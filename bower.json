@@ -1,6 +1,6 @@
 {
   "name": "geosuggest",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A React autosuggest for the Google Maps Places API.",
   "main": "dist/geosuggest.min.js",
   "homepage": "https://github.com/ubilabs/react-geosuggest",
