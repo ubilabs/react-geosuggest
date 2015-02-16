@@ -1,0 +1,43 @@
+{
+  "name": "react-geosuggest",
+  "version": "0.0.0",
+  "description": "A React autosuggest for the Google Maps Places API.",
+  "main": "src/Geosuggest.jsx",
+  "author": "Robert Katzki <katzki@ubilabs.net>",
+  "homepage": "https://github.com/ubilabs/react-geosuggest",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ubilabs/react-geosuggest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ubilabs/react-geosuggest/issues"
+  },
+  "dependencies": {
+    "react": "^0.12.2",
+    "reactify": "^0.17.1"
+  },
+  "devDependencies": {
+    "react-component-gulp-tasks": "^0.1.1",
+    "gulp": "^3.8.10"
+  },
+  "browser": "src/Geosuggest.jsx",
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  },
+  "browserify-shim": {
+    "react": "global:React"
+  },
+  "scripts": {
+    "test": "echo \"no tests yet\" && exit 0"
+  },
+  "readmeFilename": "README.md",
+  "keywords": [
+    "react",
+    "react-component",
+    "google",
+    "autosuggest",
+    "places"
+  ]
+}
