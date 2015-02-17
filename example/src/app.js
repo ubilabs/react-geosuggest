@@ -7,9 +7,9 @@ var App = React.createClass({
    */
   render: function() {
     var fixtures = [
-      {label: 'Old Elbe Tunnel, Hamburg', location: {lat: 53.5459, lng: 9.966576}},
-      {label: 'Reeperbahn, Hamburg', location: {lat: 53.5495629, lng: 9.9625838}},
-      {label: 'Alster, Hamburg', location: {lat: 53.5610398, lng: 10.0259135}}
+      {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
+      {label: 'Rio', location: {lat: -22.066452, lng: -42.9232368}},
+      {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
     ];
 
     return (
