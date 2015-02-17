@@ -17,8 +17,9 @@
     "reactify": "^0.17.1"
   },
   "devDependencies": {
-    "react-component-gulp-tasks": "^0.1.1",
-    "gulp": "^3.8.10"
+    "gulp": "^3.8.10",
+    "gulp-git": "^1.0.0",
+    "react-component-gulp-tasks": "^0.1.1"
   },
   "browser": "src/Geosuggest.jsx",
   "browserify": {

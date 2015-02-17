@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+  git = require('gulp-git'),
   initGulpTasks = require('react-component-gulp-tasks');
 
 
