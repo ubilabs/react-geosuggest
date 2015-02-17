@@ -22,3 +22,27 @@ var config = require('./gulpconfig');
  */
 
 initGulpTasks(gulp, config);
+
+gulp.task('serve', ['dev']);
+
+gulp.task('publish:tag', function(done) {
+  var version = require('./package.json').version;
+  var message = 'Release ' + version;
+
+  return gulp.src('./*.json')
+    .pipe(git.add())
+    .pipe(git.commit('chore(release): ' + version));
+
+  git.tag(version, message, function (err) {
+    if (err) throw err;
+    git.push('origin', 'master', function (err) {
+      if (err) throw err;
+      done();
+    });
+  });
+});
+
+gulp.task('release', ['bump', 'build', 'publish:tag', 'publish:npm', 'publish:examples']);
+gulp.task('release:patch', ['release']);
+gulp.task('release:minor', ['bump:minor', 'build', 'publish:tag', 'publish:npm', 'publish:examples']);
+gulp.task('release:major', ['bump:major', 'build', 'publish:tag', 'publish:npm', 'publish:examples']);

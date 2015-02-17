@@ -3,18 +3,9 @@
 A [React](http://facebook.github.io/react/) autosuggest for the Google Maps Places API. You can also define your own suggests as defaults.
 
 
-## Demo & Examples
+## Demo
 
 Live demo: [ubilabs.github.io/react-geosuggest](http://ubilabs.github.io/react-geosuggest/)
-
-To build the examples locally, run:
-
-```
-npm install
-gulp dev
-```
-
-Then open [`localhost:8000`](http://localhost:8000) in a browser.
 
 
 ## Installation
@@ -131,6 +122,29 @@ React.render(<App />, document.getElementById('app'));
 ## Styling
 
 This component uses [BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/) for namespacing the CSS classes. So styling should be easy and without conflicts. See the [geosuggest.css](https://github.com/ubilabs/react-geosuggest/blob/master/src/geosuggest.css) for an example styling.
+
+
+## Contributing
+
+### Development
+
+To build the examples locally, run:
+
+```
+npm install
+gulp serve
+```
+
+Then open [`localhost:8000`](http://localhost:8000) in a browser.
+
+### Deployment
+
+To release & deploy, run the following
+
+```
+gulp release:patch|minor|major
+```
+
 
 ## License
 
