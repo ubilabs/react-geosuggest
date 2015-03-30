@@ -35,6 +35,7 @@ var App = React.createClass({displayName: "App",
 
 React.render(React.createElement(App, null), document.getElementById('app'));
 
+
 },{"../../src/Geosuggest.jsx":2,"react":undefined}],2:[function(require,module,exports){
 var React = require('react'),
   GeosuggestItem = require('./GeosuggestItem.jsx');
@@ -306,6 +307,7 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
 
 module.exports = Geosuggest;
 
+
 },{"./GeosuggestItem.jsx":3,"react":undefined}],3:[function(require,module,exports){
 var React = require('react');
 
@@ -359,5 +361,6 @@ var GeosuggestItem = React.createClass({displayName: "GeosuggestItem",
 });
 
 module.exports = GeosuggestItem;
+
 
 },{"react":undefined}]},{},[1]);

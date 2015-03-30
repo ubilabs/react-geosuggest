@@ -270,6 +270,7 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
 
 module.exports = Geosuggest;
 
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./GeosuggestItem.jsx":2}],2:[function(require,module,exports){
 (function (global){
@@ -325,6 +326,7 @@ var GeosuggestItem = React.createClass({displayName: "GeosuggestItem",
 });
 
 module.exports = GeosuggestItem;
+
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
