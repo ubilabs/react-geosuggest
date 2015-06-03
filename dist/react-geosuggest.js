@@ -191,8 +191,6 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest: function(suggest) {
-    var location;
-
     this.state.geocoder.geocode(
       {address: suggest.label},
       function(results, status) {
@@ -200,8 +198,10 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
           return;
         }
 
-        location = results[0].geometry.location;
+        var gmaps = results[0],
+          location = gmaps.geometry.location;
 
+        suggest.gmaps = gmaps;
         suggest.location = {
           lat: location.lat(),
           lng: location.lng()
@@ -270,6 +270,7 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
 
 module.exports = Geosuggest;
 
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./GeosuggestItem.jsx":2}],2:[function(require,module,exports){
 (function (global){
@@ -325,6 +326,7 @@ var GeosuggestItem = React.createClass({displayName: "GeosuggestItem",
 });
 
 module.exports = GeosuggestItem;
+
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
