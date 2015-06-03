@@ -75,7 +75,12 @@ An array with fixtures (defaults). Each fixture has to be an object with a `labe
 Type: `Function`
 Default: `function(suggest) {}`
 
-Gets triggered when a suggest got selected. Only parameter is the selected suggest.
+Gets triggered when a suggest got selected. Only parameter is an object with data of the selected suggest. This data is available:
+
+* `label` – Type `String` – The label name
+* `placeId` – Type `String` – If it is a preset, equals the `label`. Else it is the Google Maps `placeID`
+* `location` – Type `Object` – The location containing `lat` and `lng`
+* `gmaps` – Type `Object` – *Optional!* The complete response when there was a Google Maps geocode necessary (e.g. no location provided for presets). [Check the Google Maps Reference](https://developers.google.com/maps/documentation/javascript/reference#GeocoderResult) for more information on it’s structure.
 
 
 ### Example
