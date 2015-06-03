@@ -191,8 +191,6 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest: function(suggest) {
-    var location;
-
     this.state.geocoder.geocode(
       {address: suggest.label},
       function(results, status) {
@@ -200,8 +198,10 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
           return;
         }
 
-        location = results[0].geometry.location;
+        var gmaps = results[0],
+          location = gmaps.geometry.location;
 
+        suggest.gmaps = gmaps;
         suggest.location = {
           lat: location.lat(),
           lng: location.lng()
