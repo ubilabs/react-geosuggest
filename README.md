@@ -40,7 +40,7 @@ npm install react-geosuggest --save
 The Geosuggest works out of the box by just including it. However, you can customize the behaviour with the properties noted below.
 
 ```
-var Geosuggest = require('geosuggest');
+var Geosuggest = require('react-geosuggest');
 
 <Geosuggest />
 ```
