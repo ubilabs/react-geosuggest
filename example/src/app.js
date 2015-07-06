@@ -1,9 +1,12 @@
-var React = require('react'),
-  Geosuggest = require('../../src/Geosuggest.jsx');
+/* global google */
 
-var App = React.createClass({
+var React = require('react'),
+  Geosuggest = require('../../src/Geosuggest.jsx'); // eslint-disable-line
+
+var App = React.createClass({ // eslint-disable-line
   /**
    * Render the example app
+   * @return {Function} React render function
    */
   render: function() {
     var fixtures = [
@@ -12,7 +15,7 @@ var App = React.createClass({
       {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
     ];
 
-    return (
+    return ( // eslint-disable-line
       <div>
         <Geosuggest
           fixtures={fixtures}
@@ -28,8 +31,8 @@ var App = React.createClass({
    * @param  {Object} suggest The suggest
    */
   onSuggestSelect: function(suggest) {
-    console.log(suggest);
+    console.log(suggest); // eslint-disable-line
   }
 });
 
-React.render(<App />, document.getElementById('app'));
+React.render(<App />, document.getElementById('app')); // eslint-disable-line
