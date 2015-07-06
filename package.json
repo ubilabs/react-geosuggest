@@ -13,13 +13,13 @@
     "url": "https://github.com/ubilabs/react-geosuggest/issues"
   },
   "dependencies": {
-    "react": "^0.13.1",
-    "reactify": "^1.1.0"
+    "react": "^0.13.1"
   },
   "devDependencies": {
     "gulp": "^3.8.10",
     "gulp-git": "^1.0.0",
-    "react-component-gulp-tasks": "^0.1.1"
+    "react-component-gulp-tasks": "^0.1.1",
+    "reactify": "^1.1.0"
   },
   "browser": "src/Geosuggest.jsx",
   "browserify": {
