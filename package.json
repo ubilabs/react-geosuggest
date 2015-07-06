@@ -34,7 +34,12 @@
   },
   "scripts": {
     "lint": "eslint ./src ./example/src",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "build": "gulp build",
+    "release": "gulp release",
+    "release:patch": "gulp release:patch",
+    "release:minor": "gulp release:minor",
+    "release:major": "gulp release:major"
   },
   "readmeFilename": "README.md",
   "keywords": [
