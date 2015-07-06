@@ -1,5 +1,8 @@
 var gulp = require('gulp'),
   git = require('gulp-git'),
+  rename = require('gulp-rename'),
+  gif = require('gulp-if'),
+  babel = require('gulp-babel'),
   initGulpTasks = require('react-component-gulp-tasks');
 
 
@@ -43,7 +46,15 @@ gulp.task('publish:tag', function(done) {
   });
 });
 
-gulp.task('release', ['bump', 'build', 'publish:tag', 'publish:npm', 'publish:examples']);
+gulp.task('build-module', function () {
+    return gulp.src('src/*.jsx')
+        .pipe(babel())
+        .pipe(rename({ extname: '.jsx' }))
+        .pipe(gif('**/Geosuggest.jsx', rename('index.js')))
+        .pipe(gulp.dest('dist/react-geosuggest.module'));
+});
+
+gulp.task('release', ['bump', 'build', 'build-module', 'publish:tag', 'publish:npm', 'publish:examples']);
 gulp.task('release:patch', ['release']);
-gulp.task('release:minor', ['bump:minor', 'build', 'publish:tag', 'publish:npm', 'publish:examples']);
-gulp.task('release:major', ['bump:major', 'build', 'publish:tag', 'publish:npm', 'publish:examples']);
+gulp.task('release:minor', ['bump:minor', 'build', 'build-module', 'publish:tag', 'publish:npm', 'publish:examples']);
+gulp.task('release:major', ['bump:major', 'build', 'build-module', 'publish:tag', 'publish:npm', 'publish:examples']);

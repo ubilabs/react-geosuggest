@@ -2,7 +2,7 @@
   "name": "react-geosuggest",
   "version": "1.2.3",
   "description": "A React autosuggest for the Google Maps Places API.",
-  "main": "dist/react-geosuggest.js",
+  "main": "dist/react-geosuggest.module",
   "author": "Robert Katzki <katzki@ubilabs.net>",
   "homepage": "https://github.com/ubilabs/react-geosuggest",
   "repository": {
@@ -18,7 +18,10 @@
   "devDependencies": {
     "eslint": "^0.24.0",
     "gulp": "^3.8.10",
+    "gulp-babel": "~5.1.0",
     "gulp-git": "^1.0.0",
+    "gulp-if": "~1.2.5",
+    "gulp-rename": "~1.2.2",
     "react-component-gulp-tasks": "^0.1.1",
     "reactify": "^1.1.0"
   },
@@ -33,7 +36,8 @@
   },
   "scripts": {
     "lint": "eslint ./src ./example/src",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "build": "gulp build && gulp build-module"
   },
   "readmeFilename": "README.md",
   "keywords": [
