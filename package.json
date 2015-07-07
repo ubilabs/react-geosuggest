@@ -33,7 +33,7 @@
     "react": "global:React"
   },
   "scripts": {
-    "lint": "eslint ./src ./example/src",
+    "lint": "eslint ./src/*.jsx ./example/src",
     "test": "npm run lint",
     "build": "gulp build",
     "release": "gulp release",

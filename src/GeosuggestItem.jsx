@@ -26,9 +26,10 @@ var GeosuggestItem = React.createClass({
 
   /**
    * Render the view
+   * @return {Function} The React element to render
    */
   render: function() {
-    return (
+    return (// eslint-disable-line no-extra-parens
       <li className={this.getSuggestClasses()}
         onClick={this.onClick}>
           {this.props.suggest.label}

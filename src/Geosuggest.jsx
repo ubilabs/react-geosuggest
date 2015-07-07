@@ -1,5 +1,7 @@
+/* global google */
+
 var React = require('react'),
-  GeosuggestItem = require('./GeosuggestItem.jsx');
+  GeosuggestItem = require('./GeosuggestItem.jsx'); // eslint-disable-line
 
 var Geosuggest = React.createClass({
   /**
@@ -28,7 +30,8 @@ var Geosuggest = React.createClass({
       activeSuggest: null,
       suggests: [],
       geocoder: new this.props.googleMaps.Geocoder(),
-      autocompleteService: new this.props.googleMaps.places.AutocompleteService()
+      autocompleteService: new this.props.googleMaps.places
+        .AutocompleteService()
     };
   },
 
@@ -67,31 +70,29 @@ var Geosuggest = React.createClass({
     }
 
     var suggests = [],
-      regex = new RegExp(this.state.userInput, 'gim'),
-      suggestItems;
+      regex = new RegExp(this.state.userInput, 'gim');
 
     this.props.fixtures.forEach(function(suggest) {
       if (suggest.label.match(regex)) {
         suggest.placeId = suggest.label;
         suggests.push(suggest);
       }
-    }.bind(this));
+    });
 
     suggestsGoogle.forEach(function(suggest) {
       suggests.push({
         label: suggest.description,
         placeId: suggest.place_id
       });
-    }.bind(this));
+    });
 
     this.setState({suggests: suggests});
   },
 
   /**
    * When the input gets focused
-   * @param  {Event} event The focus event
    */
-  showSuggests: function(event) {
+  showSuggests: function() {
     this.updateSuggests();
 
     this.setState({isSuggestsHidden: false});
@@ -99,9 +100,8 @@ var Geosuggest = React.createClass({
 
   /**
    * When the input loses focused
-   * @param  {Event} event The focus event
    */
-  hideSuggests: function(event) {
+  hideSuggests: function() {
     setTimeout(function() {
       this.setState({isSuggestsHidden: true});
     }.bind(this), 100);
@@ -130,6 +130,8 @@ var Geosuggest = React.createClass({
       case 27: // ESC
         this.hideSuggests();
         break;
+      default:
+        break;
     }
   },
 
@@ -139,7 +141,7 @@ var Geosuggest = React.createClass({
    */
   activateSuggest: function(direction) {
     var suggestsCount = this.state.suggests.length - 1,
-      next = direction === ('next'),
+      next = direction === 'next',
       newActiveSuggest = null,
       newIndex = 0,
       i = 0;
@@ -213,9 +215,10 @@ var Geosuggest = React.createClass({
 
   /**
    * Render the view
+   * @return {Function} The React element to render
    */
   render: function() {
-    return (
+    return (// eslint-disable-line no-extra-parens
       <div className="geosuggest" onClick={this.onClick}>
         <input
           className="geosuggest__input"
@@ -240,10 +243,10 @@ var Geosuggest = React.createClass({
    */
   getSuggestItems: function() {
     return this.state.suggests.map(function(suggest) {
-      var isActive = (this.state.activeSuggest &&
-        suggest.placeId === this.state.activeSuggest.placeId);
+      var isActive = this.state.activeSuggest &&
+        suggest.placeId === this.state.activeSuggest.placeId;
 
-      return (
+      return (// eslint-disable-line no-extra-parens
         <GeosuggestItem
           key={suggest.placeId}
           suggest={suggest}
@@ -258,7 +261,7 @@ var Geosuggest = React.createClass({
    * @return {String} The classes
    */
   getSuggestsClasses: function() {
-    var classes = 'geosuggest__suggests'
+    var classes = 'geosuggest__suggests';
 
     classes += this.state.isSuggestsHidden ?
       ' geosuggest__suggests--hidden' : '';
