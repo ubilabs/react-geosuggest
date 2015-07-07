@@ -43,7 +43,8 @@ gulp.task('publish:tag', function(done) {
   });
 });
 
-gulp.task('release', ['bump', 'build', 'publish:tag', 'publish:npm', 'publish:examples']);
+gulp.task('build-and-publish', ['build', 'publish:tag', 'publish:npm', 'publish:examples']);
+gulp.task('release', ['bump', 'build-and-publish']);
 gulp.task('release:patch', ['release']);
-gulp.task('release:minor', ['bump:minor', 'build', 'publish:tag', 'publish:npm', 'publish:examples']);
-gulp.task('release:major', ['bump:major', 'build', 'publish:tag', 'publish:npm', 'publish:examples']);
+gulp.task('release:minor', ['bump:minor', 'build-and-publish']);
+gulp.task('release:major', ['bump:major', 'build-and-publish']);
