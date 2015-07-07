@@ -12,7 +12,8 @@ var Geosuggest = React.createClass({
       placeholder: 'Search places',
       onSuggestSelect: function() {},
       location: null,
-      radius: 0
+      radius: 0,
+      googleMaps: google && google.maps
     };
   },
 
@@ -26,8 +27,8 @@ var Geosuggest = React.createClass({
       userInput: '',
       activeSuggest: null,
       suggests: [],
-      geocoder: new google.maps.Geocoder(),
-      autocompleteService: new google.maps.places.AutocompleteService()
+      geocoder: new this.props.googleMaps.Geocoder(),
+      autocompleteService: new this.props.googleMaps.places.AutocompleteService()
     };
   },
 
@@ -49,7 +50,7 @@ var Geosuggest = React.createClass({
 
     this.state.autocompleteService.getPlacePredictions({
       input: userInput,
-      location: this.props.location || new google.maps.LatLng(0, 0),
+      location: this.props.location || new this.props.googleMaps.LatLng(0, 0),
       radius: this.props.radius
     }, function(suggestsGoogle) {
       this.updateSuggests(suggestsGoogle);
@@ -192,7 +193,7 @@ var Geosuggest = React.createClass({
     this.state.geocoder.geocode(
       {address: suggest.label},
       function(results, status) {
-        if (status !== google.maps.GeocoderStatus.OK) {
+        if (status !== this.props.googleMaps.GeocoderStatus.OK) {
           return;
         }
 
