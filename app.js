@@ -1,10 +1,13 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var React = require('react'),
-  Geosuggest = require('../../src/Geosuggest.jsx');
+/* global google */
 
-var App = React.createClass({displayName: "App",
+var React = require('react'),
+  Geosuggest = require('../../src/Geosuggest.jsx'); // eslint-disable-line
+
+var App = React.createClass({displayName: "App", // eslint-disable-line
   /**
    * Render the example app
+   * @return {Function} React render function
    */
   render: function() {
     var fixtures = [
@@ -13,7 +16,7 @@ var App = React.createClass({displayName: "App",
       {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
     ];
 
-    return (
+    return ( // eslint-disable-line
       React.createElement("div", null, 
         React.createElement(Geosuggest, {
           fixtures: fixtures, 
@@ -29,16 +32,18 @@ var App = React.createClass({displayName: "App",
    * @param  {Object} suggest The suggest
    */
   onSuggestSelect: function(suggest) {
-    console.log(suggest);
+    console.log(suggest); // eslint-disable-line
   }
 });
 
-React.render(React.createElement(App, null), document.getElementById('app'));
+React.render(React.createElement(App, null), document.getElementById('app')); // eslint-disable-line
 
 
 },{"../../src/Geosuggest.jsx":2,"react":undefined}],2:[function(require,module,exports){
+/* global google */
+
 var React = require('react'),
-  GeosuggestItem = require('./GeosuggestItem.jsx');
+  GeosuggestItem = require('./GeosuggestItem.jsx'); // eslint-disable-line
 
 var Geosuggest = React.createClass({displayName: "Geosuggest",
   /**
@@ -51,7 +56,8 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
       placeholder: 'Search places',
       onSuggestSelect: function() {},
       location: null,
-      radius: 0
+      radius: 0,
+      googleMaps: google && google.maps
     };
   },
 
@@ -65,8 +71,9 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
       userInput: '',
       activeSuggest: null,
       suggests: [],
-      geocoder: new google.maps.Geocoder(),
-      autocompleteService: new google.maps.places.AutocompleteService()
+      geocoder: new this.props.googleMaps.Geocoder(),
+      autocompleteService: new this.props.googleMaps.places
+        .AutocompleteService()
     };
   },
 
@@ -88,7 +95,7 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
 
     this.state.autocompleteService.getPlacePredictions({
       input: userInput,
-      location: this.props.location || new google.maps.LatLng(0, 0),
+      location: this.props.location || new this.props.googleMaps.LatLng(0, 0),
       radius: this.props.radius
     }, function(suggestsGoogle) {
       this.updateSuggests(suggestsGoogle);
@@ -105,31 +112,29 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
     }
 
     var suggests = [],
-      regex = new RegExp(this.state.userInput, 'gim'),
-      suggestItems;
+      regex = new RegExp(this.state.userInput, 'gim');
 
     this.props.fixtures.forEach(function(suggest) {
       if (suggest.label.match(regex)) {
         suggest.placeId = suggest.label;
         suggests.push(suggest);
       }
-    }.bind(this));
+    });
 
     suggestsGoogle.forEach(function(suggest) {
       suggests.push({
         label: suggest.description,
         placeId: suggest.place_id
       });
-    }.bind(this));
+    });
 
     this.setState({suggests: suggests});
   },
 
   /**
    * When the input gets focused
-   * @param  {Event} event The focus event
    */
-  showSuggests: function(event) {
+  showSuggests: function() {
     this.updateSuggests();
 
     this.setState({isSuggestsHidden: false});
@@ -137,9 +142,8 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
 
   /**
    * When the input loses focused
-   * @param  {Event} event The focus event
    */
-  hideSuggests: function(event) {
+  hideSuggests: function() {
     setTimeout(function() {
       this.setState({isSuggestsHidden: true});
     }.bind(this), 100);
@@ -168,6 +172,8 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
       case 27: // ESC
         this.hideSuggests();
         break;
+      default:
+        break;
     }
   },
 
@@ -177,7 +183,7 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
    */
   activateSuggest: function(direction) {
     var suggestsCount = this.state.suggests.length - 1,
-      next = direction === ('next'),
+      next = direction === 'next',
       newActiveSuggest = null,
       newIndex = 0,
       i = 0;
@@ -231,7 +237,7 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
     this.state.geocoder.geocode(
       {address: suggest.label},
       function(results, status) {
-        if (status !== google.maps.GeocoderStatus.OK) {
+        if (status !== this.props.googleMaps.GeocoderStatus.OK) {
           return;
         }
 
@@ -251,9 +257,10 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
 
   /**
    * Render the view
+   * @return {Function} The React element to render
    */
   render: function() {
-    return (
+    return (// eslint-disable-line no-extra-parens
       React.createElement("div", {className: "geosuggest", onClick: this.onClick}, 
         React.createElement("input", {
           className: "geosuggest__input", 
@@ -278,10 +285,10 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
    */
   getSuggestItems: function() {
     return this.state.suggests.map(function(suggest) {
-      var isActive = (this.state.activeSuggest &&
-        suggest.placeId === this.state.activeSuggest.placeId);
+      var isActive = this.state.activeSuggest &&
+        suggest.placeId === this.state.activeSuggest.placeId;
 
-      return (
+      return (// eslint-disable-line no-extra-parens
         React.createElement(GeosuggestItem, {
           key: suggest.placeId, 
           suggest: suggest, 
@@ -296,7 +303,7 @@ var Geosuggest = React.createClass({displayName: "Geosuggest",
    * @return {String} The classes
    */
   getSuggestsClasses: function() {
-    var classes = 'geosuggest__suggests'
+    var classes = 'geosuggest__suggests';
 
     classes += this.state.isSuggestsHidden ?
       ' geosuggest__suggests--hidden' : '';
@@ -337,9 +344,10 @@ var GeosuggestItem = React.createClass({displayName: "GeosuggestItem",
 
   /**
    * Render the view
+   * @return {Function} The React element to render
    */
   render: function() {
-    return (
+    return (// eslint-disable-line no-extra-parens
       React.createElement("li", {className: this.getSuggestClasses(), 
         onClick: this.onClick}, 
           this.props.suggest.label
