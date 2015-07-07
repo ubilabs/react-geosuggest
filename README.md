@@ -71,6 +71,12 @@ Default: `[]`
 
 An array with fixtures (defaults). Each fixture has to be an object with a `label` key in it. Optionally provide a `location`, but the Geosuggest will geocode the label if no location is provided.
 
+#### googleMaps
+Type: `Object`
+Default: `google.maps`
+
+In case you want to provide your own Google Maps object, pass it in as googleMaps. The default is the global google maps object.
+
 #### onSuggestSelect
 Type: `Function`
 Default: `function(suggest) {}`
