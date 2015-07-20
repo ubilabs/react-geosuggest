@@ -23,6 +23,7 @@
     "bumpery": "^1.1.1",
     "conventional-changelog-generator": "0.0.3",
     "eslint": "^0.24.0",
+    "gh-pages": "^0.3.1",
     "light-server": "^1.0.3",
     "uglifyjs": "^2.4.10"
   },
@@ -39,16 +40,17 @@
     "js:example:uglify": "uglifyjs example/dist/app.js -o example/dist/app.js -c warnings=false,drop_console=true --mangle",
     "js:browser": "browserify src/Geosuggest.jsx --standalone Geosuggest --exclude react -t babelify > dist/react-geosuggest.js",
     "js:browser:uglify": "uglifyjs dist/react-geosuggest.js -o dist/react-geosuggest.min.js -c warnings=false,drop_console=true --mangle",
-    "build": "npm run build:browser && npm run build:example",
     "build:module": "babel src --out-dir module",
     "build:browser": "npm run js:browser && npm run js:browser:uglify",
     "build:example": "npm run prepare:example && npm run js:example:uglify",
     "changelog": "conventional-changelog-generator && atom -w CHANGELOG.md",
     "release": "echo 'Usage: npm run release:patch|minor|major'",
-    "release:patch": "npm run build:browser && bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType patch && npm run changelog && npm run release:commit",
-    "release:minor": "npm run build:browser && bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType minor && npm run changelog && npm run release:commit",
-    "release:major": "npm run build:browser && bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType major && npm run changelog && npm run release:commit",
-    "release:commit": "bumpery --commitFiles 'dist/*.js CHANGELOG.md package.json' --commitMessage 'chore(release): version %VERSION%' --no-bumpVersion"
+    "release:patch": "npm run build:browser && bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType patch && npm run release:finish",
+    "release:minor": "npm run build:browser && bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType minor && npm run release:finish",
+    "release:major": "npm run build:browser && bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType major && npm run release:finish",
+    "release:finish": "npm run changelog && npm run release:commit && npm run publish:example",
+    "release:commit": "bumpery --commitFiles 'dist/*.js CHANGELOG.md package.json' --commitMessage 'chore(release): version %VERSION%' --no-bumpVersion",
+    "publish:example": "npm run build:example && gh-pages -d example/dist"
   },
   "readmeFilename": "README.md",
   "keywords": [
