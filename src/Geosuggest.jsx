@@ -11,6 +11,7 @@ var Geosuggest = React.createClass({
   getDefaultProps: function() {
     return {
       fixtures: [],
+      initialValue: '',
       placeholder: 'Search places',
       onSuggestSelect: function() {},
       location: null,
@@ -26,7 +27,7 @@ var Geosuggest = React.createClass({
   getInitialState: function() {
     return {
       isSuggestsHidden: true,
-      userInput: '',
+      userInput: this.props.initialValue,
       activeSuggest: null,
       suggests: [],
       geocoder: new this.props.googleMaps.Geocoder(),
@@ -42,17 +43,21 @@ var Geosuggest = React.createClass({
     var userInput = this.refs.geosuggestInput.getDOMNode().value;
 
     this.setState({userInput: userInput}, function() {
-      if (!userInput) {
-        this.updateSuggests();
-      }
+      this.searchSuggests();
     }.bind(this));
+  },
 
-    if (!userInput) {
+  /**
+   * Search for new suggests
+   */
+  searchSuggests: function() {
+    if (!this.state.userInput) {
+      this.updateSuggests();
       return;
     }
 
     this.state.autocompleteService.getPlacePredictions({
-      input: userInput,
+      input: this.state.userInput,
       location: this.props.location || new this.props.googleMaps.LatLng(0, 0),
       radius: this.props.radius
     }, function(suggestsGoogle) {
@@ -93,7 +98,7 @@ var Geosuggest = React.createClass({
    * When the input gets focused
    */
   showSuggests: function() {
-    this.updateSuggests();
+    this.searchSuggests();
 
     this.setState({isSuggestsHidden: false});
   },

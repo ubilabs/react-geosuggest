@@ -53,6 +53,12 @@ Default: `Search places`
 
 The input field will get this placeholder text.
 
+#### initialValue
+Type: `String`
+Default: `''`
+
+An initial value for the input, when you want to prefill the suggest.
+
 #### location
 Type: `google.maps.LatLng`
 Default: `null`
@@ -110,6 +116,7 @@ var App = React.createClass({
       <div>
         <Geosuggest
           placeholder="Start typing!"
+          initialValue="Hamburg"
           fixtures={fixtures}
           onSuggestSelect={this.onSuggestSelect}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
