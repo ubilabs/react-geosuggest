@@ -43,7 +43,7 @@ var Geosuggest = React.createClass({
     var userInput = this.refs.geosuggestInput.getDOMNode().value;
 
     this.setState({userInput: userInput}, function() {
-      this.searchSuggests();
+      this.showSuggests();
     }.bind(this));
   },
 
@@ -145,6 +145,11 @@ var Geosuggest = React.createClass({
    * @param {String} direction The direction in which to activate new suggest
    */
   activateSuggest: function(direction) {
+    if (this.state.isSuggestsHidden) {
+      this.showSuggests();
+      return;
+    }
+
     var suggestsCount = this.state.suggests.length - 1,
       next = direction === 'next',
       newActiveSuggest = null,
