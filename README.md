@@ -59,6 +59,12 @@ Default: `''`
 
 An initial value for the input, when you want to prefill the suggest.
 
+#### className
+Type: `String`
+Default: `''`
+
+Add an additional class to the geosuggest container.
+
 #### location
 Type: `google.maps.LatLng`
 Default: `null`

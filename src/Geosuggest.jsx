@@ -13,6 +13,7 @@ var Geosuggest = React.createClass({
       fixtures: [],
       initialValue: '',
       placeholder: 'Search places',
+      className: '',
       onSuggestSelect: function() {},
       location: null,
       radius: 0,
@@ -229,7 +230,8 @@ var Geosuggest = React.createClass({
    */
   render: function() {
     return (// eslint-disable-line no-extra-parens
-      <div className="geosuggest" onClick={this.onClick}>
+      <div className={'geosuggest ' + this.props.className}
+          onClick={this.onClick}>
         <input
           className="geosuggest__input"
           ref="geosuggestInput"
