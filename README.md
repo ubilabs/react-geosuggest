@@ -156,7 +156,7 @@ To build the examples locally, run:
 
 ```
 npm install
-gulp serve
+npm start
 ```
 
 Then open [`localhost:8000`](http://localhost:8000) in a browser.
@@ -166,7 +166,7 @@ Then open [`localhost:8000`](http://localhost:8000) in a browser.
 To release & deploy, run the following
 
 ```
-gulp release:patch|minor|major
+npm run release:patch|minor|major
 ```
 
 
