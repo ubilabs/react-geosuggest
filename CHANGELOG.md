@@ -1,3 +1,11 @@
+### 1.4.1 (2015-07-21)
+
+
+#### Bug Fixes
+
+* **import:** add .npmignore ([add06073](https://github.com/ubilabs/react-geosuggest/commit/add06073990bb4c8934b8ad28c6c1bfb201f6945))
+
+
 ## 1.4.0 (2015-07-20)
 
 
