@@ -1,7 +1,7 @@
 /* global google */
 
 var React = require('react'),
-  Geosuggest = require('../../src/Geosuggest.jsx'); // eslint-disable-line
+  Geosuggest = require('../../src/Geosuggest'); // eslint-disable-line
 
 var App = React.createClass({ // eslint-disable-line
   /**
