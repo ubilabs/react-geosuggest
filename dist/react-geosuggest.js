@@ -4,7 +4,7 @@
 'use strict';
 
 var React = require('react'),
-    GeosuggestItem = require('./GeosuggestItem.jsx'); // eslint-disable-line
+    GeosuggestItem = require('./GeosuggestItem'); // eslint-disable-line
 
 var Geosuggest = React.createClass({
   displayName: 'Geosuggest',
@@ -235,26 +235,25 @@ var Geosuggest = React.createClass({
    * @return {Function} The React element to render
    */
   render: function render() {
-    return ( // eslint-disable-line no-extra-parens
+    return // eslint-disable-line no-extra-parens
+    React.createElement(
+      'div',
+      { className: 'geosuggest ' + this.props.className,
+        onClick: this.onClick },
+      React.createElement('input', {
+        className: "geosuggest__input",
+        ref: "geosuggestInput",
+        type: "text",
+        value: this.state.userInput,
+        placeholder: this.props.placeholder,
+        onKeyDown: this.onInputKeyDown,
+        onChange: this.onInputChange,
+        onFocus: this.showSuggests,
+        onBlur: this.hideSuggests }),
       React.createElement(
-        'div',
-        { className: 'geosuggest ' + this.props.className,
-          onClick: this.onClick },
-        React.createElement('input', {
-          className: 'geosuggest__input',
-          ref: 'geosuggestInput',
-          type: 'text',
-          value: this.state.userInput,
-          placeholder: this.props.placeholder,
-          onKeyDown: this.onInputKeyDown,
-          onChange: this.onInputChange,
-          onFocus: this.showSuggests,
-          onBlur: this.hideSuggests }),
-        React.createElement(
-          'ul',
-          { className: this.getSuggestsClasses() },
-          this.getSuggestItems()
-        )
+        'ul',
+        { className: this.getSuggestsClasses() },
+        this.getSuggestItems()
       )
     );
   },
@@ -267,13 +266,12 @@ var Geosuggest = React.createClass({
     return this.state.suggests.map((function (suggest) {
       var isActive = this.state.activeSuggest && suggest.placeId === this.state.activeSuggest.placeId;
 
-      return ( // eslint-disable-line no-extra-parens
-        React.createElement(GeosuggestItem, {
-          key: suggest.placeId,
-          suggest: suggest,
-          isActive: isActive,
-          onSuggestSelect: this.selectSuggest })
-      );
+      return // eslint-disable-line no-extra-parens
+      React.createElement(GeosuggestItem, {
+        key: suggest.placeId,
+        suggest: suggest,
+        isActive: isActive,
+        onSuggestSelect: this.selectSuggest });
     }).bind(this));
   },
 
@@ -292,7 +290,7 @@ var Geosuggest = React.createClass({
 
 module.exports = Geosuggest;
 
-},{"./GeosuggestItem.jsx":2,"react":undefined}],2:[function(require,module,exports){
+},{"./GeosuggestItem":2,"react":undefined}],2:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -328,13 +326,12 @@ var GeosuggestItem = React.createClass({
    * @return {Function} The React element to render
    */
   render: function render() {
-    return ( // eslint-disable-line no-extra-parens
-      React.createElement(
-        'li',
-        { className: this.getSuggestClasses(),
-          onClick: this.onClick },
-        this.props.suggest.label
-      )
+    return // eslint-disable-line no-extra-parens
+    React.createElement(
+      'li',
+      { className: this.getSuggestClasses(),
+        onClick: this.onClick },
+      this.props.suggest.label
     );
   },
 

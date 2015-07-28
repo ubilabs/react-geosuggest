@@ -1,3 +1,12 @@
+### 1.4.2 (2015-07-29)
+
+
+#### Bug Fixes
+
+* **build:** fix build for npm ([6475372](https://github.com/ubilabs/react-geosuggest/commit/6475372a468f19f075a20af012f8f85404172893))
+
+
+
 ### 1.4.1 (2015-07-21)
 
 
@@ -19,5 +28,3 @@
 * **input:**
   * add new param className ([c1c990ec](https://github.com/ubilabs/react-geosuggest/commit/c1c990ec80e5210322d7d68b805d44a73196ca4e), closes [#8](https://github.com/ubilabs/react-geosuggest/issues/8))
   * add initial value param ([f97d8eba](https://github.com/ubilabs/react-geosuggest/commit/f97d8eba377ed789c1bbc21cfc4de94e85ef2760), closes [#13](https://github.com/ubilabs/react-geosuggest/issues/13))
-
-
