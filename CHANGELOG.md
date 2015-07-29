@@ -1,3 +1,11 @@
+### 1.4.3 (2015-07-29)
+
+
+#### Bug Fixes
+
+* **example:** remove drop_console option from uglify ([e8e16112](https://github.com/ubilabs/react-geosuggest/commit/e8e16112d2d0f47f7ddc005dd485a25f7d55e4e7))
+
+
 ### 1.4.2 (2015-07-29)
 
 
