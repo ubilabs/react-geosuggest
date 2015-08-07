@@ -100,6 +100,10 @@ Gets triggered when a suggest got selected. Only parameter is an object with dat
 * `location` – Type `Object` – The location containing `lat` and `lng`
 * `gmaps` – Type `Object` – *Optional!* The complete response when there was a Google Maps geocode necessary (e.g. no location provided for presets). [Check the Google Maps Reference](https://developers.google.com/maps/documentation/javascript/reference#GeocoderResult) for more information on it’s structure.
 
+### Exposed component functions
+
+#### clear
+It is possible to clear the value of the input contained within the GeoSuggest component by calling the `clear` function.
 
 ### Example
 
