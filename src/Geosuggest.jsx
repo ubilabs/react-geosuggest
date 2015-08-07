@@ -48,6 +48,12 @@ var Geosuggest = React.createClass({
     }.bind(this));
   },
 
+  clear: function () {
+    this.setState({userInput: ''}, function() {
+      this.hideSuggests();
+    }.bind(this));
+  },
+
   /**
    * Search for new suggests
    */
