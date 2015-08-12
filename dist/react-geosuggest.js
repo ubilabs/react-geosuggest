@@ -6,6 +6,8 @@
 var React = require('react'),
     GeosuggestItem = require('./GeosuggestItem'); // eslint-disable-line
 
+var noop = function noop() {};
+
 var Geosuggest = React.createClass({
   displayName: 'Geosuggest',
 
@@ -22,7 +24,9 @@ var Geosuggest = React.createClass({
       onSuggestSelect: function onSuggestSelect() {},
       location: null,
       radius: 0,
-      googleMaps: google && google.maps
+      googleMaps: google && google.maps,
+      onFocus: noop,
+      onBlur: noop
     };
   },
 
@@ -49,6 +53,15 @@ var Geosuggest = React.createClass({
 
     this.setState({ userInput: userInput }, (function () {
       this.showSuggests();
+    }).bind(this));
+  },
+
+  /*
+   * Clear the input and close the suggestion pane
+   */
+  clear: function clear() {
+    this.setState({ userInput: '' }, (function () {
+      this.hideSuggests();
     }).bind(this));
   },
 
@@ -103,6 +116,7 @@ var Geosuggest = React.createClass({
    * When the input gets focused
    */
   showSuggests: function showSuggests() {
+    this.props.onFocus();
     this.searchSuggests();
 
     this.setState({ isSuggestsHidden: false });
@@ -112,6 +126,7 @@ var Geosuggest = React.createClass({
    * When the input loses focused
    */
   hideSuggests: function hideSuggests() {
+    this.props.onBlur();
     setTimeout((function () {
       this.setState({ isSuggestsHidden: true });
     }).bind(this), 100);

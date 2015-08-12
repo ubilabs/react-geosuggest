@@ -1,3 +1,15 @@
+## 1.5.0 (2015-08-12)
+
+
+#### Features
+
+* **input:**
+  * add clear method to geosuggest  ([2d38a40](https://github.com/ubilabs/react-geosuggest/commit/2d38a4072b11c900d73b5cc26615a3cc69f286b4)
+  * add onFocus and onBlur callbacks ([5051bc4](https://github.com/ubilabs/react-geosuggest/commit/5051bc424a4f508fa8dcff6683c690cc1ab9c2dd)
+
+* **example:** add onFocus and onBlur demo ([88cf7f88](https://github.com/ubilabs/react-geosuggest/commit/88cf7f8873119f667aa514b8065e116d7a3741b2))
+
+
 ### 1.4.3 (2015-07-29)
 
 
