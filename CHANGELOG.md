@@ -1,3 +1,11 @@
+## 1.6.0 (2015-08-12)
+
+
+#### Features
+
+* **input:** add bounds, country and types params ([00a84866](https://github.com/ubilabs/react-geosuggest/commit/00a84866d109ce4e323705558ffe319d56ecd5b1), closes [#20](https://github.com/ubilabs/react-geosuggest/issues/20))
+
+
 ## 1.5.0 (2015-08-12)
 
 
