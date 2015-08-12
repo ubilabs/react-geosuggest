@@ -89,6 +89,18 @@ Default: `google.maps`
 
 In case you want to provide your own Google Maps object, pass it in as googleMaps. The default is the global google maps object.
 
+#### onFocus
+Type: `Function`
+Default: `function() {}`
+
+Gets triggered when the input field receives focus.
+
+#### onBlur
+Type: `Function`
+Default: `function() {}`
+
+Gets triggered when input field loses focus.
+
 #### onSuggestSelect
 Type: `Function`
 Default: `function(suggest) {}`
