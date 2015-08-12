@@ -19,6 +19,9 @@ var Geosuggest = React.createClass({
       onSuggestSelect: function() {},
       location: null,
       radius: 0,
+      bounds: null,
+      country: null,
+      types: null,
       googleMaps: google && google.maps,
       onFocus: noop,
       onBlur: noop
@@ -70,13 +73,32 @@ var Geosuggest = React.createClass({
       return;
     }
 
-    this.state.autocompleteService.getPlacePredictions({
+    var options = {
       input: this.state.userInput,
       location: this.props.location || new this.props.googleMaps.LatLng(0, 0),
       radius: this.props.radius
-    }, function(suggestsGoogle) {
-      this.updateSuggests(suggestsGoogle);
-    }.bind(this));
+    };
+
+    if (this.props.bounds) {
+      options.bounds = this.props.bounds;
+    }
+
+    if (this.props.types) {
+      options.types = this.props.types;
+    }
+
+    if (this.props.country) {
+      options.componentRestrictions = {
+        country: this.props.country
+      };
+    }
+
+    this.state.autocompleteService.getPlacePredictions(
+      options,
+      function(suggestsGoogle) {
+        this.updateSuggests(suggestsGoogle);
+      }.bind(this)
+    );
   },
 
   /**

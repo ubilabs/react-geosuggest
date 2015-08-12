@@ -75,7 +75,25 @@ To get localized suggestions, define a location to bias the suggests.
 Type: `Number`
 Default: `0`
 
-The radius defines the area around the locaiton to use for biasing the suggests. It must be accompanied by a `location` parameter.
+The radius defines the area around the location to use for biasing the suggests. It must be accompanied by a `location` parameter.
+
+#### bounds
+Type: [`LatLngBounds`](https://developers.google.com/maps/documentation/javascript/reference?csw=1#LatLngBounds)
+Default: `null`
+
+The bounds to use for biasing the suggests. If this is set, `location` and `radius` are ignored.
+
+#### country
+Type: `String`
+Default: `null`
+
+Restricts predictions to the specified country (ISO 3166-1 Alpha-2 country code, case insensitive). E.g., us, br, au.
+
+#### types
+Type: `Array`
+Default: `null`
+
+Restricts the suggestions against the passed in types. If none are specified, all types are used. Consult the Google Docs for [possible types](https://developers.google.com/places/supported_types).
 
 #### fixtures
 Type: `Array`
