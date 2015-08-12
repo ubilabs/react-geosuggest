@@ -52,6 +52,15 @@ var Geosuggest = React.createClass({
     }.bind(this));
   },
 
+  /*
+   * Clear the input and close the suggestion pane
+   */
+  clear: function () {
+    this.setState({userInput: ''}, function() {
+      this.hideSuggests();
+    }.bind(this));
+  },
+
   /**
    * Search for new suggests
    */
