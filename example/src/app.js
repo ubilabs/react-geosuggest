@@ -19,11 +19,27 @@ var App = React.createClass({ // eslint-disable-line
       <div>
         <Geosuggest
           fixtures={fixtures}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
           onSuggestSelect={this.onSuggestSelect}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
           radius="20" />
       </div>
     );
+  },
+
+  /**
+   * When the input receives focus
+   */
+  onFocus: function() {
+    console.log('onFocus'); // eslint-disable-line
+  },
+
+  /**
+   * When the input loses focus
+   */
+  onBlur: function() {
+    console.log('onBlur'); // eslint-disable-line
   },
 
   /**
