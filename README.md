@@ -101,6 +101,8 @@ Default: `[]`
 
 An array with fixtures (defaults). Each fixture has to be an object with a `label` key in it. Optionally provide a `location`, but the Geosuggest will geocode the label if no location is provided.
 
+You can also add a `className` key to a fixture. This class will be applied to the fixture item.
+
 #### googleMaps
 Type: `Object`
 Default: `google.maps`

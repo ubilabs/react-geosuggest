@@ -46,6 +46,9 @@ var GeosuggestItem = React.createClass({
 
     classes += this.props.isActive ? ' geosuggest-item--active' : '';
 
+    var className = this.props.suggest.className;
+    classes += className ? ' ' + className : '';
+
     return classes;
   }
 });
