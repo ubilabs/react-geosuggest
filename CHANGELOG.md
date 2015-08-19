@@ -1,3 +1,10 @@
+## 1.7.0 (2015-08-19)
+
+#### Features
+
+* **suggests:** add individual fixture classNames ([01b0e8a](https://github.com/ubilabs/react-geosuggest/commit/01b0e8a7a3e555729aeb56292a22bd8a412e4cf9)
+
+
 ## 1.6.0 (2015-08-12)
 
 
