@@ -1,3 +1,10 @@
+## 1.8.0 (2015-09-01)
+
+#### Features
+
+* **input:**  add method to change the value of the user input  ([44d86f5](https://github.com/ubilabs/react-geosuggest/commit/44d86f5842765b72cb3db073feb016f750898e1f)
+
+
 ## 1.7.0 (2015-08-19)
 
 #### Features
