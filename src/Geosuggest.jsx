@@ -306,6 +306,14 @@ var Geosuggest = React.createClass({
   },
 
   /**
+   * Update the value of the user input
+   * @param {String} value the new value of the user input
+   */
+  updateValue: function (value) {
+    this.setState({userInput: value});
+  },
+
+  /**
    * The classes for the suggests list
    * @return {String} The classes
    */
