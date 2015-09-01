@@ -55,6 +55,14 @@ var Geosuggest = React.createClass({
     }.bind(this));
   },
 
+  /**
+   * Update the value of the user input
+   * @param {String} value the new value of the user input
+   */
+  update: function (value) {
+    this.setState({userInput: value});
+  },
+
   /*
    * Clear the input and close the suggestion pane
    */
@@ -303,14 +311,6 @@ var Geosuggest = React.createClass({
           onSuggestSelect={this.selectSuggest} />
       );
     }.bind(this));
-  },
-
-  /**
-   * Update the value of the user input
-   * @param {String} value the new value of the user input
-   */
-  updateValue: function (value) {
-    this.setState({userInput: value});
   },
 
   /**

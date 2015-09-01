@@ -134,8 +134,11 @@ Gets triggered when a suggest got selected. Only parameter is an object with dat
 
 ### Exposed component functions
 
-#### clear
-It is possible to clear the value of the input contained within the GeoSuggest component by calling the `clear` function.
+#### update(value)
+It is possible to update the value of the input contained within the GeoSuggest component by calling the `update` function with a new desired `value` of the type String.
+
+#### clear()
+It is also possible to clear the value of the input contained within the GeoSuggest component by calling the `clear` function.
 
 ### Example
 
