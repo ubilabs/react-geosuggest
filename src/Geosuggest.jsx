@@ -6,41 +6,25 @@ var React = require('react'),
 var noop = function() {};
 
 var Geosuggest = React.createClass({
-  /**
-   * Get the default props
-   * @return {Object} The state
-   */
-  getDefaultProps: function() {
-    return {
-      fixtures: [],
-      initialValue: '',
-      placeholder: 'Search places',
-      className: '',
-      onSuggestSelect: function() {},
-      location: null,
-      radius: 0,
-      bounds: null,
-      country: null,
-      types: null,
-      googleMaps: google && google.maps,
-      onFocus: noop,
-      onBlur: noop
-    };
-  },
-
-  /**
-   * Get the initial state
-   * @return {Object} The state
-   */
+  propTypes: {
+    className: React.PropTypes.string,
+    country: React.PropTypes.string,
+    fixtures: React.PropTypes.array,
+    googleMaps: React.PropTypes.object,
+    initialValue: React.PropTypes.string,
+    onBlur: React.PropTypes.func,
+    onFocus: React.PropTypes.func,
+    onSuggestSelect: React.PropTypes.func,
+    placeholder: React.PropTypes.string,
+    radius: React.PropTypes.number,
+    types: React.PropTypes.array,
+  }
   getInitialState: function() {
     return {
       isSuggestsHidden: true,
-      userInput: this.props.initialValue,
+      userInput: null,
       activeSuggest: null,
       suggests: [],
-      geocoder: new this.props.googleMaps.Geocoder(),
-      autocompleteService: new this.props.googleMaps.places
-        .AutocompleteService()
     };
   },
 
