@@ -27,7 +27,22 @@ var Geosuggest = React.createClass({
       suggests: [],
     };
   },
+  componentDidMount: function(){
+      this._setInputValue(this.props.initialValue);
 
+      var googleMap = google || this.props.googleMaps;
+
+      if(!googleMap)
+      {
+          console.error('Google map api was not found in the page.');
+      }
+
+      this.autocompleteService  =  new googleMap.places.AutocompleteService();
+      this.geocoder             = new googleMap.Geocoder();
+  },
+  _setInputValue: function(value){
+      this.setState({userInput:value});
+  },
   /**
    * When the input got changed
    */
