@@ -7,11 +7,14 @@ var React           = require('react');
 
 var Geosuggest = React.createClass({
     propTypes: {
+        bounds: React.PropTypes.object,
         className: React.PropTypes.string,
         country: React.PropTypes.string,
         fixtures: React.PropTypes.array,
         googleMaps: React.PropTypes.object,
         initialValue: React.PropTypes.string,
+        location: React.PropTypes.object,
+        language: React.PropTypes.string,
         onBlur: React.PropTypes.func,
         onFocus: React.PropTypes.func,
         onSuggestSelect: React.PropTypes.func,
@@ -40,6 +43,11 @@ var Geosuggest = React.createClass({
         if(!this.googleMaps)
         {
             console.error('Google map api was not found in the page.');
+        }
+
+        if(!this.googleMaps.places)
+        {
+            console.error('Google places library was not found in the page.');
         }
 
         // init google services
@@ -163,17 +171,16 @@ var Geosuggest = React.createClass({
 
         var options = {
             input: this.state.userInput,
-            location: this.props.location || new this.googleMaps.LatLng(0, 0),
-            radius: this.props.radius
         };
 
-        if (this.props.bounds) {
-            options.bounds = this.props.bounds;
-        }
+        var conditionalKeys = ['location','language','radius','bounds','types'];
 
-        if (this.props.types) {
-            options.types = this.props.types;
-        }
+        conditionalKeys.forEach(function(key){
+            if(this.props[key])
+            {
+                options[key] = this.props[key]
+            }
+        }.bind(this));
 
         if (this.props.country) {
             options.componentRestrictions = {
