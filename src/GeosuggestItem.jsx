@@ -44,7 +44,7 @@ var GeosuggestItem = React.createClass({
     return (// eslint-disable-line no-extra-parens
       <li 
         className={this._getSuggestClasses()}
-        onClick={this.onClick}
+        onClick={this._handleClick}
         onMouseEnter={this._handleMouseOver}>
           {this.props.suggest.label}
       </li>

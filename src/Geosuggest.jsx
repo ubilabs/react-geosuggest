@@ -62,9 +62,12 @@ var Geosuggest = React.createClass({
             userInput: '',
         });
     },
+    update: function(value){
+        this._setInputValue(value);
+    },
     _handleChangeInput: function(e) {
         // set the value and open the suggests list if it's not opened yet
-        this._setInputValue(e.target.value);
+        this._setInputValue(e.target.value,this._openList);
     },
     _handleInputKeyDown: function(event) {
         switch (event.which) {
@@ -105,9 +108,7 @@ var Geosuggest = React.createClass({
         }.bind(this));
     },
     _setInputValue: function(value,next){
-        var state = {userInput:value};
-        state.isSuggestsHidden = ( value.length ) ? false : true;
-        this.setState(state,next);
+        this.setState({userInput:value},next);
     },
     _setActiveSuggest: function(suggest,next){
         this.setState({
