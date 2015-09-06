@@ -1,330 +1,252 @@
 /* global google */
 
-var React = require('react'),
-  GeosuggestItem = require('./GeosuggestItem'); // eslint-disable-line
-
-var noop = function() {};
+var _               = require('underscore');
+var GeosuggestList  = require('./GeosuggestList'); // eslint-disable-line
+var React           = require('react');
+   
 
 var Geosuggest = React.createClass({
-  /**
-   * Get the default props
-   * @return {Object} The state
-   */
-  getDefaultProps: function() {
-    return {
-      fixtures: [],
-      initialValue: '',
-      placeholder: 'Search places',
-      className: '',
-      onSuggestSelect: function() {},
-      location: null,
-      radius: 0,
-      bounds: null,
-      country: null,
-      types: null,
-      googleMaps: google && google.maps,
-      onFocus: noop,
-      onBlur: noop
-    };
-  },
-
-  /**
-   * Get the initial state
-   * @return {Object} The state
-   */
-  getInitialState: function() {
-    return {
-      isSuggestsHidden: true,
-      userInput: this.props.initialValue,
-      activeSuggest: null,
-      suggests: [],
-      geocoder: new this.props.googleMaps.Geocoder(),
-      autocompleteService: new this.props.googleMaps.places
-        .AutocompleteService()
-    };
-  },
-
-  /**
-   * When the input got changed
-   */
-  onInputChange: function() {
-    var userInput = this.refs.geosuggestInput.getDOMNode().value;
-
-    this.setState({userInput: userInput}, function() {
-      this.showSuggests();
-    }.bind(this));
-  },
-
-  /**
-   * Update the value of the user input
-   * @param {String} value the new value of the user input
-   */
-  update: function (value) {
-    this.setState({userInput: value});
-  },
-
-  /*
-   * Clear the input and close the suggestion pane
-   */
-  clear: function () {
-    this.setState({userInput: ''}, function() {
-      this.hideSuggests();
-    }.bind(this));
-  },
-
-  /**
-   * Search for new suggests
-   */
-  searchSuggests: function() {
-    if (!this.state.userInput) {
-      this.updateSuggests();
-      return;
-    }
-
-    var options = {
-      input: this.state.userInput,
-      location: this.props.location || new this.props.googleMaps.LatLng(0, 0),
-      radius: this.props.radius
-    };
-
-    if (this.props.bounds) {
-      options.bounds = this.props.bounds;
-    }
-
-    if (this.props.types) {
-      options.types = this.props.types;
-    }
-
-    if (this.props.country) {
-      options.componentRestrictions = {
-        country: this.props.country
-      };
-    }
-
-    this.state.autocompleteService.getPlacePredictions(
-      options,
-      function(suggestsGoogle) {
-        this.updateSuggests(suggestsGoogle);
-      }.bind(this)
-    );
-  },
-
-  /**
-   * Update the suggests
-   * @param  {Object} suggestsGoogle The new google suggests
-   */
-  updateSuggests: function(suggestsGoogle) {
-    if (!suggestsGoogle) {
-      suggestsGoogle = [];
-    }
-
-    var suggests = [],
-      regex = new RegExp(this.state.userInput, 'gim');
-
-    this.props.fixtures.forEach(function(suggest) {
-      if (suggest.label.match(regex)) {
-        suggest.placeId = suggest.label;
-        suggests.push(suggest);
-      }
-    });
-
-    suggestsGoogle.forEach(function(suggest) {
-      suggests.push({
-        label: suggest.description,
-        placeId: suggest.place_id
-      });
-    });
-
-    this.setState({suggests: suggests});
-  },
-
-  /**
-   * When the input gets focused
-   */
-  showSuggests: function() {
-    this.props.onFocus();
-    this.searchSuggests();
-
-    this.setState({isSuggestsHidden: false});
-  },
-
-  /**
-   * When the input loses focused
-   */
-  hideSuggests: function() {
-    this.props.onBlur();
-    setTimeout(function() {
-      this.setState({isSuggestsHidden: true});
-    }.bind(this), 100);
-  },
-
-  /**
-   * When a key gets pressed in the input
-   * @param  {Event} event The keypress event
-   */
-  onInputKeyDown: function(event) {
-    switch (event.which) {
-      case 40: // DOWN
-        event.preventDefault();
-        this.activateSuggest('next');
-        break;
-      case 38: // UP
-        event.preventDefault();
-        this.activateSuggest('prev');
-        break;
-      case 13: // ENTER
-        this.selectSuggest(this.state.activeSuggest);
-        break;
-      case 9: // TAB
-        this.selectSuggest(this.state.activeSuggest);
-        break;
-      case 27: // ESC
-        this.hideSuggests();
-        break;
-      default:
-        break;
-    }
-  },
-
-  /**
-   * Activate a new suggest
-   * @param {String} direction The direction in which to activate new suggest
-   */
-  activateSuggest: function(direction) {
-    if (this.state.isSuggestsHidden) {
-      this.showSuggests();
-      return;
-    }
-
-    var suggestsCount = this.state.suggests.length - 1,
-      next = direction === 'next',
-      newActiveSuggest = null,
-      newIndex = 0,
-      i = 0;
-
-    for (i; i <= suggestsCount; i++) {
-      if (this.state.suggests[i] === this.state.activeSuggest) {
-        newIndex = next ? i + 1 : i - 1;
-      }
-    }
-
-    if (!this.state.activeSuggest) {
-      newIndex = next ? 0 : suggestsCount;
-    }
-
-    if (newIndex >= 0 && newIndex <= suggestsCount) {
-      newActiveSuggest = this.state.suggests[newIndex];
-    }
-
-    this.setState({activeSuggest: newActiveSuggest});
-  },
-
-  /**
-   * When an item got selected
-   * @param {GeosuggestItem} suggest The selected suggest item
-   */
-  selectSuggest: function(suggest) {
-    if (!suggest) {
-      suggest = {
-        label: this.state.userInput
-      };
-    }
-
-    this.setState({
-      isSuggestsHidden: true,
-      userInput: suggest.label
-    });
-
-    if (suggest.location) {
-      this.props.onSuggestSelect(suggest);
-      return;
-    }
-
-    this.geocodeSuggest(suggest);
-  },
-
-  /**
-   * Geocode a suggest
-   * @param  {Object} suggest The suggest
-   */
-  geocodeSuggest: function(suggest) {
-    this.state.geocoder.geocode(
-      {address: suggest.label},
-      function(results, status) {
-        if (status !== this.props.googleMaps.GeocoderStatus.OK) {
-          return;
+    propTypes: {
+        bounds: React.PropTypes.object,
+        className: React.PropTypes.string,
+        country: React.PropTypes.string,
+        fixtures: React.PropTypes.array,
+        googleMaps: React.PropTypes.object,
+        initialValue: React.PropTypes.string,
+        location: React.PropTypes.object,
+        language: React.PropTypes.string,
+        onBlur: React.PropTypes.func,
+        onFocus: React.PropTypes.func,
+        onSuggestSelect: React.PropTypes.func,
+        placeholder: React.PropTypes.string,
+        radius: React.PropTypes.number,
+        types: React.PropTypes.array,
+    },
+    getInitialState: function() {
+        return {
+            activeSuggest:null,
+            isSuggestsHidden: true,
+            suggests: [],
+            userInput: '',
+        };
+    },
+    componentDidMount: function(){
+        // set the initial input value
+        if( typeof this.props.initialValue  === 'string' )
+        {
+            this._setInputValue(this.props.initialValue);
         }
 
-        var gmaps = results[0],
-          location = gmaps.geometry.location;
+        // check that googleAPI is available
+        this.googleMaps = google.maps || this.props.googleMaps;
 
-        suggest.gmaps = gmaps;
-        suggest.location = {
-          lat: location.lat(),
-          lng: location.lng()
+        if(!this.googleMaps)
+        {
+            console.error('Google map api was not found in the page.');
+        }
+
+        if(!this.googleMaps.places)
+        {
+            console.error('Google places library was not found in the page.');
+        }
+
+        // init google services
+        this.autocompleteService  =  new this.googleMaps.places.AutocompleteService();
+        this.geocoder             = new this.googleMaps.Geocoder();
+        this._cachedRequests      = {};
+    },
+    shouldComponentUpdate: function(nextProps,nextState){
+        return !_.isEqual(this.state,nextState);
+    },
+    componentDidUpdate: function(prevProps,prevState){
+        if( this.state.userInput !== prevState.userInput && this.state.userInput.length ){
+            this._searchSuggests(this.state.userInput);
+        }
+    },
+    clear: function () {
+        this.setState({
+            isSuggestsHidden: true,
+            suggests: [],
+            userInput: '',
+        });
+    },
+    update: function(value){
+        this._setInputValue(value);
+    },
+    _handleChangeInput: function(e) {
+        // set the value and open the suggests list if it's not opened yet
+        this._setInputValue(e.target.value,this._openList);
+    },
+    _handleInputKeyDown: function(event) {
+        switch (event.which) {
+          case 40: // DOWN
+            event.preventDefault();
+            this.refs.geosuggestList.focusNext();
+            break;
+          case 38: // UP
+            event.preventDefault();
+            this.refs.geosuggestList.focusPrev();
+            break;
+          case 13: // ENTER
+            this.refs.geosuggestList.selectFocused();
+            break;
+          case 9: // TAB
+            this.refs.geosuggestList.selectFocused();
+            break;
+          case 27: // ESC
+            this._closeList();
+            break;
+        }
+    },
+    _handleBlurInput: function(e){
+        this._closeList();
+    },
+    _handleFocusInput: function(e){
+        this._openList();
+    },
+    _handleSelectItem: function(item){
+        // select the item and close the suggets list
+        this._setActiveSuggest(item);
+
+        // get info about the selection and call the handler
+        // passed by props
+        this._geocodeSuggest(item,function(result){
+            if(typeof this.props.onSuggestSelect === 'function')
+                this.props.onSuggestSelect(item);
+        }.bind(this));
+    },
+    _setInputValue: function(value,next){
+        this.setState({userInput:value},next);
+    },
+    _setActiveSuggest: function(suggest,next){
+        this.setState({
+          userInput:suggest ? suggest.label : '', // set input value 
+          activeSuggest:suggest,   // set active suggest
+          isSuggestsHidden: true,  // close list
+          suggests: [],            // empty list
+        });
+    },
+    _navigateSuggest:function(direction){
+        var index = _.findIndex(this.state.suggests,this.state.activeSuggest);
+        var newIndex = direction === 'next' ? newIndex + 1 : newIndex - 1;
+        var maxIndex = this.state.suggests.length - 1;
+
+        if( newIndex < 0 ) {
+            newIndex = 0;
+        } else if ( newIndex > maxIndex ) {
+            newIndex = maxIndex;
+        }
+
+        this.setState({activeSuggest:this.state.suggests[newIndex]});
+    },
+    _setSuggests: function(suggestsGoogle) {
+        if (!suggestsGoogle) {
+            suggestsGoogle = [];
+        }
+
+        var suggests = [],
+        regex = new RegExp(this.state.userInput, 'gim');
+
+        this.props.fixtures.forEach(function(suggest) {
+            if (suggest.label.match(regex)) {
+              suggest.placeId = suggest.label;
+              suggests.push(suggest);
+            }
+        });
+
+        suggestsGoogle.forEach(function(suggest) {
+            suggests.push({
+                label: suggest.description,
+                placeId: suggest.place_id
+            });
+        });
+
+        this.setState({suggests: suggests});
+    },
+    _searchSuggests: function() {
+        if( this._cachedRequests[this.state.userInput] )
+        {
+            return this._setSuggests(this._cachedRequests[this.state.userInput]);
+        }
+
+        var options = {
+            input: this.state.userInput,
         };
 
-        this.props.onSuggestSelect(suggest);
-      }.bind(this)
-    );
-  },
+        var conditionalKeys = ['location','language','radius','bounds','types'];
 
-  /**
-   * Render the view
-   * @return {Function} The React element to render
-   */
-  render: function() {
-    return (// eslint-disable-line no-extra-parens
-      <div className={'geosuggest ' + this.props.className}
-          onClick={this.onClick}>
-        <input
-          className="geosuggest__input"
-          ref="geosuggestInput"
-          type="text"
-          value={this.state.userInput}
-          placeholder={this.props.placeholder}
-          onKeyDown={this.onInputKeyDown}
-          onChange={this.onInputChange}
-          onFocus={this.showSuggests}
-          onBlur={this.hideSuggests} />
-        <ul className={this.getSuggestsClasses()}>
-          {this.getSuggestItems()}
-        </ul>
-      </div>
-    );
-  },
+        conditionalKeys.forEach(function(key){
+            if(this.props[key])
+            {
+                options[key] = this.props[key]
+            }
+        }.bind(this));
 
-  /**
-   * Get the suggest items for the list
-   * @return {Array} The suggestions
-   */
-  getSuggestItems: function() {
-    return this.state.suggests.map(function(suggest) {
-      var isActive = this.state.activeSuggest &&
-        suggest.placeId === this.state.activeSuggest.placeId;
+        if (this.props.country) {
+            options.componentRestrictions = {
+                country: this.props.country
+            };
+        }
+
+        this.autocompleteService.getPlacePredictions(options,function(suggestsGoogle){
+            this._cachedRequests[this.state.userInput] = suggestsGoogle;
+            this._setSuggests(suggestsGoogle);
+        }.bind(this));
+    },
+    _openList: function() {
+        if( this.state.isSuggestsHidden )
+        {
+            this.setState({isSuggestsHidden: false});
+        }
+    },
+    _closeList: function() {
+        if( !this.state.isSuggestsHidden )
+        {
+            this.setState({isSuggestsHidden: true});
+        }
+    },
+    _geocodeSuggest: function(suggest,next) {
+      this.geocoder.geocode({address: suggest.label}, function(results, status) {
+          if (status !== this.googleMaps.GeocoderStatus.OK) {
+            return;
+          }
+
+          var gmaps = results[0],
+            location = gmaps.geometry.location;
+
+          suggest.gmaps = gmaps;
+          suggest.location = {
+            lat: location.lat(),
+            lng: location.lng()
+          };
+
+          next(suggest);
+      }.bind(this));
+    },
+    render: function() {
+      var className = this.props.className || '';
 
       return (// eslint-disable-line no-extra-parens
-        <GeosuggestItem
-          key={suggest.placeId}
-          suggest={suggest}
-          isActive={isActive}
-          onSuggestSelect={this.selectSuggest} />
+          <div className={'geosuggest ' + className}>
+              <input
+                className="geosuggest__input"
+                ref="geosuggestInput"
+                type="text"
+                value={this.state.userInput}
+                placeholder={this.props.placeholder}
+                onKeyDown={this._handleInputKeyDown}
+                onChange={this._handleChangeInput}
+                onFocus={this._handleFocusInput}
+                onBlur={this._handleBlurInput} />
+                  <GeosuggestList
+                    ref="geosuggestList"
+                    activeSuggest={this.state.activeSuggest}
+                    isOpen={!this.state.isSuggestsHidden}
+                    onSuggestSelect={this._handleSelectItem}
+                    suggests={this.state.suggests}/>
+          </div>
       );
-    }.bind(this));
-  },
-
-  /**
-   * The classes for the suggests list
-   * @return {String} The classes
-   */
-  getSuggestsClasses: function() {
-    var classes = 'geosuggest__suggests';
-
-    classes += this.state.isSuggestsHidden ?
-      ' geosuggest__suggests--hidden' : '';
-
-    return classes;
-  }
+    }
 });
 
 module.exports = Geosuggest;

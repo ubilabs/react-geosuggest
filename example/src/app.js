@@ -23,7 +23,7 @@ var App = React.createClass({ // eslint-disable-line
           onBlur={this.onBlur}
           onSuggestSelect={this.onSuggestSelect}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
-          radius="20" />
+          radius={20} />
       </div>
     );
   },
