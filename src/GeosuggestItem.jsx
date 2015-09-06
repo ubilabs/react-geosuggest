@@ -1,56 +1,55 @@
+var _     = require('underscore');
 var React = require('react');
 
 var GeosuggestItem = React.createClass({
-  /**
-   * Get the default props
-   * @return {Object} The props
-   */
+  propTypes: {
+      isActive: React.PropTypes.bool,
+      isFocus: React.PropTypes.bool,
+      onSuggestOver: React.PropTypes.func,
+      onSuggestSelect: React.PropTypes.func,
+      suggest: React.PropTypes.object.isRequired,
+  },
   getDefaultProps: function() {
     return {
       isActive: false,
-      suggest: {
-        label: ''
-      },
-      onSuggestSelect: function() {}
+      isFocus: false,
     };
   },
-
-  /**
-   * When the element gets clicked
-   * @param  {Event} event The click event
-   */
-  onClick: function(event) {
-    event.preventDefault();
-    this.props.onSuggestSelect(this.props.suggest);
+  shouldComponentUpdate: function(nextProps,nextState){
+      return !_.isEqual(nextProps,this.props);
   },
+  _handleMouseOver: function(e){
+      e.preventDefault();
+      if(typeof this.props.onSuggestOver === 'function')
+      {
+          this.props.onSuggestOver(this.props.suggest);
+      }
+  },
+  _handleClick: function(e){
+      e.preventDefault();
+      if(typeof this.props.onSuggestSelect === 'function')
+      {
+          this.props.onSuggestSelect(this.props.suggest);
+      }
+  },
+  _getSuggestClasses: function() {
+      var classes = 'geosuggest__suggests-item';
 
-  /**
-   * Render the view
-   * @return {Function} The React element to render
-   */
+      classes += this.props.isActive ? ' geosuggest__suggests-item--active' 
+          : this.props.isFocus ? ' geosuggest__suggests-item--focus' : '';
+
+      return classes;
+  },
   render: function() {
     return (// eslint-disable-line no-extra-parens
-      <li className={this.getSuggestClasses()}
-        onClick={this.onClick}>
+      <li 
+        className={this._getSuggestClasses()}
+        onClick={this.onClick}
+        onMouseEnter={this._handleMouseOver}>
           {this.props.suggest.label}
       </li>
     );
   },
-
-  /**
-   * The classes for the suggest item
-   * @return {String} The classes
-   */
-  getSuggestClasses: function() {
-    var classes = 'geosuggest-item';
-
-    classes += this.props.isActive ? ' geosuggest-item--active' : '';
-
-    var className = this.props.suggest.className;
-    classes += className ? ' ' + className : '';
-
-    return classes;
-  }
 });
 
 module.exports = GeosuggestItem;
