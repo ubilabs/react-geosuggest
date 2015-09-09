@@ -121,6 +121,12 @@ Default: `function() {}`
 
 Gets triggered when input field loses focus.
 
+#### onChange
+Type: `Function`
+Default: `function(value) {}`
+
+Gets triggered when input field changes the value
+
 #### onSuggestSelect
 Type: `Function`
 Default: `function(suggest) {}`
