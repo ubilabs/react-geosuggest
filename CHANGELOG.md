@@ -1,3 +1,9 @@
+## 1.9.0 (2015-09-09)
+
+#### Features
+
+* **input:**  add onChange callbacks  ([e6555ad](https://github.com/ubilabs/react-geosuggest/commit/e6555addbe3893b129488dc0623b7198036da35d)
+
 ## 1.8.0 (2015-09-01)
 
 #### Features
