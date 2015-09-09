@@ -58,6 +58,14 @@ var Geosuggest = React.createClass({
   },
 
   /**
+   * When the input gets focused
+   */
+  onFocus: function() {
+    this.props.onFocus();
+    this.showSuggests();
+  },
+
+  /**
    * Update the value of the user input
    * @param {String} value the new value of the user input
    */
@@ -145,9 +153,7 @@ var Geosuggest = React.createClass({
    * When the input gets focused
    */
   showSuggests: function() {
-    this.props.onFocus();
     this.searchSuggests();
-
     this.setState({isSuggestsHidden: false});
   },
 
@@ -288,7 +294,7 @@ var Geosuggest = React.createClass({
           placeholder={this.props.placeholder}
           onKeyDown={this.onInputKeyDown}
           onChange={this.onInputChange}
-          onFocus={this.showSuggests}
+          onFocus={this.onFocus}
           onBlur={this.hideSuggests} />
         <ul className={this.getSuggestsClasses()}>
           {this.getSuggestItems()}
