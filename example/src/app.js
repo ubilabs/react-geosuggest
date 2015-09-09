@@ -21,7 +21,7 @@ var App = React.createClass({ // eslint-disable-line
           fixtures={fixtures}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          onInputChange={this.onInputChange}
+          onChange={this.onChange}
           onSuggestSelect={this.onSuggestSelect}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
           radius="20" />
@@ -43,8 +43,8 @@ var App = React.createClass({ // eslint-disable-line
     console.log('onBlur'); // eslint-disable-line
   },
 
-  onInputChange: function(value) {
-    console.log('input changes to :' + value);
+  onChange: function(value) {
+    console.log('input changes to :' + value); // eslint-disable-line
   },
 
   /**

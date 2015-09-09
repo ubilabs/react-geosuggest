@@ -25,7 +25,7 @@ var Geosuggest = React.createClass({
       googleMaps: google && google.maps,
       onFocus: noop,
       onBlur: noop,
-      onInputPress: noop,
+      onChange: noop
     };
   },
 
@@ -53,7 +53,7 @@ var Geosuggest = React.createClass({
 
     this.setState({userInput: userInput}, function() {
       this.showSuggests();
-      this.props.onInputChange(userInput)
+      this.props.onChange(userInput);
     }.bind(this));
   },
 
@@ -63,7 +63,7 @@ var Geosuggest = React.createClass({
    */
   update: function (value) {
     this.setState({userInput: value});
-    this.props.onInputChange(userInput)
+    this.props.onChange(value);
   },
 
   /*
