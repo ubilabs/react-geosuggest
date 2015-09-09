@@ -121,7 +121,7 @@ Default: `function() {}`
 
 Gets triggered when input field loses focus.
 
-#### onInputChange
+#### onChange
 Type: `Function`
 Default: `function(value) {}`
 
