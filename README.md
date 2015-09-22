@@ -142,7 +142,13 @@ Gets triggered when a suggest got selected. Only parameter is an object with dat
 Type: `Function`
 Default: `null`
 
-Used to generate a custom label for a suggest. Only parameter is a suggest (google.maps.places.AutocompletePrediction). [Check the Google Maps Reference](https://developers.google.com/maps/documentation/javascript/reference#GeocoderResult) for more information on it’s structure.
+Used to generate a custom label for a suggest. Only parameter is an object with data of the selected suggest. (See above)
+
+#### skip
+Type: `Function`
+Default: `function(suggest) {}`
+
+If the function returns true then the suggest will not be included in the displayed results. Only parameter is an object with data of the selected suggest. (See above)
 
 ### Exposed component functions
 
