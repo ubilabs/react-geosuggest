@@ -171,7 +171,7 @@ var Geosuggest = React.createClass({
     this.props.onBlur();
     setTimeout(function() {
       this.setState({isSuggestsHidden: true});
-    }.bind(this), 100);
+    }.bind(this), 150);
   },
 
   /**
