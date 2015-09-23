@@ -27,7 +27,8 @@ var Geosuggest = React.createClass({
       onBlur: noop,
       onChange: noop
       getPlaceLabel: null,
-      skip: noop
+      skip: noop,
+      disabled: false
     };
   },
 
@@ -300,6 +301,7 @@ var Geosuggest = React.createClass({
           ref="geosuggestInput"
           type="text"
           value={this.state.userInput}
+          disabled={this.props.disabled}
           placeholder={this.props.placeholder}
           onKeyDown={this.onInputKeyDown}
           onChange={this.onInputChange}
