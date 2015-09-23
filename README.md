@@ -138,6 +138,18 @@ Gets triggered when a suggest got selected. Only parameter is an object with dat
 * `location` – Type `Object` – The location containing `lat` and `lng`
 * `gmaps` – Type `Object` – *Optional!* The complete response when there was a Google Maps geocode necessary (e.g. no location provided for presets). [Check the Google Maps Reference](https://developers.google.com/maps/documentation/javascript/reference#GeocoderResult) for more information on it’s structure.
 
+#### getPlaceLabel
+Type: `Function`
+Default: `null`
+
+Used to generate a custom label for a suggest. Only parameter is an object with data of the selected suggest. (See above)
+
+#### skip
+Type: `Function`
+Default: `function(suggest) {}`
+
+If the function returns true then the suggest will not be included in the displayed results. Only parameter is an object with data of the selected suggest. (See above)
+
 ### Exposed component functions
 
 #### update(value)
