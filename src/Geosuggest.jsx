@@ -246,10 +246,12 @@ var Geosuggest = React.createClass({
       };
     }
 
-    this.setState({
-      isSuggestsHidden: true,
-      userInput: suggest.label
-    });
+    setTimeout(function() {
+      this.setState({
+        isSuggestsHidden: true,
+        userInput: suggest.label
+      });
+    }.bind(this), 100);
 
     if (suggest.location) {
       this.props.onSuggestSelect(suggest);
