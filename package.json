@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/ubilabs/react-geosuggest/issues"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "^0.13.1"
   },
   "devDependencies": {
