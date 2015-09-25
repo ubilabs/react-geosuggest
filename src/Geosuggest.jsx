@@ -25,7 +25,7 @@ var Geosuggest = React.createClass({
       googleMaps: google && google.maps,
       onFocus: noop,
       onBlur: noop,
-      onChange: noop
+      onChange: noop,
       getPlaceLabel: null
     };
   },
