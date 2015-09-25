@@ -44,15 +44,16 @@ var Geosuggest = React.createClass({
         .AutocompleteService()
     };
   },
+
   /**
    * Change inputValue if prop changes
+   * @param {Object} props The new props
    */
-  componentWillReceiveProps(props){
-    if (this.props.initialValue !== props.initialValue){
-       this.setState({userInput:props.initialValue});
+  componentWillReceiveProps(props) {
+    if (this.props.initialValue !== props.initialValue) {
+      this.setState({userInput: props.initialValue});
     }
   },
-  
 
   /**
    * When the input got changed
