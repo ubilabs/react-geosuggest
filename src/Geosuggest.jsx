@@ -46,6 +46,16 @@ var Geosuggest = React.createClass({
   },
 
   /**
+   * Change inputValue if prop changes
+   * @param {Object} props The new props
+   */
+  componentWillReceiveProps(props) {
+    if (this.props.initialValue !== props.initialValue) {
+      this.setState({userInput: props.initialValue});
+    }
+  },
+
+  /**
    * When the input got changed
    */
   onInputChange: function() {
