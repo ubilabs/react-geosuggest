@@ -26,6 +26,8 @@ var Geosuggest = React.createClass({
       onFocus: noop,
       onBlur: noop,
       onChange: noop
+      getPlaceLabel: null,
+      skip: noop
     };
   },
 
@@ -140,20 +142,25 @@ var Geosuggest = React.createClass({
     }
 
     var suggests = [],
-      regex = new RegExp(this.state.userInput, 'gim');
+      regex = new RegExp(this.state.userInput, 'gim'),
+      getPlaceLabel = this.props.getPlaceLabel,
+      skip = this.props.skip;
 
     this.props.fixtures.forEach(function(suggest) {
-      if (suggest.label.match(regex)) {
+      if (!skip(suggest) && suggest.label.match(regex)) {
         suggest.placeId = suggest.label;
         suggests.push(suggest);
       }
     });
 
     suggestsGoogle.forEach(function(suggest) {
-      suggests.push({
-        label: suggest.description,
-        placeId: suggest.place_id
-      });
+      if (!skip(suggest)) {
+        var label = getPlaceLabel ? getPlaceLabel(suggest) : suggest.description;
+        suggests.push({
+          label: label,
+          placeId: suggest.place_id
+        });
+      }
     });
 
     this.setState({suggests: suggests});
@@ -174,7 +181,7 @@ var Geosuggest = React.createClass({
     this.props.onBlur();
     setTimeout(function() {
       this.setState({isSuggestsHidden: true});
-    }.bind(this), 100);
+    }.bind(this), 150);
   },
 
   /**
@@ -249,10 +256,12 @@ var Geosuggest = React.createClass({
       };
     }
 
-    this.setState({
-      isSuggestsHidden: true,
-      userInput: suggest.label
-    });
+    setTimeout(function() {
+      this.setState({
+        isSuggestsHidden: true,
+        userInput: suggest.label
+      });
+    }.bind(this), 100);
 
     if (suggest.location) {
       this.props.onSuggestSelect(suggest);
