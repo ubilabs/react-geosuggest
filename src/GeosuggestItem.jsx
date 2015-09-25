@@ -1,6 +1,6 @@
-var React = require('react');
+import React from 'react';
 
-var GeosuggestItem = React.createClass({
+const GeosuggestItem = React.createClass({
   /**
    * Get the default props
    * @return {Object} The props
@@ -42,11 +42,10 @@ var GeosuggestItem = React.createClass({
    * @return {String} The classes
    */
   getSuggestClasses: function() {
-    var classes = 'geosuggest-item';
+    const className = this.props.suggest.className;
+    let classes = 'geosuggest-item';
 
     classes += this.props.isActive ? ' geosuggest-item--active' : '';
-
-    var className = this.props.suggest.className;
     classes += className ? ' ' + className : '';
 
     return classes;
