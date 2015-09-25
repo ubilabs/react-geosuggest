@@ -3,7 +3,7 @@
 
 'use strict';
 
-var React = require('react'),
+var React = (window.React),
     GeosuggestItem = require('./GeosuggestItem'); // eslint-disable-line
 
 var noop = function noop() {};
@@ -47,6 +47,16 @@ var Geosuggest = React.createClass({
       geocoder: new this.props.googleMaps.Geocoder(),
       autocompleteService: new this.props.googleMaps.places.AutocompleteService()
     };
+  },
+
+  /**
+   * Change inputValue if prop changes
+   * @param {Object} props The new props
+   */
+  componentWillReceiveProps: function componentWillReceiveProps(props) {
+    if (this.props.initialValue !== props.initialValue) {
+      this.setState({ userInput: props.initialValue });
+    }
   },
 
   /**
@@ -286,7 +296,7 @@ var Geosuggest = React.createClass({
    * @return {Function} The React element to render
    */
   render: function render() {
-    return ( // eslint-disable-line no-extra-parens
+    return (// eslint-disable-line no-extra-parens
       React.createElement(
         'div',
         { className: 'geosuggest ' + this.props.className,
@@ -318,7 +328,7 @@ var Geosuggest = React.createClass({
     return this.state.suggests.map((function (suggest) {
       var isActive = this.state.activeSuggest && suggest.placeId === this.state.activeSuggest.placeId;
 
-      return ( // eslint-disable-line no-extra-parens
+      return (// eslint-disable-line no-extra-parens
         React.createElement(GeosuggestItem, {
           key: suggest.placeId,
           suggest: suggest,
@@ -343,10 +353,10 @@ var Geosuggest = React.createClass({
 
 module.exports = Geosuggest;
 
-},{"./GeosuggestItem":2,"react":undefined}],2:[function(require,module,exports){
+},{"./GeosuggestItem":2}],2:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
+var React = (window.React);
 
 var GeosuggestItem = React.createClass({
   displayName: 'GeosuggestItem',
@@ -379,7 +389,7 @@ var GeosuggestItem = React.createClass({
    * @return {Function} The React element to render
    */
   render: function render() {
-    return ( // eslint-disable-line no-extra-parens
+    return (// eslint-disable-line no-extra-parens
       React.createElement(
         'li',
         { className: this.getSuggestClasses(),
@@ -407,5 +417,5 @@ var GeosuggestItem = React.createClass({
 
 module.exports = GeosuggestItem;
 
-},{"react":undefined}]},{},[1])(1)
+},{}]},{},[1])(1)
 });
