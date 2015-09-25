@@ -1,11 +1,9 @@
 /* global google */
 
-var React = require('react'),
-  GeosuggestItem = require('./GeosuggestItem'); // eslint-disable-line
+import React from 'react';
+import GeosuggestItem from './GeosuggestItem'; // eslint-disable-line
 
-var noop = function() {};
-
-var Geosuggest = React.createClass({
+const Geosuggest = React.createClass({
   /**
    * Get the default props
    * @return {Object} The state
@@ -16,16 +14,16 @@ var Geosuggest = React.createClass({
       initialValue: '',
       placeholder: 'Search places',
       className: '',
-      onSuggestSelect: function() {},
       location: null,
       radius: 0,
       bounds: null,
       country: null,
       types: null,
       googleMaps: google && google.maps,
-      onFocus: noop,
-      onBlur: noop,
-      onChange: noop
+      onSuggestSelect: () => {},
+      onFocus: () => {},
+      onBlur: () => {},
+      onChange: () => {}
     };
   },
 
@@ -79,7 +77,7 @@ var Geosuggest = React.createClass({
    * Update the value of the user input
    * @param {String} value the new value of the user input
    */
-  update: function (value) {
+  update: function(value) {
     this.setState({userInput: value});
     this.props.onChange(value);
   },
@@ -87,7 +85,7 @@ var Geosuggest = React.createClass({
   /*
    * Clear the input and close the suggestion pane
    */
-  clear: function () {
+  clear: function() {
     this.setState({userInput: ''}, function() {
       this.hideSuggests();
     }.bind(this));
@@ -219,7 +217,7 @@ var Geosuggest = React.createClass({
       next = direction === 'next',
       newActiveSuggest = null,
       newIndex = 0,
-      i = 0;
+      i = 0; // eslint-disable-line id-length
 
     for (i; i <= suggestsCount; i++) {
       if (this.state.suggests[i] === this.state.activeSuggest) {
