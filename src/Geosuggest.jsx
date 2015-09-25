@@ -25,7 +25,8 @@ var Geosuggest = React.createClass({
       googleMaps: google && google.maps,
       onFocus: noop,
       onBlur: noop,
-      onChange: noop
+      onChange: noop,
+      skip: noop
     };
   },
 
@@ -130,20 +131,23 @@ var Geosuggest = React.createClass({
     }
 
     var suggests = [],
-      regex = new RegExp(this.state.userInput, 'gim');
+      regex = new RegExp(this.state.userInput, 'gim'),
+      skip = this.props.skip;
 
     this.props.fixtures.forEach(function(suggest) {
-      if (suggest.label.match(regex)) {
+      if (!skip(suggest) && suggest.label.match(regex)) {
         suggest.placeId = suggest.label;
         suggests.push(suggest);
       }
     });
 
     suggestsGoogle.forEach(function(suggest) {
-      suggests.push({
-        label: suggest.description,
-        placeId: suggest.place_id
-      });
+      if (!skip(suggest)) {
+        suggests.push({
+          label: suggest.description,
+          placeId: suggest.place_id
+        });
+      }
     });
 
     this.setState({suggests: suggests});

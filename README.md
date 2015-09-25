@@ -131,6 +131,12 @@ Gets triggered when input field changes the value
 Type: `Function`
 Default: `function(suggest) {}`
 
+#### skip
+Type: `Function`
+Default: `function(suggest) {}`
+
+If the function returns true then the suggest will not be included in the displayed results. Only parameter is an object with data of the selected suggest. (See above)
+
 Gets triggered when a suggest got selected. Only parameter is an object with data of the selected suggest. This data is available:
 
 * `label` – Type `String` – The label name
