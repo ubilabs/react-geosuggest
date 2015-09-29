@@ -20,11 +20,11 @@ const Geosuggest = React.createClass({
       country: null,
       types: null,
       googleMaps: google && google.maps,
-      getPlaceLabel: null,
       onSuggestSelect: () => {},
       onFocus: () => {},
       onBlur: () => {},
-      onChange: () => {}
+      onChange: () => {},
+      getSuggestLabel: suggest => suggest.description
     };
   },
 
@@ -139,8 +139,7 @@ const Geosuggest = React.createClass({
     }
 
     var suggests = [],
-      regex = new RegExp(this.state.userInput, 'gim'),
-      getPlaceLabel = this.props.getPlaceLabel;
+      regex = new RegExp(this.state.userInput, 'gim');
 
     this.props.fixtures.forEach(function(suggest) {
       if (suggest.label.match(regex)) {
@@ -149,10 +148,9 @@ const Geosuggest = React.createClass({
       }
     });
 
-    suggestsGoogle.forEach(function(suggest) {
-      var label = getPlaceLabel ? getPlaceLabel(suggest) : suggest.description;
+    suggestsGoogle.forEach(suggest => {
       suggests.push({
-        label: label,
+        label: this.props.getSuggestLabel(suggest),
         placeId: suggest.place_id
       });
     });
