@@ -196,6 +196,7 @@ const Geosuggest = React.createClass({
         this.activateSuggest('prev');
         break;
       case 13: // ENTER
+        event.preventDefault();
         this.selectSuggest(this.state.activeSuggest);
         break;
       case 9: // TAB
