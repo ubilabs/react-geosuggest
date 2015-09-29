@@ -1,3 +1,16 @@
+## 1.10.0 (2015-09-29)
+
+
+#### Bug Fixes
+
+* prevent form submit on enter press ([dda86a12](https://github.com/ubilabs/react-geosuggest/commit/dda86a124a68ccf03220afb5f1796e99f183713e), closes [#49](https://github.com/ubilabs/react-geosuggest/issues/49))
+
+#### Features
+
+* add skipSuggest to not show certain suggestions  ([6da568d5](https://github.com/ubilabs/react-geosuggest/commit/6da568d5c0736fad7aacf21c864e8278544a544b)
+* add getSuggestLabel to define a custom label  ([5103598](https://github.com/ubilabs/react-geosuggest/commit/51035989077a0eced308ac01f7e87a646893f767)
+* **input:**  add disabled prop to disable ([7100d43e](https://github.com/ubilabs/react-geosuggest/commit/7100d43e2e3750e2506c78de32985974b915bb8f)
+
 ### 1.9.1 (2015-09-25)
 
 #### Bug Fixes

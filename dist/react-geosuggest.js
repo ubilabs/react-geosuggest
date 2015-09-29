@@ -27,6 +27,7 @@ var Geosuggest = _react2['default'].createClass({
       fixtures: [],
       initialValue: '',
       placeholder: 'Search places',
+      disabled: false,
       className: '',
       location: null,
       radius: 0,
@@ -37,7 +38,11 @@ var Geosuggest = _react2['default'].createClass({
       onSuggestSelect: function onSuggestSelect() {},
       onFocus: function onFocus() {},
       onBlur: function onBlur() {},
-      onChange: function onChange() {}
+      onChange: function onChange() {},
+      skipSuggest: function skipSuggest() {},
+      getSuggestLabel: function getSuggestLabel(suggest) {
+        return suggest.description;
+      }
     };
   },
 
@@ -143,25 +148,30 @@ var Geosuggest = _react2['default'].createClass({
    * @param  {Object} suggestsGoogle The new google suggests
    */
   updateSuggests: function updateSuggests(suggestsGoogle) {
+    var _this = this;
+
     if (!suggestsGoogle) {
       suggestsGoogle = [];
     }
 
     var suggests = [],
-        regex = new RegExp(this.state.userInput, 'gim');
+        regex = new RegExp(this.state.userInput, 'gim'),
+        skipSuggest = this.props.skipSuggest;
 
     this.props.fixtures.forEach(function (suggest) {
-      if (suggest.label.match(regex)) {
+      if (!skipSuggest(suggest) && suggest.label.match(regex)) {
         suggest.placeId = suggest.label;
         suggests.push(suggest);
       }
     });
 
     suggestsGoogle.forEach(function (suggest) {
-      suggests.push({
-        label: suggest.description,
-        placeId: suggest.place_id
-      });
+      if (!skipSuggest(suggest)) {
+        suggests.push({
+          label: _this.props.getSuggestLabel(suggest),
+          placeId: suggest.place_id
+        });
+      }
     });
 
     this.setState({ suggests: suggests });
@@ -203,6 +213,7 @@ var Geosuggest = _react2['default'].createClass({
         break;
       case 13:
         // ENTER
+        event.preventDefault();
         this.selectSuggest(this.state.activeSuggest);
         break;
       case 9:
@@ -314,6 +325,7 @@ var Geosuggest = _react2['default'].createClass({
           type: 'text',
           value: this.state.userInput,
           placeholder: this.props.placeholder,
+          disabled: this.props.disabled,
           onKeyDown: this.onInputKeyDown,
           onChange: this.onInputChange,
           onFocus: this.onFocus,
