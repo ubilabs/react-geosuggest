@@ -3,12 +3,19 @@
 
 'use strict';
 
-var React = require('react'),
-    GeosuggestItem = require('./GeosuggestItem'); // eslint-disable-line
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var noop = function noop() {};
+var _react = (window.React);
 
-var Geosuggest = React.createClass({
+var _react2 = _interopRequireDefault(_react);
+
+var _GeosuggestItem = require('./GeosuggestItem');
+
+var _GeosuggestItem2 = _interopRequireDefault(_GeosuggestItem);
+
+// eslint-disable-line
+
+var Geosuggest = _react2['default'].createClass({
   displayName: 'Geosuggest',
 
   /**
@@ -21,16 +28,16 @@ var Geosuggest = React.createClass({
       initialValue: '',
       placeholder: 'Search places',
       className: '',
-      onSuggestSelect: function onSuggestSelect() {},
       location: null,
       radius: 0,
       bounds: null,
       country: null,
       types: null,
       googleMaps: google && google.maps,
-      onFocus: noop,
-      onBlur: noop,
-      onChange: noop
+      onSuggestSelect: function onSuggestSelect() {},
+      onFocus: function onFocus() {},
+      onBlur: function onBlur() {},
+      onChange: function onChange() {}
     };
   },
 
@@ -47,6 +54,16 @@ var Geosuggest = React.createClass({
       geocoder: new this.props.googleMaps.Geocoder(),
       autocompleteService: new this.props.googleMaps.places.AutocompleteService()
     };
+  },
+
+  /**
+   * Change inputValue if prop changes
+   * @param {Object} props The new props
+   */
+  componentWillReceiveProps: function componentWillReceiveProps(props) {
+    if (this.props.initialValue !== props.initialValue) {
+      this.setState({ userInput: props.initialValue });
+    }
   },
 
   /**
@@ -215,7 +232,7 @@ var Geosuggest = React.createClass({
         next = direction === 'next',
         newActiveSuggest = null,
         newIndex = 0,
-        i = 0;
+        i = 0; // eslint-disable-line id-length
 
     for (i; i <= suggestsCount; i++) {
       if (this.state.suggests[i] === this.state.activeSuggest) {
@@ -286,12 +303,12 @@ var Geosuggest = React.createClass({
    * @return {Function} The React element to render
    */
   render: function render() {
-    return ( // eslint-disable-line no-extra-parens
-      React.createElement(
+    return (// eslint-disable-line no-extra-parens
+      _react2['default'].createElement(
         'div',
         { className: 'geosuggest ' + this.props.className,
           onClick: this.onClick },
-        React.createElement('input', {
+        _react2['default'].createElement('input', {
           className: 'geosuggest__input',
           ref: 'geosuggestInput',
           type: 'text',
@@ -301,7 +318,7 @@ var Geosuggest = React.createClass({
           onChange: this.onInputChange,
           onFocus: this.onFocus,
           onBlur: this.hideSuggests }),
-        React.createElement(
+        _react2['default'].createElement(
           'ul',
           { className: this.getSuggestsClasses() },
           this.getSuggestItems()
@@ -318,8 +335,8 @@ var Geosuggest = React.createClass({
     return this.state.suggests.map((function (suggest) {
       var isActive = this.state.activeSuggest && suggest.placeId === this.state.activeSuggest.placeId;
 
-      return ( // eslint-disable-line no-extra-parens
-        React.createElement(GeosuggestItem, {
+      return (// eslint-disable-line no-extra-parens
+        _react2['default'].createElement(_GeosuggestItem2['default'], {
           key: suggest.placeId,
           suggest: suggest,
           isActive: isActive,
@@ -343,12 +360,16 @@ var Geosuggest = React.createClass({
 
 module.exports = Geosuggest;
 
-},{"./GeosuggestItem":2,"react":undefined}],2:[function(require,module,exports){
+},{"./GeosuggestItem":2}],2:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var GeosuggestItem = React.createClass({
+var _react = (window.React);
+
+var _react2 = _interopRequireDefault(_react);
+
+var GeosuggestItem = _react2['default'].createClass({
   displayName: 'GeosuggestItem',
 
   /**
@@ -379,8 +400,8 @@ var GeosuggestItem = React.createClass({
    * @return {Function} The React element to render
    */
   render: function render() {
-    return ( // eslint-disable-line no-extra-parens
-      React.createElement(
+    return (// eslint-disable-line no-extra-parens
+      _react2['default'].createElement(
         'li',
         { className: this.getSuggestClasses(),
           onClick: this.onClick },
@@ -394,11 +415,10 @@ var GeosuggestItem = React.createClass({
    * @return {String} The classes
    */
   getSuggestClasses: function getSuggestClasses() {
+    var className = this.props.suggest.className;
     var classes = 'geosuggest-item';
 
     classes += this.props.isActive ? ' geosuggest-item--active' : '';
-
-    var className = this.props.suggest.className;
     classes += className ? ' ' + className : '';
 
     return classes;
@@ -407,5 +427,5 @@ var GeosuggestItem = React.createClass({
 
 module.exports = GeosuggestItem;
 
-},{"react":undefined}]},{},[1])(1)
+},{}]},{},[1])(1)
 });
