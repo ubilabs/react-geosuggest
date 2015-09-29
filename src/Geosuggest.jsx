@@ -25,7 +25,8 @@ const Geosuggest = React.createClass({
       onFocus: () => {},
       onBlur: () => {},
       onChange: () => {},
-      skipSuggest: () => {}
+      skipSuggest: () => {},
+      getSuggestLabel: suggest => suggest.description
     };
   },
 
@@ -150,10 +151,10 @@ const Geosuggest = React.createClass({
       }
     });
 
-    suggestsGoogle.forEach(function(suggest) {
+    suggestsGoogle.forEach(suggest => {
       if (!skipSuggest(suggest)) {
         suggests.push({
-          label: suggest.description,
+          label: this.props.getSuggestLabel(suggest),
           placeId: suggest.place_id
         });
       }
