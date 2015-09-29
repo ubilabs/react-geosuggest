@@ -65,6 +65,12 @@ Default: `''`
 
 Add an additional class to the geosuggest container.
 
+#### disabled
+Type: `Boolean`
+Default: `false`
+
+Defines whether the input is disabled.
+
 #### location
 Type: `google.maps.LatLng`
 Default: `null`

@@ -13,6 +13,7 @@ const Geosuggest = React.createClass({
       fixtures: [],
       initialValue: '',
       placeholder: 'Search places',
+      disabled: false,
       className: '',
       location: null,
       radius: 0,
@@ -304,6 +305,7 @@ const Geosuggest = React.createClass({
           type="text"
           value={this.state.userInput}
           placeholder={this.props.placeholder}
+          disabled={this.props.disabled}
           onKeyDown={this.onInputKeyDown}
           onChange={this.onInputChange}
           onFocus={this.onFocus}
