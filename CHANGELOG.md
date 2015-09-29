@@ -1,3 +1,10 @@
+### 1.9.1 (2015-09-25)
+
+#### Bug Fixes
+
+* Fix issue if the initialValue changes ([b739b5c9](https://github.com/ubilabs/react-geosuggest/commit/b739b5c9b755f0efc05e28b01eb6b595b3d3cb9d))
+* Build fixes so dist/ works with a global window.React  ([9b5e4369](https://github.com/ubilabs/react-geosuggest/commit/9b5e4369f7057e95ae5a36611cf5b7932dae50de))
+
 ## 1.9.0 (2015-09-09)
 
 #### Features
