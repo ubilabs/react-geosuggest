@@ -24,7 +24,7 @@ const Geosuggest = React.createClass({
       onFocus: () => {},
       onBlur: () => {},
       onChange: () => {},
-      skip: () => {}
+      skipSuggest: () => {}
     };
   },
 
@@ -140,17 +140,17 @@ const Geosuggest = React.createClass({
 
     var suggests = [],
       regex = new RegExp(this.state.userInput, 'gim'),
-      skip = this.props.skip;
+      skipSuggest = this.props.skipSuggest;
 
     this.props.fixtures.forEach(function(suggest) {
-      if (!skip(suggest) && suggest.label.match(regex)) {
+      if (!skipSuggest(suggest) && suggest.label.match(regex)) {
         suggest.placeId = suggest.label;
         suggests.push(suggest);
       }
     });
 
     suggestsGoogle.forEach(function(suggest) {
-      if (!skip(suggest)) {
+      if (!skipSuggest(suggest)) {
         suggests.push({
           label: suggest.description,
           placeId: suggest.place_id
