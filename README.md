@@ -156,6 +156,12 @@ Default: `function(suggest) {}`
 
 If the function returns true then the suggest will not be included in the displayed results. Only parameter is an object with data of the selected suggest. (See above)
 
+#### autoActivateFirstSuggest
+Type: `Boolean`
+Default: `false`
+
+Automatically activate the first suggestion as you type. If false, the exact term(s) in the input will be used when searching and may return a result not in the list of suggestions.
+
 ### Exposed component functions
 
 #### update(value)
