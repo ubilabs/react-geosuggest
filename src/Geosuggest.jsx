@@ -26,7 +26,8 @@ const Geosuggest = React.createClass({
       onBlur: () => {},
       onChange: () => {},
       skipSuggest: () => {},
-      getSuggestLabel: suggest => suggest.description
+      getSuggestLabel: suggest => suggest.description,
+      autoActivateFirstSuggest: false
     };
   },
 
@@ -127,6 +128,10 @@ const Geosuggest = React.createClass({
       options,
       function(suggestsGoogle) {
         this.updateSuggests(suggestsGoogle);
+
+        if (this.props.autoActivateFirstSuggest) {
+          this.activateSuggest('next');
+        }
       }.bind(this)
     );
   },
