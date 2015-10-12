@@ -1,6 +1,7 @@
 /* global google */
 
 var React = require('react'),
+  ReactDOM = require('react-dom'),
   Geosuggest = require('../../src/Geosuggest'); // eslint-disable-line
 
 var App = React.createClass({ // eslint-disable-line
@@ -56,4 +57,4 @@ var App = React.createClass({ // eslint-disable-line
   }
 });
 
-React.render(<App />, document.getElementById('app')); // eslint-disable-line
+ReactDOM.render(<App />, document.getElementById('app')); // eslint-disable-line
