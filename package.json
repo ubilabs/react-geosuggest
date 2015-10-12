@@ -14,7 +14,7 @@
     "url": "https://github.com/ubilabs/react-geosuggest/issues"
   },
   "peerDependencies": {
-    "react": "^0.13.1"
+    "react": "^0.14.0"
   },
   "devDependencies": {
     "babel": "^5.6.23",
