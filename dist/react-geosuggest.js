@@ -42,7 +42,8 @@ var Geosuggest = _react2['default'].createClass({
       skipSuggest: function skipSuggest() {},
       getSuggestLabel: function getSuggestLabel(suggest) {
         return suggest.description;
-      }
+      },
+      autoActivateFirstSuggest: false
     };
   },
 
@@ -140,6 +141,10 @@ var Geosuggest = _react2['default'].createClass({
 
     this.state.autocompleteService.getPlacePredictions(options, (function (suggestsGoogle) {
       this.updateSuggests(suggestsGoogle);
+
+      if (this.props.autoActivateFirstSuggest) {
+        this.activateSuggest('next');
+      }
     }).bind(this));
   },
 

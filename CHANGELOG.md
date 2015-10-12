@@ -1,3 +1,12 @@
+## 1.11.0 (2015-10-12)
+
+
+#### Features
+
+* bump peer dependency react to 0.14.0 ([dc39828e](https://github.com/ubilabs/react-geosuggest/commit/dc39828ea46552c60ce0a5ae33a52f6eee8c8f10))
+* **input:** auto activate first suggest ([d1429b86](https://github.com/ubilabs/react-geosuggest/commit/d1429b8698c8928d69135fbe948f20f7e9246956))
+
+
 ## 1.10.0 (2015-09-29)
 
 
