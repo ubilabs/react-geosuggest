@@ -1,3 +1,11 @@
+### 1.11.1 (2015-10-12)
+
+
+#### Bug Fixes
+
+* upgrade code to 0.14, too ([c5f64d47](https://github.com/ubilabs/react-geosuggest/commit/c5f64d47befef21c620bee1db41e86ffc1592194))
+
+
 ## 1.11.0 (2015-10-12)
 
 

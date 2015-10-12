@@ -76,7 +76,7 @@ var Geosuggest = _react2['default'].createClass({
    * When the input got changed
    */
   onInputChange: function onInputChange() {
-    var userInput = this.refs.geosuggestInput.getDOMNode().value;
+    var userInput = this.refs.geosuggestInput.value;
 
     this.setState({ userInput: userInput }, (function () {
       this.showSuggests();
