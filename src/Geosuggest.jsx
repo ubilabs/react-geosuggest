@@ -20,7 +20,6 @@ const Geosuggest = React.createClass({
       bounds: null,
       country: null,
       types: null,
-      googleMaps: google && google.maps,
       onSuggestSelect: () => {},
       onFocus: () => {},
       onBlur: () => {},
@@ -40,10 +39,7 @@ const Geosuggest = React.createClass({
       isSuggestsHidden: true,
       userInput: this.props.initialValue,
       activeSuggest: null,
-      suggests: [],
-      geocoder: new this.props.googleMaps.Geocoder(),
-      autocompleteService: new this.props.googleMaps.places
-        .AutocompleteService()
+      suggests: []
     };
   },
 
@@ -55,6 +51,27 @@ const Geosuggest = React.createClass({
     if (this.props.initialValue !== props.initialValue) {
       this.setState({userInput: props.initialValue});
     }
+  },
+
+  componentDidMount: function() {
+    this.setInputValue(this.props.initialValue);
+
+    var googleMap = (google && google.maps) || this.googleMaps;
+
+    if (!googleMap) {
+      console.error('Google map api was not found in the page.');
+    } else {
+      this.googleMaps = googleMap;
+    }
+
+    this.autocompleteService = new googleMap.places.AutocompleteService();
+    this.geocoder = new googleMap.Geocoder();
+  },
+
+  setInputValue: function(value) {
+    this.setState({
+      userInput: value
+    });
   },
 
   /**
@@ -106,7 +123,7 @@ const Geosuggest = React.createClass({
 
     var options = {
       input: this.state.userInput,
-      location: this.props.location || new this.props.googleMaps.LatLng(0, 0),
+      location: this.props.location || new this.googleMaps.LatLng(0, 0),
       radius: this.props.radius
     };
 
@@ -124,7 +141,7 @@ const Geosuggest = React.createClass({
       };
     }
 
-    this.state.autocompleteService.getPlacePredictions(
+    this.autocompleteService.getPlacePredictions(
       options,
       function(suggestsGoogle) {
         this.updateSuggests(suggestsGoogle);
@@ -277,10 +294,10 @@ const Geosuggest = React.createClass({
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest: function(suggest) {
-    this.state.geocoder.geocode(
+    this.geocoder.geocode(
       {address: suggest.label},
       function(results, status) {
-        if (status !== this.props.googleMaps.GeocoderStatus.OK) {
+        if (status !== this.googleMaps.GeocoderStatus.OK) {
           return;
         }
 
