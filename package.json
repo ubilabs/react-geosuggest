@@ -42,7 +42,7 @@
     "js:example:uglify": "uglifyjs example/dist/app.js -o example/dist/app.js -c warnings=false --mangle",
     "js:browser": "browserify src/Geosuggest.jsx --standalone Geosuggest --exclude react -t babelify --extension=.jsx -t browserify-global-shim > dist/react-geosuggest.js",
     "js:browser:uglify": "uglifyjs dist/react-geosuggest.js -o dist/react-geosuggest.min.js -c warnings=false,drop_console=true --mangle",
-    "build:module": "babel src --out-dir module",
+    "build:module": "babel src --out-dir module && cp src/geosuggest.css module/",
     "build:browser": "npm run js:browser && npm run js:browser:uglify",
     "build:example": "npm run prepare:example && npm run js:example:uglify",
     "changelog": "conventional-changelog-generator && atom -w CHANGELOG.md",
