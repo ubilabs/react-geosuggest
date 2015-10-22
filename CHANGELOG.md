@@ -1,3 +1,13 @@
+## 1.12.0 (2015-10-22)
+
+
+#### Bug Fixes
+
+* doc comments, backward compatible changes ([96cca392](https://github.com/ubilabs/react-geosuggest/commit/96cca392f5b569247523cf784d34f1e1eb8b89d8))
+* add copy css in build module ([bb988a1c](https://github.com/ubilabs/react-geosuggest/commit/bb988a1c5bf3079b170cd24c79bbd21093f49f93))
+* googleMaps object moved out of props and set in componentDidMount ([955812df](https://github.com/ubilabs/react-geosuggest/commit/955812dfb702e8ea6318d89b2ef36d866c5c4354))
+
+
 ### 1.11.1 (2015-10-12)
 
 
