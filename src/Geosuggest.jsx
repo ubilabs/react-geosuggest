@@ -20,7 +20,7 @@ const Geosuggest = React.createClass({
       bounds: null,
       country: null,
       types: null,
-      googleMaps: google && google.maps,
+      googleMaps: null,
       onSuggestSelect: () => {},
       onFocus: () => {},
       onBlur: () => {},
@@ -40,10 +40,7 @@ const Geosuggest = React.createClass({
       isSuggestsHidden: true,
       userInput: this.props.initialValue,
       activeSuggest: null,
-      suggests: [],
-      geocoder: new this.props.googleMaps.Geocoder(),
-      autocompleteService: new this.props.googleMaps.places
-        .AutocompleteService()
+      suggests: []
     };
   },
 
@@ -55,6 +52,37 @@ const Geosuggest = React.createClass({
     if (this.props.initialValue !== props.initialValue) {
       this.setState({userInput: props.initialValue});
     }
+  },
+
+  /**
+   * Called on the client side after component is mounted.
+   * Google api sdk object will be obtained and cached as a instance property.
+   * Necessary objects of google api will also be determined and saved.
+   */
+  componentDidMount: function() {
+    this.setInputValue(this.props.initialValue);
+
+    var googleMaps = this.props.googleMaps
+      || (google && google.maps) || this.googleMaps;
+
+    if (!googleMaps) {
+      console.error('Google map api was not found in the page.');
+    } else {
+      this.googleMaps = googleMaps;
+    }
+
+    this.autocompleteService = new googleMaps.places.AutocompleteService();
+    this.geocoder = new googleMaps.Geocoder();
+  },
+
+  /**
+   * Method used for setting initial value.
+   * @param {string} value to set in input
+   */
+  setInputValue: function(value) {
+    this.setState({
+      userInput: value
+    });
   },
 
   /**
@@ -106,7 +134,7 @@ const Geosuggest = React.createClass({
 
     var options = {
       input: this.state.userInput,
-      location: this.props.location || new this.props.googleMaps.LatLng(0, 0),
+      location: this.props.location || new this.googleMaps.LatLng(0, 0),
       radius: this.props.radius
     };
 
@@ -124,7 +152,7 @@ const Geosuggest = React.createClass({
       };
     }
 
-    this.state.autocompleteService.getPlacePredictions(
+    this.autocompleteService.getPlacePredictions(
       options,
       function(suggestsGoogle) {
         this.updateSuggests(suggestsGoogle);
@@ -277,10 +305,10 @@ const Geosuggest = React.createClass({
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest: function(suggest) {
-    this.state.geocoder.geocode(
+    this.geocoder.geocode(
       {address: suggest.label},
       function(results, status) {
-        if (status !== this.props.googleMaps.GeocoderStatus.OK) {
+        if (status !== this.googleMaps.GeocoderStatus.OK) {
           return;
         }
 
