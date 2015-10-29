@@ -16,7 +16,7 @@ const Geosuggest = React.createClass({
       disabled: false,
       className: '',
       location: null,
-      radius: 0,
+      radius: null,
       bounds: null,
       country: null,
       types: null,
@@ -133,10 +133,16 @@ const Geosuggest = React.createClass({
     }
 
     var options = {
-      input: this.state.userInput,
-      location: this.props.location || new this.googleMaps.LatLng(0, 0),
-      radius: this.props.radius
+      input: this.state.userInput
     };
+
+    if (this.props.location) {
+      options.location = this.props.location;
+    }
+
+    if (this.props.radius) {
+      options.radius = this.props.radius;
+    }
 
     if (this.props.bounds) {
       options.bounds = this.props.bounds;
