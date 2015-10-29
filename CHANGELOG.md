@@ -1,3 +1,9 @@
+## 1.13.0 (2015-10-29)
+
+#### Features
+
+* Remove defaults for search radius and location ([17f0bf0](https://github.com/ubilabs/react-geosuggest/commit/17f0bf053bde609c5f891ba4bb048d1cacc3f0b9))
+
 ## 1.12.0 (2015-10-22)
 
 
