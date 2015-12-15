@@ -27,7 +27,8 @@ const Geosuggest = React.createClass({
       onChange: () => {},
       skipSuggest: () => {},
       getSuggestLabel: suggest => suggest.description,
-      autoActivateFirstSuggest: false
+      autoActivateFirstSuggest: false,
+      nativeAutocomplete: 'off'
     };
   },
 
@@ -350,7 +351,8 @@ const Geosuggest = React.createClass({
           onKeyDown={this.onInputKeyDown}
           onChange={this.onInputChange}
           onFocus={this.onFocus}
-          onBlur={this.hideSuggests} />
+          onBlur={this.hideSuggests}
+          autoComplete={this.props.nativeAutocomplete} />
         <ul className={this.getSuggestsClasses()}>
           {this.getSuggestItems()}
         </ul>
