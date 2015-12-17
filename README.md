@@ -65,6 +65,12 @@ Default: `''`
 
 Add an additional class to the geosuggest container.
 
+#### inputClassName
+Type: `String`
+Default: `''`
+
+Add an additional class to the input.
+
 #### disabled
 Type: `Boolean`
 Default: `false`
