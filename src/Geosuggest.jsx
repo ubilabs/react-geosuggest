@@ -15,6 +15,7 @@ const Geosuggest = React.createClass({
       placeholder: 'Search places',
       disabled: false,
       className: '',
+      inputClassName: '',
       location: null,
       radius: null,
       bounds: null,
@@ -341,7 +342,7 @@ const Geosuggest = React.createClass({
       <div className={'geosuggest ' + this.props.className}
           onClick={this.onClick}>
         <input
-          className="geosuggest__input"
+          className={'geosuggest__input ' + this.props.inputClassName}
           ref="geosuggestInput"
           type="text"
           value={this.state.userInput}
