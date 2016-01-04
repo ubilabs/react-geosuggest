@@ -38,6 +38,7 @@ const Geosuggest = React.createClass({
    */
   getInitialState: function() {
     return {
+      isMounted: false,
       isSuggestsHidden: true,
       userInput: this.props.initialValue,
       activeSuggest: null,
@@ -74,6 +75,15 @@ const Geosuggest = React.createClass({
 
     this.autocompleteService = new googleMaps.places.AutocompleteService();
     this.geocoder = new googleMaps.Geocoder();
+
+    this.setState({isMounted: true});
+  },
+
+  /**
+   * When the component will unmount
+   */
+  componentWillUnmount: function() {
+    this.setState({isMounted: false});
   },
 
   /**
@@ -217,7 +227,9 @@ const Geosuggest = React.createClass({
   hideSuggests: function() {
     this.props.onBlur();
     setTimeout(function() {
-      this.setState({isSuggestsHidden: true});
+      if (this.state && this.state.isMounted) {
+        this.setState({isSuggestsHidden: true});
+      }
     }.bind(this), 100);
   },
 
