@@ -313,7 +313,7 @@ const Geosuggest = React.createClass({
    */
   geocodeSuggest: function(suggest) {
     this.geocoder.geocode(
-      {address: suggest.label},
+      {placeId: suggest.placeId},
       function(results, status) {
         if (status !== this.googleMaps.GeocoderStatus.OK) {
           return;
