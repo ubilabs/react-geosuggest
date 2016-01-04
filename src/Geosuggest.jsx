@@ -94,9 +94,7 @@ const Geosuggest = React.createClass({
    * @param {string} value to set in input
    */
   setInputValue: function(value) {
-    this.setState({
-      userInput: value
-    });
+    this.setState({userInput: value});
   },
 
   /**
@@ -105,10 +103,10 @@ const Geosuggest = React.createClass({
   onInputChange: function() {
     var userInput = this.refs.geosuggestInput.value;
 
-    this.setState({userInput: userInput}, function() {
+    this.setState({userInput: userInput}, () => {
       this.showSuggests();
       this.props.onChange(userInput);
-    }.bind(this));
+    });
   },
 
   /**
@@ -132,9 +130,7 @@ const Geosuggest = React.createClass({
    * Clear the input and close the suggestion pane
    */
   clear: function() {
-    this.setState({userInput: ''}, function() {
-      this.hideSuggests();
-    }.bind(this));
+    this.setState({userInput: ''}, () => this.hideSuggests());
   },
 
   /**
@@ -174,13 +170,13 @@ const Geosuggest = React.createClass({
 
     this.autocompleteService.getPlacePredictions(
       options,
-      function(suggestsGoogle) {
+      suggestsGoogle => {
         this.updateSuggests(suggestsGoogle);
 
         if (this.props.autoActivateFirstSuggest) {
           this.activateSuggest('next');
         }
-      }.bind(this)
+      }
     );
   },
 
@@ -197,7 +193,7 @@ const Geosuggest = React.createClass({
       regex = new RegExp(this.state.userInput, 'gim'),
       skipSuggest = this.props.skipSuggest;
 
-    this.props.fixtures.forEach(function(suggest) {
+    this.props.fixtures.forEach(suggest => {
       if (!skipSuggest(suggest) && suggest.label.match(regex)) {
         suggest.placeId = suggest.label;
         suggests.push(suggest);
@@ -229,11 +225,11 @@ const Geosuggest = React.createClass({
    */
   hideSuggests: function() {
     this.props.onBlur();
-    setTimeout(function() {
+    setTimeout(() => {
       if (this.state && this.state.isMounted) {
         this.setState({isSuggestsHidden: true});
       }
-    }.bind(this), 100);
+    }, 100);
   },
 
   /**
@@ -329,7 +325,7 @@ const Geosuggest = React.createClass({
   geocodeSuggest: function(suggest) {
     this.geocoder.geocode(
       {address: suggest.label},
-      function(results, status) {
+      (results, status) => {
         if (status !== this.googleMaps.GeocoderStatus.OK) {
           return;
         }
@@ -344,7 +340,7 @@ const Geosuggest = React.createClass({
         };
 
         this.props.onSuggestSelect(suggest);
-      }.bind(this)
+      }
     );
   },
 
