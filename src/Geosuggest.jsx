@@ -1,4 +1,4 @@
-/* global google */
+/* global window */
 
 import React from 'react';
 import GeosuggestItem from './GeosuggestItem'; // eslint-disable-line
@@ -64,13 +64,13 @@ const Geosuggest = React.createClass({
     this.setInputValue(this.props.initialValue);
 
     var googleMaps = this.props.googleMaps
-      || (google && google.maps) || this.googleMaps;
+      || (window.google && window.google.maps) || this.googleMaps;
 
     if (!googleMaps) {
       console.error('Google map api was not found in the page.');
-    } else {
-      this.googleMaps = googleMaps;
+      return;
     }
+    this.googleMaps = googleMaps;
 
     this.autocompleteService = new googleMaps.places.AutocompleteService();
     this.geocoder = new googleMaps.Geocoder();
