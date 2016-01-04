@@ -64,11 +64,14 @@ const Geosuggest = React.createClass({
   componentDidMount: function() {
     this.setInputValue(this.props.initialValue);
 
-    var googleMaps = this.props.googleMaps
-      || (window.google && window.google.maps) || this.googleMaps;
+    var googleMaps = this.props.googleMaps ||
+      (window.google && // eslint-disable-line no-extra-parens
+        window.google.maps) ||
+      this.googleMaps;
 
     if (!googleMaps) {
-      console.error('Google map api was not found in the page.');
+      console.error(// eslint-disable-line no-console
+        'Google map api was not found in the page.');
       return;
     }
     this.googleMaps = googleMaps;
@@ -266,7 +269,7 @@ const Geosuggest = React.createClass({
    * Activate a new suggest
    * @param {String} direction The direction in which to activate new suggest
    */
-  activateSuggest: function(direction) {
+  activateSuggest: function(direction) { // eslint-disable-line complexity
     if (this.state.isSuggestsHidden) {
       this.showSuggests();
       return;
