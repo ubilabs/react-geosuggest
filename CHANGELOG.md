@@ -1,3 +1,15 @@
+## 1.14.0 (2016-01-04)
+
+
+#### Bug Fixes
+
+* check whether component is still mounted after timeout ([67972d08](https://github.com/ubilabs/react-geosuggest/commit/67972d08ee24e77605ead13d23025854683454ef), closes [#71](https://github.com/ubilabs/react-geosuggest/issues/71))
+* "use strict"; no longer throws errors if google cannot be loaded ([d8c97c0](https://github.com/ubilabs/react-geosuggest/commit/d8c97c0e1d023a31c4545fff24ff0a1e7b18c2b6))
+
+#### Features
+
+* Add property for input class name. ([c43b91a](https://github.com/ubilabs/react-geosuggest/commit/c43b91aa597d7d9685be994a431e54529464cabe))
+
 ## 1.13.0 (2015-10-29)
 
 #### Features

@@ -1,5 +1,5 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Geosuggest = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/* global google */
+/* global window */
 
 'use strict';
 
@@ -29,6 +29,7 @@ var Geosuggest = _react2['default'].createClass({
       placeholder: 'Search places',
       disabled: false,
       className: '',
+      inputClassName: '',
       location: null,
       radius: null,
       bounds: null,
@@ -53,6 +54,7 @@ var Geosuggest = _react2['default'].createClass({
    */
   getInitialState: function getInitialState() {
     return {
+      isMounted: false,
       isSuggestsHidden: true,
       userInput: this.props.initialValue,
       activeSuggest: null,
@@ -78,16 +80,27 @@ var Geosuggest = _react2['default'].createClass({
   componentDidMount: function componentDidMount() {
     this.setInputValue(this.props.initialValue);
 
-    var googleMaps = this.props.googleMaps || google && google.maps || this.googleMaps;
+    var googleMaps = this.props.googleMaps || window.google && // eslint-disable-line no-extra-parens
+    window.google.maps || this.googleMaps;
 
     if (!googleMaps) {
-      console.error('Google map api was not found in the page.');
-    } else {
-      this.googleMaps = googleMaps;
+      console.error( // eslint-disable-line no-console
+      'Google map api was not found in the page.');
+      return;
     }
+    this.googleMaps = googleMaps;
 
     this.autocompleteService = new googleMaps.places.AutocompleteService();
     this.geocoder = new googleMaps.Geocoder();
+
+    this.setState({ isMounted: true });
+  },
+
+  /**
+   * When the component will unmount
+   */
+  componentWillUnmount: function componentWillUnmount() {
+    this.setState({ isMounted: false });
   },
 
   /**
@@ -95,21 +108,21 @@ var Geosuggest = _react2['default'].createClass({
    * @param {string} value to set in input
    */
   setInputValue: function setInputValue(value) {
-    this.setState({
-      userInput: value
-    });
+    this.setState({ userInput: value });
   },
 
   /**
    * When the input got changed
    */
   onInputChange: function onInputChange() {
+    var _this = this;
+
     var userInput = this.refs.geosuggestInput.value;
 
-    this.setState({ userInput: userInput }, (function () {
-      this.showSuggests();
-      this.props.onChange(userInput);
-    }).bind(this));
+    this.setState({ userInput: userInput }, function () {
+      _this.showSuggests();
+      _this.props.onChange(userInput);
+    });
   },
 
   /**
@@ -133,15 +146,19 @@ var Geosuggest = _react2['default'].createClass({
    * Clear the input and close the suggestion pane
    */
   clear: function clear() {
-    this.setState({ userInput: '' }, (function () {
-      this.hideSuggests();
-    }).bind(this));
+    var _this2 = this;
+
+    this.setState({ userInput: '' }, function () {
+      return _this2.hideSuggests();
+    });
   },
 
   /**
    * Search for new suggests
    */
   searchSuggests: function searchSuggests() {
+    var _this3 = this;
+
     if (!this.state.userInput) {
       this.updateSuggests();
       return;
@@ -173,13 +190,13 @@ var Geosuggest = _react2['default'].createClass({
       };
     }
 
-    this.autocompleteService.getPlacePredictions(options, (function (suggestsGoogle) {
-      this.updateSuggests(suggestsGoogle);
+    this.autocompleteService.getPlacePredictions(options, function (suggestsGoogle) {
+      _this3.updateSuggests(suggestsGoogle);
 
-      if (this.props.autoActivateFirstSuggest) {
-        this.activateSuggest('next');
+      if (_this3.props.autoActivateFirstSuggest) {
+        _this3.activateSuggest('next');
       }
-    }).bind(this));
+    });
   },
 
   /**
@@ -187,7 +204,7 @@ var Geosuggest = _react2['default'].createClass({
    * @param  {Object} suggestsGoogle The new google suggests
    */
   updateSuggests: function updateSuggests(suggestsGoogle) {
-    var _this = this;
+    var _this4 = this;
 
     if (!suggestsGoogle) {
       suggestsGoogle = [];
@@ -207,7 +224,7 @@ var Geosuggest = _react2['default'].createClass({
     suggestsGoogle.forEach(function (suggest) {
       if (!skipSuggest(suggest)) {
         suggests.push({
-          label: _this.props.getSuggestLabel(suggest),
+          label: _this4.props.getSuggestLabel(suggest),
           placeId: suggest.place_id
         });
       }
@@ -228,10 +245,14 @@ var Geosuggest = _react2['default'].createClass({
    * When the input loses focused
    */
   hideSuggests: function hideSuggests() {
+    var _this5 = this;
+
     this.props.onBlur();
-    setTimeout((function () {
-      this.setState({ isSuggestsHidden: true });
-    }).bind(this), 100);
+    setTimeout(function () {
+      if (_this5.state && _this5.state.isMounted) {
+        _this5.setState({ isSuggestsHidden: true });
+      }
+    }, 100);
   },
 
   /**
@@ -273,6 +294,7 @@ var Geosuggest = _react2['default'].createClass({
    * @param {String} direction The direction in which to activate new suggest
    */
   activateSuggest: function activateSuggest(direction) {
+    // eslint-disable-line complexity
     if (this.state.isSuggestsHidden) {
       this.showSuggests();
       return;
@@ -330,8 +352,10 @@ var Geosuggest = _react2['default'].createClass({
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest: function geocodeSuggest(suggest) {
-    this.geocoder.geocode({ address: suggest.label }, (function (results, status) {
-      if (status !== this.googleMaps.GeocoderStatus.OK) {
+    var _this6 = this;
+
+    this.geocoder.geocode({ address: suggest.label }, function (results, status) {
+      if (status !== _this6.googleMaps.GeocoderStatus.OK) {
         return;
       }
 
@@ -344,8 +368,8 @@ var Geosuggest = _react2['default'].createClass({
         lng: location.lng()
       };
 
-      this.props.onSuggestSelect(suggest);
-    }).bind(this));
+      _this6.props.onSuggestSelect(suggest);
+    });
   },
 
   /**
@@ -359,7 +383,7 @@ var Geosuggest = _react2['default'].createClass({
         { className: 'geosuggest ' + this.props.className,
           onClick: this.onClick },
         _react2['default'].createElement('input', {
-          className: 'geosuggest__input',
+          className: 'geosuggest__input ' + this.props.inputClassName,
           ref: 'geosuggestInput',
           type: 'text',
           value: this.state.userInput,
