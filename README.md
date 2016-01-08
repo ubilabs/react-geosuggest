@@ -168,6 +168,12 @@ Default: `false`
 
 Automatically activate the first suggestion as you type. If false, the exact term(s) in the input will be used when searching and may return a result not in the list of suggestions.
 
+#### nativeAutocomplete
+Type: `String`
+Default: `off`
+
+Will set the html autocomplete property on the input. Set to 'off' by default as we are providing our own autocomplete functionality.
+
 ### Exposed component functions
 
 #### update(value)
