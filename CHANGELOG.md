@@ -1,3 +1,11 @@
+## 1.15.0 (2016-01-18)
+
+
+#### Features
+
+* allow all standard input type attributes ([a43c388c](https://github.com/ubilabs/react-geosuggest/commit/a43c388cd168a60c90ec0b5d971d9f65316b8275), closes [#80](https://github.com/ubilabs/react-geosuggest/issues/80))
+
+
 ## 1.14.0 (2016-01-04)
 
 

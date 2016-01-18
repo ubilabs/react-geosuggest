@@ -3,6 +3,8 @@
 
 'use strict';
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = (window.React);
@@ -14,6 +16,10 @@ var _GeosuggestItem = require('./GeosuggestItem');
 var _GeosuggestItem2 = _interopRequireDefault(_GeosuggestItem);
 
 // eslint-disable-line
+
+var _inputAttributes = require('./input-attributes');
+
+var _inputAttributes2 = _interopRequireDefault(_inputAttributes);
 
 var Geosuggest = _react2['default'].createClass({
   displayName: 'Geosuggest',
@@ -377,22 +383,31 @@ var Geosuggest = _react2['default'].createClass({
    * @return {Function} The React element to render
    */
   render: function render() {
+    var _this7 = this;
+
+    var attributes = {};
+
+    _inputAttributes2['default'].forEach(function (inputAttribute) {
+      if (_this7.props[inputAttribute]) {
+        attributes[inputAttribute] = _this7.props[inputAttribute];
+      }
+    });
+
     return (// eslint-disable-line no-extra-parens
       _react2['default'].createElement(
         'div',
         { className: 'geosuggest ' + this.props.className,
           onClick: this.onClick },
-        _react2['default'].createElement('input', {
+        _react2['default'].createElement('input', _extends({
           className: 'geosuggest__input ' + this.props.inputClassName,
           ref: 'geosuggestInput',
-          type: 'text',
+          type: 'text'
+        }, attributes, {
           value: this.state.userInput,
-          placeholder: this.props.placeholder,
-          disabled: this.props.disabled,
           onKeyDown: this.onInputKeyDown,
           onChange: this.onInputChange,
           onFocus: this.onFocus,
-          onBlur: this.hideSuggests }),
+          onBlur: this.hideSuggests })),
         _react2['default'].createElement(
           'ul',
           { className: this.getSuggestsClasses() },
@@ -435,7 +450,7 @@ var Geosuggest = _react2['default'].createClass({
 
 module.exports = Geosuggest;
 
-},{"./GeosuggestItem":2}],2:[function(require,module,exports){
+},{"./GeosuggestItem":2,"./input-attributes":3}],2:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -501,6 +516,18 @@ var GeosuggestItem = _react2['default'].createClass({
 });
 
 module.exports = GeosuggestItem;
+
+},{}],3:[function(require,module,exports){
+/**
+ * Attributes allowed on input elements
+ */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports['default'] = ['autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'autosave', 'disabled', 'form', 'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'inputmode', 'maxlength', 'maxlength', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'selectionDirection', 'size', 'spellcheck', 'tabindex'];
+module.exports = exports['default'];
 
 },{}]},{},[1])(1)
 });
