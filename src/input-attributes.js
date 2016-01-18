@@ -15,6 +15,7 @@ export default [
   'formnovalidate',
   'formtarget',
   'height',
+  'id',
   'inputmode',
   'maxlength',
   'maxlength',
