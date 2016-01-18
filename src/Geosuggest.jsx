@@ -2,6 +2,7 @@
 
 import React from 'react';
 import GeosuggestItem from './GeosuggestItem'; // eslint-disable-line
+import inputAttributes from './input-attributes';
 
 const Geosuggest = React.createClass({
   /**
@@ -349,6 +350,14 @@ const Geosuggest = React.createClass({
    * @return {Function} The React element to render
    */
   render: function() {
+    const attributes = {};
+
+    inputAttributes.forEach(inputAttribute => {
+      if (this.props[inputAttribute]) {
+        attributes[inputAttribute] = this.props[inputAttribute];
+      }
+    });
+
     return (// eslint-disable-line no-extra-parens
       <div className={'geosuggest ' + this.props.className}
           onClick={this.onClick}>
@@ -356,9 +365,8 @@ const Geosuggest = React.createClass({
           className={'geosuggest__input ' + this.props.inputClassName}
           ref="geosuggestInput"
           type="text"
+          {...attributes}
           value={this.state.userInput}
-          placeholder={this.props.placeholder}
-          disabled={this.props.disabled}
           onKeyDown={this.onInputKeyDown}
           onChange={this.onInputChange}
           onFocus={this.onFocus}
