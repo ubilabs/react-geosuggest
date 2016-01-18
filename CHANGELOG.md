@@ -1,3 +1,11 @@
+### 1.15.1 (2016-01-18)
+
+
+#### Bug Fixes
+
+* add missing attribute id ([91f5ceea](https://github.com/ubilabs/react-geosuggest/commit/91f5ceea64c940a3cf26f0b913dfbcf784dfa40f))
+
+
 ## 1.15.0 (2016-01-18)
 
 
