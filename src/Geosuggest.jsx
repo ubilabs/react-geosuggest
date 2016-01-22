@@ -18,6 +18,7 @@ const Geosuggest = React.createClass({
       className: '',
       inputClassName: '',
       location: null,
+      language: null,
       radius: null,
       bounds: null,
       country: null,
@@ -157,6 +158,10 @@ const Geosuggest = React.createClass({
 
     if (this.props.bounds) {
       options.bounds = this.props.bounds;
+    }
+
+    if (this.props.language) {
+      options.language  = this.props.language;
     }
 
     if (this.props.types) {
