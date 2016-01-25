@@ -121,11 +121,9 @@ const Geosuggest = React.createClass({
   /**
    * Focus the input
    */
-
   focusInput: function() {
-    this.refs.geosuggestInput.focus()
+    this.refs.geosuggestInput.focus();
   },
-  
   /**
    * Update the value of the user input
    * @param {String} value the new value of the user input
