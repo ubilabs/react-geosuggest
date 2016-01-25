@@ -117,7 +117,6 @@ const Geosuggest = React.createClass({
     this.props.onFocus();
     this.showSuggests();
   },
-  
   /**
    * Focus the input
    */
