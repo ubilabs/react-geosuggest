@@ -99,6 +99,14 @@ const Geosuggest = React.createClass({
   },
 
   /**
+   * Flag so clicking a suggest is not treated as a blur
+   * @param {Boolean} ignore - whether blur events should be ignored
+   */
+  setIgnoreBlur: function(ignore) {
+    this.ignoreBlur = ignore;
+  },
+
+  /**
    * When the input got changed
    */
   onInputChange: function() {
@@ -116,6 +124,15 @@ const Geosuggest = React.createClass({
   onFocus: function() {
     this.props.onFocus();
     this.showSuggests();
+  },
+
+  /**
+   * When the input gets blurred
+   */
+  onBlur: function() {
+    if (!this.ignoreBlur) {
+      this.hideSuggests();
+    }
   },
 
   /**
@@ -312,6 +329,7 @@ const Geosuggest = React.createClass({
     });
 
     if (suggest.location) {
+      this.setIgnoreBlur(false);
       this.props.onSuggestSelect(suggest);
       return;
     }
@@ -370,7 +388,7 @@ const Geosuggest = React.createClass({
           onKeyDown={this.onInputKeyDown}
           onChange={this.onInputChange}
           onFocus={this.onFocus}
-          onBlur={this.hideSuggests} />
+          onBlur={this.onBlur} />
         <ul className={this.getSuggestsClasses()}>
           {this.getSuggestItems()}
         </ul>
@@ -392,6 +410,8 @@ const Geosuggest = React.createClass({
           key={suggest.placeId}
           suggest={suggest}
           isActive={isActive}
+          onMouseDown={() => this.setIgnoreBlur(true)}
+          onMouseOut={() => this.setIgnoreBlur(false)}
           onSuggestSelect={this.selectSuggest} />
       );
     }.bind(this));
