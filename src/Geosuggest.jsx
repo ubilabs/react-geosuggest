@@ -43,6 +43,21 @@ const Geosuggest = React.createClass({
    * @return {Object} The state
    */
   getInitialState: function() {
+    var googleMaps = this.props.googleMaps ||
+      (window.google && // eslint-disable-line no-extra-parens
+      window.google.maps) ||
+      this.googleMaps;
+
+    if (!googleMaps) {
+      console.error(// eslint-disable-line no-console
+        'Google map api was not found in the page.');
+      return;
+    }
+    this.googleMaps = googleMaps;
+
+    this.autocompleteService = new googleMaps.places.AutocompleteService();
+    this.geocoder = new googleMaps.Geocoder();
+    
     return {
       isMounted: false,
       isSuggestsHidden: true,
@@ -69,22 +84,6 @@ const Geosuggest = React.createClass({
    */
   componentDidMount: function() {
     this.setInputValue(this.props.initialValue);
-
-    var googleMaps = this.props.googleMaps ||
-      (window.google && // eslint-disable-line no-extra-parens
-        window.google.maps) ||
-      this.googleMaps;
-
-    if (!googleMaps) {
-      console.error(// eslint-disable-line no-console
-        'Google map api was not found in the page.');
-      return;
-    }
-    this.googleMaps = googleMaps;
-
-    this.autocompleteService = new googleMaps.places.AutocompleteService();
-    this.geocoder = new googleMaps.Geocoder();
-
     this.setState({isMounted: true});
   },
 
