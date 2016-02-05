@@ -1,57 +1,25 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
+import classnames from 'classnames';
 
-const GeosuggestItem = React.createClass({
-  /**
-   * Get the default props
-   * @return {Object} The props
-   */
-  getDefaultProps: function() {
-    return {
-      isActive: false,
-      suggest: {
-        label: ''
-      },
-      onSuggestSelect: function() {}
-    };
-  },
+/**
+ * A single Geosuggest item in the list
+ * @param {Object} props The component's props
+ * @return {JSX} The icon component.
+ */
+export default props => {
+  const classes = classnames(
+    'geosuggest-item',
+    props.suggest.className,
+    {'geosuggest-item--active': props.isActive}
+  );
 
-  /**
-   * When the element gets clicked
-   * @param  {Event} event The click event
-   */
-  onClick: function(event) {
-    event.preventDefault();
-    this.props.onSuggestSelect(this.props.suggest);
-  },
-
-  /**
-   * Render the view
-   * @return {Function} The React element to render
-   */
-  render: function() {
-    return (// eslint-disable-line no-extra-parens
-      <li className={this.getSuggestClasses()}
-        onMouseDown={this.props.onMouseDown}
-        onMouseOut={this.props.onMouseOut}
-        onClick={this.onClick}>
-          {this.props.suggest.label}
-      </li>
-    );
-  },
-
-  /**
-   * The classes for the suggest item
-   * @return {String} The classes
-   */
-  getSuggestClasses: function() {
-    const className = this.props.suggest.className;
-    let classes = 'geosuggest-item';
-
-    classes += this.props.isActive ? ' geosuggest-item--active' : '';
-    classes += className ? ' ' + className : '';
-
-    return classes;
-  }
-});
-
-module.exports = GeosuggestItem;
+  return <li className={classes}
+    onMouseDown={props.onMouseDown}
+    onMouseOut={props.onMouseOut}
+    onClick={event => {
+      event.preventDefault();
+      props.onSuggestSelect(props.suggest);
+    }}>
+      {props.suggest.label}
+  </li>;
+};

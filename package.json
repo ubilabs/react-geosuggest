@@ -22,6 +22,7 @@
     "browserify": "^11.0.0",
     "browserify-global-shim": "^1.0.0",
     "bumpery": "^1.1.1",
+    "classnames": "^2.2.3",
     "conventional-changelog-generator": "0.0.3",
     "eslint": "^1.5.1",
     "gh-pages": "^0.4.0",
