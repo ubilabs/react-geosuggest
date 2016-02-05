@@ -161,7 +161,7 @@ const Geosuggest = React.createClass({
     }
 
     if (this.props.language) {
-      options.language  = this.props.language;
+      options.language = this.props.language;
     }
 
     if (this.props.types) {
