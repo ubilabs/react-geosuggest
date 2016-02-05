@@ -1,56 +1,37 @@
 /* global window */
 
 import React from 'react';
-import GeosuggestItem from './GeosuggestItem'; // eslint-disable-line
-import inputAttributes from './input-attributes';
+import classnames from 'classnames';
+
+import defaults from './defaults';
+import filterInputAttributes from './filter-input-attributes';
+
+import Input from './input.jsx';
+import SuggestList from './suggest-list.jsx';
 
 // Escapes special characters in user input for regex
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
-const Geosuggest = React.createClass({
+/**
+ * Entry point for the Geosuggest component
+ */
+class Geosuggest extends React.Component {
   /**
-   * Get the default props
-   * @return {Object} The state
+   * The constructor. Sets the initial state.
+   * @param  {Object} props The properties object.
    */
-  getDefaultProps: function() {
-    return {
-      fixtures: [],
-      initialValue: '',
-      placeholder: 'Search places',
-      disabled: false,
-      className: '',
-      inputClassName: '',
-      location: null,
-      radius: null,
-      bounds: null,
-      country: null,
-      types: null,
-      googleMaps: null,
-      onSuggestSelect: () => {},
-      onFocus: () => {},
-      onBlur: () => {},
-      onChange: () => {},
-      skipSuggest: () => {},
-      getSuggestLabel: suggest => suggest.description,
-      autoActivateFirstSuggest: false
-    };
-  },
-
-  /**
-   * Get the initial state
-   * @return {Object} The state
-   */
-  getInitialState: function() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       isMounted: false,
       isSuggestsHidden: true,
       userInput: this.props.initialValue,
       activeSuggest: null,
       suggests: []
     };
-  },
+  }
 
   /**
    * Change inputValue if prop changes
@@ -60,15 +41,15 @@ const Geosuggest = React.createClass({
     if (this.props.initialValue !== props.initialValue) {
       this.setState({userInput: props.initialValue});
     }
-  },
+  }
 
   /**
    * Called on the client side after component is mounted.
    * Google api sdk object will be obtained and cached as a instance property.
    * Necessary objects of google api will also be determined and saved.
    */
-  componentDidMount: function() {
-    this.setInputValue(this.props.initialValue);
+  componentDidMount() {
+    this.setState({userInput: this.props.initialValue});
 
     var googleMaps = this.props.googleMaps ||
       (window.google && // eslint-disable-line no-extra-parens
@@ -86,104 +67,77 @@ const Geosuggest = React.createClass({
     this.geocoder = new googleMaps.Geocoder();
 
     this.setState({isMounted: true});
-  },
+  }
 
   /**
    * When the component will unmount
    */
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     this.setState({isMounted: false});
-  },
-
-  /**
-   * Method used for setting initial value.
-   * @param {string} value to set in input
-   */
-  setInputValue: function(value) {
-    this.setState({userInput: value});
-  },
-
-  /**
-   * Flag so clicking a suggest is not treated as a blur
-   * @param {Boolean} ignore - whether blur events should be ignored
-   */
-  setIgnoreBlur: function(ignore) {
-    this.ignoreBlur = ignore;
-  },
+  }
 
   /**
    * When the input got changed
+   * @param {String} userInput The input value of the user
    */
-  onInputChange: function() {
-    var userInput = this.refs.geosuggestInput.value;
-
-    this.setState({userInput: userInput}, () => {
+  onInputChange(userInput) {
+    this.setState({userInput}, () => {
       this.showSuggests();
       this.props.onChange(userInput);
     });
-  },
+  }
 
   /**
    * When the input gets focused
    */
-  onFocus: function() {
+  onInputFocus() {
     this.props.onFocus();
     this.showSuggests();
-  },
+  }
 
   /**
    * When the input gets blurred
    */
-  onBlur: function() {
-    if (!this.ignoreBlur) {
+  onInputBlur() {
+    if (!this.state.ignoreBlur) {
       this.hideSuggests();
     }
-  },
+  }
 
   /**
    * Update the value of the user input
-   * @param {String} value the new value of the user input
+   * @param {String} userInput the new value of the user input
    */
-  update: function(value) {
-    this.setState({userInput: value});
-    this.props.onChange(value);
-  },
+  update(userInput) {
+    this.setState({userInput});
+    this.props.onChange(userInput);
+  }
 
   /*
    * Clear the input and close the suggestion pane
    */
-  clear: function() {
+  clear() {
     this.setState({userInput: ''}, () => this.hideSuggests());
-  },
+  }
 
   /**
    * Search for new suggests
    */
-  searchSuggests: function() {
+  searchSuggests() {
     if (!this.state.userInput) {
       this.updateSuggests();
       return;
     }
 
-    var options = {
+    const options = {
       input: this.state.userInput
     };
 
-    if (this.props.location) {
-      options.location = this.props.location;
-    }
-
-    if (this.props.radius) {
-      options.radius = this.props.radius;
-    }
-
-    if (this.props.bounds) {
-      options.bounds = this.props.bounds;
-    }
-
-    if (this.props.types) {
-      options.types = this.props.types;
-    }
+    ['location', 'radius', 'bounds', 'types'].forEach(option => {
+      if (this.props[option]) {
+        options[option] = this.props[option];
+      }
+    });
 
     if (this.props.country) {
       options.componentRestrictions = {
@@ -201,17 +155,13 @@ const Geosuggest = React.createClass({
         }
       }
     );
-  },
+  }
 
   /**
    * Update the suggests
-   * @param  {Object} suggestsGoogle The new google suggests
+   * @param  {Array} suggestsGoogle The new google suggests
    */
-  updateSuggests: function(suggestsGoogle) {
-    if (!suggestsGoogle) {
-      suggestsGoogle = [];
-    }
-
+  updateSuggests(suggestsGoogle = []) {
     var suggests = [],
       regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
       skipSuggest = this.props.skipSuggest;
@@ -232,73 +182,44 @@ const Geosuggest = React.createClass({
       }
     });
 
-    this.setState({suggests: suggests});
-  },
+    this.setState({suggests});
+  }
 
   /**
-   * When the input gets focused
+   * Show the suggestions
    */
-  showSuggests: function() {
+  showSuggests() {
     this.searchSuggests();
     this.setState({isSuggestsHidden: false});
-  },
+  }
 
   /**
-   * When the input loses focused
+   * Hide the suggestions
    */
-  hideSuggests: function() {
+  hideSuggests() {
     this.props.onBlur();
     setTimeout(() => {
       if (this.state && this.state.isMounted) {
         this.setState({isSuggestsHidden: true});
       }
     }, 100);
-  },
-
-  /**
-   * When a key gets pressed in the input
-   * @param  {Event} event The keypress event
-   */
-  onInputKeyDown: function(event) {
-    switch (event.which) {
-      case 40: // DOWN
-        event.preventDefault();
-        this.activateSuggest('next');
-        break;
-      case 38: // UP
-        event.preventDefault();
-        this.activateSuggest('prev');
-        break;
-      case 13: // ENTER
-        event.preventDefault();
-        this.selectSuggest(this.state.activeSuggest);
-        break;
-      case 9: // TAB
-        this.selectSuggest(this.state.activeSuggest);
-        break;
-      case 27: // ESC
-        this.hideSuggests();
-        break;
-      default:
-        break;
-    }
-  },
+  }
 
   /**
    * Activate a new suggest
    * @param {String} direction The direction in which to activate new suggest
    */
-  activateSuggest: function(direction) { // eslint-disable-line complexity
+  activateSuggest(direction) { // eslint-disable-line complexity
     if (this.state.isSuggestsHidden) {
       this.showSuggests();
       return;
     }
 
-    var suggestsCount = this.state.suggests.length - 1,
-      next = direction === 'next',
-      newActiveSuggest = null,
+    const suggestsCount = this.state.suggests.length - 1,
+      next = direction === 'next';
+    let newActiveSuggest = null,
       newIndex = 0,
-      i = 0; // eslint-disable-line id-length
+      i = 0;
 
     for (i; i <= suggestsCount; i++) {
       if (this.state.suggests[i] === this.state.activeSuggest) {
@@ -315,13 +236,13 @@ const Geosuggest = React.createClass({
     }
 
     this.setState({activeSuggest: newActiveSuggest});
-  },
+  }
 
   /**
    * When an item got selected
    * @param {GeosuggestItem} suggest The selected suggest item
    */
-  selectSuggest: function(suggest) {
+  selectSuggest(suggest) {
     if (!suggest) {
       suggest = {
         label: this.state.userInput
@@ -334,19 +255,19 @@ const Geosuggest = React.createClass({
     });
 
     if (suggest.location) {
-      this.setIgnoreBlur(false);
+      this.setState({ignoreBlur: false});
       this.props.onSuggestSelect(suggest);
       return;
     }
 
     this.geocodeSuggest(suggest);
-  },
+  }
 
   /**
    * Geocode a suggest
    * @param  {Object} suggest The suggest
    */
-  geocodeSuggest: function(suggest) {
+  geocodeSuggest(suggest) {
     this.geocoder.geocode(
       suggest.placeId ? {placeId: suggest.placeId} : {address: suggest.label},
       (results, status) => {
@@ -366,74 +287,48 @@ const Geosuggest = React.createClass({
         this.props.onSuggestSelect(suggest);
       }
     );
-  },
+  }
 
   /**
    * Render the view
    * @return {Function} The React element to render
    */
-  render: function() {
-    const attributes = {};
-
-    inputAttributes.forEach(inputAttribute => {
-      if (this.props[inputAttribute]) {
-        attributes[inputAttribute] = this.props[inputAttribute];
-      }
-    });
-
-    return (// eslint-disable-line no-extra-parens
-      <div className={'geosuggest ' + this.props.className}
-          onClick={this.onClick}>
-        <input
-          className={'geosuggest__input ' + this.props.inputClassName}
-          ref="geosuggestInput"
-          type="text"
-          {...attributes}
-          value={this.state.userInput}
-          onKeyDown={this.onInputKeyDown}
-          onChange={this.onInputChange}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur} />
-        <ul className={this.getSuggestsClasses()}>
-          {this.getSuggestItems()}
-        </ul>
-      </div>
-    );
-  },
-
-  /**
-   * Get the suggest items for the list
-   * @return {Array} The suggestions
-   */
-  getSuggestItems: function() {
-    return this.state.suggests.map(function(suggest) {
-      var isActive = this.state.activeSuggest &&
-        suggest.placeId === this.state.activeSuggest.placeId;
-
-      return (// eslint-disable-line no-extra-parens
-        <GeosuggestItem
-          key={suggest.placeId}
-          suggest={suggest}
-          isActive={isActive}
-          onMouseDown={() => this.setIgnoreBlur(true)}
-          onMouseOut={() => this.setIgnoreBlur(false)}
-          onSuggestSelect={this.selectSuggest} />
+  render() {
+    const attributes = filterInputAttributes(this.props),
+      classes = classnames(
+        'geosuggest',
+        this.props.className
       );
-    }.bind(this));
-  },
 
-  /**
-   * The classes for the suggests list
-   * @return {String} The classes
-   */
-  getSuggestsClasses: function() {
-    var classes = 'geosuggest__suggests';
+    return <div className={classes}>
 
-    classes += this.state.isSuggestsHidden ?
-      ' geosuggest__suggests--hidden' : '';
+      <Input className={this.props.inputClassName}
+        value={this.state.userInput}
+        onChange={this.onInputChange.bind(this)}
+        onFocus={this.onInputFocus.bind(this)}
+        onBlur={this.onInputBlur.bind(this)}
+        onNext={() => this.activateSuggest('next')}
+        onPrev={() => this.activateSuggest('prev')}
+        onSelect={() => this.selectSuggest(this.state.activeSuggest)}
+        onEscape={this.hideSuggests.bind(this)}
+        {...attributes} />
 
-    return classes;
+      <SuggestList
+        isHidden={this.state.isSuggestsHidden}
+        suggests={this.state.suggests}
+        activeSuggest={this.state.activeSuggest}
+        onSuggestMouseDown={() => this.setState({ignoreBlur: true})}
+        onSuggestMouseOut={() => this.setState({ignoreBlur: false})}
+        onSuggestSelect={this.selectSuggest.bind(this)}/>
+
+    </div>;
   }
-});
+}
 
-module.exports = Geosuggest;
+/**
+ * Default values for the properties
+ * @type {Object}
+ */
+Geosuggest.defaultProps = defaults;
+
+export default Geosuggest;

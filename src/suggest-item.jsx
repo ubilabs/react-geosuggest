@@ -6,20 +6,27 @@ import classnames from 'classnames';
  * @param {Object} props The component's props
  * @return {JSX} The icon component.
  */
-export default props => {
+export default ({
+  isActive = false,
+  className = '',
+  suggest = {},
+  onMouseDown = () => {},
+  onMouseOut = () => {},
+  onSelect = () => {}
+}) => {
   const classes = classnames(
     'geosuggest-item',
-    props.suggest.className,
-    {'geosuggest-item--active': props.isActive}
+    className,
+    {'geosuggest-item--active': isActive}
   );
 
   return <li className={classes}
-    onMouseDown={props.onMouseDown}
-    onMouseOut={props.onMouseOut}
+    onMouseDown={onMouseDown}
+    onMouseOut={onMouseOut}
     onClick={event => {
       event.preventDefault();
-      props.onSuggestSelect(props.suggest);
+      onSelect();
     }}>
-      {props.suggest.label}
+      {suggest.label}
   </li>;
 };
