@@ -41,7 +41,7 @@
     "pretest": "npm run lint",
     "test": "npm run unit-test",
     "start": "npm run server",
-    "unit-test": "mocha --compiler js:babel/register ./test --recursive",
+    "unit-test": "mocha ./test --recursive",
     "server": "npm run prepare:example && light-server -s example/dist -p 8000 -w 'src/*.jsx,example/src/*.js # npm run js:example' -w 'src/*.css,example/src/*.css # npm run css # reloadcss' -w 'example/src/*.html # npm run copy:assets # reload'",
     "prepare:example": "rm -rf example/dist && mkdir example/dist && npm run copy:assets && npm run js:example && npm run css",
     "copy:assets": "cp example/src/*.html example/dist && cp example/src/*.svg example/dist",
