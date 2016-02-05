@@ -130,7 +130,12 @@ const Geosuggest = React.createClass({
     this.props.onFocus();
     this.showSuggests();
   },
-
+  /**
+   * Focus the input
+   */
+  focusInput: function() {
+    this.refs.geosuggestInput.focus();
+  },
   /**
    * When the input gets blurred
    */
