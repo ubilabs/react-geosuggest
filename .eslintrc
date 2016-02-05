@@ -158,7 +158,9 @@
     "id-length": [2, {
       "min": 3
     }],
-    "id-match": [0],
+    "id-match": [2, "^[a-z]+([A-Z][a-z]+)*$", {
+      "properties": true
+    }],
     "key-spacing": [2, {
       "beforeColon": false,
       "afterColon": true
