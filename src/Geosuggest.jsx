@@ -4,6 +4,11 @@ import React from 'react';
 import GeosuggestItem from './GeosuggestItem'; // eslint-disable-line
 import inputAttributes from './input-attributes';
 
+// Escapes special characters in user input for regex
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+}
+
 const Geosuggest = React.createClass({
   /**
    * Get the default props
@@ -208,7 +213,7 @@ const Geosuggest = React.createClass({
     }
 
     var suggests = [],
-      regex = new RegExp(this.state.userInput, 'gim'),
+      regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
       skipSuggest = this.props.skipSuggest;
 
     this.props.fixtures.forEach(suggest => {
