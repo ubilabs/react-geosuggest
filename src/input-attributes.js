@@ -5,7 +5,7 @@ export default [
   'autocapitalize',
   'autocomplete',
   'autocorrect',
-  'autofocus',
+  'autoFocus',
   'autosave',
   'disabled',
   'form',
