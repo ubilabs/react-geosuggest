@@ -1,6 +1,12 @@
 {
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
   "env": {
-    "node": true
+    "browser": true,
+    "node": true,
+    "mocha": true
   },
   "globals": {
   },
@@ -26,8 +32,7 @@
     "superInFunctions": true,
     "templateStrings": true,
     "unicodeCodePointEscapes": true,
-    "globalReturn": true,
-    "jsx": true
+    "globalReturn": true
   },
   "rules": {
     "comma-dangle": 2,
@@ -156,9 +161,9 @@
     "func-names": 0,
     "func-style": 0,
     "id-length": [2, {
-      "min": 3
+      "min": 1
     }],
-    "id-match": [2, "^[a-z]+([A-Z][a-z]+)*$", {
+    "id-match": [0, "^([A-Za-z_]+)*$", {
       "properties": true
     }],
     "key-spacing": [2, {
