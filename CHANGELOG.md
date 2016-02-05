@@ -1,3 +1,15 @@
+## 1.16.0 (2016-02-05)
+
+#### Bug Fixes
+
+* autofocus -> autoFocus ([7f9daa0](7f9daa0b4d1813704448037322787e4004309e49))
+* use ignoreBlur flag to avoid hiding suggests when clicking one ([4fa6bd2](4fa6bd2d5e381bfb55a53db86afbd9519c333958))
+* Escape user input for regex to avoid Exception ([95b01ba](95b01ba1dae31d6780c4ed5fd72b9cfb4b3e10c2))
+
+#### Features
+
+* Use labelId instead of address to get the geocode ([f95d2a3](f95d2a337021b3ce49ef6094f53c388de9aa20d9))
+
 ### 1.15.1 (2016-01-18)
 
 
