@@ -6,8 +6,8 @@ import classnames from 'classnames';
 import defaults from './defaults';
 import filterInputAttributes from './filter-input-attributes';
 
-import Input from './input.jsx';
-import SuggestList from './suggest-list.jsx';
+import Input from './input';
+import SuggestList from './suggest-list';
 
 // Escapes special characters in user input for regex
 function escapeRegExp(str) {
