@@ -85,13 +85,13 @@ var _filterInputAttributes = require('./filter-input-attributes');
 
 var _filterInputAttributes2 = _interopRequireDefault(_filterInputAttributes);
 
-var _inputJsx = require('./input.jsx');
+var _input = require('./input');
 
-var _inputJsx2 = _interopRequireDefault(_inputJsx);
+var _input2 = _interopRequireDefault(_input);
 
-var _suggestListJsx = require('./suggest-list.jsx');
+var _suggestList = require('./suggest-list');
 
-var _suggestListJsx2 = _interopRequireDefault(_suggestListJsx);
+var _suggestList2 = _interopRequireDefault(_suggestList);
 
 // Escapes special characters in user input for regex
 function escapeRegExp(str) {
@@ -439,7 +439,7 @@ var Geosuggest = (function (_React$Component) {
       return _react2['default'].createElement(
         'div',
         { className: classes },
-        _react2['default'].createElement(_inputJsx2['default'], _extends({ className: this.props.inputClassName,
+        _react2['default'].createElement(_input2['default'], _extends({ className: this.props.inputClassName,
           value: this.state.userInput,
           onChange: this.onInputChange.bind(this),
           onFocus: this.onInputFocus.bind(this),
@@ -455,7 +455,7 @@ var Geosuggest = (function (_React$Component) {
           },
           onEscape: this.hideSuggests.bind(this)
         }, attributes)),
-        _react2['default'].createElement(_suggestListJsx2['default'], {
+        _react2['default'].createElement(_suggestList2['default'], {
           isHidden: this.state.isSuggestsHidden,
           suggests: this.state.suggests,
           activeSuggest: this.state.activeSuggest,
@@ -478,7 +478,7 @@ Geosuggest.defaultProps = _defaults2['default'];
 exports['default'] = Geosuggest;
 module.exports = exports['default'];
 
-},{"./defaults":3,"./filter-input-attributes":4,"./input.jsx":5,"./suggest-list.jsx":7,"classnames":1}],3:[function(require,module,exports){
+},{"./defaults":3,"./filter-input-attributes":4,"./input":5,"./suggest-list":7,"classnames":1}],3:[function(require,module,exports){
 /**
  * Default values
  */
