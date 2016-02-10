@@ -46,6 +46,13 @@ class Input extends React.Component {
   }
 
   /**
+   * Focus the input
+   */
+  focus() {
+    this.refs.input.focus();
+  }
+
+  /**
    * Render the view
    * @return {Function} The React element to render
    */

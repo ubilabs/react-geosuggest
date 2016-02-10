@@ -105,6 +105,13 @@ class Geosuggest extends React.Component {
   }
 
   /**
+   * Focus the input
+   */
+  focus() {
+    this.refs.input.focus();
+  }
+
+  /**
    * Update the value of the user input
    * @param {String} userInput the new value of the user input
    */
@@ -303,6 +310,7 @@ class Geosuggest extends React.Component {
     return <div className={classes}>
 
       <Input className={this.props.inputClassName}
+        ref='input'
         value={this.state.userInput}
         onChange={this.onInputChange.bind(this)}
         onFocus={this.onInputFocus.bind(this)}

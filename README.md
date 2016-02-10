@@ -174,6 +174,9 @@ All standard `input[type="text"]` attributes are allowed. See the [documentation
 
 ### Exposed component functions
 
+#### focus()
+Call `focus` to focus on the element. The suggest list will be expanded with the current suggestions.
+
 #### update(value)
 It is possible to update the value of the input contained within the GeoSuggest component by calling the `update` function with a new desired `value` of the type String.
 
