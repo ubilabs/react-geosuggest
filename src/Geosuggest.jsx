@@ -148,7 +148,7 @@ class Geosuggest extends React.Component {
     this.autocompleteService.getPlacePredictions(
       options,
       suggestsGoogle => {
-        this.updateSuggests(suggestsGoogle);
+        this.updateSuggests(suggestsGoogle || []); // can be null
 
         if (this.props.autoActivateFirstSuggest) {
           this.activateSuggest('next');
