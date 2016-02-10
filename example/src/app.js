@@ -44,6 +44,10 @@ var App = React.createClass({ // eslint-disable-line
     console.log('onBlur'); // eslint-disable-line
   },
 
+  /**
+   * When the input got changed
+   * @param {String} value The new value
+   */
   onChange: function(value) {
     console.log('input changes to :' + value); // eslint-disable-line
   },
