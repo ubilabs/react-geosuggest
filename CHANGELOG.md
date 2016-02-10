@@ -1,3 +1,9 @@
+### 1.16.1 (2016-02-07)
+
+#### Bug Fixes
+
+* Fix module build ([7de677c](7de677c51dcd87b67e371303ae3ee1f2242fa599))
+
 ## 1.16.0 (2016-02-05)
 
 #### Bug Fixes
