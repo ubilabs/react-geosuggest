@@ -1,3 +1,14 @@
+## 1.17.0 (2016-02-10)
+
+#### Bug Fixes
+
+* Handle null value for Google suggestions ([cfd84ad](cfd84adeebda41d2b7e27576716fb3a30f63182c))
+
+#### Features
+
+* add focus() to focus on the element ([11c08af5](https://github.com/ubilabs/react-geosuggest/commit/11c08af5808d197254cbdfe3a78f99eafe0840b2))
+
+
 ### 1.16.1 (2016-02-07)
 
 #### Bug Fixes

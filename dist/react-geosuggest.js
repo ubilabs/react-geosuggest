@@ -213,6 +213,15 @@ var Geosuggest = (function (_React$Component) {
     }
 
     /**
+     * Focus the input
+     */
+  }, {
+    key: 'focus',
+    value: function focus() {
+      this.refs.input.focus();
+    }
+
+    /**
      * Update the value of the user input
      * @param {String} userInput the new value of the user input
      */
@@ -266,7 +275,7 @@ var Geosuggest = (function (_React$Component) {
       }
 
       this.autocompleteService.getPlacePredictions(options, function (suggestsGoogle) {
-        _this3.updateSuggests(suggestsGoogle);
+        _this3.updateSuggests(suggestsGoogle || []); // can be null
 
         if (_this3.props.autoActivateFirstSuggest) {
           _this3.activateSuggest('next');
@@ -440,6 +449,7 @@ var Geosuggest = (function (_React$Component) {
         'div',
         { className: classes },
         _react2['default'].createElement(_input2['default'], _extends({ className: this.props.inputClassName,
+          ref: 'input',
           value: this.state.userInput,
           onChange: this.onInputChange.bind(this),
           onFocus: this.onInputFocus.bind(this),
@@ -640,6 +650,15 @@ var Input = (function (_React$Component) {
         default:
           break;
       }
+    }
+
+    /**
+     * Focus the input
+     */
+  }, {
+    key: 'focus',
+    value: function focus() {
+      this.refs.input.focus();
     }
 
     /**
