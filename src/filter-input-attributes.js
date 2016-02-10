@@ -3,7 +3,7 @@
  */
 const allowedAttributes = [
   'autocapitalize',
-  'autocomplete',
+  'autoComplete',
   'autocorrect',
   'autoFocus',
   'autosave',
