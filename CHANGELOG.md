@@ -1,3 +1,11 @@
+## 1.18.0 (2016-02-10)
+
+
+#### Features
+
+* deploy dist folder via npm ([e5446a29](https://github.com/ubilabs/react-geosuggest/commit/e5446a298b2d9e0479a65786b908647b46d8bc9b))
+
+
 ## 1.17.0 (2016-02-10)
 
 #### Bug Fixes
