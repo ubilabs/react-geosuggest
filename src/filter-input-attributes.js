@@ -2,32 +2,27 @@
  * Attributes allowed on input elements
  */
 const allowedAttributes = [
-  'autocapitalize',
   'autoComplete',
-  'autocorrect',
   'autoFocus',
-  'autosave',
   'disabled',
   'form',
-  'formaction',
-  'formenctype',
-  'formmethod',
-  'formnovalidate',
-  'formtarget',
+  'formAction',
+  'formEncType',
+  'formMethod',
+  'formNoValidate',
+  'formTarget',
   'height',
   'id',
-  'inputmode',
-  'maxlength',
-  'maxlength',
+  'inputMode',
+  'maxLength',
   'name',
   'pattern',
   'placeholder',
-  'readonly',
+  'readOnly',
   'required',
-  'selectionDirection',
   'size',
-  'spellcheck',
-  'tabindex'
+  'spellCheck',
+  'tabIndex'
 ];
 
 /**
