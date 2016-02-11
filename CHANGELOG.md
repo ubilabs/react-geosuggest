@@ -1,3 +1,12 @@
+### 1.18.1 (2016-02-11)
+
+
+#### Bug Fixes
+
+* **input:** use corrected list of allowed input attributes ([d623c65c](https://github.com/ubilabs/react-geosuggest/commit/d623c65c6eb26ff84d5675e573a4991a93c4c74f))
+* make classnames a real dependency  ([1fd93dd](https://github.com/ubilabs/react-geosuggest/commit/1fd93dd842820f87133ae4db48ba24fc064270fd))
+
+
 ## 1.18.0 (2016-02-10)
 
 
