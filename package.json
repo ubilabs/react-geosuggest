@@ -41,6 +41,7 @@
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.7",
     "react-dom": "^0.14.0",
+    "sinon": "^1.17.3",
     "uglifyjs": "^2.4.10"
   },
   "scripts": {
