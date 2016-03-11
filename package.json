@@ -80,11 +80,5 @@
     "google",
     "autosuggest",
     "places"
-  ],
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
-  }
+  ]
 }
