@@ -1,3 +1,17 @@
+## 1.19.0 (2016-03-11)
+
+
+#### Bug Fixes
+
+* remove isMounted antipattern ([b347e9a3](https://github.com/ubilabs/react-geosuggest/commit/b347e9a3eb935e89ca30797ba253cd299b2a1e57), closes [#71](https://github.com/ubilabs/react-geosuggest/issues/71))
+* Add className option for fixtures  ([880fe77](https://github.com/ubilabs/react-geosuggest/commit/880fe7758810a0e259c2442698cdf07309829b41))
+
+
+#### Features
+
+* add props validation ([7d68a02f](https://github.com/ubilabs/react-geosuggest/commit/7d68a02f8bbdea86fdc91b87a084e5ee25d98ca4), closes [#33](https://github.com/ubilabs/react-geosuggest/issues/33))
+
+
 ### 1.18.1 (2016-02-11)
 
 

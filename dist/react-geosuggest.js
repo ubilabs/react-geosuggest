@@ -81,6 +81,10 @@ var _defaults = require('./defaults');
 
 var _defaults2 = _interopRequireDefault(_defaults);
 
+var _propTypes = require('./prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _filterInputAttributes = require('./filter-input-attributes');
 
 var _filterInputAttributes2 = _interopRequireDefault(_filterInputAttributes);
@@ -115,16 +119,16 @@ var Geosuggest = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(Geosuggest.prototype), 'constructor', this).call(this, props);
     this.state = {
-      isMounted: false,
       isSuggestsHidden: true,
       userInput: this.props.initialValue,
       activeSuggest: null,
-      suggests: []
+      suggests: [],
+      timer: null
     };
   }
 
   /**
-   * Default values for the properties
+   * Types for the properties
    * @type {Object}
    */
 
@@ -163,8 +167,6 @@ var Geosuggest = (function (_React$Component) {
 
       this.autocompleteService = new googleMaps.places.AutocompleteService();
       this.geocoder = new googleMaps.Geocoder();
-
-      this.setState({ isMounted: true });
     }
 
     /**
@@ -173,7 +175,7 @@ var Geosuggest = (function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      this.setState({ isMounted: false });
+      clearTimeout(this.state.timer);
     }
 
     /**
@@ -336,11 +338,11 @@ var Geosuggest = (function (_React$Component) {
       var _this5 = this;
 
       this.props.onBlur();
-      setTimeout(function () {
-        if (_this5.state && _this5.state.isMounted) {
-          _this5.setState({ isSuggestsHidden: true });
-        }
+      var timer = setTimeout(function () {
+        _this5.setState({ isSuggestsHidden: true });
       }, 100);
+
+      this.setState({ timer: timer });
     }
 
     /**
@@ -483,12 +485,18 @@ var Geosuggest = (function (_React$Component) {
   return Geosuggest;
 })(_react2['default'].Component);
 
+Geosuggest.propTypes = _propTypes2['default'];
+
+/**
+ * Default values for the properties
+ * @type {Object}
+ */
 Geosuggest.defaultProps = _defaults2['default'];
 
 exports['default'] = Geosuggest;
 module.exports = exports['default'];
 
-},{"./defaults":3,"./filter-input-attributes":4,"./input":5,"./suggest-list":7,"classnames":1}],3:[function(require,module,exports){
+},{"./defaults":3,"./filter-input-attributes":4,"./input":5,"./prop-types":6,"./suggest-list":8,"classnames":1}],3:[function(require,module,exports){
 /**
  * Default values
  */
@@ -714,6 +722,45 @@ var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
 
+/**
+ * Default values
+ */
+exports['default'] = {
+  fixtures: _react2['default'].PropTypes.array,
+  initialValue: _react2['default'].PropTypes.string,
+  placeholder: _react2['default'].PropTypes.string,
+  disabled: _react2['default'].PropTypes.bool,
+  className: _react2['default'].PropTypes.string,
+  inputClassName: _react2['default'].PropTypes.string,
+  location: _react2['default'].PropTypes.object,
+  radius: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.number]),
+  bounds: _react2['default'].PropTypes.object,
+  country: _react2['default'].PropTypes.string,
+  types: _react2['default'].PropTypes.array,
+  googleMaps: _react2['default'].PropTypes.object,
+  onSuggestSelect: _react2['default'].PropTypes.func,
+  onFocus: _react2['default'].PropTypes.func,
+  onBlur: _react2['default'].PropTypes.func,
+  onChange: _react2['default'].PropTypes.func,
+  skipSuggest: _react2['default'].PropTypes.func,
+  getSuggestLabel: _react2['default'].PropTypes.func,
+  autoActivateFirstSuggest: _react2['default'].PropTypes.bool
+};
+module.exports = exports['default'];
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = (window.React);
+
+var _react2 = _interopRequireDefault(_react);
+
 // eslint-disable-line no-unused-vars
 
 var _classnames = require('classnames');
@@ -757,7 +804,7 @@ exports['default'] = function (_ref) {
 
 module.exports = exports['default'];
 
-},{"classnames":1}],7:[function(require,module,exports){
+},{"classnames":1}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -808,6 +855,7 @@ exports['default'] = function (_ref) {
       var isActive = activeSuggest && suggest.placeId === activeSuggest.placeId;
 
       return _react2['default'].createElement(_suggestItem2['default'], { key: suggest.placeId,
+        className: suggest.className,
         suggest: suggest,
         isActive: isActive,
         onMouseDown: onSuggestMouseDown,
@@ -821,5 +869,5 @@ exports['default'] = function (_ref) {
 
 module.exports = exports['default'];
 
-},{"./suggest-item":6,"classnames":1}]},{},[2])(2)
+},{"./suggest-item":7,"classnames":1}]},{},[2])(2)
 });
