@@ -4,6 +4,7 @@ import React from 'react';
 import classnames from 'classnames';
 
 import defaults from './defaults';
+import propTypes from './prop-types';
 import filterInputAttributes from './filter-input-attributes';
 
 import Input from './input';
@@ -330,6 +331,12 @@ class Geosuggest extends React.Component {
     </div>;
   }
 }
+
+/**
+ * Types for the properties
+ * @type {Object}
+ */
+Geosuggest.propTypes = propTypes;
 
 /**
  * Default values for the properties
