@@ -20,6 +20,7 @@
     "classnames": "^2.2.3"
   },
   "devDependencies": {
+    "aliasify": "^1.9.0",
     "babel": "^5.6.23",
     "babel-eslint": "^4.1.8",
     "babelify": "^6.1.3",
@@ -35,7 +36,10 @@
     "mocha": "^2.4.5",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
-    "uglifyjs": "^2.4.10"
+    "uglifyjs": "^2.4.10",
+    "preact": "^4.1.1",
+    "preact-compat": "^1.6.0",
+    "proptypes": "^0.14.3"
   },
   "scripts": {
     "prepublish": "npm run build:module",
@@ -48,7 +52,7 @@
     "prepare:example": "rm -rf example/dist && mkdir example/dist && npm run copy:assets && npm run js:example && npm run css",
     "copy:assets": "cp example/src/*.html example/dist && cp example/src/*.svg example/dist",
     "css": "cat example/src/app.css src/geosuggest.css > example/dist/app.css",
-    "js:example": "browserify example/src/app.js -t babelify --extension=.jsx> example/dist/app.js",
+    "js:example": "browserify example/src/app.js -t babelify -t aliasify --extension=.jsx> example/dist/app.js",
     "js:example:uglify": "uglifyjs example/dist/app.js -o example/dist/app.js -c warnings=false --mangle",
     "js:browser": "browserify src/Geosuggest.jsx --standalone Geosuggest --exclude react -t babelify --extension=.jsx -t browserify-global-shim > dist/react-geosuggest.js",
     "js:browser:uglify": "uglifyjs dist/react-geosuggest.js -o dist/react-geosuggest.min.js -c warnings=false,drop_console=true --mangle",
@@ -66,6 +70,12 @@
   },
   "browserify-global-shim": {
     "react": "React"
+  },
+  "aliasify": {
+    "aliases": {
+      "react": "preact-compat",
+      "react-dom": "preact-compat"
+    }
   },
   "readmeFilename": "README.md",
   "keywords": [
