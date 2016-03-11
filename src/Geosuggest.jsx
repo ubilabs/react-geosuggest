@@ -25,11 +25,11 @@ class Geosuggest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMounted: false,
       isSuggestsHidden: true,
       userInput: this.props.initialValue,
       activeSuggest: null,
-      suggests: []
+      suggests: [],
+      timer: null
     };
   }
 
@@ -65,15 +65,13 @@ class Geosuggest extends React.Component {
 
     this.autocompleteService = new googleMaps.places.AutocompleteService();
     this.geocoder = new googleMaps.Geocoder();
-
-    this.setState({isMounted: true});
   }
 
   /**
    * When the component will unmount
    */
   componentWillUnmount() {
-    this.setState({isMounted: false});
+    clearTimeout(this.state.timer);
   }
 
   /**
@@ -205,11 +203,11 @@ class Geosuggest extends React.Component {
    */
   hideSuggests() {
     this.props.onBlur();
-    setTimeout(() => {
-      if (this.state && this.state.isMounted) {
-        this.setState({isSuggestsHidden: true});
-      }
+    const timer = setTimeout(() => {
+      this.setState({isSuggestsHidden: true});
     }, 100);
+
+    this.setState({timer});
   }
 
   /**
