@@ -26,6 +26,7 @@ export default ({
         suggest.placeId === activeSuggest.placeId;
 
       return <SuggestItem key={suggest.placeId}
+        className={suggest.className}
         suggest={suggest}
         isActive={isActive}
         onMouseDown={onSuggestMouseDown}
