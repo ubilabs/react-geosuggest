@@ -17,7 +17,7 @@ As this component uses the Google Maps Places API to get suggests, you must incl
   <html>
   <head>
     …
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&libraries=places"></script>
   </head>
   <body>
     …
@@ -25,6 +25,7 @@ As this component uses the Google Maps Places API to get suggests, you must incl
 </html>
 ```
 
+Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key.
 
 The easiest way to use geosuggest is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
 
