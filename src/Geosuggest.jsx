@@ -296,37 +296,6 @@ class Geosuggest extends React.Component {
   }
 
   /**
-   * Render the input element
-   * @param  {Object} attributes The attributes
-   * @return {Function} The React element to render
-   */
-  renderInput(attributes) {
-    return <Input className={this.props.inputClassName}
-                ref='input'
-                value={this.state.userInput}
-                onChange={this.onInputChange.bind(this)}
-                onFocus={this.onInputFocus.bind(this)}
-                onBlur={this.onInputBlur.bind(this)}
-                onNext={() => this.activateSuggest('next')}
-                onPrev={() => this.activateSuggest('prev')}
-                onSelect={() => this.selectSuggest(this.state.activeSuggest)}
-                onEscape={this.hideSuggests.bind(this)} {...attributes} />;
-  }
-
-  /**
-   * Render the suggestions list
-   * @return {Function} The React element to render
-   */
-  renderSuggestionsList() {
-    return <SuggestList isHidden={this.state.isSuggestsHidden}
-                  suggests={this.state.suggests}
-                  activeSuggest={this.state.activeSuggest}
-                  onSuggestMouseDown={() => this.setState({ignoreBlur: true})}
-                  onSuggestMouseOut={() => this.setState({ignoreBlur: false})}
-                  onSuggestSelect={this.selectSuggest.bind(this)}/>;
-  }
-
-  /**
    * Render the view
    * @return {Function} The React element to render
    */
@@ -336,18 +305,34 @@ class Geosuggest extends React.Component {
         'geosuggest',
         this.props.className
       );
+    var input = <Input className={this.props.inputClassName}
+                 ref='input'
+                 value={this.state.userInput}
+                 onChange={this.onInputChange.bind(this)}
+                 onFocus={this.onInputFocus.bind(this)}
+                 onBlur={this.onInputBlur.bind(this)}
+                 onNext={() => this.activateSuggest('next')}
+                 onPrev={() => this.activateSuggest('prev')}
+                 onSelect={() => this.selectSuggest(this.state.activeSuggest)}
+                 onEscape={this.hideSuggests.bind(this)} {...attributes} />,
+      suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
+                   suggests={this.state.suggests}
+                   activeSuggest={this.state.activeSuggest}
+                   onSuggestMouseDown={() => this.setState({ignoreBlur: true})}
+                   onSuggestMouseOut={() => this.setState({ignoreBlur: false})}
+                   onSuggestSelect={this.selectSuggest.bind(this)}/>;
 
     return <div className={classes}>
       {!this.props.wrapInput ?
-        this.renderInput.bind(this, attributes) :
+        input :
         <div className={this.props.inputWrapperClassName}>
-          {this.renderInput.bind(this, attributes)}
+          {input}
         </div>
       }
       {!this.props.wrapSuggestionList ?
-        this.renderSuggestionsList.bind(this) :
+        suggestionsList :
         <div className={this.props.suggestionListWrapperClassName}>
-          {this.renderSuggestionsList.bind(this)}
+          {suggestionsList}
         </div>
       }
     </div>;
