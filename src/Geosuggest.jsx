@@ -345,9 +345,9 @@ class Geosuggest extends React.Component {
         </div>
       }
       {!this.props.wrapSuggestionList ?
-        this.renderSuggestionsList().bind(this) :
+        this.renderSuggestionsList.bind(this) :
         <div className={this.props.suggestionListWrapperClassName}>
-          {this.renderSuggestionsList().bind(this)}
+          {this.renderSuggestionsList.bind(this)}
         </div>
       }
     </div>;
