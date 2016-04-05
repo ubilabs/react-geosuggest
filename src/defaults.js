@@ -10,8 +10,6 @@ export default {
   wrapSuggestionList: false,
   className: '',
   inputClassName: '',
-  inputWrapperClassName: '',
-  suggestionListWrapperClassName: '',
   location: null,
   radius: null,
   bounds: null,

@@ -12,8 +12,6 @@ export default {
   wrapSuggestionList: React.PropTypes.bool,
   className: React.PropTypes.string,
   inputClassName: React.PropTypes.string,
-  inputWrapperClassName: React.PropTypes.string,
-  suggestionListWrapperClassName: React.PropTypes.string,
   location: React.PropTypes.object,
   radius: React.PropTypes.oneOfType([
     React.PropTypes.string,

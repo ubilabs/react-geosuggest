@@ -84,18 +84,6 @@ Default: `''`
 
 Add an additional class to the input.
 
-#### inputWrapperClassName
-Type: `String`
-Default: `''`
-
-Add an additional class to the input wrapper, if exists.
-
-#### suggestionListWrapperClassName
-Type: `String`
-Default: `''`
-
-Add an additional class to the suggestion list wrapper, if exists.
-
 #### disabled
 Type: `Boolean`
 Default: `false`
