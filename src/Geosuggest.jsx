@@ -305,29 +305,36 @@ class Geosuggest extends React.Component {
         'geosuggest',
         this.props.className
       );
+    var input = <Input className={this.props.inputClassName}
+                 ref='input'
+                 value={this.state.userInput}
+                 onChange={this.onInputChange.bind(this)}
+                 onFocus={this.onInputFocus.bind(this)}
+                 onBlur={this.onInputBlur.bind(this)}
+                 onNext={() => this.activateSuggest('next')}
+                 onPrev={() => this.activateSuggest('prev')}
+                 onSelect={() => this.selectSuggest(this.state.activeSuggest)}
+                 onEscape={this.hideSuggests.bind(this)} {...attributes} />,
+      suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
+                   suggests={this.state.suggests}
+                   activeSuggest={this.state.activeSuggest}
+                   onSuggestMouseDown={() => this.setState({ignoreBlur: true})}
+                   onSuggestMouseOut={() => this.setState({ignoreBlur: false})}
+                   onSuggestSelect={this.selectSuggest.bind(this)}/>;
 
     return <div className={classes}>
-
-      <Input className={this.props.inputClassName}
-        ref='input'
-        value={this.state.userInput}
-        onChange={this.onInputChange.bind(this)}
-        onFocus={this.onInputFocus.bind(this)}
-        onBlur={this.onInputBlur.bind(this)}
-        onNext={() => this.activateSuggest('next')}
-        onPrev={() => this.activateSuggest('prev')}
-        onSelect={() => this.selectSuggest(this.state.activeSuggest)}
-        onEscape={this.hideSuggests.bind(this)}
-        {...attributes} />
-
-      <SuggestList
-        isHidden={this.state.isSuggestsHidden}
-        suggests={this.state.suggests}
-        activeSuggest={this.state.activeSuggest}
-        onSuggestMouseDown={() => this.setState({ignoreBlur: true})}
-        onSuggestMouseOut={() => this.setState({ignoreBlur: false})}
-        onSuggestSelect={this.selectSuggest.bind(this)}/>
-
+      {this.props.wrapInput ?
+        <div className="geosuggest__input-wrapper">
+          {input}
+        </div>
+        : input
+      }
+      {this.props.wrapSuggestionList ?
+        <div className="geosuggest__suggests-wrapper">
+          {suggestionsList}
+        </div>
+        : suggestionsList
+      }
     </div>;
   }
 }

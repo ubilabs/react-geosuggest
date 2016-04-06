@@ -8,6 +8,8 @@ export default {
   initialValue: React.PropTypes.string,
   placeholder: React.PropTypes.string,
   disabled: React.PropTypes.bool,
+  wrapInput: React.PropTypes.bool,
+  wrapSuggestionList: React.PropTypes.bool,
   className: React.PropTypes.string,
   inputClassName: React.PropTypes.string,
   location: React.PropTypes.object,
