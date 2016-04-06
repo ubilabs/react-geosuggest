@@ -25,9 +25,7 @@ var App = React.createClass({ // eslint-disable-line
           onChange={this.onChange}
           onSuggestSelect={this.onSuggestSelect}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
-          radius="20"
-          wrapInput={true}
-          wrapSuggestionList={true} />
+          radius="20" />
       </div>
     );
   },

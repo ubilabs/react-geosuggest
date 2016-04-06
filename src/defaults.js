@@ -6,8 +6,6 @@ export default {
   initialValue: '',
   placeholder: 'Search places',
   disabled: false,
-  wrapInput: false,
-  wrapSuggestionList: false,
   className: '',
   inputClassName: '',
   location: null,

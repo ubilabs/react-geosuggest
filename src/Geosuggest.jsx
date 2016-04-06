@@ -323,18 +323,12 @@ class Geosuggest extends React.Component {
                    onSuggestSelect={this.selectSuggest.bind(this)}/>;
 
     return <div className={classes}>
-      {this.props.wrapInput ?
-        <div className="geosuggest__input-wrapper">
-          {input}
-        </div>
-        : input
-      }
-      {this.props.wrapSuggestionList ?
-        <div className="geosuggest__suggests-wrapper">
-          {suggestionsList}
-        </div>
-        : suggestionsList
-      }
+      <div className="geosuggest__input-wrapper">
+        {input}
+      </div>
+      <div className="geosuggest__suggests-wrapper">
+        {suggestionsList}
+      </div>
     </div>;
   }
 }

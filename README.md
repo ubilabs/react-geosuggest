@@ -60,18 +60,6 @@ Default: `''`
 
 An initial value for the input, when you want to prefill the suggest.
 
-#### wrapInput
-Type: `Boolean`
-Default: `false`
-
-Wrap `input` element in a `div` element.
-
-#### wrapSuggestionList
-Type: `Boolean`
-Default: `false`
-
-Wrap suggestion list (`ul` element) in a `div` element.
-
 #### className
 Type: `String`
 Default: `''`
