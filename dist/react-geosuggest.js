@@ -49,25 +49,15 @@
 }());
 
 },{}],2:[function(require,module,exports){
-/* global window */
-
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = (window.React);
 
@@ -97,6 +87,14 @@ var _suggestList = require('./suggest-list');
 
 var _suggestList2 = _interopRequireDefault(_suggestList);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global window */
+
 // Escapes special characters in user input for regex
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
@@ -106,7 +104,7 @@ function escapeRegExp(str) {
  * Entry point for the Geosuggest component
  */
 
-var Geosuggest = (function (_React$Component) {
+var Geosuggest = function (_React$Component) {
   _inherits(Geosuggest, _React$Component);
 
   /**
@@ -117,25 +115,23 @@ var Geosuggest = (function (_React$Component) {
   function Geosuggest(props) {
     _classCallCheck(this, Geosuggest);
 
-    _get(Object.getPrototypeOf(Geosuggest.prototype), 'constructor', this).call(this, props);
-    this.state = {
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Geosuggest).call(this, props));
+
+    _this.state = {
       isSuggestsHidden: true,
-      userInput: this.props.initialValue,
+      userInput: _this.props.initialValue,
       activeSuggest: null,
       suggests: [],
       timer: null
     };
+    return _this;
   }
-
-  /**
-   * Types for the properties
-   * @type {Object}
-   */
 
   /**
    * Change inputValue if prop changes
    * @param {Object} props The new props
    */
+
 
   _createClass(Geosuggest, [{
     key: 'componentWillReceiveProps',
@@ -150,6 +146,7 @@ var Geosuggest = (function (_React$Component) {
      * Google api sdk object will be obtained and cached as a instance property.
      * Necessary objects of google api will also be determined and saved.
      */
+
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
@@ -172,6 +169,7 @@ var Geosuggest = (function (_React$Component) {
     /**
      * When the component will unmount
      */
+
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
@@ -182,20 +180,22 @@ var Geosuggest = (function (_React$Component) {
      * When the input got changed
      * @param {String} userInput The input value of the user
      */
+
   }, {
     key: 'onInputChange',
     value: function onInputChange(userInput) {
-      var _this = this;
+      var _this2 = this;
 
       this.setState({ userInput: userInput }, function () {
-        _this.showSuggests();
-        _this.props.onChange(userInput);
+        _this2.showSuggests();
+        _this2.props.onChange(userInput);
       });
     }
 
     /**
      * When the input gets focused
      */
+
   }, {
     key: 'onInputFocus',
     value: function onInputFocus() {
@@ -206,6 +206,7 @@ var Geosuggest = (function (_React$Component) {
     /**
      * When the input gets blurred
      */
+
   }, {
     key: 'onInputBlur',
     value: function onInputBlur() {
@@ -217,6 +218,7 @@ var Geosuggest = (function (_React$Component) {
     /**
      * Focus the input
      */
+
   }, {
     key: 'focus',
     value: function focus() {
@@ -227,6 +229,7 @@ var Geosuggest = (function (_React$Component) {
      * Update the value of the user input
      * @param {String} userInput the new value of the user input
      */
+
   }, {
     key: 'update',
     value: function update(userInput) {
@@ -237,23 +240,25 @@ var Geosuggest = (function (_React$Component) {
     /*
      * Clear the input and close the suggestion pane
      */
+
   }, {
     key: 'clear',
     value: function clear() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.setState({ userInput: '' }, function () {
-        return _this2.hideSuggests();
+        return _this3.hideSuggests();
       });
     }
 
     /**
      * Search for new suggests
      */
+
   }, {
     key: 'searchSuggests',
     value: function searchSuggests() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (!this.state.userInput) {
         this.updateSuggests();
@@ -265,8 +270,8 @@ var Geosuggest = (function (_React$Component) {
       };
 
       ['location', 'radius', 'bounds', 'types'].forEach(function (option) {
-        if (_this3.props[option]) {
-          options[option] = _this3.props[option];
+        if (_this4.props[option]) {
+          options[option] = _this4.props[option];
         }
       });
 
@@ -277,10 +282,10 @@ var Geosuggest = (function (_React$Component) {
       }
 
       this.autocompleteService.getPlacePredictions(options, function (suggestsGoogle) {
-        _this3.updateSuggests(suggestsGoogle || []); // can be null
+        _this4.updateSuggests(suggestsGoogle || []); // can be null
 
-        if (_this3.props.autoActivateFirstSuggest) {
-          _this3.activateSuggest('next');
+        if (_this4.props.autoActivateFirstSuggest) {
+          _this4.activateSuggest('next');
         }
       });
     }
@@ -289,10 +294,11 @@ var Geosuggest = (function (_React$Component) {
      * Update the suggests
      * @param  {Array} suggestsGoogle The new google suggests
      */
+
   }, {
     key: 'updateSuggests',
     value: function updateSuggests() {
-      var _this4 = this;
+      var _this5 = this;
 
       var suggestsGoogle = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 
@@ -310,7 +316,7 @@ var Geosuggest = (function (_React$Component) {
       suggestsGoogle.forEach(function (suggest) {
         if (!skipSuggest(suggest)) {
           suggests.push({
-            label: _this4.props.getSuggestLabel(suggest),
+            label: _this5.props.getSuggestLabel(suggest),
             placeId: suggest.place_id
           });
         }
@@ -322,6 +328,7 @@ var Geosuggest = (function (_React$Component) {
     /**
      * Show the suggestions
      */
+
   }, {
     key: 'showSuggests',
     value: function showSuggests() {
@@ -332,14 +339,15 @@ var Geosuggest = (function (_React$Component) {
     /**
      * Hide the suggestions
      */
+
   }, {
     key: 'hideSuggests',
     value: function hideSuggests() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.props.onBlur();
       var timer = setTimeout(function () {
-        _this5.setState({ isSuggestsHidden: true });
+        _this6.setState({ isSuggestsHidden: true });
       }, 100);
 
       this.setState({ timer: timer });
@@ -349,6 +357,7 @@ var Geosuggest = (function (_React$Component) {
      * Activate a new suggest
      * @param {String} direction The direction in which to activate new suggest
      */
+
   }, {
     key: 'activateSuggest',
     value: function activateSuggest(direction) {
@@ -385,6 +394,7 @@ var Geosuggest = (function (_React$Component) {
      * When an item got selected
      * @param {GeosuggestItem} suggest The selected suggest item
      */
+
   }, {
     key: 'selectSuggest',
     value: function selectSuggest(suggest) {
@@ -412,13 +422,14 @@ var Geosuggest = (function (_React$Component) {
      * Geocode a suggest
      * @param  {Object} suggest The suggest
      */
+
   }, {
     key: 'geocodeSuggest',
     value: function geocodeSuggest(suggest) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.geocoder.geocode(suggest.placeId ? { placeId: suggest.placeId } : { address: suggest.label }, function (results, status) {
-        if (status !== _this6.googleMaps.GeocoderStatus.OK) {
+        if (status !== _this7.googleMaps.GeocoderStatus.OK) {
           return;
         }
 
@@ -431,7 +442,7 @@ var Geosuggest = (function (_React$Component) {
           lng: location.lng()
         };
 
-        _this6.props.onSuggestSelect(suggest);
+        _this7.props.onSuggestSelect(suggest);
       });
     }
 
@@ -439,77 +450,93 @@ var Geosuggest = (function (_React$Component) {
      * Render the view
      * @return {Function} The React element to render
      */
+
   }, {
     key: 'render',
     value: function render() {
-      var _this7 = this;
+      var _this8 = this;
 
-      var attributes = (0, _filterInputAttributes2['default'])(this.props),
-          classes = (0, _classnames2['default'])('geosuggest', this.props.className);
+      var attributes = (0, _filterInputAttributes2.default)(this.props),
+          classes = (0, _classnames2.default)('geosuggest', this.props.className);
+      var input = _react2.default.createElement(_input2.default, _extends({ className: this.props.inputClassName,
+        ref: 'input',
+        value: this.state.userInput,
+        onChange: this.onInputChange.bind(this),
+        onFocus: this.onInputFocus.bind(this),
+        onBlur: this.onInputBlur.bind(this),
+        onNext: function onNext() {
+          return _this8.activateSuggest('next');
+        },
+        onPrev: function onPrev() {
+          return _this8.activateSuggest('prev');
+        },
+        onSelect: function onSelect() {
+          return _this8.selectSuggest(_this8.state.activeSuggest);
+        },
+        onEscape: this.hideSuggests.bind(this) }, attributes)),
+          suggestionsList = _react2.default.createElement(_suggestList2.default, { isHidden: this.state.isSuggestsHidden,
+        suggests: this.state.suggests,
+        activeSuggest: this.state.activeSuggest,
+        onSuggestMouseDown: function onSuggestMouseDown() {
+          return _this8.setState({ ignoreBlur: true });
+        },
+        onSuggestMouseOut: function onSuggestMouseOut() {
+          return _this8.setState({ ignoreBlur: false });
+        },
+        onSuggestSelect: this.selectSuggest.bind(this) });
 
-      return _react2['default'].createElement(
+      return _react2.default.createElement(
         'div',
         { className: classes },
-        _react2['default'].createElement(_input2['default'], _extends({ className: this.props.inputClassName,
-          ref: 'input',
-          value: this.state.userInput,
-          onChange: this.onInputChange.bind(this),
-          onFocus: this.onInputFocus.bind(this),
-          onBlur: this.onInputBlur.bind(this),
-          onNext: function () {
-            return _this7.activateSuggest('next');
-          },
-          onPrev: function () {
-            return _this7.activateSuggest('prev');
-          },
-          onSelect: function () {
-            return _this7.selectSuggest(_this7.state.activeSuggest);
-          },
-          onEscape: this.hideSuggests.bind(this)
-        }, attributes)),
-        _react2['default'].createElement(_suggestList2['default'], {
-          isHidden: this.state.isSuggestsHidden,
-          suggests: this.state.suggests,
-          activeSuggest: this.state.activeSuggest,
-          onSuggestMouseDown: function () {
-            return _this7.setState({ ignoreBlur: true });
-          },
-          onSuggestMouseOut: function () {
-            return _this7.setState({ ignoreBlur: false });
-          },
-          onSuggestSelect: this.selectSuggest.bind(this) })
+        this.props.wrapInput ? _react2.default.createElement(
+          'div',
+          { className: 'geosuggest__input-wrapper' },
+          input
+        ) : input,
+        this.props.wrapSuggestionList ? _react2.default.createElement(
+          'div',
+          { className: 'geosuggest__suggests-wrapper' },
+          suggestionsList
+        ) : suggestionsList
       );
     }
   }]);
 
   return Geosuggest;
-})(_react2['default'].Component);
+}(_react2.default.Component);
 
-Geosuggest.propTypes = _propTypes2['default'];
+/**
+ * Types for the properties
+ * @type {Object}
+ */
+
+
+Geosuggest.propTypes = _propTypes2.default;
 
 /**
  * Default values for the properties
  * @type {Object}
  */
-Geosuggest.defaultProps = _defaults2['default'];
+Geosuggest.defaultProps = _defaults2.default;
 
-exports['default'] = Geosuggest;
-module.exports = exports['default'];
+exports.default = Geosuggest;
 
 },{"./defaults":3,"./filter-input-attributes":4,"./input":5,"./prop-types":6,"./suggest-list":8,"classnames":1}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /**
  * Default values
  */
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-exports['default'] = {
+exports.default = {
   fixtures: [],
   initialValue: '',
   placeholder: 'Search places',
   disabled: false,
+  wrapInput: false,
+  wrapSuggestionList: false,
   className: '',
   inputClassName: '',
   location: null,
@@ -528,26 +555,15 @@ exports['default'] = {
   },
   autoActivateFirstSuggest: false
 };
-module.exports = exports['default'];
 
 },{}],4:[function(require,module,exports){
-/**
- * Attributes allowed on input elements
- */
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var allowedAttributes = ['autoComplete', 'autoFocus', 'disabled', 'form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'height', 'id', 'inputMode', 'maxLength', 'name', 'pattern', 'placeholder', 'readOnly', 'required', 'size', 'spellCheck', 'tabIndex'];
 
-/**
- * Filter the properties for only allowed input properties
- * @param  {Object} props The properties to filter
- * @return {Object} The filtered, allowed properties
- */
-
-exports['default'] = function (props) {
+exports.default = function (props) {
   var attributes = {};
 
   allowedAttributes.forEach(function (allowedAttribute) {
@@ -559,32 +575,31 @@ exports['default'] = function (props) {
   return attributes;
 };
 
-module.exports = exports['default'];
+/**
+ * Attributes allowed on input elements
+ */
+var allowedAttributes = ['autoComplete', 'autoFocus', 'disabled', 'form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'height', 'id', 'inputMode', 'maxLength', 'name', 'pattern', 'placeholder', 'readOnly', 'required', 'size', 'spellCheck', 'tabIndex'];
+
+/**
+ * Filter the properties for only allowed input properties
+ * @param  {Object} props The properties to filter
+ * @return {Object} The filtered, allowed properties
+ */
 
 },{}],5:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
-
-// eslint-disable-line no-unused-vars
 
 var _classnames = require('classnames');
 
@@ -594,25 +609,29 @@ var _filterInputAttributes = require('./filter-input-attributes');
 
 var _filterInputAttributes2 = _interopRequireDefault(_filterInputAttributes);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // eslint-disable-line no-unused-vars
+
+
 /**
  * The input field
  * @param {Object} props The component's props
  * @return {JSX} The icon component.
  */
 
-var Input = (function (_React$Component) {
+var Input = function (_React$Component) {
   _inherits(Input, _React$Component);
 
   function Input() {
     _classCallCheck(this, Input);
 
-    _get(Object.getPrototypeOf(Input.prototype), 'constructor', this).apply(this, arguments);
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Input).apply(this, arguments));
   }
-
-  /**
-   * Default values for the properties
-   * @type {Object}
-   */
 
   _createClass(Input, [{
     key: 'onChange',
@@ -628,6 +647,7 @@ var Input = (function (_React$Component) {
      * When a key gets pressed in the input
      * @param  {Event} event The keypress event
      */
+
   }, {
     key: 'onInputKeyDown',
     value: function onInputKeyDown(event) {
@@ -663,6 +683,7 @@ var Input = (function (_React$Component) {
     /**
      * Focus the input
      */
+
   }, {
     key: 'focus',
     value: function focus() {
@@ -673,13 +694,14 @@ var Input = (function (_React$Component) {
      * Render the view
      * @return {Function} The React element to render
      */
+
   }, {
     key: 'render',
     value: function render() {
-      var attributes = (0, _filterInputAttributes2['default'])(this.props),
-          classes = (0, _classnames2['default'])('geosuggest__input', this.props.className);
+      var attributes = (0, _filterInputAttributes2.default)(this.props),
+          classes = (0, _classnames2.default)('geosuggest__input', this.props.className);
 
-      return _react2['default'].createElement('input', _extends({ className: classes,
+      return _react2.default.createElement('input', _extends({ className: classes,
         ref: 'input',
         type: 'text'
       }, attributes, {
@@ -692,7 +714,13 @@ var Input = (function (_React$Component) {
   }]);
 
   return Input;
-})(_react2['default'].Component);
+}(_react2.default.Component);
+
+/**
+ * Default values for the properties
+ * @type {Object}
+ */
+
 
 Input.defaultProps = {
   className: '',
@@ -706,66 +734,64 @@ Input.defaultProps = {
   onEscape: function onEscape() {}
 };
 
-exports['default'] = Input;
-module.exports = exports['default'];
+exports.default = Input;
 
 },{"./filter-input-attributes":4,"classnames":1}],6:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Default values
  */
-exports['default'] = {
-  fixtures: _react2['default'].PropTypes.array,
-  initialValue: _react2['default'].PropTypes.string,
-  placeholder: _react2['default'].PropTypes.string,
-  disabled: _react2['default'].PropTypes.bool,
-  className: _react2['default'].PropTypes.string,
-  inputClassName: _react2['default'].PropTypes.string,
-  location: _react2['default'].PropTypes.object,
-  radius: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.number]),
-  bounds: _react2['default'].PropTypes.object,
-  country: _react2['default'].PropTypes.string,
-  types: _react2['default'].PropTypes.array,
-  googleMaps: _react2['default'].PropTypes.object,
-  onSuggestSelect: _react2['default'].PropTypes.func,
-  onFocus: _react2['default'].PropTypes.func,
-  onBlur: _react2['default'].PropTypes.func,
-  onChange: _react2['default'].PropTypes.func,
-  skipSuggest: _react2['default'].PropTypes.func,
-  getSuggestLabel: _react2['default'].PropTypes.func,
-  autoActivateFirstSuggest: _react2['default'].PropTypes.bool
+exports.default = {
+  fixtures: _react2.default.PropTypes.array,
+  initialValue: _react2.default.PropTypes.string,
+  placeholder: _react2.default.PropTypes.string,
+  disabled: _react2.default.PropTypes.bool,
+  wrapInput: _react2.default.PropTypes.bool,
+  wrapSuggestionList: _react2.default.PropTypes.bool,
+  className: _react2.default.PropTypes.string,
+  inputClassName: _react2.default.PropTypes.string,
+  location: _react2.default.PropTypes.object,
+  radius: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.number]),
+  bounds: _react2.default.PropTypes.object,
+  country: _react2.default.PropTypes.string,
+  types: _react2.default.PropTypes.array,
+  googleMaps: _react2.default.PropTypes.object,
+  onSuggestSelect: _react2.default.PropTypes.func,
+  onFocus: _react2.default.PropTypes.func,
+  onBlur: _react2.default.PropTypes.func,
+  onChange: _react2.default.PropTypes.func,
+  skipSuggest: _react2.default.PropTypes.func,
+  getSuggestLabel: _react2.default.PropTypes.func,
+  autoActivateFirstSuggest: _react2.default.PropTypes.bool
 };
-module.exports = exports['default'];
 
 },{}],7:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
 
-// eslint-disable-line no-unused-vars
-
 var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * A single Geosuggest item in the list
@@ -773,7 +799,7 @@ var _classnames2 = _interopRequireDefault(_classnames);
  * @return {JSX} The icon component.
  */
 
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var _ref$isActive = _ref.isActive;
   var isActive = _ref$isActive === undefined ? false : _ref$isActive;
   var _ref$className = _ref.className;
@@ -787,37 +813,31 @@ exports['default'] = function (_ref) {
   var _ref$onSelect = _ref.onSelect;
   var onSelect = _ref$onSelect === undefined ? function () {} : _ref$onSelect;
 
-  var classes = (0, _classnames2['default'])('geosuggest-item', className, { 'geosuggest-item--active': isActive });
+  var classes = (0, _classnames2.default)('geosuggest-item', className, { 'geosuggest-item--active': isActive });
 
-  return _react2['default'].createElement(
+  return _react2.default.createElement(
     'li',
     { className: classes,
       onMouseDown: onMouseDown,
       onMouseOut: onMouseOut,
-      onClick: function (event) {
+      onClick: function onClick(event) {
         event.preventDefault();
         onSelect();
       } },
     suggest.label
   );
-};
-
-module.exports = exports['default'];
+}; // eslint-disable-line no-unused-vars
 
 },{"classnames":1}],8:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
-
-// eslint-disable-line no-unused-vars
 
 var _classnames = require('classnames');
 
@@ -827,47 +847,48 @@ var _suggestItem = require('./suggest-item');
 
 var _suggestItem2 = _interopRequireDefault(_suggestItem);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /**
  * The list with suggestions. Either from an API or provided as fixture
  * @param {Object} props The component's props
  * @return {JSX} The icon component.
  */
+// eslint-disable-line no-unused-vars
 
-exports['default'] = function (_ref) {
+exports.default = function (_ref) {
   var _ref$isHidden = _ref.isHidden;
   var isHidden = _ref$isHidden === undefined ? true : _ref$isHidden;
   var _ref$suggests = _ref.suggests;
   var suggests = _ref$suggests === undefined ? [] : _ref$suggests;
   var activeSuggest = _ref.activeSuggest;
-  var _ref$onSuggestMouseDown = _ref.onSuggestMouseDown;
-  var onSuggestMouseDown = _ref$onSuggestMouseDown === undefined ? function () {} : _ref$onSuggestMouseDown;
-  var _ref$onSuggestMouseOut = _ref.onSuggestMouseOut;
-  var onSuggestMouseOut = _ref$onSuggestMouseOut === undefined ? function () {} : _ref$onSuggestMouseOut;
+  var _ref$onSuggestMouseDo = _ref.onSuggestMouseDown;
+  var onSuggestMouseDown = _ref$onSuggestMouseDo === undefined ? function () {} : _ref$onSuggestMouseDo;
+  var _ref$onSuggestMouseOu = _ref.onSuggestMouseOut;
+  var onSuggestMouseOut = _ref$onSuggestMouseOu === undefined ? function () {} : _ref$onSuggestMouseOu;
   var _ref$onSuggestSelect = _ref.onSuggestSelect;
   var onSuggestSelect = _ref$onSuggestSelect === undefined ? function () {} : _ref$onSuggestSelect;
 
-  var classes = (0, _classnames2['default'])('geosuggest__suggests', { 'geosuggest__suggests--hidden': isHidden });
+  var classes = (0, _classnames2.default)('geosuggest__suggests', { 'geosuggest__suggests--hidden': isHidden });
 
-  return _react2['default'].createElement(
+  return _react2.default.createElement(
     'ul',
     { className: classes },
     suggests.map(function (suggest) {
       var isActive = activeSuggest && suggest.placeId === activeSuggest.placeId;
 
-      return _react2['default'].createElement(_suggestItem2['default'], { key: suggest.placeId,
+      return _react2.default.createElement(_suggestItem2.default, { key: suggest.placeId,
         className: suggest.className,
         suggest: suggest,
         isActive: isActive,
         onMouseDown: onSuggestMouseDown,
         onMouseOut: onSuggestMouseOut,
-        onSelect: function () {
+        onSelect: function onSelect() {
           return onSuggestSelect(suggest);
         } });
     })
   );
 };
-
-module.exports = exports['default'];
 
 },{"./suggest-item":7,"classnames":1}]},{},[2])(2)
 });

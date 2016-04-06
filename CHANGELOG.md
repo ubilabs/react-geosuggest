@@ -1,3 +1,15 @@
+## 1.20.0 (2016-04-06)
+
+
+#### Bug Fixes
+
+* **example:** switch to ES6 imports thanks to Babel bug ([b5a066b8](https://github.com/ubilabs/react-geosuggest/commit/b5a066b81c28cb991a9bee95183af4d23cff4beb), closes [#112](https://github.com/ubilabs/react-geosuggest/issues/112))
+
+#### Features
+
+* Add wrapper options and add them to example and README ([ 	4b9f9c7](https://github.com/ubilabs/react-geosuggest/commit/4b9f9c7b5939020d09a9603198a6111333f94fbd))
+
+
 ## 1.19.0 (2016-03-11)
 
 
