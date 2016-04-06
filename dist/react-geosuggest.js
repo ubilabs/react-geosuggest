@@ -488,16 +488,16 @@ var Geosuggest = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: classes },
-        this.props.wrapInput ? _react2.default.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'geosuggest__input-wrapper' },
           input
-        ) : input,
-        this.props.wrapSuggestionList ? _react2.default.createElement(
+        ),
+        _react2.default.createElement(
           'div',
           { className: 'geosuggest__suggests-wrapper' },
           suggestionsList
-        ) : suggestionsList
+        )
       );
     }
   }]);
@@ -535,8 +535,6 @@ exports.default = {
   initialValue: '',
   placeholder: 'Search places',
   disabled: false,
-  wrapInput: false,
-  wrapSuggestionList: false,
   className: '',
   inputClassName: '',
   location: null,
@@ -757,8 +755,6 @@ exports.default = {
   initialValue: _react2.default.PropTypes.string,
   placeholder: _react2.default.PropTypes.string,
   disabled: _react2.default.PropTypes.bool,
-  wrapInput: _react2.default.PropTypes.bool,
-  wrapSuggestionList: _react2.default.PropTypes.bool,
   className: _react2.default.PropTypes.string,
   inputClassName: _react2.default.PropTypes.string,
   location: _react2.default.PropTypes.object,

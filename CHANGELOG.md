@@ -1,3 +1,11 @@
+### 1.20.1 (2016-04-06)
+
+
+#### Bug Fixes
+
+* always add wrappers to input and suggests ([91d1f4fb](https://github.com/ubilabs/react-geosuggest/commit/91d1f4fbc480d1043213d62eb8399e3da4789c92))
+
+
 ## 1.20.0 (2016-04-06)
 
 
