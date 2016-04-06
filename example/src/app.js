@@ -1,8 +1,8 @@
 /* global google */
 
-var React = require('react'),
-  ReactDOM = require('react-dom'),
-  Geosuggest = require('../../src/Geosuggest'); // eslint-disable-line
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Geosuggest from '../../src/Geosuggest';
 
 var App = React.createClass({ // eslint-disable-line
   /**
