@@ -181,7 +181,7 @@ class Geosuggest extends React.Component {
 
       if (!skipSuggest(suggest) && suggest.label.match(regex)) {
         fixturesSearched++;
-        
+
         suggest.placeId = suggest.label;
         suggests.push(suggest);
       }
