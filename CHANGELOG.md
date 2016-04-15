@@ -1,3 +1,9 @@
+## 1.21.0 (2016-04-15)
+
+#### Features
+
+* Update to React 15 ([ 	f604019](https://github.com/ubilabs/react-geosuggest/commit/f60401938166d1eaaf7a80c2e83992fe22d35e2b))
+
 ### 1.20.1 (2016-04-06)
 
 
