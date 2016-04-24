@@ -169,12 +169,6 @@ Default: `false`
 
 Automatically activate the first suggestion as you type. If false, the exact term(s) in the input will be used when searching and may return a result not in the list of suggestions.
 
-#### maxFixtures
-Type: `Number`
-Default: `100`
-
-If using fixtures, this sets the max number of fixtures that will be included in results. This is especially useful if you have a large number of fixtures (e.g. 1000s) as otherwise the component will attempt to match a regex on EVERY one of them, especially when the user first focuses the search input.
-
 #### Others
 
 All standard `input[type="text"]` attributes are allowed. See the [documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input) for more information.

@@ -25,6 +25,5 @@ export default {
   onChange: React.PropTypes.func,
   skipSuggest: React.PropTypes.func,
   getSuggestLabel: React.PropTypes.func,
-  autoActivateFirstSuggest: React.PropTypes.bool,
-  maxFixtures: React.PropTypes.number
+  autoActivateFirstSuggest: React.PropTypes.bool
 };
