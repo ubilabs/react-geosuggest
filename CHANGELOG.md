@@ -1,3 +1,12 @@
+## 1.22.0 (2016-04-26)
+
+
+#### Features
+
+* **Geosuggest:**
+  * hardcode maxFixtures to 10 ([c2c3ef0f](https://github.com/ubilabs/react-geosuggest/commit/c2c3ef0f4a56b76720b90971c7b554b175ed0917))
+
+
 ## 1.21.0 (2016-04-15)
 
 #### Features

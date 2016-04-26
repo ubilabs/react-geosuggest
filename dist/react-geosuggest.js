@@ -304,10 +304,18 @@ var Geosuggest = function (_React$Component) {
 
       var suggests = [],
           regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
-          skipSuggest = this.props.skipSuggest;
+          skipSuggest = this.props.skipSuggest,
+          maxFixtures = 10,
+          fixturesSearched = 0;
 
       this.props.fixtures.forEach(function (suggest) {
+        if (fixturesSearched >= maxFixtures) {
+          return;
+        }
+
         if (!skipSuggest(suggest) && suggest.label.match(regex)) {
+          fixturesSearched++;
+
           suggest.placeId = suggest.label;
           suggests.push(suggest);
         }
