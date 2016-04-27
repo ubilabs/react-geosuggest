@@ -119,7 +119,7 @@ var Geosuggest = function (_React$Component) {
 
     _this.state = {
       isSuggestsHidden: true,
-      userInput: _this.props.initialValue,
+      userInput: props.initialValue,
       activeSuggest: null,
       suggests: [],
       timer: null
