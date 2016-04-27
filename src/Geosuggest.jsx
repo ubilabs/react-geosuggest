@@ -27,7 +27,7 @@ class Geosuggest extends React.Component {
     super(props);
     this.state = {
       isSuggestsHidden: true,
-      userInput: this.props.initialValue,
+      userInput: props.initialValue,
       activeSuggest: null,
       suggests: [],
       timer: null
