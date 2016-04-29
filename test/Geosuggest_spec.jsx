@@ -38,16 +38,23 @@ window.google = global.google = {
 
 describe('Component: Geosuggest', () => {
 
-  let component, onSuggestSelect, isLocationCalled;
+  let component,
+    onSuggestSelect,
+    onActivateSuggest,
+    isLocationCalled,
+    isActivateCalled;
 
   beforeEach(() => {
     isLocationCalled = false;
+    isActivateCalled = false;
     onSuggestSelect = () => isLocationCalled = true;
+    onActivateSuggest = () => isActivateCalled = true;
 
     component = TestUtils.renderIntoDocument(
       <Geosuggest
         radius="20"
         onSuggestSelect={onSuggestSelect}
+        onActivateSuggest={onActivateSuggest}
       />
     );
   });
@@ -67,7 +74,15 @@ describe('Component: Geosuggest', () => {
     TestUtils.Simulate.keyDown(geoSuggestInput, {key: "keyDown", keyCode: 40, which: 40});
     TestUtils.Simulate.keyDown(geoSuggestInput, {key: "Enter", keyCode: 13, which: 13});
     expect(isLocationCalled).to.be.true;
+  });
 
+  it('should call `onActivateSuggest` when we key down to a suggestion', () => {
+    const input = component.refs.input;
+    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input');
+    input.value = 'New';
+    TestUtils.Simulate.change(geoSuggestInput);
+    TestUtils.Simulate.keyDown(geoSuggestInput, {key: "keyDown", keyCode: 40, which: 40});
+    expect(isActivateCalled).to.be.true;
   });
 
 });
