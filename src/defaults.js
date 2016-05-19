@@ -14,6 +14,7 @@ export default {
   country: null,
   types: null,
   googleMaps: null,
+  onActivateSuggest: () => {},
   onSuggestSelect: () => {},
   onFocus: () => {},
   onBlur: () => {},
