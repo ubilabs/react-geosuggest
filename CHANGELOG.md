@@ -1,3 +1,16 @@
+## 1.23.0 (2016-05-19)
+
+
+#### Bug Fixes
+
+* Bug fix for IE 10, 'this' is not defined in the constructor function.  We need to access the props directly from the argument. ([2dca2727](https://github.com/ubilabs/react-geosuggest/commit/2dca2727b4c4aee585ce419af2954c49d4208606))
+
+#### Features
+
+* **Geosuggest:** add onActivateSuggest event ([ab2fc049](https://github.com/ubilabs/react-geosuggest/commit/ab2fc049624076fb2d0ab517ebae705a82a987dc))
+
+
+
 ## 1.22.0 (2016-04-26)
 
 

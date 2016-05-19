@@ -119,7 +119,7 @@ var Geosuggest = function (_React$Component) {
 
     _this.state = {
       isSuggestsHidden: true,
-      userInput: _this.props.initialValue,
+      userInput: props.initialValue,
       activeSuggest: null,
       suggests: [],
       timer: null
@@ -395,6 +395,8 @@ var Geosuggest = function (_React$Component) {
         newActiveSuggest = this.state.suggests[newIndex];
       }
 
+      this.props.onActivateSuggest(newActiveSuggest);
+
       this.setState({ activeSuggest: newActiveSuggest });
     }
 
@@ -551,6 +553,7 @@ exports.default = {
   country: null,
   types: null,
   googleMaps: null,
+  onActivateSuggest: function onActivateSuggest() {},
   onSuggestSelect: function onSuggestSelect() {},
   onFocus: function onFocus() {},
   onBlur: function onBlur() {},
