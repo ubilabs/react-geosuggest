@@ -49,9 +49,7 @@ class Geosuggest extends React.Component {
    * Google api sdk object will be obtained and cached as a instance property.
    * Necessary objects of google api will also be determined and saved.
    */
-  componentDidMount() {
-    this.setState({userInput: this.props.initialValue});
-
+  componentWillMount() {
     var googleMaps = this.props.googleMaps ||
       (window.google && // eslint-disable-line no-extra-parens
         window.google.maps) ||
