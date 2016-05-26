@@ -90,7 +90,6 @@
       "string": true
     }],
     "no-implied-eval": 2,
-    "no-invalid-this": 2,
     "no-iterator": 2,
     "no-labels": 2,
     "no-lone-blocks": 2,
@@ -235,6 +234,7 @@
     "no-const-assign": 2,
     "prefer-reflect": 1,
     "prefer-spread": 1,
-    "require-yield": 2
+    "require-yield": 2,
+    "react/jsx-no-bind": 2
   }
 }
