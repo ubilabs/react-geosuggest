@@ -142,6 +142,13 @@ Default: `google.maps`
 
 In case you want to provide your own Google Maps object, pass it in as googleMaps. The default is the global google maps object.
 
+#### debounce
+Type: `Number`
+Default: `250`
+
+Sets the delay in milliseconds after typing before a request will be sent to find suggestions.
+Specify `0` if you wish to fetch suggestions after every keystroke.
+
 #### onFocus
 Type: `Function`
 Default: `function() {}`
