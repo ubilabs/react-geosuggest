@@ -148,6 +148,13 @@ Default: `false`
 
 When the tab key is pressed, the `onSelect` handler is invoked. Set to true to not invoke `onSelect` on tab press.
 
+#### queryDelay
+Type: `Number`
+Default: `250`
+
+Sets the delay in milliseconds after typing before a request will be sent to find suggestions.
+Specify `0` if you wish to fetch suggestions after every keystroke.
+
 #### onFocus
 Type: `Function`
 Default: `function() {}`
