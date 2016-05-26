@@ -17,7 +17,8 @@
     "react": "^0.14.0 || ^15.0.0"
   },
   "dependencies": {
-    "classnames": "^2.2.3"
+    "classnames": "^2.2.3",
+    "lodash": "^4.13.1"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
