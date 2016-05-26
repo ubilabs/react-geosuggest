@@ -52,6 +52,7 @@ describe('Component: Geosuggest', () => {
       component = TestUtils.renderIntoDocument(
         <Geosuggest
           radius='20'
+          queryDelay={0}
           onSuggestSelect={onSuggestSelect}
           onActivateSuggest={onActivateSuggest}
           onChange={onChange}
