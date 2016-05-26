@@ -13,6 +13,7 @@ export default {
   bounds: null,
   country: null,
   types: null,
+  queryDelay: 250,
   googleMaps: null,
   onActivateSuggest: () => {},
   onSuggestSelect: () => {},
