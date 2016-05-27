@@ -2,7 +2,6 @@
  * Attributes allowed on input elements
  */
 const allowedAttributes = [
-  'autoComplete',
   'autoFocus',
   'disabled',
   'form',
