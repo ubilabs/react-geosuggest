@@ -66,6 +66,7 @@ class Input extends React.Component {
     return <input className={classes}
       ref='input'
       type='text'
+      autoComplete='off'
       {...attributes}
       value={this.props.value}
       onKeyDown={this.onInputKeyDown.bind(this)}

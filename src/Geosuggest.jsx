@@ -315,7 +315,6 @@ class Geosuggest extends React.Component {
       );
     var input = <Input className={this.props.inputClassName}
                  ref='input'
-                 autoComplete='off'
                  value={this.state.userInput}
                  onChange={this.onInputChange.bind(this)}
                  onFocus={this.onInputFocus.bind(this)}
