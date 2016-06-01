@@ -35,13 +35,22 @@ You can also use the standalone build by including `dist/react-geosuggest.js` in
 npm install react-geosuggest --save
 ```
 
-
 ## Usage
 
 The Geosuggest works out of the box by just including it. However, you can customize the behaviour with the properties noted below.
 
+### ES6:
+
 ```
-var Geosuggest = require('react-geosuggest');
+import Geosuggest from 'react-geosuggest';
+
+<Geosuggest />
+```
+
+### ES5:
+
+```
+var Geosuggest = require('react-geosuggest').default;
 
 <Geosuggest />
 ```
@@ -196,8 +205,9 @@ It is also possible to clear the value of the input contained within the GeoSugg
 ### Example
 
 ```
-var React = require('react'),
-  Geosuggest = require('./src/Geosuggest.jsx');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Geosuggest from 'react-geosuggest';
 
 var App = React.createClass({
   /**
@@ -232,7 +242,7 @@ var App = React.createClass({
   }
 });
 
-React.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
 ```
 
 ## Styling
