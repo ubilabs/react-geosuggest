@@ -180,7 +180,6 @@ class Geosuggest extends React.Component {
       if (!skipSuggest(suggest) && suggest.label.match(regex)) {
         fixturesSearched++;
 
-        suggest.placeId = suggest.label;
         suggests.push(suggest);
       }
     });
@@ -270,6 +269,7 @@ class Geosuggest extends React.Component {
 
     if (suggest.location) {
       this.setState({ignoreBlur: false});
+      suggest.placeId = suggest.placeId || suggest.label;
       this.props.onSuggestSelect(suggest);
       return;
     }
@@ -292,6 +292,7 @@ class Geosuggest extends React.Component {
         var gmaps = results[0],
           location = gmaps.geometry.location;
 
+        suggest.placeId = suggest.placeId || gmaps.place_id;
         suggest.gmaps = gmaps;
         suggest.location = {
           lat: location.lat(),
