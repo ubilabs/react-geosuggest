@@ -45,7 +45,7 @@
   },
   "scripts": {
     "prepublish": "npm run build:module",
-    "lint": "eslint ./src/*.jsx ./example/src",
+    "lint": "eslint ./src/*.jsx ./src/*.js ./example/src ./test/*.jsx ./test/*.js ./test/fixtures",
     "pretest": "npm run lint",
     "test": "npm run unit-test",
     "start": "npm run server",
