@@ -180,6 +180,8 @@ class Geosuggest extends React.Component {
       if (!skipSuggest(suggest) && suggest.label.match(regex)) {
         fixturesSearched++;
 
+        suggest.placeId = suggest.label;
+        suggest.isFixture = true;
         suggests.push(suggest);
       }
     });
@@ -188,7 +190,8 @@ class Geosuggest extends React.Component {
       if (!skipSuggest(suggest)) {
         suggests.push({
           label: this.props.getSuggestLabel(suggest),
-          placeId: suggest.place_id
+          placeId: suggest.place_id,
+          isFixture: false
         });
       }
     });
@@ -269,7 +272,6 @@ class Geosuggest extends React.Component {
 
     if (suggest.location) {
       this.setState({ignoreBlur: false});
-      suggest.placeId = suggest.placeId || suggest.label;
       this.props.onSuggestSelect(suggest);
       return;
     }
@@ -283,7 +285,8 @@ class Geosuggest extends React.Component {
    */
   geocodeSuggest(suggest) {
     this.geocoder.geocode(
-      suggest.placeId ? {placeId: suggest.placeId} : {address: suggest.label},
+      suggest.placeId && !suggest.isFixture ?
+        {placeId: suggest.placeId} : {address: suggest.label},
       (results, status) => {
         if (status !== this.googleMaps.GeocoderStatus.OK) {
           return;
@@ -292,7 +295,6 @@ class Geosuggest extends React.Component {
         var gmaps = results[0],
           location = gmaps.geometry.location;
 
-        suggest.placeId = suggest.placeId || gmaps.place_id;
         suggest.gmaps = gmaps;
         suggest.location = {
           lat: location.lat(),

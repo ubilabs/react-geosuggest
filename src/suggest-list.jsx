@@ -21,11 +21,11 @@ export default ({
   );
 
   return <ul className={classes}>
-    {suggests.map((suggest, index) => {
+    {suggests.map(suggest => {
       const isActive = activeSuggest &&
         suggest.placeId === activeSuggest.placeId;
 
-      return <SuggestItem key={index}
+      return <SuggestItem key={suggest.placeId}
         className={suggest.className}
         suggest={suggest}
         isActive={isActive}
