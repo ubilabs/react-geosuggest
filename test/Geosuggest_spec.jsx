@@ -1,10 +1,9 @@
-import React from 'react';
+import React from 'react'; // eslint-disable-line no-unused-vars
 import {expect} from 'chai';
 import TestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 import predictions from './fixtures/predictions';
 import Geosuggest from '../src/Geosuggest';
-
 
 window.google = global.google = {
   'maps': {
@@ -37,12 +36,11 @@ window.google = global.google = {
 };
 
 describe('Component: Geosuggest', () => {
-
-  let component,
-    onSuggestSelect,
-    onActivateSuggest,
-    isLocationCalled,
-    isActivateCalled;
+  let component = null,
+    onSuggestSelect = null,
+    onActivateSuggest = null,
+    isLocationCalled = false,
+    isActivateCalled = false;
 
   beforeEach(() => {
     isLocationCalled = false;
@@ -52,7 +50,7 @@ describe('Component: Geosuggest', () => {
 
     component = TestUtils.renderIntoDocument(
       <Geosuggest
-        radius="20"
+        radius='20'
         onSuggestSelect={onSuggestSelect}
         onActivateSuggest={onActivateSuggest}
       />
@@ -60,29 +58,43 @@ describe('Component: Geosuggest', () => {
   });
 
   it('should have an input field', () => {
-    const input = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__input');
-
+    const input = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
     expect(input).to.have.lengthOf(1);
   });
 
-  it('should call `onSuggestSelect` when we type a city name and choose some of the suggestions', () => {
-    const input = component.refs.input;
-    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input');
+  it('should call `onSuggestSelect` when we type a city name and choose some of the suggestions', () => { // eslint-disable-line max-len
+    const input = component.refs.input,
+      geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
     input.value = 'New';
     TestUtils.Simulate.change(geoSuggestInput);
-    TestUtils.Simulate.keyDown(geoSuggestInput, {key: "keyDown", keyCode: 40, which: 40});
-    TestUtils.Simulate.keyDown(geoSuggestInput, {key: "keyDown", keyCode: 40, which: 40});
-    TestUtils.Simulate.keyDown(geoSuggestInput, {key: "Enter", keyCode: 13, which: 13});
-    expect(isLocationCalled).to.be.true;
+    TestUtils.Simulate.keyDown(geoSuggestInput, {
+      key: 'keyDown',
+      keyCode: 40,
+      which: 40
+    });
+    TestUtils.Simulate.keyDown(geoSuggestInput, {
+      key: 'keyDown',
+      keyCode: 40,
+      which: 40
+    });
+    TestUtils.Simulate.keyDown(geoSuggestInput, {
+      key: 'Enter',
+      keyCode: 13,
+      which: 13
+    });
+    expect(isLocationCalled).to.be.true; // eslint-disable-line no-unused-expressions, max-len
   });
 
-  it('should call `onActivateSuggest` when we key down to a suggestion', () => {
-    const input = component.refs.input;
-    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input');
+  it('should call `onActivateSuggest` when we key down to a suggestion', () => { // eslint-disable-line max-len
+    const input = component.refs.input,
+      geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
     input.value = 'New';
     TestUtils.Simulate.change(geoSuggestInput);
-    TestUtils.Simulate.keyDown(geoSuggestInput, {key: "keyDown", keyCode: 40, which: 40});
-    expect(isActivateCalled).to.be.true;
+    TestUtils.Simulate.keyDown(geoSuggestInput, {
+      key: 'keyDown',
+      keyCode: 40,
+      which: 40
+    });
+    expect(isActivateCalled).to.be.true; // eslint-disable-line no-unused-expressions, max-len
   });
-
 });
