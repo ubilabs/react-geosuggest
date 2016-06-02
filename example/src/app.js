@@ -23,6 +23,18 @@ var App = React.createClass({ // eslint-disable-line
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onChange={this.onChange}
+          style={{
+            'input': {
+              'borderColor': '#000'
+            },
+            'suggests': {
+              'borderColor': '#000'
+            },
+            'suggestItem': {
+              'borderColor': '#000',
+              'borderWidth': 1
+            }
+          }}
           onSuggestSelect={this.onSuggestSelect}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
           radius="20" />
