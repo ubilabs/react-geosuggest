@@ -39,9 +39,10 @@ var App = React.createClass({ // eslint-disable-line
 
   /**
    * When the input loses focus
+   * @param {String} value The user input
    */
-  onBlur: function() {
-    console.log('onBlur'); // eslint-disable-line
+  onBlur: function(value) {
+    console.log('onBlur', value); // eslint-disable-line
   },
 
   /**

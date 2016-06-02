@@ -208,7 +208,7 @@ class Geosuggest extends React.Component {
    * Hide the suggestions
    */
   hideSuggests() {
-    this.props.onBlur();
+    this.props.onBlur(this.state.userInput);
     const timer = setTimeout(() => {
       this.setState({isSuggestsHidden: true});
     }, 100);
