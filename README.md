@@ -249,6 +249,15 @@ ReactDOM.render(<App />, document.getElementById('app'));
 
 This component uses [BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/) for namespacing the CSS classes. So styling should be easy and without conflicts. See the [geosuggest.css](https://github.com/ubilabs/react-geosuggest/blob/master/src/geosuggest.css) for an example styling.
 
+### Note:
+`geosuggest__suggests--hidden` class is added to auto hide the suggestion list. copy the below style in your CSS file.
+```
+.geosuggest__suggests--hidden {
+  max-height: 0;
+  overflow: hidden;
+  border-width: 0;
+}
+```
 
 ## Contributing
 
