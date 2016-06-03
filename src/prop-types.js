@@ -25,5 +25,10 @@ export default {
   onChange: React.PropTypes.func,
   skipSuggest: React.PropTypes.func,
   getSuggestLabel: React.PropTypes.func,
-  autoActivateFirstSuggest: React.PropTypes.bool
+  autoActivateFirstSuggest: React.PropTypes.bool,
+  style: React.PropTypes.shape({
+    input: React.PropTypes.object,
+    suggests: React.PropTypes.object,
+    suggestItem: React.PropTypes.object
+  })
 };

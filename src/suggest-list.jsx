@@ -13,14 +13,15 @@ export default ({
   activeSuggest,
   onSuggestMouseDown = () => {},
   onSuggestMouseOut = () => {},
-  onSuggestSelect = () => {}
+  onSuggestSelect = () => {},
+  style = {},
+  suggestItemStyle = {}
 }) => {
   const classes = classnames(
     'geosuggest__suggests',
     {'geosuggest__suggests--hidden': isHidden}
   );
-
-  return <ul className={classes}>
+  return <ul className={classes} style={style}>
     {suggests.map(suggest => {
       const isActive = activeSuggest &&
         suggest.placeId === activeSuggest.placeId;
@@ -28,6 +29,7 @@ export default ({
       return <SuggestItem key={suggest.placeId}
         className={suggest.className}
         suggest={suggest}
+        style={suggestItemStyle}
         isActive={isActive}
         onMouseDown={onSuggestMouseDown}
         onMouseOut={onSuggestMouseOut}

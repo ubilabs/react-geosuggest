@@ -12,7 +12,8 @@ export default ({
   suggest = {},
   onMouseDown = () => {},
   onMouseOut = () => {},
-  onSelect = () => {}
+  onSelect = () => {},
+  style = {}
 }) => {
   const classes = classnames(
     'geosuggest-item',
@@ -21,6 +22,7 @@ export default ({
   );
 
   return <li className={classes}
+    style={style}
     onMouseDown={onMouseDown}
     onMouseOut={onMouseOut}
     onClick={event => {

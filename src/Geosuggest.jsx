@@ -322,11 +322,14 @@ class Geosuggest extends React.Component {
         onChange={this.onInputChange.bind(this)}
         onFocus={this.onInputFocus.bind(this)}
         onBlur={this.onInputBlur.bind(this)}
+        style={this.props.style.input}
         onNext={() => this.activateSuggest('next')}
         onPrev={() => this.activateSuggest('prev')}
         onSelect={() => this.selectSuggest(this.state.activeSuggest)}
         onEscape={this.hideSuggests.bind(this)} {...attributes} />,
       suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
+        style={this.props.style.suggests}
+        suggestItemStyle={this.props.style.suggestItem}
         suggests={this.state.suggests}
         activeSuggest={this.state.activeSuggest}
         onSuggestMouseDown={() => this.setState({ignoreBlur: true})}
