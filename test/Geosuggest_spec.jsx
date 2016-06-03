@@ -53,6 +53,18 @@ describe('Component: Geosuggest', () => {
         radius='20'
         onSuggestSelect={onSuggestSelect}
         onActivateSuggest={onActivateSuggest}
+        style={{
+          'input': {
+            'borderColor': '#000'
+          },
+          'suggests': {
+            'borderColor': '#000'
+          },
+          'suggestItem': {
+            'borderColor': '#000',
+            'borderWidth': 1
+          }
+        }}
       />
     );
   });
@@ -96,5 +108,15 @@ describe('Component: Geosuggest', () => {
       which: 40
     });
     expect(isActivateCalled).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
+
+  it('should add external inline `style` to input component', () => { // eslint-disable-line max-len
+    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    expect(geoSuggestInput.style['border-color']).to.be.equal('#000');
+  });
+
+  it('should add external inline `style` to suggestList component', () => { // eslint-disable-line max-len
+    const geoSuggestList = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__suggests'); // eslint-disable-line max-len
+    expect(geoSuggestList.style['border-color']).to.be.equal('#000');
   });
 });
