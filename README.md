@@ -81,6 +81,17 @@ Default: `''`
 
 Add an additional class to the input.
 
+#### style
+Type: `Object`
+Default: `{
+  'input': {},
+  'suggests': {},
+  'suggestItem': {}
+}`
+
+Add an additional style to `Geosuggest`.
+This would support overriding/adding styles to the input suggestList and suggestItem.
+
 #### disabled
 Type: `Boolean`
 Default: `false`
