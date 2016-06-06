@@ -170,7 +170,8 @@ class Geosuggest extends React.Component {
       regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
       maxFixtures = 10,
-      fixturesSearched = 0;
+      fixturesSearched = 0,
+      activeSuggest = this.state.activeSuggest;
 
     this.props.fixtures.forEach(suggest => {
       if (fixturesSearched >= maxFixtures) {
@@ -196,7 +197,17 @@ class Geosuggest extends React.Component {
       }
     });
 
-    this.setState({suggests});
+    // check if activeSuggest is still in list
+    if (activeSuggest) {
+      const newSuggest = suggests.find(listedSuggest =>
+        activeSuggest.placeId === listedSuggest.placeId &&
+        activeSuggest.isFixture === listedSuggest.isFixture
+      );
+
+      activeSuggest = newSuggest || null;
+    }
+
+    this.setState({suggests, activeSuggest});
   }
 
   /**
@@ -213,7 +224,10 @@ class Geosuggest extends React.Component {
   hideSuggests() {
     this.props.onBlur(this.state.userInput);
     const timer = setTimeout(() => {
-      this.setState({isSuggestsHidden: true});
+      this.setState({
+        isSuggestsHidden: true,
+        activeSuggest: null
+      });
     }, 100);
 
     this.setState({timer});
