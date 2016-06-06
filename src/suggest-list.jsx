@@ -19,7 +19,7 @@ export default ({
 }) => {
   const classes = classnames(
     'geosuggest__suggests',
-    {'geosuggest__suggests--hidden': isHidden}
+    {'geosuggest__suggests--hidden': isHidden || suggests.length === 0}
   );
   return <ul className={classes} style={style}>
     {suggests.map(suggest => {
