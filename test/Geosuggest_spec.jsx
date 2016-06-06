@@ -39,8 +39,8 @@ describe('Component: Geosuggest', () => {
   let component = null,
     onSuggestSelect = null,
     onActivateSuggest = null,
-    isLocationCalled = false,
-    isActivateCalled = false;
+    isLocationCalled, // eslint-disable-line init-declarations
+    isActivateCalled; // eslint-disable-line init-declarations
 
   beforeEach(() => {
     isLocationCalled = false;
@@ -118,5 +118,17 @@ describe('Component: Geosuggest', () => {
   it('should add external inline `style` to suggestList component', () => { // eslint-disable-line max-len
     const geoSuggestList = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__suggests'); // eslint-disable-line max-len
     expect(geoSuggestList.style['border-color']).to.be.equal('#000');
+  });
+
+  it('should hide the suggestion box when there are no suggestions', () => {
+    const input = component.refs.input,
+      geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'), // eslint-disable-line max-len
+      geoSuggestList = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__suggests'), // eslint-disable-line max-len
+      classList = geoSuggestList.classList;
+
+    input.value = 'There is no result for this. Really.';
+    TestUtils.Simulate.change(geoSuggestInput);
+
+    expect(classList.contains('geosuggest__suggests--hidden')).to.be.true; // eslint-disable-line max-len, no-unused-expressions
   });
 });
