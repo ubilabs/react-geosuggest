@@ -39,20 +39,25 @@ describe('Component: Geosuggest', () => {
   let component = null,
     onSuggestSelect = null,
     onActivateSuggest = null,
-    isLocationCalled = false,
-    isActivateCalled = false;
+    onFocus = null,
+    onChange = null,
+    onBlur = null;
 
   beforeEach(() => {
-    isLocationCalled = false;
-    isActivateCalled = false;
-    onSuggestSelect = () => isLocationCalled = true;
-    onActivateSuggest = () => isActivateCalled = true;
+    onSuggestSelect = sinon.spy();
+    onActivateSuggest = sinon.spy();
+    onChange = sinon.spy();
+    onFocus = sinon.spy();
+    onBlur = sinon.spy();
 
     component = TestUtils.renderIntoDocument(
       <Geosuggest
         radius='20'
         onSuggestSelect={onSuggestSelect}
         onActivateSuggest={onActivateSuggest}
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
         style={{
           'input': {
             'borderColor': '#000'
@@ -94,7 +99,7 @@ describe('Component: Geosuggest', () => {
       keyCode: 13,
       which: 13
     });
-    expect(isLocationCalled).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
   });
 
   it('should call `onActivateSuggest` when we key down to a suggestion', () => { // eslint-disable-line max-len
@@ -107,7 +112,29 @@ describe('Component: Geosuggest', () => {
       keyCode: 40,
       which: 40
     });
-    expect(isActivateCalled).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    expect(onActivateSuggest.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
+
+  it('should call `onFocus` when we focus the input', () => {
+    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    TestUtils.Simulate.focus(geoSuggestInput);
+    expect(onFocus.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
+
+  it('should call `onBlur` when we remove the focus from the input', () => {
+    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    TestUtils.Simulate.focus(geoSuggestInput);
+    geoSuggestInput.value = 'New';
+    TestUtils.Simulate.change(geoSuggestInput);
+    TestUtils.Simulate.blur(geoSuggestInput);
+    expect(onBlur.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
+
+  it('should call `onChange` when we change the input value', () => {
+    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    geoSuggestInput.value = 'New';
+    TestUtils.Simulate.change(geoSuggestInput);
+    expect(onChange.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
   });
 
   it('should add external inline `style` to input component', () => { // eslint-disable-line max-len
