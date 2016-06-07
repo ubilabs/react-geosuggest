@@ -150,7 +150,7 @@ Gets triggered when the input field receives focus.
 
 #### onBlur
 Type: `Function`
-Default: `function() {}`
+Default: `function(value) {}`
 
 Gets triggered when input field loses focus.
 
