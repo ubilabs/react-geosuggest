@@ -137,6 +137,19 @@ describe('Component: Geosuggest', () => {
     expect(onChange.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
   });
 
+  it('should call `onChange` when the update method is called', () => {
+    component.update('New');
+    expect(onChange.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
+
+  it('should clear the input text when calling `clear`', () => {
+    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    geoSuggestInput.value = 'New';
+    TestUtils.Simulate.change(geoSuggestInput);
+    component.clear();
+    expect(geoSuggestInput.value).to.equal('');
+  });
+
   it('should add external inline `style` to input component', () => { // eslint-disable-line max-len
     const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
     expect(geoSuggestInput.style['border-color']).to.be.equal('#000');
