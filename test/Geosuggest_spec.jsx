@@ -38,17 +38,23 @@ window.google = global.google = {
 describe('Component: Geosuggest', () => {
   let component = null,
     onSuggestSelect = null,
-    onActivateSuggest = null;
+    onActivateSuggest = null,
+    onFocus = null,
+    onBlur = null;
 
   beforeEach(() => {
     onSuggestSelect = sinon.spy();
     onActivateSuggest = sinon.spy();
+    onFocus = sinon.spy();
+    onBlur = sinon.spy();
 
     component = TestUtils.renderIntoDocument(
       <Geosuggest
         radius='20'
         onSuggestSelect={onSuggestSelect}
         onActivateSuggest={onActivateSuggest}
+        onFocus={onFocus}
+        onBlur={onBlur}
         style={{
           'input': {
             'borderColor': '#000'
@@ -104,6 +110,21 @@ describe('Component: Geosuggest', () => {
       which: 40
     });
     expect(onActivateSuggest.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
+
+  it('should call `onFocus` when we focus the input', () => {
+    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    TestUtils.Simulate.focus(geoSuggestInput);
+    expect(onFocus.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
+
+  it('should call `onBlur` when we remove the focus from the input', () => {
+    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    TestUtils.Simulate.focus(geoSuggestInput);
+    geoSuggestInput.value = 'New';
+    TestUtils.Simulate.change(geoSuggestInput);
+    TestUtils.Simulate.blur(geoSuggestInput);
+    expect(onBlur.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
   });
 
   it('should add external inline `style` to input component', () => { // eslint-disable-line max-len
