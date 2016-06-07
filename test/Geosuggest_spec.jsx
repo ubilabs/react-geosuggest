@@ -38,15 +38,11 @@ window.google = global.google = {
 describe('Component: Geosuggest', () => {
   let component = null,
     onSuggestSelect = null,
-    onActivateSuggest = null,
-    isLocationCalled = false,
-    isActivateCalled = false;
+    onActivateSuggest = null;
 
   beforeEach(() => {
-    isLocationCalled = false;
-    isActivateCalled = false;
-    onSuggestSelect = () => isLocationCalled = true;
-    onActivateSuggest = () => isActivateCalled = true;
+    onSuggestSelect = sinon.spy();
+    onActivateSuggest = sinon.spy();
 
     component = TestUtils.renderIntoDocument(
       <Geosuggest
@@ -94,7 +90,7 @@ describe('Component: Geosuggest', () => {
       keyCode: 13,
       which: 13
     });
-    expect(isLocationCalled).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
   });
 
   it('should call `onActivateSuggest` when we key down to a suggestion', () => { // eslint-disable-line max-len
@@ -107,7 +103,7 @@ describe('Component: Geosuggest', () => {
       keyCode: 40,
       which: 40
     });
-    expect(isActivateCalled).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    expect(onActivateSuggest.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
   });
 
   it('should add external inline `style` to input component', () => { // eslint-disable-line max-len
