@@ -75,6 +75,17 @@ Default: `''`
 
 Add an additional class to the geosuggest container.
 
+#### style
+Type: `Object`
+Default: `{
+  'input': {},
+  'suggests': {},
+  'suggestItem': {}
+}`
+
+Add an additional style to `Geosuggest`.
+This would support overriding/adding styles to the input suggestList and suggestItem.
+
 #### inputClassName
 Type: `String`
 Default: `''`
@@ -139,7 +150,7 @@ Gets triggered when the input field receives focus.
 
 #### onBlur
 Type: `Function`
-Default: `function() {}`
+Default: `function(value) {}`
 
 Gets triggered when input field loses focus.
 
