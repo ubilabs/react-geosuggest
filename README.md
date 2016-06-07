@@ -75,12 +75,6 @@ Default: `''`
 
 Add an additional class to the geosuggest container.
 
-#### inputClassName
-Type: `String`
-Default: `''`
-
-Add an additional class to the input.
-
 #### style
 Type: `Object`
 Default: `{
@@ -91,6 +85,12 @@ Default: `{
 
 Add an additional style to `Geosuggest`.
 This would support overriding/adding styles to the input suggestList and suggestItem.
+
+#### inputClassName
+Type: `String`
+Default: `''`
+
+Add an additional class to the input.
 
 #### disabled
 Type: `Boolean`
