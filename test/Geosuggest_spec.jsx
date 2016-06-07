@@ -40,11 +40,13 @@ describe('Component: Geosuggest', () => {
     onSuggestSelect = null,
     onActivateSuggest = null,
     onFocus = null,
+    onChange = null,
     onBlur = null;
 
   beforeEach(() => {
     onSuggestSelect = sinon.spy();
     onActivateSuggest = sinon.spy();
+    onChange = sinon.spy();
     onFocus = sinon.spy();
     onBlur = sinon.spy();
 
@@ -53,6 +55,7 @@ describe('Component: Geosuggest', () => {
         radius='20'
         onSuggestSelect={onSuggestSelect}
         onActivateSuggest={onActivateSuggest}
+        onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
         style={{
@@ -125,6 +128,13 @@ describe('Component: Geosuggest', () => {
     TestUtils.Simulate.change(geoSuggestInput);
     TestUtils.Simulate.blur(geoSuggestInput);
     expect(onBlur.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
+
+  it('should call `onChange` when we change the input value', () => {
+    const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    geoSuggestInput.value = 'New';
+    TestUtils.Simulate.change(geoSuggestInput);
+    expect(onChange.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
   });
 
   it('should add external inline `style` to input component', () => { // eslint-disable-line max-len
