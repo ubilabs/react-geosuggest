@@ -142,6 +142,12 @@ Default: `google.maps`
 
 In case you want to provide your own Google Maps object, pass it in as googleMaps. The default is the global google maps object.
 
+#### ignoreTab
+Type: `Boolean`
+Default: `false`
+
+When the tab key is pressed, the `onSelect` handler is invoked. Set to true to not invoke `onSelect` on tab press.
+
 #### onFocus
 Type: `Function`
 Default: `function() {}`
