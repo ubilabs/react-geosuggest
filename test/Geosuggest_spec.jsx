@@ -41,38 +41,40 @@ describe('Component: Geosuggest', () => {
     onActivateSuggest = null,
     onFocus = null,
     onChange = null,
-    onBlur = null;
+    onBlur = null,
+    render = props => {
+      onSuggestSelect = sinon.spy();
+      onActivateSuggest = sinon.spy();
+      onChange = sinon.spy();
+      onFocus = sinon.spy();
+      onBlur = sinon.spy();
 
-  beforeEach(() => {
-    onSuggestSelect = sinon.spy();
-    onActivateSuggest = sinon.spy();
-    onChange = sinon.spy();
-    onFocus = sinon.spy();
-    onBlur = sinon.spy();
+      component = TestUtils.renderIntoDocument(
+        <Geosuggest
+          radius='20'
+          onSuggestSelect={onSuggestSelect}
+          onActivateSuggest={onActivateSuggest}
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          style={{
+            'input': {
+              'borderColor': '#000'
+            },
+            'suggests': {
+              'borderColor': '#000'
+            },
+            'suggestItem': {
+              'borderColor': '#000',
+              'borderWidth': 1
+            }
+          }}
+          {...props}
+        />
+      );
+    };
 
-    component = TestUtils.renderIntoDocument(
-      <Geosuggest
-        radius='20'
-        onSuggestSelect={onSuggestSelect}
-        onActivateSuggest={onActivateSuggest}
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        style={{
-          'input': {
-            'borderColor': '#000'
-          },
-          'suggests': {
-            'borderColor': '#000'
-          },
-          'suggestItem': {
-            'borderColor': '#000',
-            'borderWidth': 1
-          }
-        }}
-      />
-    );
-  });
+  beforeEach(() => render());
 
   it('should have an input field', () => {
     const input = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
