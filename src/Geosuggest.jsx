@@ -319,6 +319,7 @@ class Geosuggest extends React.Component {
       input = <Input className={this.props.inputClassName}
         ref='input'
         value={this.state.userInput}
+        ignoreTab={this.props.ignoreTab}
         onChange={this.onInputChange.bind(this)}
         onFocus={this.onInputFocus.bind(this)}
         onBlur={this.onInputBlur.bind(this)}

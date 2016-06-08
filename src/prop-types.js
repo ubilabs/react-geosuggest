@@ -30,5 +30,6 @@ export default {
     input: React.PropTypes.object,
     suggests: React.PropTypes.object,
     suggestItem: React.PropTypes.object
-  })
+  }),
+  ignoreTab: React.PropTypes.bool
 };

@@ -35,7 +35,9 @@ class Input extends React.Component {
         this.props.onSelect();
         break;
       case 9: // TAB
-        this.props.onSelect();
+        if (!this.props.ignoreTab) {
+          this.props.onSelect();
+        }
         break;
       case 27: // ESC
         this.props.onEscape();
@@ -84,6 +86,7 @@ class Input extends React.Component {
 Input.defaultProps = {
   className: '',
   value: '',
+  ignoreTab: false,
   onChange: () => {},
   onFocus: () => {},
   onBlur: () => {},
