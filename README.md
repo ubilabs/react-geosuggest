@@ -158,7 +158,7 @@ Gets triggered when input field loses focus.
 Type: `Function`
 Default: `function(value) {}`
 
-Gets triggered when input field changes the value
+Gets triggered when input field changes the value.
 
 #### onSuggestSelect
 Type: `Function`
@@ -273,6 +273,10 @@ The above class is added whenever the suggestion list needs to be hidden. Like w
 
 ## Contributing
 
+### Conventions
+
+Commit messages should follow the format outlined in [CONVENTIONS.md](https://github.com/ubilabs/react-geosuggest/blob/master/CONVENTIONS.md).
+
 ### Development
 
 To build the examples locally, run:
@@ -286,7 +290,7 @@ Then open [`localhost:8000`](http://localhost:8000) in a browser.
 
 ### Deployment
 
-To release & deploy, run the following
+To release & deploy, run the following:
 
 ```
 npm run release:patch|minor|major
