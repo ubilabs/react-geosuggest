@@ -273,9 +273,9 @@ The above class is added whenever the suggestion list needs to be hidden. Like w
 
 ## Contributing
 
-### Conventions
-
-Commit messages should follow the format outlined in [CONVENTIONS.md](https://github.com/ubilabs/react-geosuggest/blob/master/CONVENTIONS.md).
+Issues and pull requests are welcome!  
+Please read the guidelines in [CONTRIBUTING.md](CONTRIBUTING.md) before starting to work on a PR.  
+Most importantly, commit messages should follow the format outlined in [CONVENTIONS.md](CONVENTIONS.md).
 
 ### Development
 
