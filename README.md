@@ -273,6 +273,10 @@ The above class is added whenever the suggestion list needs to be hidden. Like w
 
 ## Contributing
 
+### Conventions
+
+Commit messages should follow the format outlined in [CONVENTIONS.md](https://github.com/ubilabs/react-geosuggest/blob/master/CONVENTIONS.md)
+
 ### Development
 
 To build the examples locally, run:
