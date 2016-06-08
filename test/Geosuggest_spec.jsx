@@ -171,4 +171,28 @@ describe('Component: Geosuggest', () => {
 
     expect(classList.contains('geosuggest__suggests--hidden')).to.be.true; // eslint-disable-line max-len, no-unused-expressions
   });
+
+  it('should call onSuggestSelect on enter', () => {
+    const input = component.refs.input,
+      geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    input.value = 'New';
+    TestUtils.Simulate.keyDown(geoSuggestInput, {
+      key: 'Enter',
+      keyCode: 13,
+      which: 13
+    });
+    expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
+
+  it('should call onSuggestSelect on tab', () => {
+    const input = component.refs.input,
+      geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    input.value = 'New';
+    TestUtils.Simulate.keyDown(geoSuggestInput, {
+      key: 'Tab',
+      keyCode: 9,
+      which: 9
+    });
+    expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+  });
 });
