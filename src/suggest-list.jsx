@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 import SuggestItem from './suggest-item';
 
@@ -8,6 +9,10 @@ import SuggestItem from './suggest-item';
  * @return {JSX} The icon component.
  */
 export default class SuggestList extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   isHidden() {
     return this.props.isHidden || this.props.suggests.length === 0;
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 
 /**
@@ -7,6 +8,10 @@ import classnames from 'classnames';
  * @return {JSX} The icon component.
  */
 export default class SuggestItem extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   onClick = event => {
     event.preventDefault();
     this.props.onSelect(this.props.suggest);
