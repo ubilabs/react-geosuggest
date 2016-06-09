@@ -2,7 +2,7 @@
 
 import React from 'react';
 import classnames from 'classnames';
-import {debounce} from 'lodash';
+import debounce from 'lodash.debounce';
 
 import defaults from './defaults';
 import propTypes from './prop-types';
