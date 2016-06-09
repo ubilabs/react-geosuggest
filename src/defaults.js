@@ -26,5 +26,6 @@ export default {
     'input': {},
     'suggests': {},
     'suggestItem': {}
-  }
+  },
+  ignoreTab: false
 };
