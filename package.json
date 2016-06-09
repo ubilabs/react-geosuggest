@@ -37,6 +37,7 @@
     "jsdom": "^8.1.0",
     "light-server": "^1.0.3",
     "mocha": "^2.4.5",
+    "nyc": "^6.4.4",
     "react": "^15.0.0",
     "react-addons-test-utils": "^15.0.0",
     "react-dom": "^15.0.0",
@@ -47,7 +48,7 @@
     "prepublish": "npm run build:module",
     "lint": "eslint ./src/*.jsx ./src/*.js ./example/src ./test/*.jsx ./test/*.js ./test/fixtures",
     "pretest": "npm run lint",
-    "test": "npm run unit-test",
+    "test": "nyc --include 'src/*' -e .jsx -s npm run unit-test && npm run report",
     "start": "npm run server",
     "unit-test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "server": "npm run prepare:example && light-server -s example/dist -p 8000 -w 'src/*.jsx,src/*.js,example/src/*.js # npm run js:example' -w 'src/*.css,example/src/*.css # npm run css # reloadcss' -w 'example/src/*.html # npm run copy:assets # reload'",
@@ -68,6 +69,7 @@
     "release:major": "npm run build:browser && bumpery --verify='npm test' --no-push --no-commit --no-createTag --versionType major && npm run release:finish",
     "release:finish": "npm run changelog && npm run release:commit && npm run publish:example",
     "release:commit": "bumpery --commitFiles 'dist/*.js CHANGELOG.md package.json' --commitMessage 'chore(release): version %VERSION%' --no-bumpVersion",
+    "report": "nyc report --reporter=text --reporter=lcov --reporter=html",
     "publish:example": "npm run build:example && gh-pages -d example/dist"
   },
   "browserify-global-shim": {
