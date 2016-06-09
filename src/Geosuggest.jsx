@@ -171,7 +171,7 @@ class Geosuggest extends React.Component {
       skipSuggest = this.props.skipSuggest,
       maxFixtures = 10,
       fixturesSearched = 0,
-      activeSuggest = this.state.activeSuggest;
+      activeSuggest = null;
 
     this.props.fixtures.forEach(suggest => {
       if (fixturesSearched >= maxFixtures) {
@@ -197,7 +197,18 @@ class Geosuggest extends React.Component {
       }
     });
 
-    // check if activeSuggest is still in list
+    activeSuggest = this.updateActiveSuggest(suggests);
+    this.setState({suggests, activeSuggest});
+  }
+
+  /**
+   * Return the new activeSuggest object after suggests have been updated
+   * @param {Array} suggests The new list of suggests
+   * @return {Object} The new activeSuggest
+   **/
+  updateActiveSuggest(suggests = []) {
+    let activeSuggest = this.state.activeSuggest;
+
     if (activeSuggest) {
       const newSuggest = suggests.find(listedSuggest =>
         activeSuggest.placeId === listedSuggest.placeId &&
@@ -207,7 +218,7 @@ class Geosuggest extends React.Component {
       activeSuggest = newSuggest || null;
     }
 
-    this.setState({suggests, activeSuggest});
+    return activeSuggest;
   }
 
   /**
