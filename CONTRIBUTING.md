@@ -33,7 +33,7 @@ Our communications here on GitHub follow certain guidelines. Please observe the 
 - JavaScript
 
    - [ESLint](http://eslint.org/) configuration files are provided
-   
+
    - run `npm run lint` to check code style
 
 - CSS
@@ -41,3 +41,22 @@ Our communications here on GitHub follow certain guidelines. Please observe the 
     - CSS code follows [BEM](http://getbem.com/naming/) style
 
 - run `npm run test` before submitting a PR to ensure that your code uses correct style and passes all tests
+
+### Development
+
+To build the examples locally, run:
+
+```
+npm install
+npm start
+```
+
+Then open [`localhost:8000`](http://localhost:8000) in a browser.
+
+### Deployment
+
+To release & deploy, run the following:
+
+```
+npm run release:patch|minor|major
+```
