@@ -2,6 +2,7 @@
 
 import React from 'react';
 import classnames from 'classnames';
+import debounce from 'lodash.debounce';
 
 import defaults from './defaults';
 import propTypes from './prop-types';
@@ -32,6 +33,14 @@ class Geosuggest extends React.Component {
       suggests: [],
       timer: null
     };
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onAfterInputChange = this.onAfterInputChange.bind(this);
+
+    if (props.queryDelay) {
+      this.onAfterInputChange =
+        debounce(this.onAfterInputChange, props.queryDelay);
+    }
   }
 
   /**
@@ -78,10 +87,12 @@ class Geosuggest extends React.Component {
    * @param {String} userInput The input value of the user
    */
   onInputChange(userInput) {
-    this.setState({userInput}, () => {
-      this.showSuggests();
-      this.props.onChange(userInput);
-    });
+    this.setState({userInput}, this.onAfterInputChange);
+  }
+
+  onAfterInputChange() {
+    this.showSuggests();
+    this.props.onChange(this.state.userInput);
   }
 
   /**
@@ -320,7 +331,7 @@ class Geosuggest extends React.Component {
         ref='input'
         value={this.state.userInput}
         ignoreTab={this.props.ignoreTab}
-        onChange={this.onInputChange.bind(this)}
+        onChange={this.onInputChange}
         onFocus={this.onInputFocus.bind(this)}
         onBlur={this.onInputBlur.bind(this)}
         style={this.props.style.input}
