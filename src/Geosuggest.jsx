@@ -181,7 +181,8 @@ class Geosuggest extends React.Component {
       regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
       maxFixtures = 10,
-      fixturesSearched = 0;
+      fixturesSearched = 0,
+      activeSuggest = null;
 
     this.props.fixtures.forEach(suggest => {
       if (fixturesSearched >= maxFixtures) {
@@ -207,7 +208,28 @@ class Geosuggest extends React.Component {
       }
     });
 
-    this.setState({suggests});
+    activeSuggest = this.updateActiveSuggest(suggests);
+    this.setState({suggests, activeSuggest});
+  }
+
+  /**
+   * Return the new activeSuggest object after suggests have been updated
+   * @param {Array} suggests The new list of suggests
+   * @return {Object} The new activeSuggest
+   **/
+  updateActiveSuggest(suggests = []) {
+    let activeSuggest = this.state.activeSuggest;
+
+    if (activeSuggest) {
+      const newSuggest = suggests.find(listedSuggest =>
+        activeSuggest.placeId === listedSuggest.placeId &&
+        activeSuggest.isFixture === listedSuggest.isFixture
+      );
+
+      activeSuggest = newSuggest || null;
+    }
+
+    return activeSuggest;
   }
 
   /**
@@ -224,7 +246,10 @@ class Geosuggest extends React.Component {
   hideSuggests() {
     this.props.onBlur(this.state.userInput);
     const timer = setTimeout(() => {
-      this.setState({isSuggestsHidden: true});
+      this.setState({
+        isSuggestsHidden: true,
+        activeSuggest: null
+      });
     }, 100);
 
     this.setState({timer});
