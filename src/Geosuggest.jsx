@@ -64,6 +64,7 @@ class Geosuggest extends React.Component {
         window.google.maps) ||
       this.googleMaps;
 
+    /* istanbul ignore next */
     if (!googleMaps) {
       console.error(// eslint-disable-line no-console
         'Google map api was not found in the page.');
