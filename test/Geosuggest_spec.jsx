@@ -148,6 +148,49 @@ describe('Component: Geosuggest', () => {
       expect(geoSuggestInput.value).to.equal('');
     });
 
+    it('should not change the active suggest while it remains in the list', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'Ne';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'keyDown',
+        keyCode: 40,
+        which: 40
+      });
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'Enter',
+        keyCode: 13,
+        which: 13
+      });
+      expect(onSuggestSelect.args[0][0].placeId).to.equal(onActivateSuggest.args[0][0].placeId); // eslint-disable-line max-len
+    });
+
+    it('should reset the active suggest when it disappears from the list', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'Ne';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'keyDown',
+        keyCode: 40,
+        which: 40
+      });
+      geoSuggestInput.value = '';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'Enter',
+        keyCode: 13,
+        which: 13
+      });
+      expect(onSuggestSelect.called).to.be.false; // eslint-disable-line no-unused-expressions, max-len
+    });
+
+    it('should have the focus after calling `focus`', () => {
+      component.focus();
+      expect(document.activeElement.classList.contains('geosuggest__input')).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+
     it('should add external inline `style` to input component', () => { // eslint-disable-line max-len
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       expect(geoSuggestInput.style['border-color']).to.be.equal('#000');
