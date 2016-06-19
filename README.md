@@ -193,6 +193,12 @@ Gets triggered when a suggest is activated in the list. Only parameter is an obj
 * `label` – Type `String` – The label name
 * `placeId` – Type `String` – If it is a preset, equals the `label`. Else it is the Google Maps `placeID`
 
+#### onSuggestNoResults
+Type: `Function`
+Default: `function(value) {}`
+
+Gets triggered when there are no suggest results found
+
 #### getSuggestLabel
 Type: `Function`
 Default: `function(suggest) { return suggest.description; }`

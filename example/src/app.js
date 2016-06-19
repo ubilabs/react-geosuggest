@@ -64,6 +64,7 @@ var App = React.createClass({ // eslint-disable-line
 
   /**
    * When there are no suggest results
+   * @param {String} value The user input
    */
   onSuggestNoResults: function(value) {
     console.log('onSuggestNoResults for :' + value); // eslint-disable-line
