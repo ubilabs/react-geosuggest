@@ -122,6 +122,10 @@ class Geosuggest extends React.Component {
 
   onSuggestMouseOut = () => this.setState({ignoreBlur: false})
 
+  onSuggestNoResults = () => {
+    this.props.onSuggestNoResults(this.state.userInput);
+  }
+
   /**
    * Focus the input
    */
@@ -379,6 +383,7 @@ class Geosuggest extends React.Component {
         suggestItemStyle={this.props.style.suggestItem}
         suggests={this.state.suggests}
         activeSuggest={this.state.activeSuggest}
+        onSuggestNoResults={this.onSuggestNoResults}
         onSuggestMouseDown={this.onSuggestMouseDown}
         onSuggestMouseOut={this.onSuggestMouseOut}
         onSuggestSelect={this.selectSuggest}/>;

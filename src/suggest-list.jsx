@@ -17,6 +17,14 @@ export default class SuggestList extends React.Component {
     return this.props.isHidden || this.props.suggests.length === 0;
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps != this.props) {
+      if (newProps.suggests.length === 0) {
+        this.props.onSuggestNoResults();
+      }
+    }
+  }
+
   render() {
     const classes = classnames(
       'geosuggest__suggests',
