@@ -216,4 +216,48 @@ describe('Component: Geosuggest', () => {
       expect(onSuggestSelect.calledOnce).to.be.false; // eslint-disable-line no-unused-expressions, max-len
     });
   });
+
+  describe('with autoActivateFirstSuggest enabled', () => {
+    const props = {
+      autoActivateFirstSuggest: true
+    };
+
+    beforeEach(() => render(props));
+
+    it('should not activate a suggest before focus', () => {
+      const activeItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest-item--active'); // eslint-disable-line max-len
+      expect(activeItems.length).to.be.equal(0);
+      expect(onActivateSuggest.called).to.be.false; // eslint-disable-line no-unused-expressions, max-len
+    });
+
+    it('should call `onActivateSuggest` when auto-activating the first suggest', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+
+      expect(onActivateSuggest.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+
+    it('should not change the active suggest when it is set already', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      geoSuggestInput.value = 'New York';
+      TestUtils.Simulate.change(geoSuggestInput);
+
+      expect(onActivateSuggest.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+
+    it('should activate a suggest once there is some input', done => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+
+      setImmediate(() => {
+        const activeItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest-item--active'); // eslint-disable-line max-len
+        expect(activeItems.length).to.be.equal(1);
+        done();
+      });
+    });
+  });
 });
