@@ -54,6 +54,7 @@ class Input extends React.Component {
       case 27: // ESC
         this.props.onEscape();
         break;
+      /* istanbul ignore next */
       default:
         break;
     }
