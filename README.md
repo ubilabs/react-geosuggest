@@ -195,7 +195,7 @@ Gets triggered when a suggest is activated in the list. Only parameter is an obj
 
 #### onSuggestNoResults
 Type: `Function`
-Default: `function(value) {}`
+Default: `function(userInput) {}`
 
 Gets triggered when there are no suggest results found
 

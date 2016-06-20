@@ -18,7 +18,7 @@ export default class SuggestList extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps !== this.props) {
+    if (newProps.suggests !== this.props.suggests) {
       if (newProps.suggests.length === 0) {
         this.props.onSuggestNoResults();
       }
