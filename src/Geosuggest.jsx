@@ -174,20 +174,23 @@ class Geosuggest extends React.Component {
     this.autocompleteService.getPlacePredictions(
       options,
       suggestsGoogle => {
-        this.updateSuggests(suggestsGoogle || []); // can be null
-
-        if (this.props.autoActivateFirstSuggest) {
-          this.activateSuggest('next');
-        }
+        this.updateSuggests(suggestsGoogle || [], // can be null
+          () => {
+            if (this.props.autoActivateFirstSuggest &&
+              !this.state.activeSuggest) {
+              this.activateSuggest('next');
+            }
+          });
       }
     );
   }
 
   /**
    * Update the suggests
-   * @param  {Array} suggestsGoogle The new google suggests
+   * @param {Array} suggestsGoogle The new google suggests
+   * @param {Function} callback Called once the state has been updated
    */
-  updateSuggests(suggestsGoogle = []) {
+  updateSuggests(suggestsGoogle = [], callback) {
     var suggests = [],
       regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
@@ -220,7 +223,7 @@ class Geosuggest extends React.Component {
     });
 
     activeSuggest = this.updateActiveSuggest(suggests);
-    this.setState({suggests, activeSuggest});
+    this.setState({suggests, activeSuggest}, callback);
   }
 
   /**
