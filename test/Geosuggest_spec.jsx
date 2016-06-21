@@ -11,12 +11,14 @@ describe('Component: Geosuggest', () => {
   let component = null,
     onSuggestSelect = null,
     onActivateSuggest = null,
+    onSuggestNoResults = null,
     onFocus = null,
     onChange = null,
     onBlur = null,
     render = props => {
       onSuggestSelect = sinon.spy();
       onActivateSuggest = sinon.spy();
+      onSuggestNoResults = sinon.spy();
       onChange = sinon.spy();
       onFocus = sinon.spy();
       onBlur = sinon.spy();
@@ -27,6 +29,7 @@ describe('Component: Geosuggest', () => {
           queryDelay={0}
           onSuggestSelect={onSuggestSelect}
           onActivateSuggest={onActivateSuggest}
+          onSuggestNoResults={onSuggestNoResults}
           onChange={onChange}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -255,6 +258,16 @@ describe('Component: Geosuggest', () => {
       TestUtils.Simulate.change(geoSuggestInput);
 
       expect(geoSuggestList.classList.contains('geosuggest__suggests--hidden')).to.be.true; // eslint-disable-line max-len, no-unused-expressions
+    });
+
+    it('should call `onSuggestNoResults` when there are no suggestions', () => {
+      const input = component.refs.input,
+        geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+
+      input.value = 'There is no result for this. Really.';
+      TestUtils.Simulate.change(geoSuggestInput);
+
+      expect(onSuggestNoResults.calledOnce).to.be.true;  // eslint-disable-line max-len, no-unused-expressions
     });
 
     it('should call onSuggestSelect on enter', () => {

@@ -18,6 +18,7 @@ export default {
   googleMaps: null,
   onActivateSuggest: () => {},
   onSuggestSelect: () => {},
+  onSuggestNoResults: () => {},
   onFocus: () => {},
   onBlur: () => {},
   onChange: () => {},

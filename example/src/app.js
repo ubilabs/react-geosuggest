@@ -24,6 +24,7 @@ var App = React.createClass({ // eslint-disable-line
           onBlur={this.onBlur}
           onChange={this.onChange}
           onSuggestSelect={this.onSuggestSelect}
+          onSuggestNoResults={this.onSuggestNoResults}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
           radius="20" />
       </div>
@@ -59,6 +60,14 @@ var App = React.createClass({ // eslint-disable-line
    */
   onSuggestSelect: function(suggest) {
     console.log(suggest); // eslint-disable-line
+  },
+
+  /**
+   * When there are no suggest results
+   * @param {String} userInput The user input
+   */
+  onSuggestNoResults: function(userInput) {
+    console.log('onSuggestNoResults for :' + userInput); // eslint-disable-line
   }
 });
 
