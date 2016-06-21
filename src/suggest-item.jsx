@@ -8,15 +8,29 @@ import classnames from 'classnames';
  * @return {JSX} The icon component.
  */
 export default class SuggestItem extends React.Component {
+  /**
+   * Whether or not the component should update
+   * @param {Object} nextProps The new properties
+   * @param {Object} nextState The new state
+   * @return {Boolean} Update or not?
+   */
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
+  /**
+   * When the suggest item got clicked
+   * @param {Event} event The click event
+   */
   onClick = event => {
     event.preventDefault();
     this.props.onSelect(this.props.suggest);
   }
 
+  /**
+   * Render the view
+   * @return {Function} The React element to render
+   */
   render() {
     const classes = classnames(
       'geosuggest-item',
@@ -34,6 +48,10 @@ export default class SuggestItem extends React.Component {
   }
 }
 
+/**
+ * Default values for the properties
+ * @type {Object}
+ */
 SuggestItem.defaultProps = {
   isActive: false,
   className: '',
