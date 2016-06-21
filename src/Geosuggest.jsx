@@ -59,6 +59,10 @@ class Geosuggest extends React.Component {
    * Necessary objects of google api will also be determined and saved.
    */
   componentWillMount() {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     var googleMaps = this.props.googleMaps ||
       (window.google && // eslint-disable-line no-extra-parens
         window.google.maps) ||
