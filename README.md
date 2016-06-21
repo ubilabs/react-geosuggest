@@ -39,7 +39,7 @@ npm install react-geosuggest --save
 
 The Geosuggest works out of the box by just including it. However, you can customize the behaviour with the properties noted below.
 
-### ES6:
+### ES6:
 
 ```
 import Geosuggest from 'react-geosuggest';
@@ -280,7 +280,8 @@ ReactDOM.render(<App />, document.getElementById('app'));
 This component uses [BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/) for namespacing the CSS classes. So styling should be easy and without conflicts. See the [geosuggest.css](https://github.com/ubilabs/react-geosuggest/blob/master/src/geosuggest.css) for an example styling.
 
 ### Note:
-`geosuggest__suggests--hidden` class is added to auto hide the suggestion list. Copy the below style in your CSS file.
+
+The `geosuggest__suggests--hidden` class is added to hide the suggestion list. You should copy the style below into your CSS file.
 ```
 .geosuggest__suggests--hidden {
   max-height: 0;
@@ -288,12 +289,12 @@ This component uses [BEM](http://csswizardry.com/2013/01/mindbemding-getting-you
   border-width: 0;
 }
 ```
-The above class is added whenever the suggestion list needs to be hidden. Like when user selects the item from the list or when the user triggers `blur` event on the input.
+The above class is added whenever the suggestion list needs to be hidden. This occurs when the user selects an item from the list or when the user triggers the `blur` event on the input.
 
 ## Contributing
 
 Issues and pull requests are welcome!  
-Please read the guidelines in [CONTRIBUTING.md](CONTRIBUTING.md) before starting to work on a PR.  
+Please read the guidelines in [CONTRIBUTING.md](CONTRIBUTING.md) before starting to work on a PR.
 
 ## License
 
