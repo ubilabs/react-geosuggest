@@ -9,22 +9,40 @@ import SuggestItem from './suggest-item';
  * @return {JSX} The icon component.
  */
 export default class SuggestList extends React.Component {
+  /**
+   * Whether or not the component should update
+   * @param {Object} nextProps The new properties
+   * @param {Object} nextState The new state
+   * @return {Boolean} Update or not?
+   */
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
+  /**
+   * Whether or not it is hidden
+   * @return {Boolean} Hidden or not?
+   */
   isHidden() {
     return this.props.isHidden || this.props.suggests.length === 0;
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.suggests !== this.props.suggests) {
-      if (newProps.suggests.length === 0) {
+  /**
+   * There are new properties available for the list
+   * @param {Object} nextProps The new properties
+   */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.suggests !== this.props.suggests) {
+      if (nextProps.suggests.length === 0) {
         this.props.onSuggestNoResults();
       }
     }
   }
 
+  /**
+   * Render the view
+   * @return {Function} The React element to render
+   */
   render() {
     const classes = classnames(
       'geosuggest__suggests',
@@ -49,6 +67,10 @@ export default class SuggestList extends React.Component {
   }
 }
 
+/**
+ * Default values for the properties
+ * @type {Object}
+ */
 SuggestList.defaultProps = {
   isHidden: true,
   suggests: []

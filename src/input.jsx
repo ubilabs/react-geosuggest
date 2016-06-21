@@ -10,9 +10,16 @@ import filterInputAttributes from './filter-input-attributes';
  * @return {JSX} The icon component.
  */
 class Input extends React.Component {
+  /**
+   * Whether or not the component should update
+   * @param {Object} nextProps The new properties
+   * @param {Object} nextState The new state
+   * @return {Boolean} Update or not?
+   */
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
+
   /**
    * When the input got changed
    */
@@ -20,10 +27,16 @@ class Input extends React.Component {
     this.props.onChange(this.refs.input.value);
   }
 
+  /**
+   * When the input got focused
+   */
   onFocus = () => {
     this.props.onFocus();
   }
 
+  /**
+   * When the input loses focus
+   */
   onBlur = () => {
     this.props.onBlur();
   }
