@@ -1,3 +1,30 @@
+## 1.24.0 (2016-06-21)
+
+
+#### Bug Fixes
+
+* **Geosuggest:**
+  * fix `autoActivateFirstSuggest` prop ([f4409f7e](https://github.com/ubilabs/react-geosuggest/commit/f4409f7ef9b02a097b1ec5679218d5d6f97e2d30))
+  * Unset activeSuggest on blur and when not in suggestion list anymore ([08ea143e](https://github.com/ubilabs/react-geosuggest/commit/08ea143e736cea91631f47468c8ff7702127128a))
+  * Hide the suggest list when the result set is empty ([6f23dc0e](https://github.com/ubilabs/react-geosuggest/commit/6f23dc0ec6f39124e488b51a690938a730d6cd28))
+  * GeoCode fixtures if no location is provided ([67ec4e5b](https://github.com/ubilabs/react-geosuggest/commit/67ec4e5b9676caa6fd623bb4add62b8a564202fd))
+  * Set autoComplete='off' and remove autoComplete option ([33763dd9](https://github.com/ubilabs/react-geosuggest/commit/33763dd90d24797b7435d331b0c937f7eb59a896), closes [#136](https://github.com/ubilabs/react-geosuggest/issues/136))
+  * initialise Google Maps in componentWillMount instead of componentDidMount ([2f326427](https://github.com/ubilabs/react-geosuggest/commit/2f3264279a1aca5164ced0bb4f5c40e46c608a2c), closes [#130](https://github.com/ubilabs/react-geosuggest/issues/130))
+* **example:** add Google Maps API key ([9c3c6d25](https://github.com/ubilabs/react-geosuggest/commit/9c3c6d2596bdafbe633c9b33f125ac4a313c9534), closes [#107](https://github.com/ubilabs/react-geosuggest/issues/107))
+* **package:**
+  * add test cases and src/*.js to linter ([61e3d08b](https://github.com/ubilabs/react-geosuggest/commit/61e3d08b756ad784edc9190787d9cd0ff9aaa77e))
+  * add src/*.js to light-server watch list ([68432ec1](https://github.com/ubilabs/react-geosuggest/commit/68432ec1af65872f211169a89c042f8130ecfc76))
+
+
+#### Features
+
+* **on-blur:** return current user input ([e88eda42](https://github.com/ubilabs/react-geosuggest/commit/e88eda424e57280bac8609b88cf9a30e77fc893a))
+* add support for inline styles  ([935fc71c](https://github.com/ubilabs/react-geosuggest/commit/935fc71c35db0cf27943acd34fceafc9dfee8e7a))
+* Input obeys ignoreTab  ([5987f05b](https://github.com/ubilabs/react-geosuggest/commit/5987f05b037c0c202bbe9f36e79aff40b082af87))
+* add `queryDelay` parameter ([9daff3ac](https://github.com/ubilabs/react-geosuggest/commit/9daff3ac979ad87febd02c255316ef4fcb6e4d6d))
+* add onSuggestNoResults callback function ([f51cacc0](https://github.com/ubilabs/react-geosuggest/commit/f51cacc04e0b5119f195c783779c9031df72a850))
+
+
 ## 1.23.0 (2016-05-19)
 
 
