@@ -729,6 +729,10 @@ var Geosuggest = function (_React$Component) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
+      if (typeof window === 'undefined') {
+        return;
+      }
+
       var googleMaps = this.props.googleMaps || window.google && // eslint-disable-line no-extra-parens
       window.google.maps || this.googleMaps;
 

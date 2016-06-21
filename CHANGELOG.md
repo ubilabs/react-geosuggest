@@ -1,3 +1,11 @@
+### 1.24.1 (2016-06-21)
+
+
+#### Bug Fixes
+
+* **Geosuggest:** fix server side rendering ([428dedd8](https://github.com/ubilabs/react-geosuggest/commit/428dedd81687a613085db52e35cae14bf2dd19f4), closes [#172](https://github.com/ubilabs/react-geosuggest/issues/172))
+
+
 ## 1.24.0 (2016-06-21)
 
 
