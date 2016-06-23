@@ -381,7 +381,7 @@ class Geosuggest extends React.Component {
       classes = classnames(
         'geosuggest',
         this.props.className,
-        {'geosuggest-loading': this.state.isLoading}
+        {'geosuggest--loading': this.state.isLoading}
       ),
       input = <Input className={this.props.inputClassName}
         ref='input'
