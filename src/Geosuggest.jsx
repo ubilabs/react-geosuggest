@@ -28,6 +28,7 @@ class Geosuggest extends React.Component {
     super(props);
     this.state = {
       isSuggestsHidden: true,
+      isLoading: false,
       userInput: props.initialValue,
       activeSuggest: null,
       suggests: [],
@@ -182,19 +183,22 @@ class Geosuggest extends React.Component {
       };
     }
 
-    this.autocompleteService.getPlacePredictions(
-      options,
-      suggestsGoogle => {
-        this.updateSuggests(suggestsGoogle || [], // can be null
-          () => {
-            if (this.props.autoActivateFirstSuggest &&
-              !this.state.activeSuggest
-            ) {
-              this.activateSuggest('next');
-            }
-          });
-      }
-    );
+    this.setState({isLoading: true}, () => {
+      this.autocompleteService.getPlacePredictions(
+        options,
+        suggestsGoogle => {
+          this.setState({isLoading: false});
+          this.updateSuggests(suggestsGoogle || [], // can be null
+            () => {
+              if (this.props.autoActivateFirstSuggest &&
+                !this.state.activeSuggest
+              ) {
+                this.activateSuggest('next');
+              }
+            });
+        }
+      );
+    });
   }
 
   /**
@@ -376,7 +380,8 @@ class Geosuggest extends React.Component {
     const attributes = filterInputAttributes(this.props),
       classes = classnames(
         'geosuggest',
-        this.props.className
+        this.props.className,
+        {'geosuggest-loading': this.state.isLoading}
       ),
       input = <Input className={this.props.inputClassName}
         ref='input'
