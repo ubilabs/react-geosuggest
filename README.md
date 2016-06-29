@@ -126,7 +126,7 @@ Restricts predictions to the specified country (ISO 3166-1 Alpha-2 country code,
 Type: `Array`
 Default: `null`
 
-Restricts the suggestions against the passed in types. If none are specified, all types are used. Consult the Google Docs for [possible types](https://developers.google.com/places/supported_types).
+The types of predictions to be returned. Four types are supported: `establishment` for businesses, `geocode` for addresses, `(regions)` for administrative regions and `(cities)` for localities. If nothing is specified, all types are returned. Consult the Google Docs for [up to date types](https://developers.google.com/maps/documentation/javascript/reference#AutocompletionRequest).
 
 #### fixtures
 Type: `Array`
