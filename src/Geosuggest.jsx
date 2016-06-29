@@ -99,7 +99,9 @@ class Geosuggest extends React.Component {
    * On After the input got changed
    */
   onAfterInputChange = () => {
-    this.showSuggests();
+    if(!this.state.isSuggestsHidden) {
+      this.showSuggests();
+    }
     this.props.onChange(this.state.userInput);
   }
 
