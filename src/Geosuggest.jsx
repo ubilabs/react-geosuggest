@@ -124,7 +124,11 @@ class Geosuggest extends React.Component {
 
   onPrev = () => this.activateSuggest('prev')
 
-  onSelect = () => this.selectSuggest(this.state.activeSuggest)
+  onSelect = () => {
+    if (this.state.activeSuggest) {
+      this.selectSuggest(this.state.activeSuggest);
+    }
+  }
 
   onSuggestMouseDown = () => this.setState({ignoreBlur: true})
 
