@@ -1,3 +1,17 @@
+## 1.25.0 (2016-08-19)
+
+
+#### Bug Fixes
+
+* **Geosuggest:** allow enter key events to propagate if suggestions are hidden ([f993c6bc](https://github.com/ubilabs/react-geosuggest/commit/f993c6bc94cd49b6b3904d6129bc7d6a68288e21), closes [#184](https://github.com/ubilabs/react-geosuggest/issues/184))
+
+
+#### Features
+
+* **Geosuggest:** pass on mouse and clipboard events ([7dc64566](https://github.com/ubilabs/react-geosuggest/commit/7dc64566f9149b720ee8f7809cf1d83bfef6bccf), closes [#182](https://github.com/ubilabs/react-geosuggest/issues/182))
+* **Geosuggest:** Add a loading class on suggest loading ([685812b7](https://github.com/ubilabs/react-geosuggest/commit/685812b72caa9b6ce8bbcf74590d78099a366715)
+
+
 ### 1.24.1 (2016-06-21)
 
 

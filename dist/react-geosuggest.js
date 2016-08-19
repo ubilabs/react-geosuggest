@@ -691,6 +691,7 @@ var Geosuggest = function (_React$Component) {
 
     _this.state = {
       isSuggestsHidden: true,
+      isLoading: false,
       userInput: props.initialValue,
       activeSuggest: null,
       suggests: [],
@@ -841,12 +842,15 @@ var Geosuggest = function (_React$Component) {
         };
       }
 
-      this.autocompleteService.getPlacePredictions(options, function (suggestsGoogle) {
-        _this2.updateSuggests(suggestsGoogle || [], // can be null
-        function () {
-          if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
-            _this2.activateSuggest('next');
-          }
+      this.setState({ isLoading: true }, function () {
+        _this2.autocompleteService.getPlacePredictions(options, function (suggestsGoogle) {
+          _this2.setState({ isLoading: false });
+          _this2.updateSuggests(suggestsGoogle || [], // can be null
+          function () {
+            if (_this2.props.autoActivateFirstSuggest && !_this2.state.activeSuggest) {
+              _this2.activateSuggest('next');
+            }
+          });
         });
       });
     }
@@ -1022,10 +1026,11 @@ var Geosuggest = function (_React$Component) {
     key: 'render',
     value: function render() {
       var attributes = (0, _filterInputAttributes2.default)(this.props),
-          classes = (0, _classnames2.default)('geosuggest', this.props.className),
+          classes = (0, _classnames2.default)('geosuggest', this.props.className, { 'geosuggest--loading': this.state.isLoading }),
           input = _react2.default.createElement(_input2.default, _extends({ className: this.props.inputClassName,
         ref: 'input',
         value: this.state.userInput,
+        ignoreEnter: !this.state.isSuggestsHidden,
         ignoreTab: this.props.ignoreTab,
         style: this.props.style.input,
         onChange: this.onInputChange,
@@ -1146,7 +1151,7 @@ exports.default = function (props) {
 /**
  * Attributes allowed on input elements
  */
-var allowedAttributes = ['autoFocus', 'disabled', 'form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'height', 'id', 'inputMode', 'maxLength', 'name', 'pattern', 'placeholder', 'readOnly', 'required', 'size', 'spellCheck', 'tabIndex'];
+var allowedAttributes = ['autoFocus', 'disabled', 'form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'height', 'id', 'inputMode', 'maxLength', 'name', 'onClick', 'onContextMenu', 'onCopy', 'onCut', 'onDoubleClick', 'onMouseDown', 'onMouseEnter', 'onMouseLeave', 'onMouseMove', 'onMouseOut', 'onMouseOver', 'onMouseUp', 'onPaste', 'pattern', 'placeholder', 'readOnly', 'required', 'size', 'spellCheck', 'tabIndex'];
 
 /**
  * Filter the properties for only allowed input properties
@@ -1230,7 +1235,10 @@ var Input = function (_React$Component) {
           break;
         case 13:
           // ENTER
-          event.preventDefault();
+          if (_this.props.ignoreEnter) {
+            event.preventDefault();
+          }
+
           _this.props.onSelect();
           break;
         case 9:
