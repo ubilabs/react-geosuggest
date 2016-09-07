@@ -14,12 +14,12 @@
     "url": "https://github.com/ubilabs/react-geosuggest/issues"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0"
+    "react": "^0.14.0 || ^15.0.0",
+    "react-addons-shallow-compare": "^0.14.0 || ^15.0.0"
   },
   "dependencies": {
     "classnames": "^2.2.3",
-    "lodash.debounce": "^4.0.6",
-    "react-addons-shallow-compare": "^15.1.0"
+    "lodash.debounce": "^4.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
