@@ -35,6 +35,14 @@ You can also use the standalone build by including `dist/react-geosuggest.js` in
 npm install react-geosuggest --save
 ```
 
+### Peer Dependencies
+
+To allow for the greatest flexiblity in react version support, this module specifies `react-addons-shallow-compare` as a peer dependency. Therefore in order to use it, you must also install a version of `react-addons-shallow-compare` that matches your `react` version, ie:
+
+```
+npm install react-addons-shallow-compare@0.14.6
+```
+
 ## Usage
 
 The Geosuggest works out of the box by just including it. However, you can customize the behaviour with the properties noted below.
