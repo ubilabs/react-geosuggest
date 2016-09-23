@@ -1,3 +1,26 @@
+### 1.25.1 (2016-09-23)
+
+
+#### Bug Fixes
+
+* **package:** Specify addon as peer dependency ([7be701c1](https://github.com/ubilabs/react-geosuggest/commit/7be701c10d3c7d1cab774f157935784ecbd02312))
+
+
+#### Breaking Changes
+
+* react-addons-shallow-compare is now a peer dependency,
+meaning users must install it separately from react-geosuggest.
+
+The peer dependency for react allows one to use either react 0.14 or
+0.15. However, the dependency for react-addons-shallow-compare only
+allows 0.15 versions. For anyone using react 0.14 this causes warnings
+from npm saying that the peer dependency for react 0.15 (specified by
+react-addons-shallow-compare) is missing. This completely breaks
+workflows depending on `npm shrinkwrap`.
+
+ ([7be701c1](https://github.com/ubilabs/react-geosuggest/commit/7be701c10d3c7d1cab774f157935784ecbd02312))
+
+
 ## 1.25.0 (2016-08-19)
 
 
