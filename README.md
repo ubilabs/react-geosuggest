@@ -92,6 +92,20 @@ Default: `''`
 
 Add an additional class to the input.
 
+#### suggestListClassName
+Type: `String`
+Default: `''`
+
+Add an additional class to suggest list.
+
+#### suggestItemClassName
+Type: `String`
+Default: `''`
+
+Add an additional class to suggest items.
+
+
+
 #### disabled
 Type: `Boolean`
 Default: `false`
