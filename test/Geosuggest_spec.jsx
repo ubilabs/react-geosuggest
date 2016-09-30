@@ -415,4 +415,28 @@ describe('Component: Geosuggest', () => {
       });
     });
   });
+
+  describe('with label and id props', () => {
+    const props = {
+      id: 'geosuggest-id',
+      label: 'some label'
+    };
+
+    beforeEach(() => render(props));
+
+    it('should render a <label> if the `label` and `id` props were supplied', () => { // eslint-disable-line max-len
+      const label = TestUtils.findRenderedDOMComponentWithTag(component, 'label'); // eslint-disable-line max-len
+      expect(label).to.not.equal(null);
+    });
+  });
+
+  describe('without label and id props', () => {
+    beforeEach(() => render());
+
+    it('should not render a <label> if no `label` and `id` props were supplied', () => { // eslint-disable-line max-len
+      expect(() =>
+        TestUtils.findRenderedDOMComponentWithTag(component, 'label')
+      ).to.throw(Error);
+    });
+  });
 });
