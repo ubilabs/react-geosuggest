@@ -383,6 +383,7 @@ class Geosuggest extends React.Component {
         this.props.className,
         {'geosuggest--loading': this.state.isLoading}
       ),
+      shouldRenderLabel = this.props.label && attributes.id,
       input = <Input className={this.props.inputClassName}
         ref='input'
         value={this.state.userInput}
@@ -408,6 +409,9 @@ class Geosuggest extends React.Component {
 
     return <div className={classes}>
       <div className="geosuggest__input-wrapper">
+        {shouldRenderLabel &&
+          <label htmlFor={attributes.id}>{this.props.label}</label>
+        }
         {input}
       </div>
       <div className="geosuggest__suggests-wrapper">
