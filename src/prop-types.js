@@ -24,6 +24,8 @@ export default {
   onFocus: React.PropTypes.func,
   onBlur: React.PropTypes.func,
   onChange: React.PropTypes.func,
+  onKeyDown: React.PropTypes.func,
+  onKeyPress: React.PropTypes.func,
   skipSuggest: React.PropTypes.func,
   getSuggestLabel: React.PropTypes.func,
   autoActivateFirstSuggest: React.PropTypes.bool,
