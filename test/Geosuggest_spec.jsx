@@ -157,7 +157,7 @@ describe('Component: Geosuggest', () => {
       expect(onKeyDown.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
 
-    it('should call `onFocus` when we key press in the input', () => {
+    it('should call `onKeyPress` when we key press in the input', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       TestUtils.Simulate.keyPress(geoSuggestInput);
       expect(onKeyPress.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
