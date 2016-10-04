@@ -42,7 +42,7 @@ class Input extends React.Component {
   }
 
   /**
-   * When the input loses focus
+   * When a key gets pressed in the input
    * @param  {Event} event The keypress event
    */
   onKeyPress = event => {
