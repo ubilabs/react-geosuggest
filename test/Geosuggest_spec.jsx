@@ -13,7 +13,6 @@ describe('Component: Geosuggest', () => {
     onActivateSuggest = null,
     onSuggestNoResults = null,
     onFocus = null,
-    onKeyDown = null,
     onKeyPress = null,
     onChange = null,
     onBlur = null,
@@ -23,7 +22,6 @@ describe('Component: Geosuggest', () => {
       onSuggestNoResults = sinon.spy();
       onChange = sinon.spy();
       onFocus = sinon.spy();
-      onKeyDown = sinon.spy();
       onKeyPress = sinon.spy();
       onBlur = sinon.spy();
 
@@ -36,7 +34,6 @@ describe('Component: Geosuggest', () => {
           onSuggestNoResults={onSuggestNoResults}
           onChange={onChange}
           onFocus={onFocus}
-          onKeyDown={onKeyDown}
           onKeyPress={onKeyPress}
           onBlur={onBlur}
           style={{
@@ -149,12 +146,6 @@ describe('Component: Geosuggest', () => {
     it('should call `onChange` when the update method is called', () => {
       component.update('New');
       expect(onChange.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
-    });
-
-    it('should call `onKeyDown` when we key down in the input', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
-      TestUtils.Simulate.keyDown(geoSuggestInput);
-      expect(onKeyDown.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
 
     it('should call `onKeyPress` when we key press in the input', () => {

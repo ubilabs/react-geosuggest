@@ -79,7 +79,6 @@ class Input extends React.Component {
       default:
         break;
     }
-    this.props.onKeyDown(event);
   }
 
   /**

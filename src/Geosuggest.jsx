@@ -386,7 +386,6 @@ class Geosuggest extends React.Component {
         onChange={this.onInputChange}
         onFocus={this.onInputFocus}
         onBlur={this.onInputBlur}
-        onKeyDown={this.props.onKeyDown}
         onKeyPress={this.props.onKeyPress}
         onNext={this.onNext}
         onPrev={this.onPrev}
