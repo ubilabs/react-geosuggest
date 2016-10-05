@@ -173,6 +173,12 @@ Default: `function(value) {}`
 
 Gets triggered when input field changes the value.
 
+#### onKeyPress
+Type: `Function`
+Default: `function(event) {}`
+
+Gets triggered when input field gets key press.
+
 #### onSuggestSelect
 Type: `Function`
 Default: `function(suggest) {}`
