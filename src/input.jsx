@@ -45,6 +45,14 @@ class Input extends React.Component {
    * When a key gets pressed in the input
    * @param  {Event} event The keypress event
    */
+  onKeyPress = event => {
+    this.props.onKeyPress(event);
+  }
+
+  /**
+   * When a key gets pressed in the input
+   * @param  {Event} event The keydown event
+   */
   onInputKeyDown = event => {
     switch (event.which) {
       case 40: // DOWN
@@ -103,6 +111,7 @@ class Input extends React.Component {
       style={this.props.style}
       onKeyDown={this.onInputKeyDown}
       onChange={this.onChange}
+      onKeyPress={this.onKeyPress}
       onFocus={this.onFocus}
       onBlur={this.onBlur} />;
   }
@@ -115,7 +124,9 @@ class Input extends React.Component {
 Input.defaultProps = {
   className: '',
   value: '',
-  ignoreTab: false
+  ignoreTab: false,
+  onKeyDown: () => {},
+  onKeyPress: () => {}
 };
 
 export default Input;

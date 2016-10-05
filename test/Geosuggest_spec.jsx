@@ -13,6 +13,7 @@ describe('Component: Geosuggest', () => {
     onActivateSuggest = null,
     onSuggestNoResults = null,
     onFocus = null,
+    onKeyPress = null,
     onChange = null,
     onBlur = null,
     render = props => {
@@ -21,6 +22,7 @@ describe('Component: Geosuggest', () => {
       onSuggestNoResults = sinon.spy();
       onChange = sinon.spy();
       onFocus = sinon.spy();
+      onKeyPress = sinon.spy();
       onBlur = sinon.spy();
 
       component = TestUtils.renderIntoDocument(
@@ -32,6 +34,7 @@ describe('Component: Geosuggest', () => {
           onSuggestNoResults={onSuggestNoResults}
           onChange={onChange}
           onFocus={onFocus}
+          onKeyPress={onKeyPress}
           onBlur={onBlur}
           style={{
             'input': {
@@ -143,6 +146,12 @@ describe('Component: Geosuggest', () => {
     it('should call `onChange` when the update method is called', () => {
       component.update('New');
       expect(onChange.withArgs('New').calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+
+    it('should call `onKeyPress` when we key press in the input', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      TestUtils.Simulate.keyPress(geoSuggestInput);
+      expect(onKeyPress.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
 
     it('should clear the input text when calling `clear`', () => {
