@@ -229,7 +229,7 @@ Automatically activate the first suggestion as you type. If false, the exact ter
 Type: `String`
 Default: `null`
 
-If the `label` and a `id` prop (see "Others") prop were supplied, a `<label>` with the passed label text will be rendered.
+If the `label` and a `id` prop (see "Others") were supplied, a `<label>` tag with the passed label text will be rendered. The `<label>` element's `for` attribute will correctly point to the `id` of the `<input>` element.
 
 #### Others
 
