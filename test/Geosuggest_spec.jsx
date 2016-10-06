@@ -103,6 +103,7 @@ describe('Component: Geosuggest', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
 
       const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest-item'); // eslint-disable-line max-len, one-var
       TestUtils.Simulate.click(suggestItems[0]);
@@ -113,6 +114,7 @@ describe('Component: Geosuggest', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
       TestUtils.Simulate.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
@@ -166,6 +168,7 @@ describe('Component: Geosuggest', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'Ne';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
       TestUtils.Simulate.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
@@ -223,6 +226,7 @@ describe('Component: Geosuggest', () => {
 
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
       TestUtils.Simulate.keyDown(geoSuggestInput, {
         key: 'keyUp',
         keyCode: 38,
@@ -254,6 +258,7 @@ describe('Component: Geosuggest', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
 
       const geoSuggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest-item'); // eslint-disable-line max-len, one-var
       expect(geoSuggestItems[0].style['border-color']).to.be.equal('#000');
@@ -275,6 +280,7 @@ describe('Component: Geosuggest', () => {
 
       input.value = 'There is no result for this. Really.';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
 
       expect(onSuggestNoResults.calledOnce).to.be.true;  // eslint-disable-line max-len, no-unused-expressions
     });
@@ -341,6 +347,7 @@ describe('Component: Geosuggest', () => {
 
       geoSuggestInput.value = 'Rio';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
 
       const suggests = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest-item'); // eslint-disable-line max-len, one-var
       expect(suggests.length).to.be.equal(1);
@@ -398,6 +405,7 @@ describe('Component: Geosuggest', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
 
       expect(onActivateSuggest.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
@@ -408,6 +416,7 @@ describe('Component: Geosuggest', () => {
       TestUtils.Simulate.change(geoSuggestInput);
       geoSuggestInput.value = 'New York';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
 
       expect(onActivateSuggest.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
@@ -416,6 +425,7 @@ describe('Component: Geosuggest', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
 
       setImmediate(() => {
         const activeItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest-item--active'); // eslint-disable-line max-len
