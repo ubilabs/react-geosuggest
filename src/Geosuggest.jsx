@@ -356,19 +356,16 @@ class Geosuggest extends React.Component {
       suggest.placeId && !suggest.isFixture ?
         {placeId: suggest.placeId} : {address: suggest.label},
       (results, status) => {
-        if (status !== this.googleMaps.GeocoderStatus.OK) {
-          return;
+        if (status === this.googleMaps.GeocoderStatus.OK) {
+          var gmaps = results[0],
+            location = gmaps.geometry.location;
+
+          suggest.gmaps = gmaps;
+          suggest.location = {
+            lat: location.lat(),
+            lng: location.lng()
+          };
         }
-
-        var gmaps = results[0],
-          location = gmaps.geometry.location;
-
-        suggest.gmaps = gmaps;
-        suggest.location = {
-          lat: location.lat(),
-          lng: location.lng()
-        };
-
         this.props.onSuggestSelect(suggest);
       }
     );
