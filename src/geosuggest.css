@@ -48,21 +48,21 @@
 /**
  * A geosuggest item
  */
-.geosuggest-item {
+.geosuggest__item {
   font-size: 18px;
   font-size: 1rem;
   padding: .5em .65em;
   cursor: pointer;
 }
-.geosuggest-item:hover,
-.geosuggest-item:focus {
+.geosuggest__item:hover,
+.geosuggest__item:focus {
   background: #f5f5f5;
 }
-.geosuggest-item--active {
+.geosuggest__item--active {
   background: #267dc0;
   color: #fff;
 }
-.geosuggest-item--active:hover,
-.geosuggest-item--active:focus {
+.geosuggest__item--active:hover,
+.geosuggest__item--active:focus {
   background: #ccc;
 }
