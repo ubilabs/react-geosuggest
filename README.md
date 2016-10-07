@@ -313,9 +313,9 @@ The `geosuggest__suggests--hidden` class is added to hide the suggestion list. Y
 ```
 The above class is added whenever the suggestion list needs to be hidden. This occurs when the user selects an item from the list or when the user triggers the `blur` event on the input.
 
-Similarly, you need to have the class `geosuggest-item--active` similar to this:
+Similarly, you need to have the class `geosuggest__item--active` similar to this:
 ```
-.geosuggest-item--active {
+.geosuggest__item--active {
   background: #267dc0;
   color: #fff;
 }
