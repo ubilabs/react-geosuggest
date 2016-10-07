@@ -1,3 +1,17 @@
+## 2.0.0 (2016-10-07)
+
+
+#### Bug Fixes
+
+* **suggest-item:** bem naming ([1ab465aa](https://github.com/ubilabs/react-geosuggest/commit/1ab465aa1ea2999f01960ee0ef99d1de5621ef83))
+
+
+#### Features
+
+* **Geosuggest:** render label if id and label text where supplied ([e2cbfc86](https://github.com/ubilabs/react-geosuggest/commit/e2cbfc862b1706be215c4d29acaa26d988806f89))
+* **prop-types:** add label prop types ([0345d63b](https://github.com/ubilabs/react-geosuggest/commit/0345d63b40e157c3d5c09ad0cf7c7046ffa3095c))
+
+
 ### 1.25.1 (2016-09-23)
 
 

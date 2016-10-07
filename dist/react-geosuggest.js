@@ -601,7 +601,9 @@ var Geosuggest = function (_React$Component) {
     };
 
     _this.onAfterInputChange = function () {
-      _this.showSuggests();
+      if (!_this.state.isSuggestsHidden) {
+        _this.showSuggests();
+      }
       _this.props.onChange(_this.state.userInput);
     };
 
@@ -984,19 +986,16 @@ var Geosuggest = function (_React$Component) {
       var _this4 = this;
 
       this.geocoder.geocode(suggest.placeId && !suggest.isFixture ? { placeId: suggest.placeId } : { address: suggest.label }, function (results, status) {
-        if (status !== _this4.googleMaps.GeocoderStatus.OK) {
-          return;
+        if (status === _this4.googleMaps.GeocoderStatus.OK) {
+          var gmaps = results[0],
+              location = gmaps.geometry.location;
+
+          suggest.gmaps = gmaps;
+          suggest.location = {
+            lat: location.lat(),
+            lng: location.lng()
+          };
         }
-
-        var gmaps = results[0],
-            location = gmaps.geometry.location;
-
-        suggest.gmaps = gmaps;
-        suggest.location = {
-          lat: location.lat(),
-          lng: location.lng()
-        };
-
         _this4.props.onSuggestSelect(suggest);
       });
     }
@@ -1011,6 +1010,7 @@ var Geosuggest = function (_React$Component) {
     value: function render() {
       var attributes = (0, _filterInputAttributes2.default)(this.props),
           classes = (0, _classnames2.default)('geosuggest', this.props.className, { 'geosuggest--loading': this.state.isLoading }),
+          shouldRenderLabel = this.props.label && attributes.id,
           input = _react2.default.createElement(_input2.default, _extends({ className: this.props.inputClassName,
         ref: 'input',
         value: this.state.userInput,
@@ -1020,6 +1020,7 @@ var Geosuggest = function (_React$Component) {
         onChange: this.onInputChange,
         onFocus: this.onInputFocus,
         onBlur: this.onInputBlur,
+        onKeyPress: this.props.onKeyPress,
         onNext: this.onNext,
         onPrev: this.onPrev,
         onSelect: this.onSelect,
@@ -1040,6 +1041,11 @@ var Geosuggest = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'geosuggest__input-wrapper' },
+          shouldRenderLabel && _react2.default.createElement(
+            'label',
+            { htmlFor: attributes.id },
+            this.props.label
+          ),
           input
         ),
         _react2.default.createElement(
@@ -1204,7 +1210,10 @@ var Input = function (_React$Component) {
       _this.props.onFocus();
     }, _this.onBlur = function () {
       _this.props.onBlur();
+    }, _this.onKeyPress = function (event) {
+      _this.props.onKeyPress(event);
     }, _this.onInputKeyDown = function (event) {
+      // eslint-disable-line complexity
       switch (event.which) {
         case 40:
           // DOWN
@@ -1274,6 +1283,12 @@ var Input = function (_React$Component) {
      * @param  {Event} event The keypress event
      */
 
+
+    /**
+     * When a key gets pressed in the input
+     * @param  {Event} event The keydown event
+     */
+
   }, {
     key: 'focus',
 
@@ -1305,6 +1320,7 @@ var Input = function (_React$Component) {
         style: this.props.style,
         onKeyDown: this.onInputKeyDown,
         onChange: this.onChange,
+        onKeyPress: this.onKeyPress,
         onFocus: this.onFocus,
         onBlur: this.onBlur }));
     }
@@ -1322,7 +1338,9 @@ var Input = function (_React$Component) {
 Input.defaultProps = {
   className: '',
   value: '',
-  ignoreTab: false
+  ignoreTab: false,
+  onKeyDown: function onKeyDown() {},
+  onKeyPress: function onKeyPress() {}
 };
 
 exports.default = Input;
@@ -1361,6 +1379,7 @@ exports.default = {
   onFocus: _react2.default.PropTypes.func,
   onBlur: _react2.default.PropTypes.func,
   onChange: _react2.default.PropTypes.func,
+  onKeyPress: _react2.default.PropTypes.func,
   skipSuggest: _react2.default.PropTypes.func,
   getSuggestLabel: _react2.default.PropTypes.func,
   autoActivateFirstSuggest: _react2.default.PropTypes.bool,
@@ -1369,7 +1388,8 @@ exports.default = {
     suggests: _react2.default.PropTypes.object,
     suggestItem: _react2.default.PropTypes.object
   }),
-  ignoreTab: _react2.default.PropTypes.bool
+  ignoreTab: _react2.default.PropTypes.bool,
+  label: _react2.default.PropTypes.string
 };
 
 },{}],11:[function(require,module,exports){
@@ -1453,7 +1473,7 @@ var SuggestItem = function (_React$Component) {
      * @return {Function} The React element to render
      */
     value: function render() {
-      var classes = (0, _classnames2.default)('geosuggest-item', this.props.className, { 'geosuggest-item--active': this.props.isActive });
+      var classes = (0, _classnames2.default)('geosuggest__item', this.props.className, { 'geosuggest__item--active': this.props.isActive });
 
       return _react2.default.createElement(
         'li',
