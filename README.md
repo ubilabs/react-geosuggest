@@ -237,47 +237,12 @@ Default: `null`
 
 If the `label` and a `id` prop (see "Others") were supplied, a `<label>` tag with the passed label text will be rendered. The `<label>` element's `for` attribute will correctly point to the `id` of the `<input>` element.
 
-#### List of allowed attributes for `<input>`
-
-```autoFocus,
-disabled,
-form,
-formAction,
-formEncType,
-formMethod,
-formNoValidate,
-formTarget,
-height,
-id,
-inputMode,
-maxLength,
-name,
-onClick,
-onContextMenu,
-onCopy,
-onCut,
-onDoubleClick,
-onMouseDown,
-onMouseEnter,
-onMouseLeave,
-onMouseMove,
-onMouseOut,
-onMouseOver,
-onMouseUp,
-onPaste,
-pattern,
-placeholder,
-readOnly,
-required,
-size,
-spellCheck,
-tabIndex'
-```
-
 #### Others
 
+All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.js#L4)
 All [DOM clipboard events](https://facebook.github.io/react/docs/events.html#clipboard-events).  
 All [DOM mouse events](https://facebook.github.io/react/docs/events.html#mouse-events) except for drag & drop.
+
 
 ### Exposed component functions
 
