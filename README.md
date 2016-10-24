@@ -239,9 +239,10 @@ If the `label` and a `id` prop (see "Others") were supplied, a `<label>` tag wit
 
 #### Others
 
-All standard `input[type="text"]` attributes are allowed. See the [documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input) for more information.  
+All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.js#L4)
 All [DOM clipboard events](https://facebook.github.io/react/docs/events.html#clipboard-events).  
 All [DOM mouse events](https://facebook.github.io/react/docs/events.html#mouse-events) except for drag & drop.
+
 
 ### Exposed component functions
 
