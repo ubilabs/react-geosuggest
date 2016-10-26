@@ -1,3 +1,9 @@
+## 2.0.1
+
+#### Bug Fixes
+
+* **refactor:** changed to use reacts internal shallowCompare  
+
 ## 2.0.0 (2016-10-07)
 
 
