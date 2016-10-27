@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import shallowCompare from 'react-addons-shallow-compare';
+import shallowCompare from 'react/lib/shallowCompare';
 import classnames from 'classnames';
 import SuggestItem from './suggest-item';
 
