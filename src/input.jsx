@@ -24,7 +24,7 @@ class Input extends React.Component {
    * When the input got changed
    */
   onChange = () => {
-    this.props.onChange(this.refs.input.value);
+    this.props.onChange(this.input.value);
   }
 
   /**
@@ -88,7 +88,7 @@ class Input extends React.Component {
    * Focus the input
    */
   focus() {
-    this.refs.input.focus();
+    this.input.focus();
   }
 
   /**
@@ -103,7 +103,7 @@ class Input extends React.Component {
       );
 
     return <input className={classes}
-      ref='input'
+      ref={input => this.input = input}
       type='text'
       autoComplete='off'
       {...attributes}
