@@ -19,6 +19,32 @@ export default class SuggestItem extends React.Component {
   }
 
   /**
+   * Checking if item just became active and scrolling if needed.
+   * @param {Object} nextProps The new properties
+   */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isActive && !this.props.isActive) {
+      this.scrollIfNeeded();
+    }
+  }
+
+  /**
+   * Scrolling current item to the center of the list if item needs scrolling.
+   * Item is scrolled to the center of the list.
+   */
+  scrollIfNeeded() {
+    const el = this.ref;
+    const parent = el.parentElement;
+    
+    const overTop = el.offsetTop - parent.offsetTop < parent.scrollTop;
+    const overBottom = (el.offsetTop - parent.offsetTop + el.clientHeight) > (parent.scrollTop + parent.clientHeight);
+    
+    if (overTop || overBottom) {
+      parent.scrollTop = el.offsetTop - parent.offsetTop - parent.clientHeight / 2 + el.clientHeight / 2;
+    }
+  }
+
+  /**
    * When the suggest item got clicked
    * @param {Event} event The click event
    */
@@ -39,6 +65,7 @@ export default class SuggestItem extends React.Component {
     );
 
     return <li className={classes}
+      ref={li => this.ref = li }
       style={this.props.style}
       onMouseDown={this.props.onMouseDown}
       onMouseOut={this.props.onMouseOut}
