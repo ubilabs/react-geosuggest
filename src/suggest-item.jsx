@@ -35,10 +35,10 @@ export default class SuggestItem extends React.Component {
   scrollIfNeeded() {
     const el = this.ref;
     const parent = el.parentElement;
-    
+
     const overTop = el.offsetTop - parent.offsetTop < parent.scrollTop;
-    const overBottom = (el.offsetTop - parent.offsetTop + el.clientHeight) > (parent.scrollTop + parent.clientHeight);
-    
+    const overBottom = el.offsetTop - parent.offsetTop + el.clientHeight > parent.scrollTop + parent.clientHeight;
+
     if (overTop || overBottom) {
       parent.scrollTop = el.offsetTop - parent.offsetTop - parent.clientHeight / 2 + el.clientHeight / 2;
     }
