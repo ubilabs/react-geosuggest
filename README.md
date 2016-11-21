@@ -41,7 +41,7 @@ The Geosuggest works out of the box by just including it. However, you can custo
 
 ### ES6:
 
-```
+```js
 import Geosuggest from 'react-geosuggest';
 
 <Geosuggest />
@@ -49,7 +49,7 @@ import Geosuggest from 'react-geosuggest';
 
 ### ES5:
 
-```
+```js
 var Geosuggest = require('react-geosuggest').default;
 
 <Geosuggest />
@@ -249,7 +249,7 @@ It is also possible to clear the value of the input contained within the GeoSugg
 
 ### Example
 
-```
+```js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Geosuggest from 'react-geosuggest';
@@ -297,7 +297,7 @@ This component uses [BEM](http://csswizardry.com/2013/01/mindbemding-getting-you
 ### Note:
 
 The `geosuggest__suggests--hidden` class is added to hide the suggestion list. You should copy the style below into your CSS file.
-```
+```css
 .geosuggest__suggests--hidden {
   max-height: 0;
   overflow: hidden;
@@ -307,7 +307,7 @@ The `geosuggest__suggests--hidden` class is added to hide the suggestion list. Y
 The above class is added whenever the suggestion list needs to be hidden. This occurs when the user selects an item from the list or when the user triggers the `blur` event on the input.
 
 Similarly, you need to have the class `geosuggest__item--active` similar to this:
-```
+```css
 .geosuggest__item--active {
   background: #267dc0;
   color: #fff;
