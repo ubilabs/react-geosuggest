@@ -7,7 +7,7 @@ import Geosuggest from '../src/Geosuggest';
 
 window.google = global.google = googleStub();
 
-describe('Component: Geosuggest', () => {
+describe('Component: Geosuggest with Google APIs', () => {
   let component = null,
     onSuggestSelect = null,
     onActivateSuggest = null,
@@ -16,6 +16,7 @@ describe('Component: Geosuggest', () => {
     onKeyPress = null,
     onChange = null,
     onBlur = null,
+    showSuggests = null,
     render = props => {
       onSuggestSelect = sinon.spy();
       onActivateSuggest = sinon.spy();
@@ -24,6 +25,7 @@ describe('Component: Geosuggest', () => {
       onFocus = sinon.spy();
       onKeyPress = sinon.spy();
       onBlur = sinon.spy();
+      showSuggests = sinon.spy();
 
       component = TestUtils.renderIntoDocument(
         <Geosuggest
@@ -36,6 +38,7 @@ describe('Component: Geosuggest', () => {
           onFocus={onFocus}
           onKeyPress={onKeyPress}
           onBlur={onBlur}
+          showSuggests={showSuggests}
           style={{
             'input': {
               'borderColor': '#000'
@@ -498,4 +501,18 @@ describe('Component: Geosuggest', () => {
       });
     });
   });
+
+  describe('with Nominatim API', () => {
+    beforeEach(() => render({useNominatim: true}));
+
+    it('should call `showSuggests` when `onBlur` is called', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      TestUtils.Simulate.focus(geoSuggestInput);
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.blur(geoSuggestInput);
+      expect(showSuggests.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+  });
+
 });

@@ -16,6 +16,7 @@ export default {
   types: null,
   queryDelay: 250,
   googleMaps: null,
+  useNominatim: false,
   onActivateSuggest: () => {},
   onSuggestSelect: () => {},
   onSuggestNoResults: () => {},
@@ -23,6 +24,7 @@ export default {
   onBlur: () => {},
   onChange: () => {},
   skipSuggest: () => {},
+  showSuggests: () => {},
   getSuggestLabel: suggest => suggest.description,
   autoActivateFirstSuggest: false,
   style: {
