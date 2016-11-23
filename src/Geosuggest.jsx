@@ -11,6 +11,8 @@ import filterInputAttributes from './filter-input-attributes';
 import Input from './input';
 import SuggestList from './suggest-list';
 
+import * as Nominatim from 'nominatim-browser';
+
 // Escapes special characters in user input for regex
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
@@ -64,21 +66,28 @@ class Geosuggest extends React.Component {
       return;
     }
 
-    var googleMaps = this.props.googleMaps ||
-      (window.google && // eslint-disable-line no-extra-parens
-        window.google.maps) ||
-      this.googleMaps;
+    // first check if we are using Nominatim instead of google apis
+    this.useNominatim = this.props.useNominatim;
 
-    /* istanbul ignore next */
-    if (!googleMaps) {
-      console.error(// eslint-disable-line no-console
-        'Google map api was not found in the page.');
-      return;
+    if (this.useNominatim) {
+      this.autocompleteService = Nominatim;
+      this.geocoder = Nominatim;
+    } else {
+      // use google apis
+      var googleMaps = this.props.googleMaps ||
+        (window.google && // eslint-disable-line no-extra-parens
+          window.google.maps) ||
+        this.googleMaps;
+      this.googleMaps = googleMaps;
+      /* istanbul ignore next */
+      if (!googleMaps) {
+        console.error(// eslint-disable-line no-console
+          'Google map api was not found in the page.');
+        return;
+      }
+      this.autocompleteService = new googleMaps.places.AutocompleteService();
+      this.geocoder = new googleMaps.Geocoder();
     }
-    this.googleMaps = googleMaps;
-
-    this.autocompleteService = new googleMaps.places.AutocompleteService();
-    this.geocoder = new googleMaps.Geocoder();
   }
 
   /**
@@ -100,7 +109,7 @@ class Geosuggest extends React.Component {
    * On After the input got changed
    */
   onAfterInputChange = () => {
-    if (!this.state.isSuggestsHidden) {
+    if (!this.state.isSuggestsHidden && !this.useNominatim) {
       this.showSuggests();
     }
     this.props.onChange(this.state.userInput);
@@ -118,7 +127,10 @@ class Geosuggest extends React.Component {
    * When the input gets blurred
    */
   onInputBlur = () => {
-    if (!this.state.ignoreBlur) {
+    if (this.useNominatim) {
+      this.showSuggests();
+    }
+    if (!this.state.ignoreBlur && !this.useNominatim) {
       this.hideSuggests();
     }
   }
@@ -186,11 +198,15 @@ class Geosuggest extends React.Component {
     }
 
     this.setState({isLoading: true}, () => {
-      this.autocompleteService.getPlacePredictions(
-        options,
-        suggestsGoogle => {
+      if (this.useNominatim) {
+        // Nominatim lookup
+        this.autocompleteService.geocode({
+          q: this.state.userInput,
+          addressdetails: true
+        })
+        .then(suggestsResults => {
           this.setState({isLoading: false});
-          this.updateSuggests(suggestsGoogle || [], // can be null
+          this.updateSuggests(suggestsResults || [], // can be null
             () => {
               if (this.props.autoActivateFirstSuggest &&
                 !this.state.activeSuggest
@@ -198,17 +214,36 @@ class Geosuggest extends React.Component {
                 this.activateSuggest('next');
               }
             });
-        }
-      );
+        })
+        .catch(error => {
+          console.error('Nominatim Search Error: ', error);
+        });
+      } else {
+        // Google Places lookup
+        this.autocompleteService.getPlacePredictions(
+          options,
+          suggestsResults => {
+            this.setState({isLoading: false});
+            this.updateSuggests(suggestsResults || [], // can be null
+              () => {
+                if (this.props.autoActivateFirstSuggest &&
+                  !this.state.activeSuggest
+                ) {
+                  this.activateSuggest('next');
+                }
+              });
+          }
+        );
+      }
     });
   }
 
   /**
-   * Update the suggests
-   * @param {Array} suggestsGoogle The new google suggests
+   * Update the suggests using Google Places API
+   * @param {Array} suggestsResults The new google suggests
    * @param {Function} callback Called once the state has been updated
    */
-  updateSuggests(suggestsGoogle = [], callback) {
+  updateSuggests(suggestsResults = [], callback) {
     var suggests = [],
       regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
@@ -230,11 +265,13 @@ class Geosuggest extends React.Component {
       }
     });
 
-    suggestsGoogle.forEach(suggest => {
+    suggestsResults.forEach(suggest => {
       if (!skipSuggest(suggest)) {
         suggests.push({
-          label: this.props.getSuggestLabel(suggest),
+          label: this.useNominatim ?
+            suggest.display_name : this.props.getSuggestLabel(suggest),
           placeId: suggest.place_id,
+          raw: suggest,
           isFixture: false
         });
       }
@@ -352,23 +389,39 @@ class Geosuggest extends React.Component {
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest(suggest) {
-    this.geocoder.geocode(
-      suggest.placeId && !suggest.isFixture ?
-        {placeId: suggest.placeId} : {address: suggest.label},
-      (results, status) => {
-        if (status === this.googleMaps.GeocoderStatus.OK) {
-          var gmaps = results[0],
-            location = gmaps.geometry.location;
+    if (this.useNominatim) {
+      // no need to gecode again, since all data is included in suggest.raw
+      var raw = suggest.raw,
+        selected = {
+          nominatim: raw || {},
+          location: {
+            lat: raw ? raw.lat : '',
+            lon: raw ? raw.lon : ''
+          },
+          placeId: suggest.placeId,
+          isFixture: suggest.isFixture,
+          label: raw ? raw.display_name : ''
+        };
+      this.props.onSuggestSelect(selected);
+    } else {
+      this.geocoder.geocode(
+        suggest.placeId && !suggest.isFixture ?
+          {placeId: suggest.placeId} : {address: suggest.label},
+        (results, status) => {
+          if (status === this.googleMaps.GeocoderStatus.OK) {
+            var gmaps = results[0],
+              location = gmaps.geometry.location;
 
-          suggest.gmaps = gmaps;
-          suggest.location = {
-            lat: location.lat(),
-            lng: location.lng()
-          };
+            suggest.gmaps = gmaps;
+            suggest.location = {
+              lat: location.lat(),
+              lng: location.lng()
+            };
+          }
+          this.props.onSuggestSelect(suggest);
         }
-        this.props.onSuggestSelect(suggest);
-      }
-    );
+      );
+    }
   }
 
   /**

@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
-    "lodash.debounce": "^4.0.6"
+    "lodash.debounce": "^4.0.6",
+    "nominatim-browser": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -57,8 +58,8 @@
     "prepare:example": "rm -rf example/dist && mkdir example/dist && npm run copy:assets && npm run js:example && npm run css",
     "copy:assets": "cp example/src/*.html example/dist && cp example/src/*.svg example/dist",
     "css": "cat example/src/app.css src/geosuggest.css > example/dist/app.css",
-    "js:example": "browserify example/src/app.js -t babelify --extension=.jsx> example/dist/app.js",
-    "js:example:uglify": "uglifyjs example/dist/app.js -o example/dist/app.js -c warnings=false --mangle",
+    "js:example": "browserify example/src/app.js -t babelify --extension=.jsx> example/dist/app.js && browserify example/src/app-nominatim.js -t babelify --extension=.jsx> example/dist/app-nominatim.js",
+    "js:example:uglify": "uglifyjs example/dist/app.js -o example/dist/app.js -c warnings=false --mangle && uglifyjs example/dist/app-nominatim.js -o example/dist/app-nominatim.js -c warnings=false --mangle",
     "js:browser": "browserify src/Geosuggest.jsx --standalone Geosuggest --exclude react -t babelify --extension=.jsx -t browserify-global-shim > dist/react-geosuggest.js",
     "js:browser:uglify": "uglifyjs dist/react-geosuggest.js -o dist/react-geosuggest.min.js -c warnings=false,drop_console=true --mangle",
     "build:module": "babel src --out-dir module && cp src/geosuggest.css module/",
