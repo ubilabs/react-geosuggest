@@ -16,7 +16,7 @@ describe('Component: Geosuggest with Google APIs', () => {
     onKeyPress = null,
     onChange = null,
     onBlur = null,
-    showSuggests = null,
+    onSuggestResults = null,
     render = props => {
       onSuggestSelect = sinon.spy();
       onActivateSuggest = sinon.spy();
@@ -25,7 +25,7 @@ describe('Component: Geosuggest with Google APIs', () => {
       onFocus = sinon.spy();
       onKeyPress = sinon.spy();
       onBlur = sinon.spy();
-      showSuggests = sinon.spy();
+      onSuggestResults = sinon.spy();
 
       component = TestUtils.renderIntoDocument(
         <Geosuggest
@@ -38,7 +38,7 @@ describe('Component: Geosuggest with Google APIs', () => {
           onFocus={onFocus}
           onKeyPress={onKeyPress}
           onBlur={onBlur}
-          showSuggests={showSuggests}
+          onSuggestResults={onSuggestResults}
           style={{
             'input': {
               'borderColor': '#000'
@@ -470,15 +470,17 @@ describe('Component: Geosuggest with Google APIs', () => {
       expect(geoSuggestButton).to.not.equal(null);
     });
 
-    it('should call `showSuggests` when `onButtonClick` is called', () => {
+    it('should call `onSuggestResults` when `onButtonClick` is called', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'), // eslint-disable-line max-len
         geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
       TestUtils.Simulate.focus(geoSuggestInput);
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestButton);
       TestUtils.Simulate.click(geoSuggestButton);
-      expect(showSuggests.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+      expect(onSuggestResults.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
   });
 
 });
+
