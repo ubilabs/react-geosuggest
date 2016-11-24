@@ -120,17 +120,27 @@ class Geosuggest extends React.Component {
    */
   onInputFocus = () => {
     this.props.onFocus();
-    this.showSuggests();
+    if (!this.useNominatim) {
+      this.showSuggests();
+    }
   }
 
   /**
    * When the input gets blurred
    */
   onInputBlur = () => {
-    if (this.useNominatim) {
-      this.showSuggests();
-    }
     if (!this.state.ignoreBlur && !this.useNominatim) {
+      this.hideSuggests();
+    }
+  }
+
+  /**
+   * When the search button gets clicked
+   */
+  onButtonClick = () => {
+    if (this.state.isSuggestsHidden && this.useNominatim) {
+      this.showSuggests();
+    } else {
       this.hideSuggests();
     }
   }
@@ -239,7 +249,7 @@ class Geosuggest extends React.Component {
   }
 
   /**
-   * Update the suggests using Google Places API
+   * Update the suggests
    * @param {Array} suggestsResults The new google suggests
    * @param {Function} callback Called once the state has been updated
    */
@@ -278,6 +288,7 @@ class Geosuggest extends React.Component {
     });
 
     activeSuggest = this.updateActiveSuggest(suggests);
+    this.props.onSuggestResults(suggests);
     this.setState({suggests, activeSuggest}, callback);
   }
 
@@ -436,12 +447,14 @@ class Geosuggest extends React.Component {
         {'geosuggest--loading': this.state.isLoading}
       ),
       shouldRenderLabel = this.props.label && attributes.id,
+      shouldRenderButton = this.props.useNominatim,
       input = <Input className={this.props.inputClassName}
         ref='input'
         value={this.state.userInput}
         ignoreEnter={!this.state.isSuggestsHidden}
         ignoreTab={this.props.ignoreTab}
         style={this.props.style.input}
+        className={this.useNominatim ? 'geosuggest__input--nominatim' : ''}
         onChange={this.onInputChange}
         onFocus={this.onInputFocus}
         onBlur={this.onInputBlur}
@@ -450,6 +463,8 @@ class Geosuggest extends React.Component {
         onPrev={this.onPrev}
         onSelect={this.onSelect}
         onEscape={this.hideSuggests} {...attributes} />,
+      button = <button className={this.props.buttonClassName}
+        onClick={this.onButtonClick}>{this.props.buttonText}</button>,
       suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
         style={this.props.style.suggests}
         suggestItemStyle={this.props.style.suggestItem}
@@ -461,13 +476,18 @@ class Geosuggest extends React.Component {
         onSuggestSelect={this.selectSuggest}/>;
 
     return <div className={classes}>
-      <div className="geosuggest__input-wrapper">
+      <span className="geosuggest__input-wrapper">
         {shouldRenderLabel &&
           <label className="geosuggest__label"
                  htmlFor={attributes.id}>{this.props.label}</label>
         }
         {input}
-      </div>
+      </span>
+      {shouldRenderButton &&
+        <span className="geosuggest__button-wrapper">
+          {button}
+        </span>
+      }
       <div className="geosuggest__suggests-wrapper">
         {suggestionsList}
       </div>

@@ -10,6 +10,8 @@ export default {
   disabled: React.PropTypes.bool,
   className: React.PropTypes.string,
   inputClassName: React.PropTypes.string,
+  buttonClassName: React.PropTypes.string,
+  buttonText: React.PropTypes.string,
   location: React.PropTypes.object,
   radius: React.PropTypes.oneOfType([
     React.PropTypes.string,
@@ -21,12 +23,14 @@ export default {
   queryDelay: React.PropTypes.number,
   googleMaps: React.PropTypes.object,
   onSuggestSelect: React.PropTypes.func,
+  onSuggestResults: React.PropTypes.func,
   onFocus: React.PropTypes.func,
   onBlur: React.PropTypes.func,
   onChange: React.PropTypes.func,
   onKeyPress: React.PropTypes.func,
   skipSuggest: React.PropTypes.func,
   showSuggests: React.PropTypes.func,
+  useNominatim: React.PropTypes.bool,
   getSuggestLabel: React.PropTypes.func,
   autoActivateFirstSuggest: React.PropTypes.bool,
   style: React.PropTypes.shape({
