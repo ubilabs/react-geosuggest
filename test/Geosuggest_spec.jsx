@@ -505,12 +505,18 @@ describe('Component: Geosuggest with Google APIs', () => {
   describe('with Nominatim API', () => {
     beforeEach(() => render({useNominatim: true}));
 
-    it('should call `showSuggests` when `onBlur` is called', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+    it('should display the `Search` button', () => {
+      const geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
+      expect(geoSuggestButton).to.not.equal(null);
+    });
+
+    it('should call `showSuggests` when `onButtonClick` is called', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'), // eslint-disable-line max-len
+        geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
       TestUtils.Simulate.focus(geoSuggestInput);
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.blur(geoSuggestInput);
+      TestUtils.Simulate.click(geoSuggestButton);
       expect(showSuggests.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
   });

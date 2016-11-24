@@ -142,6 +142,12 @@ Default: `google.maps`
 
 In case you want to provide your own Google Maps object, pass it in as googleMaps. The default is the global google maps object.
 
+#### useNominatim
+Type: `Boolean`
+Default: `false`
+
+Set to true if you prefer to use Open Street Maps Nominatim service instead of google APIs.  Note that usage with autolookup fields is prohibited by OSM terms of serivce so a 'Search' button will be added to the component to query for suggests.  This option also removes the google maps api page include requirement.
+
 #### ignoreTab
 Type: `Boolean`
 Default: `false`
@@ -198,6 +204,12 @@ Gets triggered when a suggest is activated in the list. Only parameter is an obj
 
 * `label` – Type `String` – The label name
 * `placeId` – Type `String` – If it is a preset, equals the `label`. Else it is the Google Maps `placeID`
+
+#### onSuggestResults
+Type: `Function`
+Default: `function(suggests) {}`
+
+Gets triggered when there suggest results are returned
 
 #### onSuggestNoResults
 Type: `Function`
