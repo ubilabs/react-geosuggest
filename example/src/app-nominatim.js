@@ -23,6 +23,7 @@ var App = React.createClass({ // eslint-disable-line
           onBlur={this.onBlur}
           onChange={this.onChange}
           onSuggestSelect={this.onSuggestSelect}
+          onSuggestResults={this.onSuggestResults}
           onSuggestNoResults={this.onSuggestNoResults}
           radius="20" />
       </div>
@@ -58,6 +59,14 @@ var App = React.createClass({ // eslint-disable-line
    */
   onSuggestSelect: function(suggest) {
     console.log(suggest); // eslint-disable-line
+  },
+
+  /**
+   * When there are suggest results
+   * @param {Array} suggests The suggestions
+   */
+  onSuggestResults: function(suggests) {
+    console.log('onSuggestResults :' + suggests); // eslint-disable-line
   },
 
   /**
