@@ -512,7 +512,6 @@ describe('Component: Geosuggest with Google APIs', () => {
   });
 
   describe('with Nominatim API', () => {
-
     let nominatimStub,
       nominatimPromise = new Promise(() => {
         return [{
@@ -551,6 +550,4 @@ describe('Component: Geosuggest with Google APIs', () => {
       expect(nominatimStub.geocode.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
   });
-
 });
-
