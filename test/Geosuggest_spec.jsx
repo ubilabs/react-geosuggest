@@ -4,6 +4,7 @@ import TestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 import googleStub from './google_stub';
 import Geosuggest from '../src/Geosuggest';
+import * as Nominatim from 'nominatim-browser';
 
 window.google = global.google = googleStub();
 
@@ -318,6 +319,14 @@ describe('Component: Geosuggest with Google APIs', () => {
       });
       expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
+
+    it('should call onSuggestResults when results are recieved', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+      expect(onSuggestResults.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
   });
 
   describe('with tab ignored', () => {
@@ -503,22 +512,43 @@ describe('Component: Geosuggest with Google APIs', () => {
   });
 
   describe('with Nominatim API', () => {
-    beforeEach(() => render({useNominatim: true}));
+
+    let nominatimStub,
+      nominatimPromise = new Promise(() => {
+        return [{
+          label: 'test',
+          placeId: 'test',
+          isFixture: false
+        }];
+      });
+
+    beforeEach(() => {
+      nominatimStub = sinon.stub(Nominatim);
+      nominatimStub.geocode.returns(nominatimPromise);
+      render({
+        useNominatim: true,
+        nominatim: nominatimStub
+      });
+    });
+
+    afterEach(() => {
+      sinon.restore(Nominatim);
+    });
 
     it('should display the `Search` button', () => {
       const geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
       expect(geoSuggestButton).to.not.equal(null);
     });
 
-    it('should call `onSuggestResults` when `onButtonClick` is called', () => {
+    it('should call `Nominatim.geocode` when `onButtonClick` is called', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'), // eslint-disable-line max-len
         geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
+
       TestUtils.Simulate.focus(geoSuggestInput);
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestButton);
       TestUtils.Simulate.click(geoSuggestButton);
-      expect(onSuggestResults.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+      expect(nominatimStub.geocode.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
   });
 
