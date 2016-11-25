@@ -18,6 +18,7 @@ export default {
   types: null,
   queryDelay: 250,
   googleMaps: null,
+  nominatim: null,
   useNominatim: false,
   onActivateSuggest: () => {},
   onSuggestSelect: () => {},

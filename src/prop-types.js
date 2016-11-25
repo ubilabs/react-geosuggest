@@ -22,6 +22,7 @@ export default {
   types: React.PropTypes.array,
   queryDelay: React.PropTypes.number,
   googleMaps: React.PropTypes.object,
+  nominatim: React.PropTypes.object,
   onSuggestSelect: React.PropTypes.func,
   onSuggestResults: React.PropTypes.func,
   onFocus: React.PropTypes.func,

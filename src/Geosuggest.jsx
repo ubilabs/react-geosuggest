@@ -44,6 +44,8 @@ class Geosuggest extends React.Component {
       this.onAfterInputChange =
         debounce(this.onAfterInputChange, props.queryDelay);
     }
+
+    this.nominatim = props.nominatim ? props.nominatim : Nominatim;
   }
 
   /**
@@ -69,10 +71,7 @@ class Geosuggest extends React.Component {
     // first check if we are using Nominatim instead of google apis
     this.useNominatim = this.props.useNominatim;
 
-    if (this.useNominatim) {
-      this.autocompleteService = Nominatim;
-      this.geocoder = Nominatim;
-    } else {
+    if (!this.useNominatim) {
       // use google apis
       var googleMaps = this.props.googleMaps ||
         (window.google && // eslint-disable-line no-extra-parens
@@ -210,7 +209,7 @@ class Geosuggest extends React.Component {
     this.setState({isLoading: true}, () => {
       if (this.useNominatim) {
         // Nominatim lookup
-        this.autocompleteService.geocode({
+        this.nominatim.geocode({
           q: this.state.userInput,
           addressdetails: true
         })
@@ -401,7 +400,7 @@ class Geosuggest extends React.Component {
    */
   geocodeSuggest(suggest) {
     if (this.useNominatim) {
-      // no need to gecode again, since all data is included in suggest.raw
+      // no need to geocode since data is included in suggest.raw
       var raw = suggest.raw,
         selected = {
           nominatim: raw || {},
