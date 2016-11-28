@@ -1,3 +1,11 @@
+## 3.0.0 (2016-11-28)
+
+
+#### Bug Fixes
+
+* **packager:** add babel-plugin-transform-object-assign to resolve issue with travis builds ([b3faafea](https://github.com/ubilabs/react-geosuggest/commit/b3faafea40586c1404fa33534bb0561e51988dcf))
+
+
 ## 2.0.1
 
 #### Bug Fixes
