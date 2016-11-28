@@ -11,6 +11,10 @@ import filterInputAttributes from './filter-input-attributes';
 import Input from './input';
 import SuggestList from './suggest-list';
 
+export const
+  PLACES_API = 'places',
+  GEOCODE_API = 'geocode';
+
 // Escapes special characters in user input for regex
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
@@ -77,7 +81,9 @@ class Geosuggest extends React.Component {
     }
     this.googleMaps = googleMaps;
 
-    this.autocompleteService = new googleMaps.places.AutocompleteService();
+    if (GEOCODE_API !== this.props.api) {
+      this.autocompleteService = new googleMaps.places.AutocompleteService();
+    }
     this.geocoder = new googleMaps.Geocoder();
   }
 
@@ -160,6 +166,18 @@ class Geosuggest extends React.Component {
     this.setState({userInput: ''}, this.hideSuggests);
   }
 
+  handleGoogleResponse = suggests => {
+    this.setState({isLoading: false});
+    this.updateSuggests(suggests || [], // can be null
+      () => {
+        if (this.props.autoActivateFirstSuggest &&
+          !this.state.activeSuggest
+        ) {
+          this.activateSuggest('next');
+        }
+      });
+  }
+
   /**
    * Search for new suggests
    */
@@ -186,20 +204,23 @@ class Geosuggest extends React.Component {
     }
 
     this.setState({isLoading: true}, () => {
-      this.autocompleteService.getPlacePredictions(
-        options,
-        suggestsGoogle => {
-          this.setState({isLoading: false});
-          this.updateSuggests(suggestsGoogle || [], // can be null
-            () => {
-              if (this.props.autoActivateFirstSuggest &&
-                !this.state.activeSuggest
-              ) {
-                this.activateSuggest('next');
-              }
-            });
-        }
-      );
+      switch (this.props.api) {
+        case GEOCODE_API:
+          this.geocoder.geocode({
+            address: options.input,
+            bounds: options.bounds
+          }, items => {
+            this.handleGoogleResponse(items.map(item =>
+              Object.assign(item, {description: item.formatted_address})
+            ));
+          });
+          break;
+        default:
+          this.autocompleteService.getPlacePredictions(
+            options,
+            this.handleGoogleResponse
+          );
+      }
     });
   }
 

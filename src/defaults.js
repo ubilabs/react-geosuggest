@@ -1,8 +1,11 @@
+import {PLACES_API} from './Geosuggest';
+
 /* istanbul ignore next */
 /**
  * Default values
  */
 export default {
+  api: PLACES_API,
   fixtures: [],
   initialValue: '',
   placeholder: 'Search places',
