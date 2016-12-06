@@ -453,7 +453,6 @@ class Geosuggest extends React.Component {
         ignoreEnter={!this.state.isSuggestsHidden}
         ignoreTab={this.props.ignoreTab}
         style={this.props.style.input}
-        className={this.useNominatim ? 'geosuggest__input--nominatim' : ''}
         onChange={this.onInputChange}
         onFocus={this.onInputFocus}
         onBlur={this.onInputBlur}

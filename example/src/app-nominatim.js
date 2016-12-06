@@ -17,6 +17,7 @@ var App = React.createClass({ // eslint-disable-line
     return ( // eslint-disable-line
       <div>
         <Geosuggest
+          inputClassName="geosuggest__input--nominatim"
           useNominatim={true}
           fixtures={fixtures}
           onFocus={this.onFocus}
