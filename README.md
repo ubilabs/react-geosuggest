@@ -237,6 +237,7 @@ All [DOM mouse events](https://facebook.github.io/react/docs/events.html#mouse-e
 
 
 ### Exposed component functions
+These functions are accessible by setting "ref" on the component (see example below)
 
 #### focus()
 Call `focus` to focus on the element. The suggest list will be expanded with the current suggestions.
@@ -268,12 +269,18 @@ var App = React.createClass({
     return (
       <div>
         <Geosuggest
+          ref={el=>this._geoSuggest=el}
           placeholder="Start typing!"
           initialValue="Hamburg"
           fixtures={fixtures}
           onSuggestSelect={this.onSuggestSelect}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
           radius="20" />
+
+        {* Buttons to trigger exposed component functions *}
+        <button onClick={()=>this._geoSuggest.focus()}>Focus</button>
+        <button onClick={()=>this._geoSuggest.update('New Zeland')}>Update</button>
+        <button onClick={()=>this._geoSuggest.clear()}>Clear</button>
       </div>
     )
   },
