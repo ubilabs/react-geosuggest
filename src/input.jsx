@@ -92,6 +92,13 @@ class Input extends React.Component {
   }
 
   /**
+   * Blur the input
+   */
+  blur() {
+    this.refs.input.blur();
+  }
+
+  /**
    * Render the view
    * @return {Function} The React element to render
    */
