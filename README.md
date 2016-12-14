@@ -25,13 +25,13 @@ As this component uses the Google Maps Places API to get suggests, you must incl
 </html>
 ```
 
-Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key.
+Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key. The API's that you have to enable in your Google API Manager Dashboard are [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/start), [Google Places API Web Service](https://developers.google.com/places/web-service/) and [Google Maps Javascript API] (https://developers.google.com/maps/documentation/javascript/).
 
 The easiest way to use geosuggest is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
 
 You can also use the standalone build by including `dist/react-geosuggest.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
 
-```
+```sh
 npm install react-geosuggest --save
 ```
 
@@ -249,7 +249,7 @@ It is also possible to clear the value of the input contained within the GeoSugg
 
 ### Example
 
-```js
+```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Geosuggest from 'react-geosuggest';
