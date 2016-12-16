@@ -12,6 +12,8 @@ export default {
   inputClassName: React.PropTypes.string,
   suggestsHiddenClassName: React.PropTypes.string,
   suggestItemActiveClassName: React.PropTypes.string,
+  suggestListClassName: React.PropTypes.string,
+  suggestItemClassName: React.PropTypes.string,
   location: React.PropTypes.object,
   radius: React.PropTypes.oneOfType([
     React.PropTypes.string,
