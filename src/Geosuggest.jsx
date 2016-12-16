@@ -144,6 +144,13 @@ class Geosuggest extends React.Component {
   }
 
   /**
+   * Blur the input
+   */
+  blur() {
+    this.refs.input.blur();
+  }
+
+  /**
    * Update the value of the user input
    * @param {String} userInput the new value of the user input
    */

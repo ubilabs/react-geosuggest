@@ -244,6 +244,13 @@ describe('Component: Geosuggest', () => {
       expect(document.activeElement.classList.contains('geosuggest__input')).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
 
+    it('should not have the focus after calling `blur`', () => {
+      component.focus();
+      expect(document.activeElement.classList.contains('geosuggest__input')).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+      component.blur();
+      expect(document.activeElement.classList.contains('geosuggest__input')).to.be.false; // eslint-disable-line no-unused-expressions, max-len
+    });
+
     it('should add external inline `style` to input component', () => { // eslint-disable-line max-len
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       expect(geoSuggestInput.style['border-color']).to.be.equal('#000');
