@@ -525,8 +525,8 @@ describe('Component: Geosuggest with Google APIs', () => {
       nominatimStub = sinon.stub(Nominatim);
       nominatimStub.geocode.returns(nominatimPromise);
       render({
-        useNominatim: true,
-        nominatim: nominatimStub
+        disableAutoLookup: true,
+        geocodeProvider: nominatimStub
       });
     });
 

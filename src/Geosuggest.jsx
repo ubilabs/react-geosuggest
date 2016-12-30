@@ -11,8 +11,6 @@ import filterInputAttributes from './filter-input-attributes';
 import Input from './input';
 import SuggestList from './suggest-list';
 
-import * as Nominatim from 'nominatim-browser';
-
 // Escapes special characters in user input for regex
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
@@ -44,7 +42,8 @@ class Geosuggest extends React.Component {
         debounce(this.onAfterInputChange, props.queryDelay);
     }
 
-    this.nominatim = props.nominatim ? props.nominatim : Nominatim;
+    this.geocodeProvider = props.geocodeProvider;
+    this.disableAutoLookup = props.disableAutoLookup;
   }
 
   /**
@@ -67,10 +66,8 @@ class Geosuggest extends React.Component {
       return;
     }
 
-    // first check if we are using Nominatim instead of google apis
-    this.useNominatim = this.props.useNominatim;
-
-    if (!this.useNominatim) {
+    // if no geocodeProvider is set, use google apis
+    if (!this.geocodeProvider) {
       // use google apis
       var googleMaps = this.props.googleMaps ||
         (window.google && // eslint-disable-line no-extra-parens
@@ -107,7 +104,7 @@ class Geosuggest extends React.Component {
    * On After the input got changed
    */
   onAfterInputChange = () => {
-    if (!this.state.isSuggestsHidden && !this.useNominatim) {
+    if (!this.state.isSuggestsHidden && !this.disableAutoLookup) {
       this.showSuggests();
     }
     this.props.onChange(this.state.userInput);
@@ -118,7 +115,7 @@ class Geosuggest extends React.Component {
    */
   onInputFocus = () => {
     this.props.onFocus();
-    if (!this.useNominatim) {
+    if (!this.disableAutoLookup) {
       this.showSuggests();
     }
   }
@@ -127,7 +124,7 @@ class Geosuggest extends React.Component {
    * When the input gets blurred
    */
   onInputBlur = () => {
-    if (!this.state.ignoreBlur && !this.useNominatim) {
+    if (!this.state.ignoreBlur && !this.disableAutoLookup) {
       this.hideSuggests();
     }
   }
@@ -136,7 +133,7 @@ class Geosuggest extends React.Component {
    * When the search button gets clicked
    */
   onButtonClick = () => {
-    if (this.state.isSuggestsHidden && this.useNominatim) {
+    if (this.state.isSuggestsHidden && this.disableAutoLookup) {
       this.showSuggests();
     } else {
       this.hideSuggests();
@@ -213,9 +210,9 @@ class Geosuggest extends React.Component {
     }
 
     this.setState({isLoading: true}, () => {
-      if (this.useNominatim) {
-        // Nominatim lookup
-        this.nominatim.geocode({
+      if (this.geocodeProvider) {
+        // Provider lookup
+        this.geocodeProvider.geocode({
           q: this.state.userInput,
           addressdetails: true
         })
@@ -231,7 +228,7 @@ class Geosuggest extends React.Component {
             });
         })
         .catch(error => {
-          console.error('Nominatim Search Error: ', error);
+          console.error('geocodeProvider Search Error: ', error);
         });
       } else {
         // Google Places lookup
@@ -283,8 +280,7 @@ class Geosuggest extends React.Component {
     suggestsResults.forEach(suggest => {
       if (!skipSuggest(suggest)) {
         suggests.push({
-          label: this.useNominatim ?
-            suggest.display_name : this.props.getSuggestLabel(suggest),
+          label: this.props.getSuggestLabel(suggest),
           placeId: suggest.place_id,
           raw: suggest,
           isFixture: false
@@ -403,8 +399,9 @@ class Geosuggest extends React.Component {
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest(suggest) {
-    if (this.useNominatim) {
-      // no need to geocode since data is included in suggest.raw
+    if (this.geocodeProvider) {
+      // geocodeProvider should provide raw geocode results
+      // so there should be no need to geocode
       var raw = suggest.raw,
         selected = {
           nominatim: raw || {},
@@ -450,7 +447,7 @@ class Geosuggest extends React.Component {
         {'geosuggest--loading': this.state.isLoading}
       ),
       shouldRenderLabel = this.props.label && attributes.id,
-      shouldRenderButton = this.props.useNominatim,
+      shouldRenderButton = this.props.disableAutoLookup,
       input = <Input className={this.props.inputClassName}
         ref='input'
         value={this.state.userInput}

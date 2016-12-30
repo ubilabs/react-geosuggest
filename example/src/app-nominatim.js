@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Geosuggest from '../../src/Geosuggest';
 
+// IMPORTANT: nomintim-browser is only included in dev dependencies
+import * as Nominatim from 'nominatim-browser';
+
 var App = React.createClass({ // eslint-disable-line
   /**
    * Render the example app
@@ -18,7 +21,13 @@ var App = React.createClass({ // eslint-disable-line
       <div>
         <Geosuggest
           inputClassName="geosuggest__input--nominatim"
-          useNominatim={true}
+          disableAutoLookup={true}
+          geocodeProvider={Nominatim}
+          getSuggestLabel={
+            function(suggest) {
+              return suggest.display_name;
+            }
+          }
           fixtures={fixtures}
           onFocus={this.onFocus}
           onBlur={this.onBlur}

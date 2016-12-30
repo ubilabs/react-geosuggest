@@ -18,8 +18,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
-    "lodash.debounce": "^4.0.6",
-    "nominatim-browser": "^1.0.0"
+    "lodash.debounce": "^4.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -46,7 +45,8 @@
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
     "sinon": "^1.17.3",
-    "uglifyjs": "^2.4.10"
+    "uglifyjs": "^2.4.10",
+    "nominatim-browser": "^1.0.0"
   },
   "scripts": {
     "prepublish": "npm run build:module",

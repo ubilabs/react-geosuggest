@@ -24,7 +24,7 @@ export default {
   types: React.PropTypes.array,
   queryDelay: React.PropTypes.number,
   googleMaps: React.PropTypes.object,
-  nominatim: React.PropTypes.object,
+  geocodeProvider: React.PropTypes.object,
   onSuggestSelect: React.PropTypes.func,
   onSuggestResults: React.PropTypes.func,
   onFocus: React.PropTypes.func,
@@ -33,7 +33,7 @@ export default {
   onKeyPress: React.PropTypes.func,
   skipSuggest: React.PropTypes.func,
   showSuggests: React.PropTypes.func,
-  useNominatim: React.PropTypes.bool,
+  disableAutoLookup: React.PropTypes.bool,
   getSuggestLabel: React.PropTypes.func,
   autoActivateFirstSuggest: React.PropTypes.bool,
   style: React.PropTypes.shape({
