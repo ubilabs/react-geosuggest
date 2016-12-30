@@ -142,11 +142,17 @@ Default: `google.maps`
 
 In case you want to provide your own Google Maps object, pass it in as googleMaps. The default is the global google maps object.
 
-#### useNominatim
+#### disableAutoLookup 
 Type: `Boolean`
 Default: `false`
 
-Set to true if you prefer to use Open Street Maps Nominatim service instead of google APIs.  Note that usage with autolookup fields is prohibited by OSM terms of serivce so a 'Search' button will be added to the component to query for suggests.  This option also removes the google maps api page include requirement.
+Set to true if you prefer to use a geocodeProvider that does not allow autocomplete lookups (Open Street Maps Nominatim service, for example). If set to true a 'Search' button will be added to the component to query for suggests.
+
+#### geocodeProvider 
+Type: `Object`
+Default: `null`
+
+Can be used to supply your own geocode provider.  The provider must implement a function named 'geocode' that takes the userInput and returns suggestion results in a JSON array.  You can use the getSuggestLabel property to set the suggestion label field.
 
 #### ignoreTab
 Type: `Boolean`
