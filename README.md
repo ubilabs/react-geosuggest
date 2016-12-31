@@ -142,6 +142,28 @@ Default: `google.maps`
 
 In case you want to provide your own Google Maps object, pass it in as googleMaps. The default is the global google maps object.
 
+#### disableAutoLookup 
+Type: `Boolean`
+Default: `false`
+
+Set to true if you prefer to use a geocodeProvider that does not allow autocomplete lookups (Open Street Maps Nominatim service, for example). If set to true a 'Search' button will be added to the component to query for suggests.
+
+#### geocodeProvider 
+Type: `Object`
+Default: `null`
+
+Can be used to supply your own geocode provider.  The provider must implement two functions:
+
+`lookup(userInput)` that takes the userInput a returns a promise containing the suggestion results array.
+`geocode(suggest)` that takes a suggest object and returns a promise containing the suggestion with geocode data. This data is available in the suggest
+
+* `isFixture` – Type `Boolean` – True if the suggestion is a fixture
+* `label` – Type `String` – The label name
+* `placeId` – Type `String` – If it is a preset, equals the `label`. Else it is the Google Maps or geocodeProvider `placeID`
+* `raw` – Type `Object` – The the raw results returned from the lookup provider
+
+You can use the getSuggestLabel property to set the suggestion label field.
+
 #### ignoreTab
 Type: `Boolean`
 Default: `false`
@@ -179,6 +201,23 @@ Default: `function(event) {}`
 
 Gets triggered when input field gets key press.
 
+#### onGeocodeSuggest
+Type: `Function`
+Default: `function(suggest) {}`
+
+Can be used to override the default geocode behavior for a selected suggest.  Should return the suggest with added geocoded data.  This data is available:
+
+* `isFixture` – Type `Boolean` – True if the suggestion is a fixture
+* `label` – Type `String` – The label name
+* `placeId` – Type `String` – If it is a preset, equals the `label`. Else it is the Google Maps `placeID`
+* `raw` – Type `Object` – The the raw results returned from the lookup provider
+
+#### onSuggestsLookup
+Type: `Function`
+Default: `function(userInput) {}`
+
+Can be used to override the default lookup behavior for user input. Gets triggered when user input changes, or when `Search` button is clicked if disableAutoLookup is set to `true`.  Should return a promise containing lookup results array.
+
 #### onSuggestSelect
 Type: `Function`
 Default: `function(suggest) {}`
@@ -198,6 +237,12 @@ Gets triggered when a suggest is activated in the list. Only parameter is an obj
 
 * `label` – Type `String` – The label name
 * `placeId` – Type `String` – If it is a preset, equals the `label`. Else it is the Google Maps `placeID`
+
+#### onSuggestResults
+Type: `Function`
+Default: `function(suggests) {}`
+
+Gets triggered when there suggest results are returned
 
 #### onSuggestNoResults
 Type: `Function`

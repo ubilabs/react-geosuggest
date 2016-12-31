@@ -22,6 +22,14 @@
   border-color: #267dc0;
   box-shadow: 0 0 0 transparent;
 }
+.geosuggest__input--nominatim {
+  width: 75%;
+}
+.geosuggest__button {
+  width: 25%;
+  padding: .8em .5em .6em .5em;
+  font-size: 16px;
+}
 .geosuggest__suggests {
   position: absolute;
   top: 100%;

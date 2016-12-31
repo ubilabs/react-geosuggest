@@ -41,6 +41,9 @@ class Geosuggest extends React.Component {
       this.onAfterInputChange =
         debounce(this.onAfterInputChange, props.queryDelay);
     }
+
+    this.geocodeProvider = props.geocodeProvider;
+    this.disableAutoLookup = props.disableAutoLookup;
   }
 
   /**
@@ -63,21 +66,25 @@ class Geosuggest extends React.Component {
       return;
     }
 
-    var googleMaps = this.props.googleMaps ||
-      (window.google && // eslint-disable-line no-extra-parens
-        window.google.maps) ||
-      this.googleMaps;
-
-    /* istanbul ignore next */
-    if (!googleMaps) {
-      console.error(// eslint-disable-line no-console
-        'Google map api was not found in the page.');
-      return;
+    // if no geocodeProvider and no onGeocodeSugegst function is
+    // set, use google apis
+    if (!this.geocodeProvider &&
+      typeof this.props.onGeocodeSuggest() === 'undefined') {
+      // use google apis
+      var googleMaps = this.props.googleMaps ||
+        (window.google && // eslint-disable-line no-extra-parens
+          window.google.maps) ||
+        this.googleMaps;
+      this.googleMaps = googleMaps;
+      /* istanbul ignore next */
+      if (!googleMaps) {
+        console.error(// eslint-disable-line no-console
+          'Google map api was not found in the page.');
+        return;
+      }
+      this.autocompleteService = new googleMaps.places.AutocompleteService();
+      this.geocoder = new googleMaps.Geocoder();
     }
-    this.googleMaps = googleMaps;
-
-    this.autocompleteService = new googleMaps.places.AutocompleteService();
-    this.geocoder = new googleMaps.Geocoder();
   }
 
   /**
@@ -99,7 +106,7 @@ class Geosuggest extends React.Component {
    * On After the input got changed
    */
   onAfterInputChange = () => {
-    if (!this.state.isSuggestsHidden) {
+    if (!this.state.isSuggestsHidden && !this.disableAutoLookup) {
       this.showSuggests();
     }
     this.props.onChange(this.state.userInput);
@@ -110,14 +117,27 @@ class Geosuggest extends React.Component {
    */
   onInputFocus = () => {
     this.props.onFocus();
-    this.showSuggests();
+    if (!this.disableAutoLookup) {
+      this.showSuggests();
+    }
   }
 
   /**
    * When the input gets blurred
    */
   onInputBlur = () => {
-    if (!this.state.ignoreBlur) {
+    if (!this.state.ignoreBlur && !this.disableAutoLookup) {
+      this.hideSuggests();
+    }
+  }
+
+  /**
+   * When the search button gets clicked
+   */
+  onButtonClick = () => {
+    if (this.state.isSuggestsHidden && this.disableAutoLookup) {
+      this.showSuggests();
+    } else {
       this.hideSuggests();
     }
   }
@@ -175,28 +195,63 @@ class Geosuggest extends React.Component {
       return;
     }
 
-    const options = {
-      input: this.state.userInput
-    };
-
-    ['location', 'radius', 'bounds', 'types'].forEach(option => {
-      if (this.props[option]) {
-        options[option] = this.props[option];
-      }
-    });
-
-    if (this.props.country) {
-      options.componentRestrictions = {
-        country: this.props.country
-      };
-    }
-
     this.setState({isLoading: true}, () => {
-      this.autocompleteService.getPlacePredictions(
-        options,
-        suggestsGoogle => {
+      if (typeof this.props.onSuggestsLookup() === 'undefined') {
+        if (this.props.geocodeProvider) {
+          // Use props defined geocodeProvider.lookup
+          this.props.geocodeProvider.lookup(this.state.userInput)
+          .then(suggestsResults => {
+            this.setState({isLoading: false});
+            this.updateSuggests(suggestsResults || [], // can be null
+              () => {
+                if (this.props.autoActivateFirstSuggest &&
+                  !this.state.activeSuggest
+                ) {
+                  this.activateSuggest('next');
+                }
+              });
+          })
+          .catch(error => {
+            console.error('geocodeProvider lookup Error: ', error);
+          });
+        } else {
+          // Use Google Places lookup
+          const options = {
+            input: this.state.userInput
+          };
+
+          ['location', 'radius', 'bounds', 'types'].forEach(option => {
+            if (this.props[option]) {
+              options[option] = this.props[option];
+            }
+          });
+
+          if (this.props.country) {
+            options.componentRestrictions = {
+              country: this.props.country
+            };
+          }
+          this.autocompleteService.getPlacePredictions(
+            options,
+            suggestsResults => {
+              this.setState({isLoading: false});
+              this.updateSuggests(suggestsResults || [], // can be null
+                () => {
+                  if (this.props.autoActivateFirstSuggest &&
+                    !this.state.activeSuggest
+                  ) {
+                    this.activateSuggest('next');
+                  }
+                });
+            }
+          );
+        }
+      } else {
+        // Use props defined onSuggestLookup
+        this.props.onSuggestsLookup(this.state.userInput)
+        .then(suggestsResults => {
           this.setState({isLoading: false});
-          this.updateSuggests(suggestsGoogle || [], // can be null
+          this.updateSuggests(suggestsResults || [], // can be null
             () => {
               if (this.props.autoActivateFirstSuggest &&
                 !this.state.activeSuggest
@@ -204,17 +259,20 @@ class Geosuggest extends React.Component {
                 this.activateSuggest('next');
               }
             });
-        }
-      );
+        })
+        .catch(error => {
+          console.error('onSuggestsLookup Search Error: ', error);
+        });
+      }
     });
   }
 
   /**
    * Update the suggests
-   * @param {Array} suggestsGoogle The new google suggests
+   * @param {Array} suggestsResults The new google suggests
    * @param {Function} callback Called once the state has been updated
    */
-  updateSuggests(suggestsGoogle = [], callback) {
+  updateSuggests(suggestsResults = [], callback) {
     var suggests = [],
       regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
@@ -236,17 +294,19 @@ class Geosuggest extends React.Component {
       }
     });
 
-    suggestsGoogle.forEach(suggest => {
+    suggestsResults.forEach(suggest => {
       if (!skipSuggest(suggest)) {
         suggests.push({
           label: this.props.getSuggestLabel(suggest),
           placeId: suggest.place_id,
+          raw: suggest,
           isFixture: false
         });
       }
     });
 
     activeSuggest = this.updateActiveSuggest(suggests);
+    this.props.onSuggestResults(suggests);
     this.setState({suggests, activeSuggest}, callback);
   }
 
@@ -356,23 +416,38 @@ class Geosuggest extends React.Component {
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest(suggest) {
-    this.geocoder.geocode(
-      suggest.placeId && !suggest.isFixture ?
-        {placeId: suggest.placeId} : {address: suggest.label},
-      (results, status) => {
-        if (status === this.googleMaps.GeocoderStatus.OK) {
-          var gmaps = results[0],
-            location = gmaps.geometry.location;
+    if (typeof this.props.onGeocodeSuggest() === 'undefined') {
+      if (this.props.geocodeProvider) {
+        // use props defined geocodeProvider
+        this.props.geocodeProvider.geocode(suggest)
+        .then(geocdedResults => {
+          this.props.onSuggestSelect(geocdedResults);
+        });
+      } else {
+        // use default google geocode lib
+        this.geocoder.geocode(
+          suggest.placeId && !suggest.isFixture ?
+            {placeId: suggest.placeId} : {address: suggest.label},
+          (results, status) => {
+            if (status === this.googleMaps.GeocoderStatus.OK) {
+              var gmaps = results[0],
+                location = gmaps.geometry.location;
 
-          suggest.gmaps = gmaps;
-          suggest.location = {
-            lat: location.lat(),
-            lng: location.lng()
-          };
-        }
-        this.props.onSuggestSelect(suggest);
+              suggest.gmaps = gmaps;
+              suggest.location = {
+                lat: location.lat(),
+                lng: location.lng()
+              };
+            }
+            this.props.onSuggestSelect(suggest);
+          }
+        );
       }
-    );
+    } else {
+      // use props defined geocode function
+      let geocodedSuggest = this.props.onGeocodeSuggest(suggest);
+      this.props.onSuggestSelect(geocodedSuggest);
+    }
   }
 
   /**
@@ -387,6 +462,7 @@ class Geosuggest extends React.Component {
         {'geosuggest--loading': this.state.isLoading}
       ),
       shouldRenderLabel = this.props.label && attributes.id,
+      shouldRenderButton = this.props.disableAutoLookup,
       input = <Input className={this.props.inputClassName}
         ref='input'
         value={this.state.userInput}
@@ -401,6 +477,8 @@ class Geosuggest extends React.Component {
         onPrev={this.onPrev}
         onSelect={this.onSelect}
         onEscape={this.hideSuggests} {...attributes} />,
+      button = <button className={this.props.buttonClassName}
+        onClick={this.onButtonClick}>{this.props.buttonText}</button>,
       suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
         style={this.props.style.suggests}
         suggestItemStyle={this.props.style.suggestItem}
@@ -414,13 +492,18 @@ class Geosuggest extends React.Component {
         onSuggestSelect={this.selectSuggest}/>;
 
     return <div className={classes}>
-      <div className="geosuggest__input-wrapper">
+      <span className="geosuggest__input-wrapper">
         {shouldRenderLabel &&
           <label className="geosuggest__label"
                  htmlFor={attributes.id}>{this.props.label}</label>
         }
         {input}
-      </div>
+      </span>
+      {shouldRenderButton &&
+        <span className="geosuggest__button-wrapper">
+          {button}
+        </span>
+      }
       <div className="geosuggest__suggests-wrapper">
         {suggestionsList}
       </div>

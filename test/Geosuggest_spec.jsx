@@ -7,7 +7,7 @@ import Geosuggest from '../src/Geosuggest';
 
 window.google = global.google = googleStub();
 
-describe('Component: Geosuggest', () => {
+describe('Component: Geosuggest with Google APIs', () => {
   let component = null,
     onSuggestSelect = null,
     onActivateSuggest = null,
@@ -16,6 +16,7 @@ describe('Component: Geosuggest', () => {
     onKeyPress = null,
     onChange = null,
     onBlur = null,
+    onSuggestResults = null,
     render = props => {
       onSuggestSelect = sinon.spy();
       onActivateSuggest = sinon.spy();
@@ -24,6 +25,7 @@ describe('Component: Geosuggest', () => {
       onFocus = sinon.spy();
       onKeyPress = sinon.spy();
       onBlur = sinon.spy();
+      onSuggestResults = sinon.spy();
 
       component = TestUtils.renderIntoDocument(
         <Geosuggest
@@ -36,6 +38,7 @@ describe('Component: Geosuggest', () => {
           onFocus={onFocus}
           onKeyPress={onKeyPress}
           onBlur={onBlur}
+          onSuggestResults={onSuggestResults}
           style={{
             'input': {
               'borderColor': '#000'
@@ -315,6 +318,14 @@ describe('Component: Geosuggest', () => {
       });
       expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
+
+    it('should call onSuggestResults when results are recieved', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+      expect(onSuggestResults.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
   });
 
   describe('with tab ignored', () => {
@@ -496,6 +507,81 @@ describe('Component: Geosuggest', () => {
         expect(activeItems[0].classList.contains('geosuggest__item--active')).to.be.true; // eslint-disable-line no-unused-expressions, max-len
         done();
       });
+    });
+  });
+
+  describe('with geocodeProvider', () => {
+    let geocodeProviderStub,
+      geocodeProvider = {
+        geocode: (suggest) => suggest,
+        lookup: (userInput) => userInput
+      },
+      lookupPromise = new Promise(() => {
+        return [{
+          label: 'test',
+          placeId: 'test',
+          isFixture: false,
+          raw: {}
+        }];
+      }),
+      geocodePromise = new Promise(() => {
+        return {
+          label: 'test',
+          placeId: 'test',
+          isFixture: false,
+          raw: {}
+        };
+      });
+
+    beforeEach(() => {
+      geocodeProviderStub = sinon.stub(geocodeProvider);
+      geocodeProviderStub.lookup.returns(lookupPromise);
+      geocodeProviderStub.geocode.returns(geocodePromise);
+      render({
+        disableAutoLookup: true,
+        geocodeProvider: geocodeProviderStub
+      });
+    });
+
+    afterEach(() => {
+      sinon.restore(geocodeProvider);
+    });
+
+    it('should display the `Search` button when `disableAutoLookup` is true', () => { // eslint-disable-line max-len
+      const geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
+      expect(geoSuggestButton).to.not.equal(null);
+    });
+
+    it('should call `geocodeProvider.lookup` when `onButtonClick` is called', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'), // eslint-disable-line max-len
+        geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
+
+      TestUtils.Simulate.focus(geoSuggestInput);
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.click(geoSuggestButton);
+      expect(geocodeProviderStub.lookup.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+
+    it('should call `geocodeProvider.geocode` when is selected', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'), // eslint-disable-line max-len
+        geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
+
+      TestUtils.Simulate.focus(geoSuggestInput);
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.click(geoSuggestButton);
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'keyDown',
+        keyCode: 40,
+        which: 40
+      });
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'Enter',
+        keyCode: 13,
+        which: 13
+      });
+      expect(geocodeProviderStub.geocode.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
   });
 });
