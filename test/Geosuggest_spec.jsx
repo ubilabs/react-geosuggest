@@ -4,7 +4,6 @@ import TestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 import googleStub from './google_stub';
 import Geosuggest from '../src/Geosuggest';
-import * as Nominatim from 'nominatim-browser';
 
 window.google = global.google = googleStub();
 
@@ -511,35 +510,49 @@ describe('Component: Geosuggest with Google APIs', () => {
     });
   });
 
-  describe('with Nominatim API', () => {
-    let nominatimStub,
-      nominatimPromise = new Promise(() => {
+  describe('with geocodeProvider', () => {
+    let geocodeProviderStub,
+      geocodeProvider = {
+        geocode: (suggest) => suggest,
+        lookup: (userInput) => userInput
+      },
+      lookupPromise = new Promise(() => {
         return [{
           label: 'test',
           placeId: 'test',
-          isFixture: false
+          isFixture: false,
+          raw: {}
         }];
+      }),
+      geocodePromise = new Promise(() => {
+        return {
+          label: 'test',
+          placeId: 'test',
+          isFixture: false,
+          raw: {}
+        };
       });
 
     beforeEach(() => {
-      nominatimStub = sinon.stub(Nominatim);
-      nominatimStub.geocode.returns(nominatimPromise);
+      geocodeProviderStub = sinon.stub(geocodeProvider);
+      geocodeProviderStub.lookup.returns(lookupPromise);
+      geocodeProviderStub.geocode.returns(geocodePromise);
       render({
         disableAutoLookup: true,
-        geocodeProvider: nominatimStub
+        geocodeProvider: geocodeProviderStub
       });
     });
 
     afterEach(() => {
-      sinon.restore(Nominatim);
+      sinon.restore(geocodeProvider);
     });
 
-    it('should display the `Search` button', () => {
+    it('should display the `Search` button when `disableAutoLookup` is true', () => { // eslint-disable-line max-len
       const geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
       expect(geoSuggestButton).to.not.equal(null);
     });
 
-    it('should call `Nominatim.geocode` when `onButtonClick` is called', () => {
+    it('should call `geocodeProvider.lookup` when `onButtonClick` is called', () => { // eslint-disable-line max-len
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'), // eslint-disable-line max-len
         geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
 
@@ -547,7 +560,28 @@ describe('Component: Geosuggest with Google APIs', () => {
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
       TestUtils.Simulate.click(geoSuggestButton);
-      expect(nominatimStub.geocode.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+      expect(geocodeProviderStub.lookup.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+
+    it('should call `geocodeProvider.geocode` when is selected', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'), // eslint-disable-line max-len
+        geoSuggestButton = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__button'); // eslint-disable-line max-len
+
+      TestUtils.Simulate.focus(geoSuggestInput);
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.click(geoSuggestButton);
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'keyDown',
+        keyCode: 40,
+        which: 40
+      });
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'Enter',
+        keyCode: 13,
+        which: 13
+      });
+      expect(geocodeProviderStub.geocode.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
   });
 });

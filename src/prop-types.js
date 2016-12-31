@@ -25,6 +25,8 @@ export default {
   queryDelay: React.PropTypes.number,
   googleMaps: React.PropTypes.object,
   geocodeProvider: React.PropTypes.object,
+  onGeocodeSuggest: React.PropTypes.func,
+  onSuggestsLookup: React.PropTypes.func,
   onSuggestSelect: React.PropTypes.func,
   onSuggestResults: React.PropTypes.func,
   onFocus: React.PropTypes.func,

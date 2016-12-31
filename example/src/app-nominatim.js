@@ -22,22 +22,60 @@ var App = React.createClass({ // eslint-disable-line
         <Geosuggest
           inputClassName="geosuggest__input--nominatim"
           disableAutoLookup={true}
-          geocodeProvider={Nominatim}
-          getSuggestLabel={
-            function(suggest) {
-              return suggest.display_name;
-            }
-          }
           fixtures={fixtures}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onChange={this.onChange}
+          onSuggestsLookup={this.onSuggestsLookup}
+          onGeocodeSuggest={this.onGeocodeSuggest}
           onSuggestSelect={this.onSuggestSelect}
           onSuggestResults={this.onSuggestResults}
           onSuggestNoResults={this.onSuggestNoResults}
+          getSuggestLabel={this.getSuggestLabel}
           radius="20" />
       </div>
     );
+  },
+
+  /**
+   * Overrides default suggest lookup routine
+   * @param {String} userInput The user input
+   * @return {Promise} promise suggest lookup results array
+   */
+  onSuggestsLookup: function(userInput) {
+    return Nominatim.geocode({
+      q: userInput,
+      addressdetails: true
+    });
+  },
+
+  /**
+   * Returns geocoded suggest
+   * @param  {Object} suggest The suggest
+   * @return {Object} geocoded suggest
+   */
+  onGeocodeSuggest: function(suggest) {
+    let geocoded = {};
+    if (suggest) {
+      geocoded.nominatim = suggest.raw || {};
+      geocoded.location = {
+        lat: suggest.raw ? suggest.raw.lat : '',
+        lon: suggest.raw ? suggest.raw.lon : ''
+      };
+      geocoded.placeId = suggest.placeId;
+      geocoded.isFixture = suggest.isFixture;
+      geocoded.label = suggest.raw ? suggest.raw.display_name : '';
+    }
+    return geocoded;
+  },
+
+  /**
+   * Returns label field value from suggest results
+   * @param  {Object} suggest The suggest
+   * @return {String} label to use for the suggest
+   */
+  getSuggestLabel: function(suggest) {
+    return suggest.display_name;
   },
 
   /**
@@ -88,4 +126,4 @@ var App = React.createClass({ // eslint-disable-line
   }
 });
 
-ReactDOM.render(<App />, document.getElementById('app')); // eslint-disable-line
+ReactDOM.render(<App />, document.getElementById('app-nominatim')); // eslint-disable-line

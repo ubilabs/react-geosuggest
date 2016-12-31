@@ -152,7 +152,17 @@ Set to true if you prefer to use a geocodeProvider that does not allow autocompl
 Type: `Object`
 Default: `null`
 
-Can be used to supply your own geocode provider.  The provider must implement a function named 'geocode' that takes the userInput and returns suggestion results in a JSON array.  You can use the getSuggestLabel property to set the suggestion label field.
+Can be used to supply your own geocode provider.  The provider must implement two functions:
+
+`lookup(userInput)` that takes the userInput a returns a promise containing the suggestion results array.
+`geocode(suggest)` that takes the userInput and returns a promise containing the suggestion results array. This data is available in the suggest
+
+* `isFixture` – Type `Boolean` – True if the suggestion is a fixture
+* `label` – Type `String` – The label name
+* `placeId` – Type `String` – If it is a preset, equals the `label`. Else it is the Google Maps or geocodeProvider `placeID`
+* `raw` – Type `Object` – The the raw results returned from the lookup provider
+
+You can use the getSuggestLabel property to set the suggestion label field.
 
 #### ignoreTab
 Type: `Boolean`
@@ -190,6 +200,23 @@ Type: `Function`
 Default: `function(event) {}`
 
 Gets triggered when input field gets key press.
+
+#### onGeocodeSuggest
+Type: `Function`
+Default: `function(suggest) {}`
+
+Can be used to override the default geocode behavior for a selected suggest.  Should return the suggest with added geocoded data.  This data is available:
+
+* `isFixture` – Type `Boolean` – True if the suggestion is a fixture
+* `label` – Type `String` – The label name
+* `placeId` – Type `String` – If it is a preset, equals the `label`. Else it is the Google Maps `placeID`
+* `raw` – Type `Object` – The the raw results returned from the lookup provider
+
+#### onSuggestsLookup
+Type: `Function`
+Default: `function(userInput) {}`
+
+Can be used to override the default lookup behavior for user input. Gets triggered when user input changes, or when `Search` button is clicked if disableAutoLookup is set to `true`.  Should return a promise containing lookup results array.
 
 #### onSuggestSelect
 Type: `Function`

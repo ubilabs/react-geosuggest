@@ -8,6 +8,8 @@
 <body>
   <div class="container">
     <h1>React Geosuggest</h1>
+
+    <!-- Google Places --> 
     <h2 class="subheader">
       Google Places Suggest for <a href="http://facebook.github.io/react/" title="React.js">React.js</a>,<br>supporting default places.
     </h2>
@@ -15,10 +17,24 @@
     <div class="hint">
       Check the console when selecting a suggest!
     </div>
+ 
+    <!-- Open Street Maps --> 
+    <h2 class="subheader">
+      Open Street Maps Nominatim Suggest for <a href="http://facebook.github.io/react/" title="React.js">React.js</a>
+    </h2>
+    <div id="app-nominatim"></div>
+    <div class="hint">
+      Suggestions will not load until focus is changed away from the input field!
+      Implemented using onSuggestLookup, onGeocodeSuggest, and disableAutoLookup properties.
+    </div>
+
     <div class="footer">
       <a href="https://github.com/ubilabs/react-geosuggest">View project on GitHub</a>. Made by <a href="http://www.ubilabs.net/en" title="Ubilabs"><img src="ubilabs.svg" alt="Ubilabs" class="ubilabs" width="100"></a>
     </div>
+
+    <!-- TODO: add example using geocodeProvider with Google PlacesService for lookup and geocode -->
   </div>
 
   <script src="app.js"></script>
+  <script src="app-nominatim.js"></script>
 </body>

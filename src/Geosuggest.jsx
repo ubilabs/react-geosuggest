@@ -66,8 +66,10 @@ class Geosuggest extends React.Component {
       return;
     }
 
-    // if no geocodeProvider is set, use google apis
-    if (!this.geocodeProvider) {
+    // if no geocodeProvider and no onGeocodeSugegst function is
+    // set, use google apis
+    if (!this.geocodeProvider &&
+      typeof this.props.onGeocodeSuggest() === 'undefined') {
       // use google apis
       var googleMaps = this.props.googleMaps ||
         (window.google && // eslint-disable-line no-extra-parens
@@ -193,29 +195,60 @@ class Geosuggest extends React.Component {
       return;
     }
 
-    const options = {
-      input: this.state.userInput
-    };
-
-    ['location', 'radius', 'bounds', 'types'].forEach(option => {
-      if (this.props[option]) {
-        options[option] = this.props[option];
-      }
-    });
-
-    if (this.props.country) {
-      options.componentRestrictions = {
-        country: this.props.country
-      };
-    }
-
     this.setState({isLoading: true}, () => {
-      if (this.geocodeProvider) {
-        // Provider lookup
-        this.geocodeProvider.geocode({
-          q: this.state.userInput,
-          addressdetails: true
-        })
+      if (typeof this.props.onSuggestsLookup() === 'undefined') {
+        if (this.props.geocodeProvider) {
+          // Use props defined geocodeProvider.lookup
+          this.props.geocodeProvider.lookup(this.state.userInput)
+          .then(suggestsResults => {
+            this.setState({isLoading: false});
+            this.updateSuggests(suggestsResults || [], // can be null
+              () => {
+                if (this.props.autoActivateFirstSuggest &&
+                  !this.state.activeSuggest
+                ) {
+                  this.activateSuggest('next');
+                }
+              });
+          })
+          .catch(error => {
+            console.error('geocodeProvider lookup Error: ', error);
+          });
+        } else {
+          // Use Google Places lookup
+          const options = {
+            input: this.state.userInput
+          };
+
+          ['location', 'radius', 'bounds', 'types'].forEach(option => {
+            if (this.props[option]) {
+              options[option] = this.props[option];
+            }
+          });
+
+          if (this.props.country) {
+            options.componentRestrictions = {
+              country: this.props.country
+            };
+          }
+          this.autocompleteService.getPlacePredictions(
+            options,
+            suggestsResults => {
+              this.setState({isLoading: false});
+              this.updateSuggests(suggestsResults || [], // can be null
+                () => {
+                  if (this.props.autoActivateFirstSuggest &&
+                    !this.state.activeSuggest
+                  ) {
+                    this.activateSuggest('next');
+                  }
+                });
+            }
+          );
+        }
+      } else {
+        // Use props defined onSuggestLookup
+        this.props.onSuggestsLookup(this.state.userInput)
         .then(suggestsResults => {
           this.setState({isLoading: false});
           this.updateSuggests(suggestsResults || [], // can be null
@@ -228,24 +261,8 @@ class Geosuggest extends React.Component {
             });
         })
         .catch(error => {
-          console.error('geocodeProvider Search Error: ', error);
+          console.error('onSuggestsLookup Search Error: ', error);
         });
-      } else {
-        // Google Places lookup
-        this.autocompleteService.getPlacePredictions(
-          options,
-          suggestsResults => {
-            this.setState({isLoading: false});
-            this.updateSuggests(suggestsResults || [], // can be null
-              () => {
-                if (this.props.autoActivateFirstSuggest &&
-                  !this.state.activeSuggest
-                ) {
-                  this.activateSuggest('next');
-                }
-              });
-          }
-        );
       }
     });
   }
@@ -399,39 +416,37 @@ class Geosuggest extends React.Component {
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest(suggest) {
-    if (this.geocodeProvider) {
-      // geocodeProvider should provide raw geocode results
-      // so there should be no need to geocode
-      var raw = suggest.raw,
-        selected = {
-          nominatim: raw || {},
-          location: {
-            lat: raw ? raw.lat : '',
-            lon: raw ? raw.lon : ''
-          },
-          placeId: suggest.placeId,
-          isFixture: suggest.isFixture,
-          label: raw ? raw.display_name : ''
-        };
-      this.props.onSuggestSelect(selected);
-    } else {
-      this.geocoder.geocode(
-        suggest.placeId && !suggest.isFixture ?
-          {placeId: suggest.placeId} : {address: suggest.label},
-        (results, status) => {
-          if (status === this.googleMaps.GeocoderStatus.OK) {
-            var gmaps = results[0],
-              location = gmaps.geometry.location;
+    if (typeof this.props.onGeocodeSuggest() === 'undefined') {
+      if (this.props.geocodeProvider) {
+        // use props defined geocodeProvider
+        this.props.geocodeProvider.geocode(suggest)
+        .then(geocdedResults => {
+          this.props.onSuggestSelect(geocdedResults);
+        });
+      } else {
+        // use default google geocode lib
+        this.geocoder.geocode(
+          suggest.placeId && !suggest.isFixture ?
+            {placeId: suggest.placeId} : {address: suggest.label},
+          (results, status) => {
+            if (status === this.googleMaps.GeocoderStatus.OK) {
+              var gmaps = results[0],
+                location = gmaps.geometry.location;
 
-            suggest.gmaps = gmaps;
-            suggest.location = {
-              lat: location.lat(),
-              lng: location.lng()
-            };
+              suggest.gmaps = gmaps;
+              suggest.location = {
+                lat: location.lat(),
+                lng: location.lng()
+              };
+            }
+            this.props.onSuggestSelect(suggest);
           }
-          this.props.onSuggestSelect(suggest);
-        }
-      );
+        );
+      }
+    } else {
+      // use props defined geocode function
+      let geocodedSuggest = this.props.onGeocodeSuggest(suggest);
+      this.props.onSuggestSelect(geocodedSuggest);
     }
   }
 

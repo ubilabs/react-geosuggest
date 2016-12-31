@@ -21,6 +21,8 @@ export default {
   geocodeProvider: null,
   disableAutoLookup: false,
   onActivateSuggest: () => {},
+  onGeocodeSuggest: () => {},
+  onSuggestsLookup: () => {},
   onSuggestSelect: () => {},
   onSuggestResults: () => {},
   onSuggestNoResults: () => {},
