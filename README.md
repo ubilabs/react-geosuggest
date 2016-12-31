@@ -155,7 +155,7 @@ Default: `null`
 Can be used to supply your own geocode provider.  The provider must implement two functions:
 
 `lookup(userInput)` that takes the userInput a returns a promise containing the suggestion results array.
-`geocode(suggest)` that takes a suggest object and returns a promise containing the suggestion results array. This data is available in the suggest
+`geocode(suggest)` that takes a suggest object and returns a promise containing the suggestion with geocode data. This data is available in the suggest
 
 * `isFixture` – Type `Boolean` – True if the suggestion is a fixture
 * `label` – Type `String` – The label name
