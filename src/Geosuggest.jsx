@@ -54,7 +54,7 @@ class Geosuggest extends React.Component {
   }
 
   /**
-   * Called on the client side after component is mounted.
+   * Called on the client side before component is mounted.
    * Google api sdk object will be obtained and cached as a instance property.
    * Necessary objects of google api will also be determined and saved.
    */
