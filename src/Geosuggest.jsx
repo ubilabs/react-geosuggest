@@ -356,23 +356,41 @@ class Geosuggest extends React.Component {
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest(suggest) {
-    this.geocoder.geocode(
-      suggest.placeId && !suggest.isFixture ?
-        {placeId: suggest.placeId} : {address: suggest.label},
-      (results, status) => {
-        if (status === this.googleMaps.GeocoderStatus.OK) {
-          var gmaps = results[0],
-            location = gmaps.geometry.location;
+    if (suggest.isFixture) {
+      this.geocoder.geocode(
+        {address: suggest.label},
+        (results, status) => {
+          if (status === this.googleMaps.GeocoderStatus.OK) {
+            var gmaps = results[0],
+              location = gmaps.geometry.location;
 
-          suggest.gmaps = gmaps;
-          suggest.location = {
-            lat: location.lat(),
-            lng: location.lng()
-          };
+            suggest.gmaps = gmaps;
+            suggest.location = {
+              lat: location.lat(),
+              lng: location.lng()
+            };
+          }
+          this.props.onSuggestSelect(suggest);
         }
-        this.props.onSuggestSelect(suggest);
-      }
-    );
+      );
+    } else {
+      this.placesService.getDetails(
+        {placeId: suggest.placeId},
+        (result, status) => {
+          if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
+            var gmaps = result,
+              location = gmaps.geometry.location;
+
+            suggest.gmaps = gmaps;
+            suggest.location = {
+              lat: location.lat(),
+              lng: location.lng()
+            };
+          }
+          this.props.onSuggestSelect(suggest);
+        }
+      );
+    }
   }
 
   /**
