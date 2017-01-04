@@ -36,5 +36,6 @@ export default {
     suggestItem: React.PropTypes.object
   }),
   ignoreTab: React.PropTypes.bool,
-  label: React.PropTypes.string
+  label: React.PropTypes.string,
+  attrContainer: React.PropTypes.element
 };
