@@ -81,6 +81,17 @@ class Geosuggest extends React.Component {
   }
 
   /**
+   * Called on the client side after component is mounted.
+   * Google Places Service will be instantiated with an invisible DOM node
+   * and cached as a instance property
+   */
+  componentDidMount() {
+    this.placesService = new this.googleMaps.places.PlacesService(
+      this.attrContainer
+    );
+  }
+
+  /**
    * When the component will unmount
    */
   componentWillUnmount() {
@@ -429,7 +440,11 @@ class Geosuggest extends React.Component {
         onSuggestNoResults={this.onSuggestNoResults}
         onSuggestMouseDown={this.onSuggestMouseDown}
         onSuggestMouseOut={this.onSuggestMouseOut}
-        onSuggestSelect={this.selectSuggest}/>;
+        onSuggestSelect={this.selectSuggest}/>,
+      attrContainer = React.cloneElement(
+        this.props.attrContainer,
+        {ref: container => this.attrContainer = container}
+      );
 
     return <div className={classes}>
       <div className="geosuggest__input-wrapper">
@@ -442,6 +457,7 @@ class Geosuggest extends React.Component {
       <div className="geosuggest__suggests-wrapper">
         {suggestionsList}
       </div>
+      {attrContainer}
     </div>;
   }
 }
