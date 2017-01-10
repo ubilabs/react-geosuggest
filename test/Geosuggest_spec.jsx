@@ -498,4 +498,36 @@ describe('Component: Geosuggest', () => {
       });
     });
   });
+
+  describe('with suggestsClassName and suggestItemClassName', () => { // eslint-disable-line max-len
+    const props = {
+      suggestsClassName: 'suggests-class',
+      suggestItemClassName: 'suggest-item'
+    };
+
+    beforeEach(() => render(props));
+
+    it('should apply suggestsClassName to the list', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      TestUtils.Simulate.focus(geoSuggestInput);
+
+      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__suggests'); // eslint-disable-line max-len, one-var
+      expect(suggests[0].classList.contains('suggests-class')).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+
+    it('should apply suggestItemClassName to each list item', done => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+
+      setImmediate(() => {
+        const totalItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'suggest-item'), // eslint-disable-line max-len
+          itemsWithItemClass = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len
+
+        expect(totalItems.length).to.be.equal(itemsWithItemClass.length);
+        done();
+      });
+    });
+  });
 });
