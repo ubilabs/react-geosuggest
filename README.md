@@ -229,11 +229,23 @@ Default: `null`
 
 If the `label` and a `id` prop (see "Others") were supplied, a `<label>` tag with the passed label text will be rendered. The `<label>` element's `for` attribute will correctly point to the `id` of the `<input>` element.
 
+#### suggestsClassName
+Type: `String`
+Default: `''`
+
+Add an additional class to suggest list.
+
 #### suggestsHiddenClassName
 Type: `String`
 Default: `null`
 
 Additional `className` to toggle as the list of suggestions changes visibility.
+
+#### suggestItemClassName
+Type: `String`
+Default: `''`
+
+Add an additional class to suggest item.
 
 #### suggestItemActiveClassName
 Type: `String`,
