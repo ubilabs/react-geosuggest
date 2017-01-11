@@ -76,7 +76,8 @@ function is(x, y) {
   if (x === y) {
     // Steps 1-5, 7-10
     // Steps 6.b-6.e: +0 != -0
-    return x !== 0 || 1 / x === 1 / y;
+    // Added the nonzero y check to make Flow happy, but it is redundant
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
   } else {
     // Step 6.a: NaN == NaN
     return x !== x && y !== y;
@@ -497,8 +498,6 @@ module.exports = debounce;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],4:[function(require,module,exports){
-module.exports = require('react/lib/shallowCompare');
-},{"react/lib/shallowCompare":5}],5:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -507,8 +506,7 @@ module.exports = require('react/lib/shallowCompare');
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
-* @providesModule shallowCompare
-*/
+ */
 
 'use strict';
 
@@ -524,7 +522,7 @@ function shallowCompare(instance, nextProps, nextState) {
 }
 
 module.exports = shallowCompare;
-},{"fbjs/lib/shallowEqual":2}],6:[function(require,module,exports){
+},{"fbjs/lib/shallowEqual":2}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -644,14 +642,12 @@ var Geosuggest = function (_React$Component) {
 
     _this.hideSuggests = function () {
       _this.props.onBlur(_this.state.userInput);
-      var timer = setTimeout(function () {
+      _this.timer = setTimeout(function () {
         _this.setState({
           isSuggestsHidden: true,
           activeSuggest: null
         });
       }, 100);
-
-      _this.setState({ timer: timer });
     };
 
     _this.selectSuggest = function (suggest) {
@@ -680,8 +676,7 @@ var Geosuggest = function (_React$Component) {
       isLoading: false,
       userInput: props.initialValue,
       activeSuggest: null,
-      suggests: [],
-      timer: null
+      suggests: []
     };
 
     _this.onInputChange = _this.onInputChange.bind(_this);
@@ -742,7 +737,7 @@ var Geosuggest = function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      clearTimeout(this.state.timer);
+      clearTimeout(this.timer);
     }
 
     /**
@@ -774,6 +769,16 @@ var Geosuggest = function (_React$Component) {
      */
     value: function focus() {
       this.refs.input.focus();
+    }
+
+    /**
+     * Blur the input
+     */
+
+  }, {
+    key: 'blur',
+    value: function blur() {
+      this.refs.input.blur();
     }
 
     /**
@@ -852,7 +857,7 @@ var Geosuggest = function (_React$Component) {
     value: function updateSuggests() {
       var _this3 = this;
 
-      var suggestsGoogle = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+      var suggestsGoogle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var callback = arguments[1];
 
       var suggests = [],
@@ -899,7 +904,7 @@ var Geosuggest = function (_React$Component) {
   }, {
     key: 'updateActiveSuggest',
     value: function updateActiveSuggest() {
-      var suggests = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+      var suggests = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
       var activeSuggest = this.state.activeSuggest;
 
@@ -1028,7 +1033,11 @@ var Geosuggest = function (_React$Component) {
           suggestionsList = _react2.default.createElement(_suggestList2.default, { isHidden: this.state.isSuggestsHidden,
         style: this.props.style.suggests,
         suggestItemStyle: this.props.style.suggestItem,
+        suggestsClassName: this.props.suggestsClassName,
+        suggestItemClassName: this.props.suggestItemClassName,
         suggests: this.state.suggests,
+        hiddenClassName: this.props.suggestsHiddenClassName,
+        suggestItemActiveClassName: this.props.suggestItemActiveClassName,
         activeSuggest: this.state.activeSuggest,
         onSuggestNoResults: this.onSuggestNoResults,
         onSuggestMouseDown: this.onSuggestMouseDown,
@@ -1043,7 +1052,8 @@ var Geosuggest = function (_React$Component) {
           { className: 'geosuggest__input-wrapper' },
           shouldRenderLabel && _react2.default.createElement(
             'label',
-            { htmlFor: attributes.id },
+            { className: 'geosuggest__label',
+              htmlFor: attributes.id },
             this.props.label
           ),
           input
@@ -1076,7 +1086,7 @@ Geosuggest.defaultProps = _defaults2.default;
 
 exports.default = Geosuggest;
 
-},{"./defaults":7,"./filter-input-attributes":8,"./input":9,"./prop-types":10,"./suggest-list":12,"classnames":1,"lodash.debounce":3}],7:[function(require,module,exports){
+},{"./defaults":6,"./filter-input-attributes":7,"./input":8,"./prop-types":9,"./suggest-list":11,"classnames":1,"lodash.debounce":3}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1119,7 +1129,7 @@ exports.default = {
   ignoreTab: false
 };
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1141,7 +1151,7 @@ exports.default = function (props) {
 /**
  * Attributes allowed on input elements
  */
-var allowedAttributes = ['autoFocus', 'disabled', 'form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'height', 'id', 'inputMode', 'maxLength', 'name', 'onClick', 'onContextMenu', 'onCopy', 'onCut', 'onDoubleClick', 'onMouseDown', 'onMouseEnter', 'onMouseLeave', 'onMouseMove', 'onMouseOut', 'onMouseOver', 'onMouseUp', 'onPaste', 'pattern', 'placeholder', 'readOnly', 'required', 'size', 'spellCheck', 'tabIndex'];
+var allowedAttributes = ['autoFocus', 'disabled', 'form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'height', 'id', 'inputMode', 'maxLength', 'name', 'onClick', 'onContextMenu', 'onCopy', 'onCut', 'onDoubleClick', 'onMouseDown', 'onMouseEnter', 'onMouseLeave', 'onMouseMove', 'onMouseOut', 'onMouseOver', 'onMouseUp', 'onPaste', 'pattern', 'placeholder', 'readOnly', 'required', 'size', 'spellCheck', 'tabIndex', 'aria-atomic', 'aria-busy', 'aria-controls', 'aria-current', 'aria-describedby', 'aria-details', 'aria-disabled', 'aria-dropeffect', 'aria-errormessage', 'aria-flowto', 'aria-grabbed', 'aria-haspopup', 'aria-hidden', 'aria-invalid', 'aria-keyshortcuts', 'aria-label', 'aria-labelledby', 'aria-live', 'aria-owns', 'aria-relevant', 'aria-roledescription', 'aria-activedescendant', 'aria-autocomplete', 'aria-multiline', 'aria-placeholder', 'aria-readonly', 'aria-required'];
 
 /**
  * Filter the properties for only allowed input properties
@@ -1149,7 +1159,7 @@ var allowedAttributes = ['autoFocus', 'disabled', 'form', 'formAction', 'formEnc
  * @return {Object} The filtered, allowed properties
  */
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1164,9 +1174,9 @@ var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
+var _shallowCompare = require('react/lib/shallowCompare');
 
-var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
+var _shallowCompare2 = _interopRequireDefault(_shallowCompare);
 
 var _classnames = require('classnames');
 
@@ -1260,7 +1270,7 @@ var Input = function (_React$Component) {
      * @return {Boolean} Update or not?
      */
     value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
+      return (0, _shallowCompare2.default)(this, nextProps, nextState);
     }
 
     /**
@@ -1298,6 +1308,16 @@ var Input = function (_React$Component) {
      */
     value: function focus() {
       this.refs.input.focus();
+    }
+
+    /**
+     * Blur the input
+     */
+
+  }, {
+    key: 'blur',
+    value: function blur() {
+      this.refs.input.blur();
     }
 
     /**
@@ -1345,7 +1365,7 @@ Input.defaultProps = {
 
 exports.default = Input;
 
-},{"./filter-input-attributes":8,"classnames":1,"react-addons-shallow-compare":4}],10:[function(require,module,exports){
+},{"./filter-input-attributes":7,"classnames":1,"react/lib/shallowCompare":4}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1368,6 +1388,10 @@ exports.default = {
   disabled: _react2.default.PropTypes.bool,
   className: _react2.default.PropTypes.string,
   inputClassName: _react2.default.PropTypes.string,
+  suggestsClassName: _react2.default.PropTypes.string,
+  suggestsHiddenClassName: _react2.default.PropTypes.string,
+  suggestItemClassName: _react2.default.PropTypes.string,
+  suggestItemActiveClassName: _react2.default.PropTypes.string,
   location: _react2.default.PropTypes.object,
   radius: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.number]),
   bounds: _react2.default.PropTypes.object,
@@ -1392,7 +1416,7 @@ exports.default = {
   label: _react2.default.PropTypes.string
 };
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1405,15 +1429,17 @@ var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
+var _shallowCompare = require('react/lib/shallowCompare');
 
-var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
+var _shallowCompare2 = _interopRequireDefault(_shallowCompare);
 
-var _classnames = require('classnames');
+var _classnames2 = require('classnames');
 
-var _classnames2 = _interopRequireDefault(_classnames);
+var _classnames3 = _interopRequireDefault(_classnames2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1456,7 +1482,7 @@ var SuggestItem = function (_React$Component) {
      * @return {Boolean} Update or not?
      */
     value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
+      return (0, _shallowCompare2.default)(this, nextProps, nextState);
     }
 
     /**
@@ -1473,7 +1499,7 @@ var SuggestItem = function (_React$Component) {
      * @return {Function} The React element to render
      */
     value: function render() {
-      var classes = (0, _classnames2.default)('geosuggest__item', this.props.className, { 'geosuggest__item--active': this.props.isActive });
+      var classes = (0, _classnames3.default)('geosuggest__item', this.props.className, this.props.suggestItemClassName, { 'geosuggest__item--active': this.props.isActive }, _defineProperty({}, this.props.activeClassname, this.props.activeClassname ? this.props.isActive : null));
 
       return _react2.default.createElement(
         'li',
@@ -1503,7 +1529,7 @@ SuggestItem.defaultProps = {
   suggest: {}
 };
 
-},{"classnames":1,"react-addons-shallow-compare":4}],12:[function(require,module,exports){
+},{"classnames":1,"react/lib/shallowCompare":4}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1516,19 +1542,21 @@ var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
+var _shallowCompare = require('react/lib/shallowCompare');
 
-var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
+var _shallowCompare2 = _interopRequireDefault(_shallowCompare);
 
-var _classnames = require('classnames');
+var _classnames2 = require('classnames');
 
-var _classnames2 = _interopRequireDefault(_classnames);
+var _classnames3 = _interopRequireDefault(_classnames2);
 
 var _suggestItem = require('./suggest-item');
 
 var _suggestItem2 = _interopRequireDefault(_suggestItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1561,7 +1589,7 @@ var SuggestList = function (_React$Component) {
      * @return {Boolean} Update or not?
      */
     value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
+      return (0, _shallowCompare2.default)(this, nextProps, nextState);
     }
 
     /**
@@ -1600,7 +1628,7 @@ var SuggestList = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var classes = (0, _classnames2.default)('geosuggest__suggests', { 'geosuggest__suggests--hidden': this.isHidden() });
+      var classes = (0, _classnames3.default)('geosuggest__suggests', this.props.suggestsClassName, { 'geosuggest__suggests--hidden': this.isHidden() }, _defineProperty({}, this.props.hiddenClassName, this.props.hiddenClassName ? this.isHidden() : null));
 
       return _react2.default.createElement(
         'ul',
@@ -1612,7 +1640,9 @@ var SuggestList = function (_React$Component) {
             className: suggest.className,
             suggest: suggest,
             style: _this2.props.suggestItemStyle,
+            suggestItemClassName: _this2.props.suggestItemClassName,
             isActive: isActive,
+            activeClassname: _this2.props.suggestItemActiveClassName,
             onMouseDown: _this2.props.onSuggestMouseDown,
             onMouseOut: _this2.props.onSuggestMouseOut,
             onSelect: _this2.props.onSuggestSelect });
@@ -1636,5 +1666,5 @@ SuggestList.defaultProps = {
   suggests: []
 };
 
-},{"./suggest-item":11,"classnames":1,"react-addons-shallow-compare":4}]},{},[6])(6)
+},{"./suggest-item":10,"classnames":1,"react/lib/shallowCompare":4}]},{},[5])(5)
 });

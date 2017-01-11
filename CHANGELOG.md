@@ -1,3 +1,22 @@
+## 2.1.0 (2017-01-11)
+
+
+#### Bug Fixes
+
+* Do not use setState to save timer instance. ([3709fdb6](https://github.com/ubilabs/react-geosuggest/commit/3709fdb6f8d7d8e7133c153398be87268b445a7a))
+
+
+#### Features
+
+* changed to use reacts internal shallowCompare func ([c66051d5](https://github.com/ubilabs/react-geosuggest/commit/c66051d53507d217630ca89d2a677c93ebce7d98))
+* add blur() ([d16c61](https://github.com/ubilabs/react-geosuggest/commit/d16c6105557bcca8dabc160927a448d86f06ffbe))
+*  Added ARIA attributes to whitelist ([5cb3f9a6](https://github.com/ubilabs/react-geosuggest/commit/5cb3f9a6560e032bd1188fb7d1893bf7154446ac))
+* **label:** add BEM class to geosuggest label  ([fb79f34e](https://github.com/ubilabs/react-geosuggest/commit/fb79f34eceed01eeaeb94e8cfe20a4b0205e908e))
+* **style**:
+  * allow custom hidden list class and active item class ([57338753](https://github.com/ubilabs/react-geosuggest/commit/57338753de65fffd839e7d3285e690d3fd098505))
+  * Allow adding custom classes to the suggest list and suggest item ([ed69df6c](https://github.com/ubilabs/react-geosuggest/commit/ed69df6c090772861e17dcafddd31bb1157b2611))
+
+
 ## 2.0.1
 
 #### Bug Fixes
