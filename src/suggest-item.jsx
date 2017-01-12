@@ -18,6 +18,36 @@ export default class SuggestItem extends React.Component {
     return shallowCompare(this, nextProps, nextState);
   }
 
+    /**
+     * Makes a text bold
+     * @param {String} el element
+     * @return {JSX} Bolder text
+     */
+  makeBold(el) {
+    return <b className="matched-text">
+        {el}</b>;
+  }
+
+  /**
+   * Replace matched text with the same bold
+   * @param {Object} userInput Value from input
+   * @param {Object} suggest Data from google
+   * @return {String} Formatted string with highlighted matched text
+   */
+  formatMatchedText(userInput, suggest) {
+    if (!userInput || !suggest.matchedSubstrings) {
+      return suggest.label;
+    }
+
+    let start = suggest.matchedSubstrings.offset,
+      end = suggest.matchedSubstrings.length,
+      split = suggest.label.split('');
+    split.splice(start, end,
+      this.makeBold(suggest.label.substring(start, end)));
+
+    return <span>{split}</span>;
+  }
+
   /**
    * When the suggest item got clicked
    * @param {Event} event The click event
@@ -46,7 +76,10 @@ export default class SuggestItem extends React.Component {
       onMouseDown={this.props.onMouseDown}
       onMouseOut={this.props.onMouseOut}
       onClick={this.onClick}>
-        {this.props.suggest.label}
+        { this.props.isHighlightMatch
+          ? this.formatMatchedText(
+            this.props.userInput, this.props.suggest)
+          : this.props.suggest.label }
     </li>;
   }
 }

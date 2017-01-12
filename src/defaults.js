@@ -16,6 +16,7 @@ export default {
   types: null,
   queryDelay: 250,
   googleMaps: null,
+  highlightMatch: true,
   onActivateSuggest: () => {},
   onSuggestSelect: () => {},
   onSuggestNoResults: () => {},

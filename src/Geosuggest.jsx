@@ -241,7 +241,8 @@ class Geosuggest extends React.Component {
         suggests.push({
           label: this.props.getSuggestLabel(suggest),
           placeId: suggest.place_id,
-          isFixture: false
+          isFixture: false,
+          matchedSubstrings: suggest.matched_substrings[0]
         });
       }
     });
@@ -404,6 +405,8 @@ class Geosuggest extends React.Component {
       suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
         style={this.props.style.suggests}
         suggestItemStyle={this.props.style.suggestItem}
+        userInput={this.state.userInput}
+        isHighlightMatch={this.props.highlightMatch}
         suggestsClassName={this.props.suggestsClassName}
         suggestItemClassName={this.props.suggestItemClassName}
         suggests={this.state.suggests}
