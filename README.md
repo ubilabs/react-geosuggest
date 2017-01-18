@@ -136,6 +136,12 @@ An array with fixtures (defaults). Each fixture has to be an object with a `labe
 
 You can also add a `className` key to a fixture. This class will be applied to the fixture item.
 
+### maxFixtures
+Type: `Number`
+Default: `10`
+ 
+Maximum number of fixtures to render.
+
 #### googleMaps
 Type: `Object`
 Default: `google.maps`

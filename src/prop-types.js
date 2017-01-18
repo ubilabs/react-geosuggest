@@ -5,6 +5,7 @@ import React from 'react';
  */
 export default {
   fixtures: React.PropTypes.array,
+  maxFixtures: React.PropTypes.number,
   initialValue: React.PropTypes.string,
   placeholder: React.PropTypes.string,
   disabled: React.PropTypes.bool,
