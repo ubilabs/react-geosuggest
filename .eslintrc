@@ -235,6 +235,8 @@
     "prefer-reflect": 1,
     "prefer-spread": 1,
     "require-yield": 2,
-    "react/jsx-no-bind": 2
+    "react/jsx-no-bind": [2, {
+      "ignoreRefs": true
+    }]
   }
 }
