@@ -1,3 +1,4 @@
+import React from 'react';
 /* istanbul ignore next */
 /**
  * Default values
@@ -30,5 +31,6 @@ export default {
     'suggests': {},
     'suggestItem': {}
   },
-  ignoreTab: false
+  ignoreTab: false,
+  attrContainer: <div style={{display: 'none'}} />
 };

@@ -54,7 +54,7 @@ class Geosuggest extends React.Component {
   }
 
   /**
-   * Called on the client side after component is mounted.
+   * Called on the client side before component is mounted.
    * Google api sdk object will be obtained and cached as a instance property.
    * Necessary objects of google api will also be determined and saved.
    */
@@ -78,6 +78,17 @@ class Geosuggest extends React.Component {
 
     this.autocompleteService = new googleMaps.places.AutocompleteService();
     this.geocoder = new googleMaps.Geocoder();
+  }
+
+  /**
+   * Called on the client side after component is mounted.
+   * Google Places Service will be instantiated with an invisible DOM node
+   * and cached as a instance property
+   */
+  componentDidMount() {
+    this.placesService = new this.googleMaps.places.PlacesService(
+      this.attrContainer
+    );
   }
 
   /**
@@ -356,23 +367,41 @@ class Geosuggest extends React.Component {
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest(suggest) {
-    this.geocoder.geocode(
-      suggest.placeId && !suggest.isFixture ?
-        {placeId: suggest.placeId} : {address: suggest.label},
-      (results, status) => {
-        if (status === this.googleMaps.GeocoderStatus.OK) {
-          var gmaps = results[0],
-            location = gmaps.geometry.location;
+    if (suggest.isFixture) {
+      this.geocoder.geocode(
+        {address: suggest.label},
+        (results, status) => {
+          if (status === this.googleMaps.GeocoderStatus.OK) {
+            var gmaps = results[0],
+              location = gmaps.geometry.location;
 
-          suggest.gmaps = gmaps;
-          suggest.location = {
-            lat: location.lat(),
-            lng: location.lng()
-          };
+            suggest.gmaps = gmaps;
+            suggest.location = {
+              lat: location.lat(),
+              lng: location.lng()
+            };
+          }
+          this.props.onSuggestSelect(suggest);
         }
-        this.props.onSuggestSelect(suggest);
-      }
-    );
+      );
+    } else {
+      this.placesService.getDetails(
+        {placeId: suggest.placeId},
+        (result, status) => {
+          if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
+            var gmaps = result,
+              location = gmaps.geometry.location;
+
+            suggest.gmaps = gmaps;
+            suggest.location = {
+              lat: location.lat(),
+              lng: location.lng()
+            };
+          }
+          this.props.onSuggestSelect(suggest);
+        }
+      );
+    }
   }
 
   /**
@@ -413,7 +442,11 @@ class Geosuggest extends React.Component {
         onSuggestNoResults={this.onSuggestNoResults}
         onSuggestMouseDown={this.onSuggestMouseDown}
         onSuggestMouseOut={this.onSuggestMouseOut}
-        onSuggestSelect={this.selectSuggest}/>;
+        onSuggestSelect={this.selectSuggest}/>,
+      attrContainer = React.cloneElement(
+        this.props.attrContainer,
+        {ref: container => this.attrContainer = container}
+      );
 
     return <div className={classes}>
       <div className="geosuggest__input-wrapper">
@@ -426,6 +459,7 @@ class Geosuggest extends React.Component {
       <div className="geosuggest__suggests-wrapper">
         {suggestionsList}
       </div>
+      {attrContainer}
     </div>;
   }
 }
