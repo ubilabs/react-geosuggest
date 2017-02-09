@@ -20,7 +20,10 @@ export default {
     React.PropTypes.number
   ]),
   bounds: React.PropTypes.object,
-  country: React.PropTypes.string,
+  country: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.array
+  ]),
   types: React.PropTypes.array,
   queryDelay: React.PropTypes.number,
   googleMaps: React.PropTypes.object,

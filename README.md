@@ -117,7 +117,7 @@ Default: `null`
 The bounds to use for biasing the suggests. If this is set, `location` and `radius` are ignored.
 
 #### country
-Type: `String`
+Type: `String` | `Array<String>`
 Default: `null`
 
 Restricts predictions to the specified country (ISO 3166-1 Alpha-2 country code, case insensitive). E.g., us, br, au.
