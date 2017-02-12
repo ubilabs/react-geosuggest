@@ -212,7 +212,7 @@ describe('Component: Geosuggest', () => {
         keyCode: 13,
         which: 13
       });
-      expect(onActivateSuggest.args.length).to.be.equal(0); // eslint-disable-line max-len
+      expect(component.state.activeSuggest).to.be.equal(null);
     });
 
     it('should deactivate the active suggest when pressing arrow down on the last suggest', () => { // eslint-disable-line max-len
