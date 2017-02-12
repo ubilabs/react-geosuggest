@@ -72,6 +72,18 @@ describe('Component: Geosuggest', () => {
       expect(suggests[0].classList.contains('geosuggest__suggests--hidden')).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
 
+    it('should show suggestions when we type a city name', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+
+      const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'), // eslint-disable-line max-len, one-var
+        suggests = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__suggests'); // eslint-disable-line max-len
+
+      expect(suggestItems.length).to.equal(5);
+      expect(suggests[0].classList.contains('geosuggest__suggests')).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+
     it('should call `onSuggestSelect` when we type a city name and choose some of the suggestions', () => { // eslint-disable-line max-len
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'New';
@@ -282,12 +294,10 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should call `onSuggestNoResults` when there are no suggestions', () => {
-      const input = component.refs.input,
-        geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
 
-      input.value = 'There is no result for this. Really.';
+      geoSuggestInput.value = 'There is no result for this. Really.';
       TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
 
       expect(onSuggestNoResults.calledOnce).to.be.true;  // eslint-disable-line max-len, no-unused-expressions
     });
