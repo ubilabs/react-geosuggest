@@ -348,7 +348,11 @@ class Geosuggest extends React.Component {
       return;
     }
 
-    this.geocodeSuggest(suggest);
+    if (!this.props.skipGeocode) {
+      this.geocodeSuggest(suggest);
+    } else {
+      this.props.onSuggestSelect(suggest);
+    }
   }
 
   /**
@@ -413,7 +417,8 @@ class Geosuggest extends React.Component {
         onSuggestNoResults={this.onSuggestNoResults}
         onSuggestMouseDown={this.onSuggestMouseDown}
         onSuggestMouseOut={this.onSuggestMouseOut}
-        onSuggestSelect={this.selectSuggest}/>;
+        onSuggestSelect={this.selectSuggest}
+        skipGeocode={this.props.skipGeocode} />;
 
     return <div className={classes}>
       <div className="geosuggest__input-wrapper">

@@ -16,6 +16,7 @@ describe('Component: Geosuggest', () => {
     onKeyPress = null,
     onChange = null,
     onBlur = null,
+    geocodeSuggest = null,
     render = props => {
       onSuggestSelect = sinon.spy();
       onActivateSuggest = sinon.spy();
@@ -24,6 +25,7 @@ describe('Component: Geosuggest', () => {
       onFocus = sinon.spy();
       onKeyPress = sinon.spy();
       onBlur = sinon.spy();
+      geocodeSuggest = sinon.spy();
 
       component = TestUtils.renderIntoDocument(
         <Geosuggest
@@ -528,6 +530,27 @@ describe('Component: Geosuggest', () => {
         expect(totalItems.length).to.be.equal(itemsWithItemClass.length);
         done();
       });
+    });
+  });
+
+  describe('with skipGeocode', () => { // eslint-disable-line max-len
+    const props = {
+      skipGeocode: true
+    };
+
+    beforeEach(() => render(props));
+
+    it('should call `onSuggestSelect` when we type a city name and click on one of the suggestions', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+
+      const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len, one-var
+      TestUtils.Simulate.click(suggestItems[0]);
+      expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+
+      expect(geocodeSuggest.called).to.be.false; // eslint-disable-line no-unused-expressions, max-len
     });
   });
 });
