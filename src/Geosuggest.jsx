@@ -348,10 +348,10 @@ class Geosuggest extends React.Component {
       return;
     }
 
-    if (!this.props.skipGeocode) {
-      this.geocodeSuggest(suggest);
-    } else {
+    if (this.props.skipGeocode) {
       this.props.onSuggestSelect(suggest);
+    } else {
+      this.geocodeSuggest(suggest);
     }
   }
 
