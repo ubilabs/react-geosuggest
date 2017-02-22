@@ -217,6 +217,12 @@ Default: `function(suggest) {}`
 
 If the function returns true then the suggest will not be included in the displayed results. Only parameter is an object with data of the selected suggest. (See above)
 
+#### skipGeocode
+Type: `Boolean`
+Default: `false`
+
+If false, the selected suggestion will be geocoded using Google's Geocoding API. If true, the suggestion will not be geocoded.
+
 #### autoActivateFirstSuggest
 Type: `Boolean`
 Default: `false`
