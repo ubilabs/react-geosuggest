@@ -282,7 +282,7 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should call `onSuggestNoResults` when there are no suggestions', () => {
-      const input = component.refs.input,
+      const input = component.input,
         geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
 
       input.value = 'There is no result for this. Really.';
