@@ -5,6 +5,9 @@ import ReactDOM from 'react-dom';
 import Geosuggest from '../../src/Geosuggest';
 
 var App = React.createClass({ // eslint-disable-line
+  getInitialState: function () {
+    return {visible: true}
+  },
   /**
    * Render the example app
    * @return {Function} React render function
@@ -18,7 +21,9 @@ var App = React.createClass({ // eslint-disable-line
 
     return ( // eslint-disable-line
       <div>
-        <Geosuggest
+        <button onClick={() => this.setState({visible: !this.state.visible})}>Toggle</button>
+        {this.state.visible && (
+          <Geosuggest
           fixtures={fixtures}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
@@ -27,6 +32,7 @@ var App = React.createClass({ // eslint-disable-line
           onSuggestNoResults={this.onSuggestNoResults}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
           radius="20" />
+        )}
       </div>
     );
   },
