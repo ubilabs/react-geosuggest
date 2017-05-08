@@ -1,5 +1,5 @@
 import React from 'react';
-import shallowCompare from 'react/lib/shallowCompare';
+import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 
 /**
