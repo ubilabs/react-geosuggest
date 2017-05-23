@@ -3,6 +3,7 @@
  */
 const allowedAttributes = [
   'autoFocus',
+  'autoComplete',
   'disabled',
   'form',
   'formAction',
