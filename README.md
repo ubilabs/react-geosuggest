@@ -253,6 +253,12 @@ Default: `null`
 
 Additional `className` to add when a suggestion item is active.
 
+#### autoComplete
+Type: `String`,
+Default: `off`
+
+Autocomplete input attribute.
+
 #### Others
 
 All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.js#L4)
