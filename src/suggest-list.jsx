@@ -20,14 +20,6 @@ export default class SuggestList extends React.Component {
   }
 
   /**
-   * Whether or not it is hidden
-   * @return {Boolean} Hidden or not?
-   */
-  isHidden() {
-    return this.props.isHidden || this.props.suggests.length === 0;
-  }
-
-  /**
    * There are new properties available for the list
    * @param {Object} nextProps The new properties
    */
@@ -47,9 +39,9 @@ export default class SuggestList extends React.Component {
     const classes = classnames(
       'geosuggest__suggests',
       this.props.suggestsClassName,
-      {'geosuggest__suggests--hidden': this.isHidden()},
+      {'geosuggest__suggests--hidden': this.props.isHidden},
       {[this.props.hiddenClassName]: this.props.hiddenClassName ?
-        this.isHidden() : null}
+        this.props.isHidden : null}
     );
 
     return <ul className={classes} style={this.props.style}>
