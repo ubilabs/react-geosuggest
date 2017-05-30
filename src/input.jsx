@@ -64,6 +64,14 @@ class Input extends React.Component {
         this.props.onPrev();
         break;
       case 13: // ENTER
+        const submitOnEnter = this.props.submitOnEnter;
+        if (typeof submitOnEnter === 'function' && submitOnEnter(event)) {
+          break;
+        }
+        if (typeof submitOnEnter === 'boolean' && !submitOnEnter) {
+          event.preventDefault();
+          break;
+        }
         if (this.props.ignoreEnter) {
           event.preventDefault();
         }

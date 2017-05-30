@@ -38,5 +38,9 @@ export default {
     suggestItem: React.PropTypes.object
   }),
   ignoreTab: React.PropTypes.bool,
+  submitOnEnter: React.PropTypes.oneOfType(
+    React.PropTypes.func,
+    React.PropTypes.bool
+  ),
   label: React.PropTypes.string
 };

@@ -1032,6 +1032,7 @@ var Geosuggest = function (_React$Component) {
         onEscape: this.hideSuggests }, attributes)),
           suggestionsList = _react2.default.createElement(_suggestList2.default, { isHidden: this.state.isSuggestsHidden,
         style: this.props.style.suggests,
+        submitOnEnter: this.props.submitOnEnter,
         suggestItemStyle: this.props.style.suggestItem,
         suggestsClassName: this.props.suggestsClassName,
         suggestItemClassName: this.props.suggestItemClassName,
@@ -1126,7 +1127,8 @@ exports.default = {
     'suggests': {},
     'suggestItem': {}
   },
-  ignoreTab: false
+  ignoreTab: false,
+  submitOnEnter: true
 };
 
 },{}],7:[function(require,module,exports){
@@ -1237,6 +1239,14 @@ var Input = function (_React$Component) {
           break;
         case 13:
           // ENTER
+          var submitOnEnter = _this.props.submitOnEnter;
+          if (typeof submitOnEnter === 'function' && submitOnEnter(event)) {
+            break;
+          }
+          if (typeof submitOnEnter === 'boolean' && !submitOnEnter) {
+            event.preventDefault();
+            break;
+          }
           if (_this.props.ignoreEnter) {
             event.preventDefault();
           }
@@ -1413,6 +1423,7 @@ exports.default = {
     suggestItem: _react2.default.PropTypes.object
   }),
   ignoreTab: _react2.default.PropTypes.bool,
+  submitOnEnter: _react2.default.PropTypes.oneOfType(_react2.default.PropTypes.func, _react2.default.PropTypes.bool),
   label: _react2.default.PropTypes.string
 };
 
