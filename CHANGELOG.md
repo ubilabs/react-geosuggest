@@ -1,3 +1,16 @@
+## 2.2.0 (2017-05-30)
+
+
+#### Bug Fixes
+
+* Do not use setState to save timer instance. ([3709fdb6](https://github.com/ubilabs/react-geosuggest/commit/3709fdb6f8d7d8e7133c153398be87268b445a7a))
+
+
+#### Features
+
+* add blur() ([d16c6105](https://github.com/ubilabs/react-geosuggest/commit/d16c6105557bcca8dabc160927a448d86f06ffbe))
+
+
 ## 2.1.0 (2017-01-11)
 
 
