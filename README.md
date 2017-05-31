@@ -211,6 +211,12 @@ Default: `function(suggest) { return suggest.description; }`
 
 Used to generate a custom label for a suggest. Only parameter is a suggest (google.maps.places.AutocompletePrediction). [Check the Google Maps Reference](https://developers.google.com/maps/documentation/javascript/reference#GeocoderResult) for more information on it’s structure.
 
+#### renderSuggestItem
+Type: `Function`
+Default: `null`
+
+Used to customize the inner html of SuggestItem and allows for controlling what properties of the suggest object you want to render. Also a convenient way to add additional styling to different rendered elements within SuggestItem.
+
 #### skipSuggest
 Type: `Function`
 Default: `function(suggest) {}`

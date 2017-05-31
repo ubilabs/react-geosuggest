@@ -530,4 +530,32 @@ describe('Component: Geosuggest', () => {
       });
     });
   });
+
+  describe('with renderSuggestItem with custom fixture attributes', () => {
+    const fixtures = [
+        {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}, firstName: 'John'} // eslint-disable-line max-len
+      ],
+      renderSuggestItem = suggest => {
+        return <span className="my-custom-suggest-item">
+            <span className="my-custom-suggest-item__first-name">
+              { suggest.firstName }
+            </span>
+            <span>{ suggest.label }</span>
+          </span>;
+      };
+
+    beforeEach(() => render({fixtures, renderSuggestItem}));
+
+    it('should render result of renderSuggestItem into the SuggestItem', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+
+      TestUtils.Simulate.focus(geoSuggestInput);
+
+      const wrapper = TestUtils.scryRenderedDOMComponentsWithClass(component, 'my-custom-suggest-item'), // eslint-disable-line one-var, max-len
+        innerContent = TestUtils.scryRenderedDOMComponentsWithClass(component, 'my-custom-suggest-item__first-name'); // eslint-disable-line one-var, max-len
+
+      expect(wrapper).to.exist; // eslint-disable-line no-unused-expressions
+      expect(innerContent).to.exist; // eslint-disable-line no-unused-expressions, max-len
+    });
+  });
 });
