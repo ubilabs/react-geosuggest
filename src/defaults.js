@@ -24,6 +24,7 @@ export default {
   onChange: () => {},
   skipSuggest: () => {},
   getSuggestLabel: suggest => suggest.description,
+  renderSuggestItem: null,
   autoActivateFirstSuggest: false,
   style: {
     'input': {},
