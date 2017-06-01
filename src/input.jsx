@@ -56,13 +56,13 @@ class Input extends React.Component {
   onInputKeyDown = event => { // eslint-disable-line complexity
     switch (event.which) {
       case 40: // DOWN
-        if (!event.isShiftKey) {
+        if (!event.shiftKey) {
           event.preventDefault();
           this.props.onNext();
         }
         break;
       case 38: // UP
-        if (!event.isShiftKey) {
+        if (!event.shiftKey) {
           event.preventDefault();
           this.props.onPrev();
         }
