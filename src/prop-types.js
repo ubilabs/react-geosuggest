@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
  */
 export default {
   fixtures: PropTypes.array,
+  maxFixtures: PropTypes.number,
   initialValue: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
@@ -20,10 +21,14 @@ export default {
     PropTypes.number
   ]),
   bounds: PropTypes.object,
-  country: PropTypes.string,
+  country: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array
+  ]),
   types: PropTypes.array,
   queryDelay: PropTypes.number,
   googleMaps: PropTypes.object,
+  highlightMatch: PropTypes.bool,
   onSuggestSelect: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
@@ -38,5 +43,6 @@ export default {
     suggestItem: PropTypes.object
   }),
   ignoreTab: PropTypes.bool,
-  label: PropTypes.string
+  label: PropTypes.string,
+  autoComplete: PropTypes.string
 };

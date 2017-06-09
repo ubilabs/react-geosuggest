@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import shallowCompare from 'react/lib/shallowCompare';
+import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 import SuggestItem from './suggest-item';
 
@@ -59,6 +59,8 @@ export default class SuggestList extends React.Component {
 
         return <SuggestItem key={suggest.placeId}
           className={suggest.className}
+          userInput={this.props.userInput}
+          isHighlightMatch={this.props.isHighlightMatch}
           suggest={suggest}
           style={this.props.suggestItemStyle}
           suggestItemClassName={this.props.suggestItemClassName}
