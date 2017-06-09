@@ -25,7 +25,7 @@ As this component uses the Google Maps Places API to get suggests, you must incl
 </html>
 ```
 
-Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key. The API's that you have to enable in your Google API Manager Dashboard are [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/start), [Google Places API Web Service](https://developers.google.com/places/web-service/) and [Google Maps Javascript API] (https://developers.google.com/maps/documentation/javascript/).
+Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key. The API's that you have to enable in your Google API Manager Dashboard are [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/start), [Google Places API Web Service](https://developers.google.com/places/web-service/) and [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/).
 
 The easiest way to use geosuggest is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
 
@@ -117,7 +117,7 @@ Default: `null`
 The bounds to use for biasing the suggests. If this is set, `location` and `radius` are ignored.
 
 #### country
-Type: `String`
+Type: `String` or `Array`
 Default: `null`
 
 Restricts predictions to the specified country (ISO 3166-1 Alpha-2 country code, case insensitive). E.g., us, br, au.
@@ -135,6 +135,12 @@ Default: `[]`
 An array with fixtures (defaults). Each fixture has to be an object with a `label` key in it. Optionally provide a `location`, but the Geosuggest will geocode the label if no location is provided.
 
 You can also add a `className` key to a fixture. This class will be applied to the fixture item.
+
+### maxFixtures
+Type: `Number`
+Default: `10`
+ 
+Maximum number of fixtures to render.
 
 #### googleMaps
 Type: `Object`
@@ -154,6 +160,12 @@ Default: `250`
 
 Sets the delay in milliseconds after typing before a request will be sent to find suggestions.
 Specify `0` if you wish to fetch suggestions after every keystroke.
+
+#### highlightMatch
+Type: `Boolean`
+Default: `true`
+
+Highlights matched text.
 
 #### onFocus
 Type: `Function`
@@ -258,6 +270,12 @@ Type: `String`,
 Default: `null`
 
 Additional `className` to add when a suggestion item is active.
+
+#### autoComplete
+Type: `String`,
+Default: `off`
+
+Autocomplete input attribute.
 
 #### Others
 

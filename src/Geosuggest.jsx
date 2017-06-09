@@ -140,14 +140,14 @@ class Geosuggest extends React.Component {
    * Focus the input
    */
   focus() {
-    this.refs.input.focus();
+    this.input.focus();
   }
 
   /**
    * Blur the input
    */
   blur() {
-    this.refs.input.blur();
+    this.input.blur();
   }
 
   /**
@@ -218,7 +218,7 @@ class Geosuggest extends React.Component {
     var suggests = [],
       regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
-      maxFixtures = 10,
+      maxFixtures = this.props.maxFixtures,
       fixturesSearched = 0,
       activeSuggest = null;
 
@@ -241,7 +241,8 @@ class Geosuggest extends React.Component {
         suggests.push({
           label: this.props.getSuggestLabel(suggest),
           placeId: suggest.place_id,
-          isFixture: false
+          isFixture: false,
+          matchedSubstrings: suggest.matched_substrings[0]
         });
       }
     });
@@ -388,7 +389,7 @@ class Geosuggest extends React.Component {
       ),
       shouldRenderLabel = this.props.label && attributes.id,
       input = <Input className={this.props.inputClassName}
-        ref='input'
+        ref={i => this.input = i}
         value={this.state.userInput}
         ignoreEnter={!this.state.isSuggestsHidden}
         ignoreTab={this.props.ignoreTab}
@@ -404,6 +405,8 @@ class Geosuggest extends React.Component {
       suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
         style={this.props.style.suggests}
         suggestItemStyle={this.props.style.suggestItem}
+        userInput={this.state.userInput}
+        isHighlightMatch={this.props.highlightMatch}
         suggestsClassName={this.props.suggestsClassName}
         suggestItemClassName={this.props.suggestItemClassName}
         suggests={this.state.suggests}
