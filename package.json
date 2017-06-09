@@ -46,7 +46,7 @@
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
     "sinon": "^1.17.3",
-    "uglifyjs": "^2.4.10"
+    "uglify-js": "^3.0.15"
   },
   "scripts": {
     "prepublish": "npm run build:module",
