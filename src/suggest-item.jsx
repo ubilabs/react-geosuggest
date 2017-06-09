@@ -88,14 +88,22 @@ export default class SuggestItem extends React.Component {
    * @return {Function} The React element to render
    */
   render() {
-    const classes = classnames(
-      'geosuggest__item',
-      this.props.className,
-      this.props.suggestItemClassName,
-      {'geosuggest__item--active': this.props.isActive},
-      {[this.props.activeClassname]: this.props.activeClassname ?
-        this.props.isActive : null}
-    );
+    const {suggest} = this.props,
+      classes = classnames(
+        'geosuggest__item',
+        this.props.className,
+        this.props.suggestItemClassName,
+        {'geosuggest__item--active': this.props.isActive},
+        {[this.props.activeClassname]: this.props.activeClassname ?
+          this.props.isActive : null}
+      );
+    let content = suggest.label;
+
+    if (this.props.renderSuggestItem) {
+      content = this.props.renderSuggestItem(suggest);
+    } else if (this.props.isHighlightMatch) {
+      content = this.formatMatchedText(this.props.userInput, suggest);
+    }
 
     return <li className={classes}
       ref={li => this.ref = li}
@@ -103,10 +111,7 @@ export default class SuggestItem extends React.Component {
       onMouseDown={this.props.onMouseDown}
       onMouseOut={this.props.onMouseOut}
       onClick={this.onClick}>
-        { this.props.isHighlightMatch
-          ? this.formatMatchedText(
-            this.props.userInput, this.props.suggest)
-          : this.props.suggest.label }
+      {content}
     </li>;
   }
 }

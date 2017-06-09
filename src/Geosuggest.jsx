@@ -416,7 +416,8 @@ class Geosuggest extends React.Component {
         onSuggestNoResults={this.onSuggestNoResults}
         onSuggestMouseDown={this.onSuggestMouseDown}
         onSuggestMouseOut={this.onSuggestMouseOut}
-        onSuggestSelect={this.selectSuggest}/>;
+        onSuggestSelect={this.selectSuggest}
+        renderSuggestItem={this.props.renderSuggestItem}/>;
 
     return <div className={classes}>
       <div className="geosuggest__input-wrapper">
