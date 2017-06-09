@@ -403,6 +403,15 @@ describe('Component: Geosuggest', () => {
 
       expect(suggest.classList.contains('geosuggest__suggests--hidden')).to.be.false; // eslint-disable-line no-unused-expressions, max-len
     });
+
+    it('should show a maximum of `maxFixtures` fixtures', () => {
+      render({maxFixtures: 2, fixtures});
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      TestUtils.Simulate.focus(geoSuggestInput);
+
+      const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len, one-var
+      expect(suggestItems.length).to.equal(2);
+    });
   });
 
   describe('with autoActivateFirstSuggest enabled', () => {
@@ -538,6 +547,23 @@ describe('Component: Geosuggest', () => {
         expect(totalItems.length).to.be.equal(itemsWithItemClass.length);
         done();
       });
+    });
+  });
+
+  describe('with highLightMatch', () => { // eslint-disable-line max-len
+    const props = {
+      suggestsClassName: 'suggests-class'
+    };
+
+    beforeEach(() => render(props));
+
+    it('should highlight matched text', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+      let matchedText = TestUtils.scryRenderedDOMComponentsWithClass(component, 'matched-text'); // eslint-disable-line max-len
+      expect(matchedText).to.have.length.of.at.least(1); // eslint-disable-line max-len
     });
   });
 });

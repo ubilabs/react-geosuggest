@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
-    "lodash.debounce": "^4.0.6"
+    "lodash.debounce": "^4.0.6",
+    "react-addons-shallow-compare": "^15.5.2"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -40,6 +41,7 @@
     "light-server": "^1.0.3",
     "mocha": "^2.4.5",
     "nyc": "^6.4.4",
+    "prop-types": "^15.5.9",
     "react": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",

@@ -1,5 +1,5 @@
 import React from 'react';
-import shallowCompare from 'react/lib/shallowCompare';
+import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 
 /**
@@ -16,6 +16,62 @@ export default class SuggestItem extends React.Component {
    */
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
+  }
+
+    /**
+     * Makes a text bold
+     * @param {String} element The element to wrap
+     * @return {JSX} Bolder text
+     */
+  makeBold(element) {
+    return <b className="matched-text">{element}</b>;
+  }
+
+  /**
+   * Replace matched text with the same bold
+   * @param {Object} userInput Value from input
+   * @param {Object} suggest Data from google
+   * @return {String} Formatted string with highlighted matched text
+   */
+  formatMatchedText(userInput, suggest) {
+    if (!userInput || !suggest.matchedSubstrings) {
+      return suggest.label;
+    }
+
+    let start = suggest.matchedSubstrings.offset,
+      end = suggest.matchedSubstrings.length,
+      split = suggest.label.split('');
+    split.splice(start, end,
+      this.makeBold(suggest.label.substring(start, end)));
+
+    return <span>{split}</span>;
+  }
+
+  /**
+   * Checking if item just became active and scrolling if needed.
+   * @param {Object} nextProps The new properties
+   */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isActive && !this.props.isActive) {
+      this.scrollIfNeeded();
+    }
+  }
+
+  /**
+   * Scrolling current item to the center of the list if item needs scrolling.
+   * Item is scrolled to the center of the list.
+   */
+  scrollIfNeeded() {
+    const el = this.ref,
+      parent = el.parentElement,
+      overTop = el.offsetTop - parent.offsetTop < parent.scrollTop,
+      overBottom = el.offsetTop - parent.offsetTop + el.clientHeight >
+        parent.scrollTop + parent.clientHeight;
+
+    if (overTop || overBottom) {
+      parent.scrollTop = el.offsetTop - parent.offsetTop -
+        parent.clientHeight / 2 + el.clientHeight / 2;
+    }
   }
 
   /**
@@ -42,11 +98,15 @@ export default class SuggestItem extends React.Component {
     );
 
     return <li className={classes}
+      ref={li => this.ref = li}
       style={this.props.style}
       onMouseDown={this.props.onMouseDown}
       onMouseOut={this.props.onMouseOut}
       onClick={this.onClick}>
-        {this.props.suggest.label}
+        { this.props.isHighlightMatch
+          ? this.formatMatchedText(
+            this.props.userInput, this.props.suggest)
+          : this.props.suggest.label }
     </li>;
   }
 }
