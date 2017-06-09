@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
-    "lodash.debounce": "^4.0.6"
+    "lodash.debounce": "^4.0.6",
+    "react-addons-shallow-compare": "^15.5.2"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
