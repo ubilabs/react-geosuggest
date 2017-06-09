@@ -20,12 +20,11 @@ export default class SuggestItem extends React.Component {
 
     /**
      * Makes a text bold
-     * @param {String} el element
+     * @param {String} element The element to wrap
      * @return {JSX} Bolder text
      */
-  makeBold(el) {
-    return <b className="matched-text">
-        {el}</b>;
+  makeBold(element) {
+    return <b className="matched-text">{element}</b>;
   }
 
   /**
@@ -66,10 +65,12 @@ export default class SuggestItem extends React.Component {
     const el = this.ref,
       parent = el.parentElement,
       overTop = el.offsetTop - parent.offsetTop < parent.scrollTop,
-      overBottom = el.offsetTop - parent.offsetTop + el.clientHeight > parent.scrollTop + parent.clientHeight;    // eslint-disable-line max-len
+      overBottom = el.offsetTop - parent.offsetTop + el.clientHeight >
+        parent.scrollTop + parent.clientHeight;
 
     if (overTop || overBottom) {
-      parent.scrollTop = el.offsetTop - parent.offsetTop - parent.clientHeight / 2 + el.clientHeight / 2;   // eslint-disable-line max-len
+      parent.scrollTop = el.offsetTop - parent.offsetTop -
+        parent.clientHeight / 2 + el.clientHeight / 2;
     }
   }
 
