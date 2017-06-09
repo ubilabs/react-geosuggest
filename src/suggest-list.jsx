@@ -55,9 +55,10 @@ export default class SuggestList extends React.Component {
     return <ul className={classes} style={this.props.style}>
       {this.props.suggests.map(suggest => {
         const isActive = this.props.activeSuggest &&
-          suggest.placeId === this.props.activeSuggest.placeId;
+          suggest.placeId === this.props.activeSuggest.placeId,
+          key = suggest.key || suggest.placeId;
 
-        return <SuggestItem key={suggest.placeId}
+        return <SuggestItem key={key}
           className={suggest.className}
           userInput={this.props.userInput}
           isHighlightMatch={this.props.isHighlightMatch}
@@ -68,7 +69,8 @@ export default class SuggestList extends React.Component {
           activeClassname={this.props.suggestItemActiveClassName}
           onMouseDown={this.props.onSuggestMouseDown}
           onMouseOut={this.props.onSuggestMouseOut}
-          onSelect={this.props.onSuggestSelect} />;
+          onSelect={this.props.onSuggestSelect}
+          renderSuggestItem={ this.props.renderSuggestItem }/>;
       })}
     </ul>;
   }
