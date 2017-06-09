@@ -1,48 +1,48 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Default values
  */
 export default {
-  fixtures: React.PropTypes.array,
-  maxFixtures: React.PropTypes.number,
-  initialValue: React.PropTypes.string,
-  placeholder: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  className: React.PropTypes.string,
-  inputClassName: React.PropTypes.string,
-  suggestsClassName: React.PropTypes.string,
-  suggestsHiddenClassName: React.PropTypes.string,
-  suggestItemClassName: React.PropTypes.string,
-  suggestItemActiveClassName: React.PropTypes.string,
-  location: React.PropTypes.object,
-  radius: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.number
+  fixtures: PropTypes.array,
+  maxFixtures: PropTypes.number,
+  initialValue: PropTypes.string,
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  inputClassName: PropTypes.string,
+  suggestsClassName: PropTypes.string,
+  suggestsHiddenClassName: PropTypes.string,
+  suggestItemClassName: PropTypes.string,
+  suggestItemActiveClassName: PropTypes.string,
+  location: PropTypes.object,
+  radius: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
   ]),
-  bounds: React.PropTypes.object,
-  country: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.array
+  bounds: PropTypes.object,
+  country: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array
   ]),
-  types: React.PropTypes.array,
-  queryDelay: React.PropTypes.number,
-  googleMaps: React.PropTypes.object,
-  highlightMatch: React.PropTypes.bool,
-  onSuggestSelect: React.PropTypes.func,
-  onFocus: React.PropTypes.func,
-  onBlur: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  onKeyPress: React.PropTypes.func,
-  skipSuggest: React.PropTypes.func,
-  getSuggestLabel: React.PropTypes.func,
-  autoActivateFirstSuggest: React.PropTypes.bool,
-  style: React.PropTypes.shape({
-    input: React.PropTypes.object,
-    suggests: React.PropTypes.object,
-    suggestItem: React.PropTypes.object
+  types: PropTypes.array,
+  queryDelay: PropTypes.number,
+  googleMaps: PropTypes.object,
+  highlightMatch: PropTypes.bool,
+  onSuggestSelect: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onKeyPress: PropTypes.func,
+  skipSuggest: PropTypes.func,
+  getSuggestLabel: PropTypes.func,
+  autoActivateFirstSuggest: PropTypes.bool,
+  style: PropTypes.shape({
+    input: PropTypes.object,
+    suggests: PropTypes.object,
+    suggestItem: PropTypes.object
   }),
-  ignoreTab: React.PropTypes.bool,
-  label: React.PropTypes.string,
-  autoComplete: React.PropTypes.string
+  ignoreTab: PropTypes.bool,
+  label: PropTypes.string,
+  autoComplete: PropTypes.string
 };

@@ -41,6 +41,7 @@
     "light-server": "^1.0.3",
     "mocha": "^2.4.5",
     "nyc": "^6.4.4",
+    "prop-types": "^15.5.9",
     "react": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
