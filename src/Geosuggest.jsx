@@ -70,8 +70,10 @@ class Geosuggest extends React.Component {
 
     /* istanbul ignore next */
     if (!googleMaps) {
-      console.error(// eslint-disable-line no-console
-        'Google map api was not found in the page.');
+      if (console) {
+        console.error(// eslint-disable-line no-console
+          'Google map api was not found in the page.');
+      }
       return;
     }
     this.googleMaps = googleMaps;
