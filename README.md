@@ -161,6 +161,12 @@ Default: `250`
 Sets the delay in milliseconds after typing before a request will be sent to find suggestions.
 Specify `0` if you wish to fetch suggestions after every keystroke.
 
+#### highlightMatch
+Type: `Boolean`
+Default: `true`
+
+Highlights matched text.
+
 #### onFocus
 Type: `Function`
 Default: `function() {}`
