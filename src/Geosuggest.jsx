@@ -218,7 +218,7 @@ class Geosuggest extends React.Component {
     var suggests = [],
       regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
-      maxFixtures = 10,
+      maxFixtures = this.props.maxFixtures,
       fixturesSearched = 0,
       activeSuggest = null;
 

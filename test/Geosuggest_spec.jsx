@@ -393,6 +393,15 @@ describe('Component: Geosuggest', () => {
 
       expect(suggest.classList.contains('geosuggest__suggests--hidden')).to.be.false; // eslint-disable-line no-unused-expressions, max-len
     });
+
+    it('should show a maximum of `maxFixtures` fixtures', () => {
+      render({maxFixtures: 2, fixtures});
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      TestUtils.Simulate.focus(geoSuggestInput);
+
+      const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len, one-var
+      expect(suggestItems.length).to.equal(2);
+    });
   });
 
   describe('with autoActivateFirstSuggest enabled', () => {
