@@ -1,3 +1,25 @@
+## 2.2.0 (2017-06-09)
+
+
+#### Bug Fixes
+
+* check for console before calling console.error ([b6588bce](https://github.com/ubilabs/react-geosuggest/commit/b6588bce9cd4f5b88ad000cc381176cd63579277))
+* allow for shift + arrow key behavior in input box ([ 	953d341](https://github.com/ubilabs/react-geosuggest/commit/953d34116856b6575cde635215b17876f52e26d1))
+* **suggest-item**:
+  * Items are not visible due to scroll when navigating using arrow keys ([f471f96](https://github.com/ubilabs/react-geosuggest/commit/f471f966b8d95ac7849dbd7547e888f2361845e1))
+  * add renderSuggestItem prop for custom suggest item ([f0ff0eb](https://github.com/ubilabs/react-geosuggest/commit/f0ff0eb493eb01bec961ccb9dd9b88b3778dcf5e))
+
+
+#### Features
+
+* add maxFixtures prop ([f504289](https://github.com/ubilabs/react-geosuggest/commit/f504289b39b6a042da09a013c44816177336974d))
+* add highlight matched text ([1607dd3](https://github.com/ubilabs/react-geosuggest/commit/1607dd30807fa0fba7d2521a97b1b38bef59dd0c))
+* add autoComplete prop ([c97ea31](https://github.com/ubilabs/react-geosuggest/commit/c97ea31da2bd5a21f494b11150272fe6e0902894))
+* allow arrays for country prop ([92391c4](https://github.com/ubilabs/react-geosuggest/commit/92391c41b19f8aa911b48909b78686538cc399e3))
+* use react-addons-shallow-compare ([3dcf209](https://github.com/ubilabs/react-geosuggest/commit/3dcf20980f8126f65d07371ac8770f04ebbe4065))
+* use prop-types ([c76d8a0](https://github.com/ubilabs/react-geosuggest/commit/c76d8a04800951193b612a17d2756e7e1e604031))
+
+
 ## 2.1.0 (2017-01-11)
 
 
