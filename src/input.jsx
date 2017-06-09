@@ -112,7 +112,6 @@ class Input extends React.Component {
     return <input className={classes}
       ref={i => this.input = i}
       type='text'
-      autoComplete='off'
       {...attributes}
       value={this.props.value}
       style={this.props.style}
@@ -133,7 +132,8 @@ Input.defaultProps = {
   value: '',
   ignoreTab: false,
   onKeyDown: () => {},
-  onKeyPress: () => {}
+  onKeyPress: () => {},
+  autoComplete: 'off'
 };
 
 export default Input;
