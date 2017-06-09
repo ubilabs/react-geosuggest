@@ -88,15 +88,15 @@ export default class SuggestItem extends React.Component {
    * @return {Function} The React element to render
    */
   render() {
-    const {suggest} = this.props;
-    const classes = classnames(
-      'geosuggest__item',
-      this.props.className,
-      this.props.suggestItemClassName,
-      {'geosuggest__item--active': this.props.isActive},
-      {[this.props.activeClassname]: this.props.activeClassname ?
-        this.props.isActive : null}
-    );
+    const {suggest} = this.props,
+      classes = classnames(
+        'geosuggest__item',
+        this.props.className,
+        this.props.suggestItemClassName,
+        {'geosuggest__item--active': this.props.isActive},
+        {[this.props.activeClassname]: this.props.activeClassname ?
+          this.props.isActive : null}
+      );
     let content = suggest.label;
 
     if (this.props.renderSuggestItem) {

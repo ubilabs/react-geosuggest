@@ -36,7 +36,7 @@ export default {
   onKeyPress: PropTypes.func,
   skipSuggest: PropTypes.func,
   getSuggestLabel: PropTypes.func,
-  renderSuggestItem: React.PropTypes.func,
+  renderSuggestItem: PropTypes.func,
   autoActivateFirstSuggest: PropTypes.bool,
   style: PropTypes.shape({
     input: PropTypes.object,
