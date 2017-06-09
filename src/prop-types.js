@@ -4,6 +4,7 @@ import React from 'react';
  * Default values
  */
 export default {
+  api: React.PropTypes.string,
   fixtures: React.PropTypes.array,
   maxFixtures: React.PropTypes.number,
   initialValue: React.PropTypes.string,
