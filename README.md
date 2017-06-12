@@ -185,6 +185,12 @@ Default: `function(value) {}`
 
 Gets triggered when input field changes the value.
 
+#### onKeyDown
+Type: `Function`
+Default: `function(event) {}`
+
+Gets triggered when input field has a key pressed down. This event is triggered before onKeyPress.
+
 #### onKeyPress
 Type: `Function`
 Default: `function(event) {}`

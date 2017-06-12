@@ -54,6 +54,12 @@ class Input extends React.Component {
    * @param  {Event} event The keydown event
    */
   onInputKeyDown = event => { // eslint-disable-line complexity
+    // Call props.onKeyDown if defined
+    // Gives the developer a little bit more control if needed
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(event);
+    }
+
     switch (event.which) {
       case 40: // DOWN
         if (!event.shiftKey) {
