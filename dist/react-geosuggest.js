@@ -1576,6 +1576,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = (window.React);
@@ -1704,7 +1706,7 @@ var Geosuggest = function (_React$Component) {
 
       _this.setState({
         isSuggestsHidden: true,
-        userInput: suggest.label
+        userInput: _typeof(suggest.label) !== 'object' ? suggest.label : suggest.description
       });
 
       if (suggest.location) {
@@ -1931,6 +1933,7 @@ var Geosuggest = function (_React$Component) {
       suggestsGoogle.forEach(function (suggest) {
         if (!skipSuggest(suggest)) {
           suggests.push({
+            description: suggest.description,
             label: _this3.props.getSuggestLabel(suggest),
             placeId: suggest.place_id,
             isFixture: false,
@@ -2077,6 +2080,7 @@ var Geosuggest = function (_React$Component) {
         onChange: this.onInputChange,
         onFocus: this.onInputFocus,
         onBlur: this.onInputBlur,
+        onKeyDown: this.props.onKeyDown,
         onKeyPress: this.props.onKeyPress,
         onNext: this.onNext,
         onPrev: this.onPrev,
@@ -2282,6 +2286,12 @@ var Input = function (_React$Component) {
       _this.props.onKeyPress(event);
     }, _this.onInputKeyDown = function (event) {
       // eslint-disable-line complexity
+      // Call props.onKeyDown if defined
+      // Gives the developer a little bit more control if needed
+      if (_this.props.onKeyDown) {
+        _this.props.onKeyDown(event);
+      }
+
       switch (event.which) {
         case 40:
           // DOWN
@@ -2558,15 +2568,16 @@ var SuggestItem = function (_React$Component) {
     /**
      * Makes a text bold
      * @param {String} element The element to wrap
+     * @param {String} key The key to set on the element
      * @return {JSX} Bolder text
      */
 
   }, {
     key: 'makeBold',
-    value: function makeBold(element) {
+    value: function makeBold(element, key) {
       return _react2.default.createElement(
         'b',
-        { className: 'matched-text' },
+        { className: 'matched-text', key: key },
         element
       );
     }
@@ -2588,7 +2599,7 @@ var SuggestItem = function (_React$Component) {
       var start = suggest.matchedSubstrings.offset,
           end = suggest.matchedSubstrings.length,
           split = suggest.label.split('');
-      split.splice(start, end, this.makeBold(suggest.label.substring(start, end)));
+      split.splice(start, end, this.makeBold(suggest.label.substring(start, end), start));
 
       return _react2.default.createElement(
         'span',

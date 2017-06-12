@@ -1,3 +1,16 @@
+## 2.3.0 (2017-06-12)
+
+
+#### Bug Fixes
+
+* check whether the label is an object to use the description value ([1a5c2f78](https://github.com/ubilabs/react-geosuggest/commit/1a5c2f784aeadf52f6a247c7790b4ce37c4d702c))
+* **suggest-item:** add missing key on iterated items ([b9512063](https://github.com/ubilabs/react-geosuggest/commit/b9512063462ee286de6c629518d6645f46d31cfc))
+
+#### Features
+
+* Expose the onKeyDown event from input ([80053d5](https://github.com/ubilabs/react-geosuggest/commit/80053d5b6359a5051285d2f08e690f1af96553b7))
+
+
 ## 2.2.0 (2017-06-09)
 
 
