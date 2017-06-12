@@ -241,6 +241,7 @@ class Geosuggest extends React.Component {
     suggestsGoogle.forEach(suggest => {
       if (!skipSuggest(suggest)) {
         suggests.push({
+          description: suggest.description,
           label: this.props.getSuggestLabel(suggest),
           placeId: suggest.place_id,
           isFixture: false,
@@ -342,7 +343,9 @@ class Geosuggest extends React.Component {
 
     this.setState({
       isSuggestsHidden: true,
-      userInput: suggest.label
+      userInput: typeof suggest.label !== 'object' ?
+        suggest.label :
+        suggest.description
     });
 
     if (suggest.location) {
