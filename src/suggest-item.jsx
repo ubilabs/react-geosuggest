@@ -21,10 +21,11 @@ export default class SuggestItem extends React.Component {
   /**
    * Makes a text bold
    * @param {String} element The element to wrap
+   * @param {String} key The key to set on the element
    * @return {JSX} Bolder text
    */
-  makeBold(element) {
-    return <b className="matched-text" key>
+  makeBold(element, key) {
+    return <b className='matched-text' key={key}>
       {element}
     </b>;
   }
@@ -44,7 +45,7 @@ export default class SuggestItem extends React.Component {
       end = suggest.matchedSubstrings.length,
       split = suggest.label.split('');
     split.splice(start, end,
-      this.makeBold(suggest.label.substring(start, end)));
+      this.makeBold(suggest.label.substring(start, end), start));
 
     return <span>{split}</span>;
   }
