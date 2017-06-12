@@ -18,13 +18,15 @@ export default class SuggestItem extends React.Component {
     return shallowCompare(this, nextProps, nextState);
   }
 
-    /**
-     * Makes a text bold
-     * @param {String} element The element to wrap
-     * @return {JSX} Bolder text
-     */
+  /**
+   * Makes a text bold
+   * @param {String} element The element to wrap
+   * @return {JSX} Bolder text
+   */
   makeBold(element) {
-    return <b className="matched-text">{element}</b>;
+    return <b className="matched-text" key>
+      {element}
+    </b>;
   }
 
   /**
