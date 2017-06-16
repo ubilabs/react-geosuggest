@@ -312,11 +312,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Geosuggest from 'react-geosuggest';
 
-var App = React.createClass({
+class App extends React.Component {
   /**
    * Render the example app
    */
-  render: function() {
+  render() {
     var fixtures = [
       {label: 'Old Elbe Tunnel, Hamburg', location: {lat: 53.5459, lng: 9.966576}},
       {label: 'Reeperbahn, Hamburg', location: {lat: 53.5495629, lng: 9.9625838}},
@@ -340,13 +340,13 @@ var App = React.createClass({
         <button onClick={()=>this._geoSuggest.clear()}>Clear</button>
       </div>
     )
-  },
+  }
 
   /**
    * When a suggest got selected
    * @param  {Object} suggest The suggest
    */
-  onSuggestSelect: function(suggest) {
+  onSuggestSelect(suggest) {
     console.log(suggest);
   }
 });
