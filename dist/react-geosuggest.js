@@ -1910,7 +1910,8 @@ var Geosuggest = function (_React$Component) {
       var callback = arguments[1];
 
       var suggests = [],
-          regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
+          userInput = this.state.userInput,
+          regex = new RegExp(escapeRegExp(userInput), 'gim'),
           skipSuggest = this.props.skipSuggest,
           maxFixtures = this.props.maxFixtures,
           fixturesSearched = 0,
@@ -1926,6 +1927,10 @@ var Geosuggest = function (_React$Component) {
 
           suggest.placeId = suggest.label;
           suggest.isFixture = true;
+          suggest.matchedSubstrings = {
+            offset: suggest.label.indexOf(userInput),
+            length: userInput.length
+          };
           suggests.push(suggest);
         }
       });
@@ -2509,10 +2514,6 @@ var _react = (window.React);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
-
-var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
-
 var _classnames2 = require('classnames');
 
 var _classnames3 = _interopRequireDefault(_classnames2);
@@ -2553,17 +2554,7 @@ var SuggestItem = function (_React$Component) {
   }
 
   _createClass(SuggestItem, [{
-    key: 'shouldComponentUpdate',
-
-    /**
-     * Whether or not the component should update
-     * @param {Object} nextProps The new properties
-     * @param {Object} nextState The new state
-     * @return {Boolean} Update or not?
-     */
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
-    }
+    key: 'makeBold',
 
     /**
      * Makes a text bold
@@ -2571,13 +2562,10 @@ var SuggestItem = function (_React$Component) {
      * @param {String} key The key to set on the element
      * @return {JSX} Bolder text
      */
-
-  }, {
-    key: 'makeBold',
     value: function makeBold(element, key) {
       return _react2.default.createElement(
         'b',
-        { className: 'matched-text', key: key },
+        { className: 'geosuggest__item__matched-text', key: key },
         element
       );
     }
@@ -2597,9 +2585,12 @@ var SuggestItem = function (_React$Component) {
       }
 
       var start = suggest.matchedSubstrings.offset,
-          end = suggest.matchedSubstrings.length,
-          split = suggest.label.split('');
-      split.splice(start, end, this.makeBold(suggest.label.substring(start, end), start));
+          length = suggest.matchedSubstrings.length,
+          end = start + length,
+          split = suggest.label.split(''),
+          boldPart = this.makeBold(suggest.label.substring(start, end));
+
+      split.splice(start, length, boldPart);
 
       return _react2.default.createElement(
         'span',
@@ -2697,7 +2688,7 @@ SuggestItem.defaultProps = {
   suggest: {}
 };
 
-},{"classnames":1,"react-addons-shallow-compare":13}],20:[function(require,module,exports){
+},{"classnames":1}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

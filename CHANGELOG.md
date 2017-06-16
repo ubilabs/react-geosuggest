@@ -1,3 +1,13 @@
+### 2.3.1 (2017-06-16)
+
+
+#### Bug Fixes
+
+* **suggest-item:**
+  * highlight matches in fixtures, too ([698ee71d](https://github.com/ubilabs/react-geosuggest/commit/698ee71d74cd16570df03089c56a6dae6d2fb171))
+  * correct highlight of matches not at index 0 ([ac027a1d](https://github.com/ubilabs/react-geosuggest/commit/ac027a1db66830ff4bdafe98f092986f782b3664))
+
+
 ## 2.3.0 (2017-06-12)
 
 
