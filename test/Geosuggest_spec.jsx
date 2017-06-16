@@ -589,7 +589,7 @@ describe('Component: Geosuggest', () => {
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.change(geoSuggestInput);
       TestUtils.Simulate.focus(geoSuggestInput);
-      let matchedText = TestUtils.scryRenderedDOMComponentsWithClass(component, 'matched-text'); // eslint-disable-line max-len
+      let matchedText = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item__matched-text'); // eslint-disable-line max-len
       expect(matchedText).to.have.length.of.at.least(1); // eslint-disable-line max-len
     });
   });

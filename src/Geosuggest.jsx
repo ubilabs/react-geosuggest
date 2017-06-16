@@ -218,7 +218,8 @@ class Geosuggest extends React.Component {
    */
   updateSuggests(suggestsGoogle = [], callback) {
     var suggests = [],
-      regex = new RegExp(escapeRegExp(this.state.userInput), 'gim'),
+      userInput = this.state.userInput,
+      regex = new RegExp(escapeRegExp(userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
       maxFixtures = this.props.maxFixtures,
       fixturesSearched = 0,
@@ -234,6 +235,10 @@ class Geosuggest extends React.Component {
 
         suggest.placeId = suggest.label;
         suggest.isFixture = true;
+        suggest.matchedSubstrings = {
+          offset: suggest.label.indexOf(userInput),
+          length: userInput.length
+        };
         suggests.push(suggest);
       }
     });
@@ -429,7 +434,7 @@ class Geosuggest extends React.Component {
       <div className="geosuggest__input-wrapper">
         {shouldRenderLabel &&
           <label className="geosuggest__label"
-                 htmlFor={attributes.id}>{this.props.label}</label>
+            htmlFor={attributes.id}>{this.props.label}</label>
         }
         {input}
       </div>
