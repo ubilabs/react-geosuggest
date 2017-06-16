@@ -429,7 +429,7 @@ class Geosuggest extends React.Component {
       <div className="geosuggest__input-wrapper">
         {shouldRenderLabel &&
           <label className="geosuggest__label"
-                 htmlFor={attributes.id}>{this.props.label}</label>
+            htmlFor={attributes.id}>{this.props.label}</label>
         }
         {input}
       </div>
