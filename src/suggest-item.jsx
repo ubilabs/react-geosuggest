@@ -47,7 +47,7 @@ export default class SuggestItem extends React.Component {
       split = suggest.label.split(''),
       boldPart = this.makeBold(suggest.label.substring(start, end));
 
-    split.splice(start, length, boldPart, start);
+    split.splice(start, length, boldPart);
 
     return <span>{split}</span>;
   }
@@ -107,6 +107,7 @@ export default class SuggestItem extends React.Component {
     if (this.props.renderSuggestItem) {
       content = this.props.renderSuggestItem(suggest);
     } else if (this.props.isHighlightMatch) {
+      // console.log('#', suggest);
       content = this.formatMatchedText(this.props.userInput, suggest);
     }
 
