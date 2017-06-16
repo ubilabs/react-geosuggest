@@ -164,3 +164,6 @@ h1 {
 .geosuggest__item--active:focus {
   background: #ccc;
 }
+.geosuggest__item__matched-text {
+  font-weight: bold;
+}
