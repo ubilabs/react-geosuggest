@@ -1,5 +1,4 @@
 import React from 'react';
-import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 
 /**
@@ -8,16 +7,6 @@ import classnames from 'classnames';
  * @return {JSX} The icon component.
  */
 export default class SuggestItem extends React.Component {
-  /**
-   * Whether or not the component should update
-   * @param {Object} nextProps The new properties
-   * @param {Object} nextState The new state
-   * @return {Boolean} Update or not?
-   */
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
-
   /**
    * Makes a text bold
    * @param {String} element The element to wrap
@@ -107,7 +96,6 @@ export default class SuggestItem extends React.Component {
     if (this.props.renderSuggestItem) {
       content = this.props.renderSuggestItem(suggest);
     } else if (this.props.isHighlightMatch) {
-      // console.log('#', suggest);
       content = this.formatMatchedText(this.props.userInput, suggest);
     }
 
