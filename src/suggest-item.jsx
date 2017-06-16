@@ -25,7 +25,7 @@ export default class SuggestItem extends React.Component {
    * @return {JSX} Bolder text
    */
   makeBold(element, key) {
-    return <b className='matched-text' key={key}>
+    return <b className='geosuggest__item__matched-text' key={key}>
       {element}
     </b>;
   }
@@ -41,11 +41,13 @@ export default class SuggestItem extends React.Component {
       return suggest.label;
     }
 
-    let start = suggest.matchedSubstrings.offset,
-      end = suggest.matchedSubstrings.length,
-      split = suggest.label.split('');
-    split.splice(start, end,
-      this.makeBold(suggest.label.substring(start, end), start));
+    const start = suggest.matchedSubstrings.offset,
+      length = suggest.matchedSubstrings.length,
+      end = start + length,
+      split = suggest.label.split(''),
+      boldPart = this.makeBold(suggest.label.substring(start, end));
+
+    split.splice(start, length, boldPart, start);
 
     return <span>{split}</span>;
   }
