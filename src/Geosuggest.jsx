@@ -3,6 +3,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import debounce from 'lodash.debounce';
+import find from 'array-find';
 
 import defaults from './defaults';
 import propTypes from './prop-types';
@@ -268,7 +269,7 @@ class Geosuggest extends React.Component {
     let activeSuggest = this.state.activeSuggest;
 
     if (activeSuggest) {
-      const newSuggest = suggests.find(listedSuggest =>
+      const newSuggest = find(suggests, listedSuggest =>
         activeSuggest.placeId === listedSuggest.placeId &&
         activeSuggest.isFixture === listedSuggest.isFixture
       );

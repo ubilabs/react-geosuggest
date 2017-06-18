@@ -17,6 +17,7 @@
     "react": "^0.14.0 || ^15.0.0"
   },
   "dependencies": {
+    "array-find": "^1.0.0",
     "classnames": "^2.2.3",
     "lodash.debounce": "^4.0.6",
     "react-addons-shallow-compare": "^15.5.2"
