@@ -95,7 +95,7 @@ class Geosuggest extends React.Component {
    */
   onInputChange = userInput => {
     this.setState({userInput}, this.onAfterInputChange);
-  }
+  };
 
   /**
    * On After the input got changed
@@ -105,7 +105,7 @@ class Geosuggest extends React.Component {
       this.showSuggests();
     }
     this.props.onChange(this.state.userInput);
-  }
+  };
 
   /**
    * When the input gets focused
@@ -113,7 +113,7 @@ class Geosuggest extends React.Component {
   onInputFocus = () => {
     this.props.onFocus();
     this.showSuggests();
-  }
+  };
 
   /**
    * When the input gets blurred
@@ -122,21 +122,21 @@ class Geosuggest extends React.Component {
     if (!this.state.ignoreBlur) {
       this.hideSuggests();
     }
-  }
+  };
 
-  onNext = () => this.activateSuggest('next')
+  onNext = () => this.activateSuggest('next');
 
-  onPrev = () => this.activateSuggest('prev')
+  onPrev = () => this.activateSuggest('prev');
 
-  onSelect = () => this.selectSuggest(this.state.activeSuggest)
+  onSelect = () => this.selectSuggest(this.state.activeSuggest);
 
-  onSuggestMouseDown = () => this.setState({ignoreBlur: true})
+  onSuggestMouseDown = () => this.setState({ignoreBlur: true});
 
-  onSuggestMouseOut = () => this.setState({ignoreBlur: false})
+  onSuggestMouseOut = () => this.setState({ignoreBlur: false});
 
   onSuggestNoResults = () => {
     this.props.onSuggestNoResults(this.state.userInput);
-  }
+  };
 
   /**
    * Focus the input
@@ -298,7 +298,7 @@ class Geosuggest extends React.Component {
         activeSuggest: null
       });
     }, 100);
-  }
+  };
 
   /**
    * Activate a new suggest
@@ -360,7 +360,7 @@ class Geosuggest extends React.Component {
     }
 
     this.geocodeSuggest(suggest);
-  }
+  };
 
   /**
    * Geocode a suggest

@@ -25,21 +25,21 @@ class Input extends React.Component {
    */
   onChange = () => {
     this.props.onChange(this.input.value);
-  }
+  };
 
   /**
    * When the input got focused
    */
   onFocus = () => {
     this.props.onFocus();
-  }
+  };
 
   /**
    * When the input loses focus
    */
   onBlur = () => {
     this.props.onBlur();
-  }
+  };
 
   /**
    * When a key gets pressed in the input
@@ -47,7 +47,7 @@ class Input extends React.Component {
    */
   onKeyPress = event => {
     this.props.onKeyPress(event);
-  }
+  };
 
   /**
    * When a key gets pressed in the input
@@ -92,7 +92,7 @@ class Input extends React.Component {
       default:
         break;
     }
-  }
+  };
 
   /**
    * Focus the input
