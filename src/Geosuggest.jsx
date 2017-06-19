@@ -268,10 +268,10 @@ class Geosuggest extends React.Component {
     let activeSuggest = this.state.activeSuggest;
 
     if (activeSuggest) {
-      const newSuggest = suggests.find(listedSuggest =>
+      const newSuggest = suggests.filter(listedSuggest =>
         activeSuggest.placeId === listedSuggest.placeId &&
         activeSuggest.isFixture === listedSuggest.isFixture
-      );
+      )[0];
 
       activeSuggest = newSuggest || null;
     }
