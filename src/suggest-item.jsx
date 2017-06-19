@@ -75,7 +75,7 @@ export default class SuggestItem extends React.Component {
   onClick = event => {
     event.preventDefault();
     this.props.onSelect(this.props.suggest);
-  }
+  };
 
   /**
    * Render the view
