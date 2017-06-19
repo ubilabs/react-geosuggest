@@ -1965,9 +1965,9 @@ var Geosuggest = function (_React$Component) {
       var activeSuggest = this.state.activeSuggest;
 
       if (activeSuggest) {
-        var newSuggest = suggests.find(function (listedSuggest) {
+        var newSuggest = suggests.filter(function (listedSuggest) {
           return activeSuggest.placeId === listedSuggest.placeId && activeSuggest.isFixture === listedSuggest.isFixture;
-        });
+        })[0];
 
         activeSuggest = newSuggest || null;
       }

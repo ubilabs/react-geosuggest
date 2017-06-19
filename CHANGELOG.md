@@ -1,3 +1,11 @@
+### 2.3.3 (2017-06-19)
+
+
+#### Bug Fixes
+
+* Use filter over find to fix IE11 compatibility ([5dfff643](https://github.com/ubilabs/react-geosuggest/commit/5dfff643a3cefd2f30f4f8a5dfa706960be32831))
+
+
 ### 2.3.2 (2017-06-19)
 
 
