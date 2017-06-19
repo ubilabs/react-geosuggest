@@ -1,3 +1,11 @@
+### 2.3.2 (2017-06-19)
+
+
+#### Bug Fixes
+
+* **builds:** fix build errors on Windows 10 ([ab2cd25e](https://github.com/ubilabs/react-geosuggest/commit/ab2cd25e16843d307b230258dd36f84092d5b64d))
+
+
 ### 2.3.1 (2017-06-16)
 
 
