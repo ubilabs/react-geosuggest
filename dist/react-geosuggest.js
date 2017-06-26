@@ -2588,7 +2588,7 @@ var SuggestItem = function (_React$Component) {
           length = suggest.matchedSubstrings.length,
           end = start + length,
           split = suggest.label.split(''),
-          boldPart = this.makeBold(suggest.label.substring(start, end));
+          boldPart = this.makeBold(suggest.label.substring(start, end), suggest.label);
 
       split.splice(start, length, boldPart);
 

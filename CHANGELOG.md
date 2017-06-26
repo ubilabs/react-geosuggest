@@ -1,3 +1,11 @@
+### 2.3.4 (2017-06-26)
+
+
+#### Bug Fixes
+
+* **suggest-item:** add missing key prop when rendering item ([c88167e7](https://github.com/ubilabs/react-geosuggest/commit/c88167e7dcc9559d987fb81019f134ec2ba2d957))
+
+
 ### 2.3.3 (2017-06-19)
 
 
