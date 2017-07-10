@@ -80,11 +80,12 @@ Type: `Object`
 Default: `{
   'input': {},
   'suggests': {},
-  'suggestItem': {}
+  'suggestItem': {},
+  'footerItem': {}
 }`
 
 Add an additional style to `Geosuggest`.
-This would support overriding/adding styles to the input suggestList and suggestItem.
+This would support overriding/adding styles to the input suggestList, suggestItem and footerItem.
 
 #### inputClassName
 Type: `String`
@@ -283,6 +284,24 @@ Default: `off`
 
 Autocomplete input attribute.
 
+#### showFooterItem
+Type: `Boolean`
+Default: `false`
+
+It shows footer item if it is set to true.
+
+#### footerItem
+Type: `String`
+Default: `null`
+
+Defines text of footer item which is shown at the bottom of suggest list.
+
+#### footerItemClassName
+Type: `String`,
+Default: `null`
+
+Additional `className` for footer item.
+
 #### Others
 
 All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.js#L4)
@@ -332,7 +351,9 @@ class App extends React.Component {
           fixtures={fixtures}
           onSuggestSelect={this.onSuggestSelect}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
-          radius="20" />
+          radius="20"
+          showFooterItem
+          footerItem="Footer item" />
 
         {* Buttons to trigger exposed component functions *}
         <button onClick={()=>this._geoSuggest.focus()}>Focus</button>

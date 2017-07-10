@@ -65,7 +65,11 @@ class App extends React.Component {
           onSuggestSelect={this.onSuggestSelect}
           onSuggestNoResults={this.onSuggestNoResults}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
-          radius="20" />
+          radius="20"
+          showFooterItem
+          footerItem="Footer item"
+          style={{footerItem: {background: 'black', color: 'white'}}}
+        />
       </div>
     );
   }

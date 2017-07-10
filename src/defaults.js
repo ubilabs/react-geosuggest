@@ -31,7 +31,10 @@ export default {
   style: {
     'input': {},
     'suggests': {},
-    'suggestItem': {}
+    'suggestItem': {},
+    'footerItem': {}
   },
-  ignoreTab: false
+  ignoreTab: false,
+  footerItem: null,
+  showFooterItem: false
 };

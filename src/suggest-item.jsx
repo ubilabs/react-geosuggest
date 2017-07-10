@@ -26,7 +26,7 @@ export default class SuggestItem extends React.Component {
    * @return {String} Formatted string with highlighted matched text
    */
   formatMatchedText(userInput, suggest) {
-    if (!userInput || !suggest.matchedSubstrings) {
+    if (!userInput || !suggest.matchedSubstrings || suggest.isFooterItem) {
       return suggest.label;
     }
 

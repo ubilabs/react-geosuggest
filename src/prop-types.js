@@ -41,9 +41,13 @@ export default {
   style: PropTypes.shape({
     input: PropTypes.object,
     suggests: PropTypes.object,
-    suggestItem: PropTypes.object
+    suggestItem: PropTypes.object,
+    footerItem: PropTypes.object
   }),
   ignoreTab: PropTypes.bool,
   label: PropTypes.string,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  footerItem: PropTypes.string,
+  showFooterItem: PropTypes.bool,
+  footerItemClassName: PropTypes.string
 };
