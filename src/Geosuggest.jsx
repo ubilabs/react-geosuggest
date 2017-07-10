@@ -218,12 +218,25 @@ class Geosuggest extends React.Component {
    */
   updateSuggests(suggestsGoogle = [], callback) {
     var suggests = [],
+      footerItem = null,
+      suggestsForActive = [],
       userInput = this.state.userInput,
       regex = new RegExp(escapeRegExp(userInput), 'gim'),
       skipSuggest = this.props.skipSuggest,
       maxFixtures = this.props.maxFixtures,
       fixturesSearched = 0,
       activeSuggest = null;
+
+    if (this.props.showFooterItem && this.props.footerItem) {
+      footerItem = {};
+      footerItem.label = this.props.footerItem;
+      footerItem.placeId = this.props.footerItem;
+      footerItem.isFooterItem = true;
+      footerItem.matchedSubstrings = {
+        offset: this.props.footerItem.indexOf(userInput),
+        length: userInput.length
+      };
+    }
 
     this.props.fixtures.forEach(suggest => {
       if (fixturesSearched >= maxFixtures) {
@@ -255,7 +268,12 @@ class Geosuggest extends React.Component {
       }
     });
 
-    activeSuggest = this.updateActiveSuggest(suggests);
+    suggestsForActive = suggests;
+    if (footerItem) {
+      suggestsForActive.push(footerItem);
+    }
+
+    activeSuggest = this.updateActiveSuggest(suggestsForActive);
     this.setState({suggests, activeSuggest}, callback);
   }
 
@@ -270,7 +288,10 @@ class Geosuggest extends React.Component {
     if (activeSuggest) {
       const newSuggest = suggests.filter(listedSuggest =>
         activeSuggest.placeId === listedSuggest.placeId &&
-        activeSuggest.isFixture === listedSuggest.isFixture
+        (
+          activeSuggest.isFixture === listedSuggest.isFixture ||
+          activeSuggest.isFooterItem === listedSuggest.isFooterItem
+        )
       )[0];
 
       activeSuggest = newSuggest || null;
@@ -428,7 +449,18 @@ class Geosuggest extends React.Component {
         onSuggestMouseDown={this.onSuggestMouseDown}
         onSuggestMouseOut={this.onSuggestMouseOut}
         onSuggestSelect={this.selectSuggest}
-        renderSuggestItem={this.props.renderSuggestItem}/>;
+        renderSuggestItem={this.props.renderSuggestItem}
+        footerItem={
+         this.props.showFooterItem && this.props.footerItem ?
+           {
+             label: this.props.footerItem,
+             placeId: this.props.footerItem,
+             isFooterItem: true
+           } : null
+        }
+        showFooterItem={this.props.showFooterItem}
+        footerItemStyle={this.props.style.footerItem}
+        footerItemClassName={this.props.footerItemClassName}/>;
 
     return <div className={classes}>
       <div className="geosuggest__input-wrapper">

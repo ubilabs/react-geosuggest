@@ -54,16 +54,29 @@ export default class SuggestList extends React.Component {
 
     return <ul className={classes} style={this.props.style}>
       {this.props.suggests.map(suggest => {
-        const isActive = this.props.activeSuggest &&
+        let isActive = this.props.activeSuggest &&
             suggest.placeId === this.props.activeSuggest.placeId,
-          key = suggest.key || suggest.placeId;
+          key = suggest.key || suggest.placeId,
+          className = suggest.className,
+          suggestValue = suggest,
+          style = this.props.suggestItemStyle;
+
+        if (
+          suggest.isFooterItem && suggest.showFooterItem && suggest.footerItem
+        ) {
+          isActive = this.props.activeSuggest &&
+            this.props.footerItem.placeId === this.props.activeSuggest.placeId;
+          className = this.props.footerItemClassName;
+          suggestValue = this.props.footerItem;
+          style = this.props.footerItemStyle;
+        }
 
         return <SuggestItem key={key}
-          className={suggest.className}
+          className={className}
           userInput={this.props.userInput}
           isHighlightMatch={this.props.isHighlightMatch}
-          suggest={suggest}
-          style={this.props.suggestItemStyle}
+          suggest={suggestValue}
+          style={style}
           suggestItemClassName={this.props.suggestItemClassName}
           isActive={isActive}
           activeClassname={this.props.suggestItemActiveClassName}
