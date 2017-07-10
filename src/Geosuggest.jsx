@@ -367,19 +367,20 @@ class Geosuggest extends React.Component {
    * @param  {Object} suggest The suggest
    */
   geocodeSuggest(suggest) {
-    let options;
+    let options = null;
     if (suggest.placeId && !suggest.isFixture) {
       options = {
-        placeId: suggest.placeId,
+        placeId: suggest.placeId
       };
     } else {
       options = {
         address: suggest.label,
         location: this.props.location,
         bounds: this.props.bounds,
-        componentRestrictions: this.props.country ? { country: this.props.country } : undefined,
+        componentRestrictions: this.props.country ?
+        {country: this.props.country} : null
       };
-    };
+    }
     this.geocoder.geocode(
       options,
       (results, status) => {
