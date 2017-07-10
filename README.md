@@ -99,7 +99,7 @@ Default: `false`
 Defines whether the input is disabled.
 
 #### location
-Type: `google.maps.LatLng`
+Type: [`google.maps.LatLng`](https://developers.google.com/maps/documentation/javascript/reference#LatLng)
 Default: `null`
 
 To get localized suggestions, define a location to bias the suggests.
@@ -108,7 +108,7 @@ To get localized suggestions, define a location to bias the suggests.
 Type: `Number`
 Default: `0`
 
-The radius defines the area around the location to use for biasing the suggests. It must be accompanied by a `location` parameter.
+The radius in meters defines the area around the location to use for biasing the suggests. It must be accompanied by a `location` parameter.
 
 #### bounds
 Type: [`LatLngBounds`](https://developers.google.com/maps/documentation/javascript/reference?csw=1#LatLngBounds)
