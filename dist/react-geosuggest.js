@@ -2046,7 +2046,20 @@ var Geosuggest = function (_React$Component) {
     value: function geocodeSuggest(suggest) {
       var _this4 = this;
 
-      this.geocoder.geocode(suggest.placeId && !suggest.isFixture ? { placeId: suggest.placeId } : { address: suggest.label }, function (results, status) {
+      var options = null;
+      if (suggest.placeId && !suggest.isFixture) {
+        options = {
+          placeId: suggest.placeId
+        };
+      } else {
+        options = {
+          address: suggest.label,
+          location: this.props.location,
+          bounds: this.props.bounds,
+          componentRestrictions: this.props.country ? { country: this.props.country } : null
+        };
+      }
+      this.geocoder.geocode(options, function (results, status) {
         if (status === _this4.googleMaps.GeocoderStatus.OK) {
           var gmaps = results[0],
               location = gmaps.geometry.location;

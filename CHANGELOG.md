@@ -1,3 +1,11 @@
+### 2.3.5 (2017-07-11)
+
+
+#### Bug Fixes
+
+* Fixed Geocoder not considering options ([b1fd7c7](https://github.com/ubilabs/react-geosuggest/commit/b1fd7c7808629f31b11e14829c3bc0cea119c07b))
+
+
 ### 2.3.4 (2017-06-26)
 
 
