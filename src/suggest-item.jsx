@@ -33,13 +33,20 @@ export default class SuggestItem extends React.Component {
     const start = suggest.matchedSubstrings.offset,
       length = suggest.matchedSubstrings.length,
       end = start + length,
-      split = suggest.label.split(''),
       boldPart = this.makeBold(suggest.label.substring(start, end),
         suggest.label);
 
-    split.splice(start, length, boldPart);
+    let pre = '',
+      post = '';
 
-    return <span>{split}</span>;
+    if (start > 0) {
+      pre = suggest.label.slice(0, start);
+    }
+    if (end < suggest.label.length) {
+      post = suggest.label.slice(end);
+    }
+
+    return <span>{pre}{boldPart}{post}</span>;
   }
 
   /**
