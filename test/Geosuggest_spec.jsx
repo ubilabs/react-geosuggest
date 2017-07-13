@@ -593,4 +593,22 @@ describe('Component: Geosuggest', () => {
       expect(matchedText).to.have.length.of.at.least(1); // eslint-disable-line max-len
     });
   });
+  describe('with highLightMatch', () => { // eslint-disable-line max-len
+    const props = {
+      suggestsClassName: 'suggests-class'
+    };
+
+    beforeEach(() => render(props));
+    it('should render a match with minial nodes', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'Newa';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+
+      const geoSuggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len, one-var
+      expect(geoSuggestItems).to.have.length.of(1);
+      expect(geoSuggestItems[0].childNodes).to.have.length.of(1);
+      expect(geoSuggestItems[0].childNodes[0].childNodes).to.have.length.of(6);
+    });
+  });
 });
