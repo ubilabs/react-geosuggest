@@ -1,3 +1,11 @@
+### 2.3.6 (2017-07-13)
+
+
+#### Bug Fixes
+
+* Fix highlight label formatting  ([e652323](https://github.com/ubilabs/react-geosuggest/commit/e652323ae2bfef1fc823b91ec69609d51dbdc035))
+
+
 ### 2.3.5 (2017-07-11)
 
 

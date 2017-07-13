@@ -2600,15 +2600,24 @@ var SuggestItem = function (_React$Component) {
       var start = suggest.matchedSubstrings.offset,
           length = suggest.matchedSubstrings.length,
           end = start + length,
-          split = suggest.label.split(''),
           boldPart = this.makeBold(suggest.label.substring(start, end), suggest.label);
 
-      split.splice(start, length, boldPart);
+      var pre = '',
+          post = '';
+
+      if (start > 0) {
+        pre = suggest.label.slice(0, start);
+      }
+      if (end < suggest.label.length) {
+        post = suggest.label.slice(end);
+      }
 
       return _react2.default.createElement(
         'span',
         null,
-        split
+        pre,
+        boldPart,
+        post
       );
     }
 
