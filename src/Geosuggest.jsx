@@ -360,9 +360,8 @@ class Geosuggest extends React.Component {
     }
 
     this.geocodeSuggest(suggest);
-    // on `enter`, input is not blurred so we need
-    // to manually call blur() so that suggestions
-    // list will repopulate on focus()
+    // on `enter`, input is not blurred
+    // Call blur() so the suggestions list will repopulate on focus()
     this.blur();
   };
 
