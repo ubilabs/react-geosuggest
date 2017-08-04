@@ -161,6 +161,12 @@ Default: `250`
 Sets the delay in milliseconds after typing before a request will be sent to find suggestions.
 Specify `0` if you wish to fetch suggestions after every keystroke.
 
+#### minLength
+Type: `Number`
+Default: `1`
+
+Sets a minimum length of characters before a request will be sent to find suggestions.
+
 #### highlightMatch
 Type: `Boolean`
 Default: `true`

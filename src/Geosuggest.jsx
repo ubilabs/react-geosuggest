@@ -178,8 +178,14 @@ class Geosuggest extends React.Component {
     }
 
     const options = {
-      input: this.state.userInput
-    };
+        input: this.state.userInput
+      },
+      inputLength = this.state.userInput.length,
+      isShorterThanMinLength = inputLength < this.props.minLength;
+
+    if (isShorterThanMinLength) {
+      return;
+    }
 
     ['location', 'radius', 'bounds', 'types'].forEach(option => {
       if (this.props[option]) {
@@ -441,7 +447,8 @@ class Geosuggest extends React.Component {
         onSuggestMouseDown={this.onSuggestMouseDown}
         onSuggestMouseOut={this.onSuggestMouseOut}
         onSuggestSelect={this.selectSuggest}
-        renderSuggestItem={this.props.renderSuggestItem}/>;
+        renderSuggestItem={this.props.renderSuggestItem}
+        minLength={this.props.minLength}/>;
 
     return <div className={classes}>
       <div className="geosuggest__input-wrapper">

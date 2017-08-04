@@ -593,6 +593,7 @@ describe('Component: Geosuggest', () => {
       expect(matchedText).to.have.length.of.at.least(1); // eslint-disable-line max-len
     });
   });
+
   describe('with highLightMatch', () => { // eslint-disable-line max-len
     const props = {
       suggestsClassName: 'suggests-class'
@@ -609,6 +610,47 @@ describe('Component: Geosuggest', () => {
       expect(geoSuggestItems).to.have.length.of(1);
       expect(geoSuggestItems[0].childNodes).to.have.length.of(1);
       expect(geoSuggestItems[0].childNodes[0].childNodes).to.have.length.of(6);
+    });
+  });
+
+  describe('with minLength', () => {
+    it('should not search for predictions when the input value is less than the minLength', () => { // eslint-disable-line max-len
+      const props = {
+        minLength: 5
+      };
+      render(props);
+
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len, one-var
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+      let matchedText = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item__matched-text'); // eslint-disable-line max-len
+      expect(matchedText).to.have.length.of(0); // eslint-disable-line max-len
+    });
+
+    it('should search for predictions when the input value is one character and minLength prop was not specified', () => { // eslint-disable-line max-len
+      render();
+
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len, one-var
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+      let matchedText = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item__matched-text'); // eslint-disable-line max-len
+      expect(matchedText).to.have.length.of.at.least(1); // eslint-disable-line max-len
+    });
+
+    it('should search for predictions when the input value is greater than the minLength prop specified', () => { // eslint-disable-line max-len
+      const props = {
+        minLength: 3
+      };
+      render(props);
+
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len, one-var
+      geoSuggestInput.value = 'New York';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+      let matchedText = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item__matched-text'); // eslint-disable-line max-len
+      expect(matchedText).to.have.length.of.at.least(1); // eslint-disable-line max-len
     });
   });
 });
