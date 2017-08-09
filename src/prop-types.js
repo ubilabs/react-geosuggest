@@ -45,8 +45,8 @@ export default {
   }),
   ignoreTab: PropTypes.bool,
   submitOnEnter: PropTypes.oneOfType([
-    React.PropTypes.func,
-    React.PropTypes.bool
+    PropTypes.func,
+    PropTypes.bool
   ]),
   label: PropTypes.string,
   autoComplete: PropTypes.string
