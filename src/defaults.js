@@ -4,6 +4,7 @@
  */
 export default {
   fixtures: [],
+  maxFixtures: 10,
   initialValue: '',
   placeholder: 'Search places',
   disabled: false,
@@ -16,6 +17,7 @@ export default {
   types: null,
   queryDelay: 250,
   googleMaps: null,
+  highlightMatch: true,
   onActivateSuggest: () => {},
   onSuggestSelect: () => {},
   onSuggestNoResults: () => {},
@@ -24,6 +26,7 @@ export default {
   onChange: () => {},
   skipSuggest: () => {},
   getSuggestLabel: suggest => suggest.description,
+  renderSuggestItem: null,
   autoActivateFirstSuggest: false,
   style: {
     'input': {},

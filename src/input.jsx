@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import shallowCompare from 'react/lib/shallowCompare';
+import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 
 import filterInputAttributes from './filter-input-attributes';
@@ -24,22 +24,22 @@ class Input extends React.Component {
    * When the input got changed
    */
   onChange = () => {
-    this.props.onChange(this.refs.input.value);
-  }
+    this.props.onChange(this.input.value);
+  };
 
   /**
    * When the input got focused
    */
   onFocus = () => {
     this.props.onFocus();
-  }
+  };
 
   /**
    * When the input loses focus
    */
   onBlur = () => {
     this.props.onBlur();
-  }
+  };
 
   /**
    * When a key gets pressed in the input
@@ -47,21 +47,31 @@ class Input extends React.Component {
    */
   onKeyPress = event => {
     this.props.onKeyPress(event);
-  }
+  };
 
   /**
    * When a key gets pressed in the input
    * @param  {Event} event The keydown event
    */
   onInputKeyDown = event => { // eslint-disable-line complexity
+    // Call props.onKeyDown if defined
+    // Gives the developer a little bit more control if needed
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(event);
+    }
+
     switch (event.which) {
       case 40: // DOWN
-        event.preventDefault();
-        this.props.onNext();
+        if (!event.shiftKey) {
+          event.preventDefault();
+          this.props.onNext();
+        }
         break;
       case 38: // UP
-        event.preventDefault();
-        this.props.onPrev();
+        if (!event.shiftKey) {
+          event.preventDefault();
+          this.props.onPrev();
+        }
         break;
       case 13: // ENTER
         if (this.props.ignoreEnter) {
@@ -82,20 +92,20 @@ class Input extends React.Component {
       default:
         break;
     }
-  }
+  };
 
   /**
    * Focus the input
    */
   focus() {
-    this.refs.input.focus();
+    this.input.focus();
   }
 
   /**
    * Blur the input
    */
   blur() {
-    this.refs.input.blur();
+    this.input.blur();
   }
 
   /**
@@ -110,9 +120,8 @@ class Input extends React.Component {
       );
 
     return <input className={classes}
-      ref='input'
+      ref={i => this.input = i}
       type='text'
-      autoComplete='off'
       {...attributes}
       value={this.props.value}
       style={this.props.style}
@@ -133,7 +142,8 @@ Input.defaultProps = {
   value: '',
   ignoreTab: false,
   onKeyDown: () => {},
-  onKeyPress: () => {}
+  onKeyPress: () => {},
+  autoComplete: 'off'
 };
 
 export default Input;

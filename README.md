@@ -25,7 +25,7 @@ As this component uses the Google Maps Places API to get suggests, you must incl
 </html>
 ```
 
-Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key. The API's that you have to enable in your Google API Manager Dashboard are [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/start), [Google Places API Web Service](https://developers.google.com/places/web-service/) and [Google Maps Javascript API] (https://developers.google.com/maps/documentation/javascript/).
+Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key. The API's that you have to enable in your Google API Manager Dashboard are [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/start), [Google Places API Web Service](https://developers.google.com/places/web-service/) and [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/).
 
 The easiest way to use geosuggest is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
 
@@ -99,7 +99,7 @@ Default: `false`
 Defines whether the input is disabled.
 
 #### location
-Type: `google.maps.LatLng`
+Type: [`google.maps.LatLng`](https://developers.google.com/maps/documentation/javascript/reference#LatLng)
 Default: `null`
 
 To get localized suggestions, define a location to bias the suggests.
@@ -108,7 +108,7 @@ To get localized suggestions, define a location to bias the suggests.
 Type: `Number`
 Default: `0`
 
-The radius defines the area around the location to use for biasing the suggests. It must be accompanied by a `location` parameter.
+The radius in meters defines the area around the location to use for biasing the suggests. It must be accompanied by a `location` parameter.
 
 #### bounds
 Type: [`LatLngBounds`](https://developers.google.com/maps/documentation/javascript/reference?csw=1#LatLngBounds)
@@ -117,10 +117,10 @@ Default: `null`
 The bounds to use for biasing the suggests. If this is set, `location` and `radius` are ignored.
 
 #### country
-Type: `String`
+Type: `String` or `Array`
 Default: `null`
 
-Restricts predictions to the specified country (ISO 3166-1 Alpha-2 country code, case insensitive). E.g., us, br, au.
+Restricts predictions to the specified country (ISO 3166-1 Alpha-2 country code, case insensitive). E.g., us, br, au. You can provide a single one, or an array of up to 5 country code strings.
 
 #### types
 Type: `Array`
@@ -135,6 +135,12 @@ Default: `[]`
 An array with fixtures (defaults). Each fixture has to be an object with a `label` key in it. Optionally provide a `location`, but the Geosuggest will geocode the label if no location is provided.
 
 You can also add a `className` key to a fixture. This class will be applied to the fixture item.
+
+#### maxFixtures
+Type: `Number`
+Default: `10`
+
+Maximum number of fixtures to render.
 
 #### googleMaps
 Type: `Object`
@@ -155,6 +161,12 @@ Default: `250`
 Sets the delay in milliseconds after typing before a request will be sent to find suggestions.
 Specify `0` if you wish to fetch suggestions after every keystroke.
 
+#### highlightMatch
+Type: `Boolean`
+Default: `true`
+
+Highlights matched text.
+
 #### onFocus
 Type: `Function`
 Default: `function() {}`
@@ -172,6 +184,12 @@ Type: `Function`
 Default: `function(value) {}`
 
 Gets triggered when input field changes the value.
+
+#### onKeyDown
+Type: `Function`
+Default: `function(event) {}`
+
+Gets triggered when input field has a key pressed down. This event is triggered before onKeyPress.
 
 #### onKeyPress
 Type: `Function`
@@ -210,6 +228,12 @@ Type: `Function`
 Default: `function(suggest) { return suggest.description; }`
 
 Used to generate a custom label for a suggest. Only parameter is a suggest (google.maps.places.AutocompletePrediction). [Check the Google Maps Reference](https://developers.google.com/maps/documentation/javascript/reference#GeocoderResult) for more information on it’s structure.
+
+#### renderSuggestItem
+Type: `Function`
+Default: `null`
+
+Used to customize the inner html of SuggestItem and allows for controlling what properties of the suggest object you want to render. Also a convenient way to add additional styling to different rendered elements within SuggestItem.
 
 #### skipSuggest
 Type: `Function`
@@ -253,6 +277,12 @@ Default: `null`
 
 Additional `className` to add when a suggestion item is active.
 
+#### autoComplete
+Type: `String`,
+Default: `off`
+
+Autocomplete input attribute.
+
 #### Others
 
 All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.js#L4)
@@ -282,11 +312,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Geosuggest from 'react-geosuggest';
 
-var App = React.createClass({
+class App extends React.Component {
   /**
    * Render the example app
    */
-  render: function() {
+  render() {
     var fixtures = [
       {label: 'Old Elbe Tunnel, Hamburg', location: {lat: 53.5459, lng: 9.966576}},
       {label: 'Reeperbahn, Hamburg', location: {lat: 53.5495629, lng: 9.9625838}},
@@ -310,13 +340,13 @@ var App = React.createClass({
         <button onClick={()=>this._geoSuggest.clear()}>Clear</button>
       </div>
     )
-  },
+  }
 
   /**
    * When a suggest got selected
    * @param  {Object} suggest The suggest
    */
-  onSuggestSelect: function(suggest) {
+  onSuggestSelect(suggest) {
     console.log(suggest);
   }
 });

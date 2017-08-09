@@ -1,6 +1,6 @@
 {
   "name": "react-geosuggest",
-  "version": "2.1.0",
+  "version": "2.3.6",
   "description": "A React autosuggest for the Google Maps Places API.",
   "main": "module/Geosuggest.js",
   "author": "Robert Katzki <katzki@ubilabs.net>",
@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.3",
-    "lodash.debounce": "^4.0.6"
+    "lodash.debounce": "^4.0.6",
+    "react-addons-shallow-compare": "^15.5.2"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -33,6 +34,7 @@
     "bumpery": "^1.1.1",
     "chai": "^3.5.0",
     "conventional-changelog-generator": "0.0.3",
+    "copyfiles": "^1.2.0",
     "eslint": "^1.5.1",
     "eslint-plugin-react": "^3.16.1",
     "gh-pages": "^0.9.0",
@@ -40,11 +42,11 @@
     "light-server": "^1.0.3",
     "mocha": "^2.4.5",
     "nyc": "^6.4.4",
+    "prop-types": "^15.5.9",
     "react": "^15.1.0",
-    "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
     "sinon": "^1.17.3",
-    "uglifyjs": "^2.4.10"
+    "uglify-js": "^3.0.15"
   },
   "scripts": {
     "prepublish": "npm run build:module",
@@ -61,7 +63,7 @@
     "js:example:uglify": "uglifyjs example/dist/app.js -o example/dist/app.js -c warnings=false --mangle",
     "js:browser": "browserify src/Geosuggest.jsx --standalone Geosuggest --exclude react -t babelify --extension=.jsx -t browserify-global-shim > dist/react-geosuggest.js",
     "js:browser:uglify": "uglifyjs dist/react-geosuggest.js -o dist/react-geosuggest.min.js -c warnings=false,drop_console=true --mangle",
-    "build:module": "babel src --out-dir module && cp src/geosuggest.css module/",
+    "build:module": "babel src --out-dir module && copyfiles -f src/geosuggest.css module/",
     "build:browser": "npm run js:browser && npm run js:browser:uglify",
     "build:example": "npm run prepare:example && npm run js:example:uglify",
     "changelog": "conventional-changelog-generator && atom -w CHANGELOG.md",
