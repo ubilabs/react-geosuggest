@@ -1,3 +1,10 @@
+## 2.4.0 (2017-08-10)
+
+#### Features
+
+* add minLength prop ([b3f2d8a](https://github.com/ubilabs/react-geosuggest/commit/b3f2d8ac5cd8a8eff2ed3fe75d6dabf3ae70288b))
+
+
 ### 2.3.6 (2017-07-13)
 
 

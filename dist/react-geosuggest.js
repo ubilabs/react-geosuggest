@@ -1868,7 +1868,13 @@ var Geosuggest = function (_React$Component) {
 
       var options = {
         input: this.state.userInput
-      };
+      },
+          inputLength = this.state.userInput.length,
+          isShorterThanMinLength = inputLength < this.props.minLength;
+
+      if (isShorterThanMinLength) {
+        return;
+      }
 
       ['location', 'radius', 'bounds', 'types'].forEach(function (option) {
         if (_this2.props[option]) {
@@ -2119,7 +2125,8 @@ var Geosuggest = function (_React$Component) {
         onSuggestMouseDown: this.onSuggestMouseDown,
         onSuggestMouseOut: this.onSuggestMouseOut,
         onSuggestSelect: this.selectSuggest,
-        renderSuggestItem: this.props.renderSuggestItem });
+        renderSuggestItem: this.props.renderSuggestItem,
+        minLength: this.props.minLength });
 
       return _react2.default.createElement(
         'div',
@@ -2206,7 +2213,8 @@ exports.default = {
     'suggests': {},
     'suggestItem': {}
   },
-  ignoreTab: false
+  ignoreTab: false,
+  minLength: 1
 };
 
 },{}],16:[function(require,module,exports){
@@ -2511,7 +2519,8 @@ exports.default = {
   }),
   ignoreTab: _propTypes2.default.bool,
   label: _propTypes2.default.string,
-  autoComplete: _propTypes2.default.string
+  autoComplete: _propTypes2.default.string,
+  minLength: _propTypes2.default.number
 };
 
 },{"prop-types":8}],19:[function(require,module,exports){
