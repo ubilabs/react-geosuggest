@@ -45,5 +45,6 @@ export default {
   }),
   ignoreTab: PropTypes.bool,
   label: PropTypes.string,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  minLength: PropTypes.number
 };
