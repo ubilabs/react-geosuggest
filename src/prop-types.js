@@ -44,10 +44,11 @@ export default {
     suggestItem: PropTypes.object
   }),
   ignoreTab: PropTypes.bool,
+  label: PropTypes.string,
+  autoComplete: PropTypes.string,
   submitOnEnter: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.bool
   ]),
-  label: PropTypes.string,
-  autoComplete: PropTypes.string
+  updateUserInput: PropTypes.bool
 };

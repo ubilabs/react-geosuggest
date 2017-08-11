@@ -34,5 +34,6 @@ export default {
     'suggestItem': {}
   },
   ignoreTab: false,
-  submitOnEnter: true
+  submitOnEnter: true,
+  updateUserInput: false
 };
