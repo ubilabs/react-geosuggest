@@ -1,3 +1,11 @@
+## 2.5.0 (2017-08-17)
+
+
+#### Features
+
+* **filters:** Add autoCapitalize and autoCorrect to filters ([ff1153c2](https://github.com/ubilabs/react-geosuggest/commit/ff1153c27b18cd7d7b551e304a26d4ac5ff0d63d))
+
+
 ## 2.4.0 (2017-08-10)
 
 #### Features
