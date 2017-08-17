@@ -2,8 +2,10 @@
  * Attributes allowed on input elements
  */
 const allowedAttributes = [
-  'autoFocus',
+  'autoCapitalize',
   'autoComplete',
+  'autoCorrect',
+  'autoFocus',
   'disabled',
   'form',
   'formAction',
