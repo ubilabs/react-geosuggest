@@ -311,6 +311,9 @@ It is possible to update the value of the input contained within the GeoSuggest 
 #### clear()
 It is also possible to clear the value of the input contained within the GeoSuggest component by calling the `clear` function.
 
+#### selectSuggest()
+Same effect as hitting `enter` (will geocode the text inside of the input).
+
 ### Example
 
 ```jsx
@@ -344,6 +347,7 @@ class App extends React.Component {
         <button onClick={()=>this._geoSuggest.focus()}>Focus</button>
         <button onClick={()=>this._geoSuggest.update('New Zeland')}>Update</button>
         <button onClick={()=>this._geoSuggest.clear()}>Clear</button>
+        <button onClick={()=>this._geoSuggest.selectSuggest()}>Search</button>
       </div>
     )
   }
