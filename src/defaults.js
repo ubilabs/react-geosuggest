@@ -21,6 +21,7 @@ export default {
   onActivateSuggest: () => {},
   onSuggestSelect: () => {},
   onSuggestNoResults: () => {},
+  onUpdateSuggests: () => {},
   onFocus: () => {},
   onBlur: () => {},
   onChange: () => {},
