@@ -549,6 +549,25 @@ describe('Component: Geosuggest', () => {
     });
   });
 
+  describe('with onUpdateSuggests', () => {
+    const props = {
+      onUpdateSuggests: sinon.spy()
+    };
+
+    beforeEach(() => render(props));
+
+    it('should call onUpdateSuggests when input onChange is triggered', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line
+      geoSuggestInput.value = 'New York City';
+      TestUtils.Simulate.change(geoSuggestInput);
+
+      setImmediate(() => {
+        expect(props.onUpdateSuggests.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+        done(); // eslint-disable-line
+      });
+    });
+  });
+
   describe('with renderSuggestItem with custom fixture attributes', () => {
     const fixtures = [
         {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}, firstName: 'John'} // eslint-disable-line max-len

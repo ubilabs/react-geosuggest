@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 /**
- * Default values
+ * Prop Types
  */
 export default {
   fixtures: PropTypes.array,
@@ -34,6 +34,7 @@ export default {
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onKeyPress: PropTypes.func,
+  onUpdateSuggests: PropTypes.func,
   skipSuggest: PropTypes.func,
   getSuggestLabel: PropTypes.func,
   renderSuggestItem: PropTypes.func,
