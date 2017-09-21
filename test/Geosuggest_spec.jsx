@@ -113,6 +113,26 @@ describe('Component: Geosuggest', () => {
       expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
     });
 
+    it('should call `onSuggestSelect` when we clear out the selected city', () => { // eslint-disable-line max-len
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'keyDown',
+        keyCode: 40,
+        which: 40
+      });
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'Enter',
+        keyCode: 13,
+        which: 13
+      });
+      expect(onSuggestSelect.calledOnce).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+      geoSuggestInput.value = '';
+      TestUtils.Simulate.change(geoSuggestInput);
+      expect(onSuggestSelect.calledWithExactly()).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+    });
+
     it('should call `onActivateSuggest` when we key down to a suggestion', () => { // eslint-disable-line max-len
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'New';
