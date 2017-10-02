@@ -609,7 +609,7 @@ describe('Component: Geosuggest', () => {
       const geoSuggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len, one-var
       expect(geoSuggestItems).to.have.length.of(1);
       expect(geoSuggestItems[0].childNodes).to.have.length.of(1);
-      expect(geoSuggestItems[0].childNodes[0].childNodes).to.have.length.of(6);
+      expect(geoSuggestItems[0].childNodes[0].childNodes).to.have.length.of(3);
     });
   });
 
