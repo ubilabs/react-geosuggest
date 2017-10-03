@@ -18,8 +18,8 @@ coverage.html
 node_modules
 
 # Example build directory
-example/dist
 module
+example/dist
 
 # Editor and other tmp files
 *.swp

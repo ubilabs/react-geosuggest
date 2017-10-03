@@ -1,5 +1,4 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import shallowCompare from 'react-addons-shallow-compare';
 import classnames from 'classnames';
 
 import filterInputAttributes from './filter-input-attributes';
@@ -9,17 +8,7 @@ import filterInputAttributes from './filter-input-attributes';
  * @param {Object} props The component's props
  * @return {JSX} The icon component.
  */
-class Input extends React.Component {
-  /**
-   * Whether or not the component should update
-   * @param {Object} nextProps The new properties
-   * @param {Object} nextState The new state
-   * @return {Boolean} Update or not?
-   */
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
-
+class Input extends React.PureComponent {
   /**
    * When the input got changed
    */
