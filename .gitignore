@@ -18,6 +18,7 @@ coverage.html
 node_modules
 
 # Example build directory
+module
 example/dist
 
 # Editor and other tmp files
