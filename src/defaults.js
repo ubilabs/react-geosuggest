@@ -33,5 +33,6 @@ export default {
     'suggests': {},
     'suggestItem': {}
   },
-  ignoreTab: false
+  ignoreTab: false,
+  minLength: 1
 };

@@ -161,6 +161,12 @@ Default: `250`
 Sets the delay in milliseconds after typing before a request will be sent to find suggestions.
 Specify `0` if you wish to fetch suggestions after every keystroke.
 
+#### minLength
+Type: `Number`
+Default: `1`
+
+Sets a minimum length of characters before a request will be sent to find suggestions.
+
 #### highlightMatch
 Type: `Boolean`
 Default: `true`
@@ -305,6 +311,9 @@ It is possible to update the value of the input contained within the GeoSuggest 
 #### clear()
 It is also possible to clear the value of the input contained within the GeoSuggest component by calling the `clear` function.
 
+#### selectSuggest()
+Same effect as hitting `enter` (will geocode the text inside of the input).
+
 ### Example
 
 ```jsx
@@ -336,8 +345,9 @@ class App extends React.Component {
 
         {* Buttons to trigger exposed component functions *}
         <button onClick={()=>this._geoSuggest.focus()}>Focus</button>
-        <button onClick={()=>this._geoSuggest.update('New Zeland')}>Update</button>
+        <button onClick={()=>this._geoSuggest.update('New Zealand')}>Update</button>
         <button onClick={()=>this._geoSuggest.clear()}>Clear</button>
+        <button onClick={()=>this._geoSuggest.selectSuggest()}>Search</button>
       </div>
     )
   }

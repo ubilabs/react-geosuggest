@@ -1,3 +1,18 @@
+## 2.5.0 (2017-08-17)
+
+
+#### Features
+
+* **filters:** Add autoCapitalize and autoCorrect to filters ([ff1153c2](https://github.com/ubilabs/react-geosuggest/commit/ff1153c27b18cd7d7b551e304a26d4ac5ff0d63d))
+
+
+## 2.4.0 (2017-08-10)
+
+#### Features
+
+* add minLength prop ([b3f2d8a](https://github.com/ubilabs/react-geosuggest/commit/b3f2d8ac5cd8a8eff2ed3fe75d6dabf3ae70288b))
+
+
 ### 2.3.6 (2017-07-13)
 
 
