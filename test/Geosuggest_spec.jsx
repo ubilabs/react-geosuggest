@@ -195,21 +195,21 @@ describe('Component: Geosuggest', () => {
 
     it('should reset the active suggest when it disappears from the list', () => { // eslint-disable-line max-len
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
-      geoSuggestInput.value = 'Ne';
+      geoSuggestInput.value = 'New York';
       TestUtils.Simulate.change(geoSuggestInput);
       TestUtils.Simulate.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
         which: 40
       });
-      geoSuggestInput.value = '';
+      geoSuggestInput.value = 'London';
       TestUtils.Simulate.change(geoSuggestInput);
       TestUtils.Simulate.keyDown(geoSuggestInput, {
         key: 'Enter',
         keyCode: 13,
         which: 13
       });
-      expect(onActivateSuggest.args.length).to.be.equal(0); // eslint-disable-line max-len
+      expect(onSuggestSelect.args[0][0].placeId).to.not.equal(onActivateSuggest.args[0][0].placeId); // eslint-disable-line max-len
     });
 
     it('should deactivate the active suggest when pressing arrow down on the last suggest', () => { // eslint-disable-line max-len
@@ -298,7 +298,7 @@ describe('Component: Geosuggest', () => {
       TestUtils.Simulate.change(geoSuggestInput);
       TestUtils.Simulate.focus(geoSuggestInput);
 
-      expect(onSuggestNoResults.calledOnce).to.be.true;  // eslint-disable-line max-len, no-unused-expressions
+      expect(onSuggestNoResults.called).to.be.true;  // eslint-disable-line max-len, no-unused-expressions
     });
 
     it('should call onSuggestSelect on enter', () => {
