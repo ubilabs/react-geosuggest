@@ -5,13 +5,6 @@ import ReactDOM from 'react-dom';
 import Geosuggest from '../../src/Geosuggest';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedSuggest: null
-    };
-    this.onSuggestSelect = this.onSuggestSelect.bind(this);
-  }
   /**
    * When the input receives focus
    */
@@ -41,9 +34,6 @@ class App extends React.Component {
    */
   onSuggestSelect(suggest) {
     console.log(suggest); // eslint-disable-line
-    this.setState({
-      selectedSuggest: suggest
-    });
   }
 
   /**
@@ -76,9 +66,6 @@ class App extends React.Component {
           onSuggestNoResults={this.onSuggestNoResults}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
           radius="20" />
-        <div>
-          {this.state.selectedSuggest && this.state.selectedSuggest.label}
-        </div>
       </div>
     );
   }
