@@ -38,6 +38,7 @@ const allowedAttributes = [
   'size',
   'spellCheck',
   'tabIndex',
+  'title',
   'aria-atomic',
   'aria-busy',
   'aria-controls',
