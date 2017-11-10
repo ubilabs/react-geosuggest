@@ -1,3 +1,20 @@
+## 2.6.0 (2017-11-10)
+
+
+#### Bug Fixes
+
+* **Geosuggest:**
+  * Remove example code ([4504ef5b](https://github.com/ubilabs/react-geosuggest/commit/4504ef5bb43eeda12dfe81299dac917c91446bd5))
+  * clear suggestion on empty input ([4efe3d10](https://github.com/ubilabs/react-geosuggest/commit/4efe3d1007ae34749d84755356d5c64250f2db05))
+* **attributes:** allow title ([c8ce8d5b](https://github.com/ubilabs/react-geosuggest/commit/c8ce8d5b52604f8f76b6e0fc0c135c3bef085c7a))
+* **suggestions:** Fixed erroneous check that hid the suggestions ([5590955](https://github.com/ubilabs/react-geosuggest/commit/5590955520bd489c01683f10dce9b01a0cb0704d))
+
+
+#### Features
+
+* upgrade to react 16 ([50042542](https://github.com/ubilabs/react-geosuggest/commit/5004254209a0d28be93c3ebbd7944a99b6fb5a69))
+
+
 ## 2.5.0 (2017-08-17)
 
 
