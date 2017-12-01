@@ -69,7 +69,7 @@ Default: `''`
 
 An initial value for the input, when you want to prefill the suggest.
 
-#### type
+#### inputType
 Type: `String`
 Default: `search`
 
