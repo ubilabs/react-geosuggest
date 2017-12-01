@@ -121,7 +121,7 @@ class Input extends React.Component {
 
     return <input className={classes}
       ref={i => this.input = i}
-      type='text'
+      type={this.props.inputType}
       {...attributes}
       value={this.props.value}
       style={this.props.style}

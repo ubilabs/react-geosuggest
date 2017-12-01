@@ -69,6 +69,13 @@ Default: `''`
 
 An initial value for the input, when you want to prefill the suggest.
 
+#### type
+Type: `String`
+Default: `search`
+
+Defines the type of the input.
+The default value `search` shows a delete cross in input.
+
 #### className
 Type: `String`
 Default: `''`

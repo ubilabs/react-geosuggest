@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
  */
 export default {
   fixtures: PropTypes.array,
+  inputType: PropTypes.string,
   maxFixtures: PropTypes.number,
   initialValue: PropTypes.string,
   placeholder: PropTypes.string,

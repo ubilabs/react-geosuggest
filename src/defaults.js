@@ -4,6 +4,7 @@
  */
 export default {
   fixtures: [],
+  inputType: 'search',
   maxFixtures: 10,
   initialValue: '',
   placeholder: 'Search places',
