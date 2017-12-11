@@ -214,6 +214,12 @@ Gets triggered when a suggest got selected. Only parameter is an object with dat
 * `location` – Type `Object` – The location containing `lat` and `lng`
 * `gmaps` – Type `Object` – *Optional!* The complete response when there was a Google Maps geocode necessary (e.g. no location provided for presets). [Check the Google Maps Reference](https://developers.google.com/maps/documentation/javascript/reference#GeocoderResult) for more information on it’s structure.
 
+#### onUpdateSuggests
+Type: `Function`
+Default: `function(suggests, activeSuggest) {}`
+
+Gets triggered when the suggest list changes. Arguments include the suggest list and the current activeSuggest. Useful if you want to render the list of suggests outside of react-geosuggest.
+
 #### onActivateSuggest
 Type: `Function`
 Default: `function(suggest) {}`

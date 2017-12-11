@@ -263,6 +263,8 @@ class Geosuggest extends React.Component {
     });
 
     activeSuggest = this.updateActiveSuggest(suggests);
+
+    this.props.onUpdateSuggests(suggests, activeSuggest);
     this.setState({suggests, activeSuggest}, callback);
   }
 
