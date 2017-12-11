@@ -55,7 +55,7 @@ export default class SuggestList extends React.Component {
     return <ul className={classes} style={this.props.style}>
       {this.props.suggests.map(suggest => {
         const isActive = this.props.activeSuggest &&
-          suggest.placeId === this.props.activeSuggest.placeId,
+            suggest.placeId === this.props.activeSuggest.placeId,
           key = suggest.key || suggest.placeId;
 
         return <SuggestItem key={key}
