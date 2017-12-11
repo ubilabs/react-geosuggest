@@ -94,6 +94,9 @@ class Geosuggest extends React.Component {
    * @param {String} userInput The input value of the user
    */
   onInputChange = userInput => {
+    if (!userInput) {
+      this.props.onSuggestSelect();
+    }
     this.setState({userInput}, this.onAfterInputChange);
   };
 
@@ -101,9 +104,7 @@ class Geosuggest extends React.Component {
    * On After the input got changed
    */
   onAfterInputChange = () => {
-    if (!this.state.isSuggestsHidden) {
-      this.showSuggests();
-    }
+    this.showSuggests();
     this.props.onChange(this.state.userInput);
   };
 

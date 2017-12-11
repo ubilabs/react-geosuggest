@@ -351,7 +351,7 @@ class App extends React.Component {
 
         {* Buttons to trigger exposed component functions *}
         <button onClick={()=>this._geoSuggest.focus()}>Focus</button>
-        <button onClick={()=>this._geoSuggest.update('New Zeland')}>Update</button>
+        <button onClick={()=>this._geoSuggest.update('New Zealand')}>Update</button>
         <button onClick={()=>this._geoSuggest.clear()}>Clear</button>
         <button onClick={()=>this._geoSuggest.selectSuggest()}>Search</button>
       </div>
