@@ -2058,6 +2058,8 @@ var Geosuggest = function (_React$Component) {
       });
 
       activeSuggest = this.updateActiveSuggest(suggests);
+
+      this.props.onUpdateSuggests(suggests, activeSuggest);
       this.setState({ suggests: suggests, activeSuggest: activeSuggest }, callback);
     }
 
@@ -2303,6 +2305,7 @@ exports.default = {
   onActivateSuggest: function onActivateSuggest() {},
   onSuggestSelect: function onSuggestSelect() {},
   onSuggestNoResults: function onSuggestNoResults() {},
+  onUpdateSuggests: function onUpdateSuggests() {},
   onFocus: function onFocus() {},
   onBlur: function onBlur() {},
   onChange: function onChange() {},
@@ -2585,7 +2588,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Default values
+ * Prop Types
  */
 exports.default = {
   fixtures: _propTypes2.default.array,
@@ -2612,6 +2615,7 @@ exports.default = {
   onBlur: _propTypes2.default.func,
   onChange: _propTypes2.default.func,
   onKeyPress: _propTypes2.default.func,
+  onUpdateSuggests: _propTypes2.default.func,
   skipSuggest: _propTypes2.default.func,
   getSuggestLabel: _propTypes2.default.func,
   renderSuggestItem: _propTypes2.default.func,

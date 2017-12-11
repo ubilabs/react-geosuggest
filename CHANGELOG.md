@@ -1,3 +1,11 @@
+## 2.7.0 (2017-12-11)
+
+
+#### Features
+
+* **SuggestItem:** Adds hook to get list of suggests on when list changes ([169951d](https://github.com/ubilabs/react-geosuggest/commit/169951d13d7a4100571c1c80820e0aaa3b56444f))
+
+
 ## 2.6.0 (2017-11-10)
 
 
