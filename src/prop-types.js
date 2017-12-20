@@ -45,6 +45,7 @@ export default {
     suggestItem: PropTypes.object
   }),
   ignoreTab: PropTypes.bool,
+  ignoreEnter: PropTypes.bool,
   label: PropTypes.string,
   autoComplete: PropTypes.string,
   minLength: PropTypes.number
