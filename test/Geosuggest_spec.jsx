@@ -431,6 +431,29 @@ describe('Component: Geosuggest', () => {
       const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len, one-var
       expect(suggestItems.length).to.equal(2);
     });
+
+    describe('with excludeFixtures set to true', () => {
+      beforeEach(() => render({fixtures, excludeFixtures: true}));
+
+      it('should show the fixtures on focus when the input is empty', () => {
+        const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+        TestUtils.Simulate.focus(geoSuggestInput);
+
+        const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len, one-var
+        expect(suggestItems.length).to.equal(fixtures.length);
+      });
+
+      it('should not contain the fixtures depending on the user input', () => {
+        const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+
+        geoSuggestInput.value = 'Rio';
+        TestUtils.Simulate.change(geoSuggestInput);
+        TestUtils.Simulate.focus(geoSuggestInput);
+
+        const suggests = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len, one-var
+        expect(suggests.length).to.be.equal(0);
+      });
+    });
   });
 
   describe('with autoActivateFirstSuggest enabled', () => {
