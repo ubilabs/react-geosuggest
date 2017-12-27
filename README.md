@@ -142,6 +142,12 @@ Default: `10`
 
 Maximum number of fixtures to render.
 
+#### excludeFixtures
+Type: `Boolean`
+Default: `false`
+
+Set this to true to not to include matched fixtures along with the google results.
+
 #### googleMaps
 Type: `Object`
 Default: `google.maps`
