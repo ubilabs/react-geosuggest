@@ -431,6 +431,26 @@ describe('Component: Geosuggest', () => {
       const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(component, 'geosuggest__item'); // eslint-disable-line max-len, one-var
       expect(suggestItems.length).to.equal(2);
     });
+
+    describe('changing the input value', () => {
+      const props = {
+        skipSuggest: sinon.spy(),
+        initialValue: 'n',
+        fixtures
+      };
+
+      beforeEach(() => render(props));
+
+      it('should call `onChange` before skipSuggest', () => {
+        const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
+          component,
+          'geosuggest__input'
+        );
+        geoSuggestInput.value = '';
+        TestUtils.Simulate.change(geoSuggestInput);
+        expect(onChange.calledBefore(props.skipSuggest)).to.be.true; // eslint-disable-line no-unused-expressions, max-len
+      });
+    });
   });
 
   describe('with autoActivateFirstSuggest enabled', () => {
