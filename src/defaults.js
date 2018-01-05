@@ -35,5 +35,6 @@ export default {
     'suggestItem': {}
   },
   ignoreTab: false,
-  minLength: 1
+  minLength: 1,
+  excludeFixtures: false
 };

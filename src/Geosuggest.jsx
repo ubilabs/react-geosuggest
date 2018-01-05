@@ -232,23 +232,25 @@ class Geosuggest extends React.Component {
       fixturesSearched = 0,
       activeSuggest = null;
 
-    this.props.fixtures.forEach(suggest => {
-      if (fixturesSearched >= maxFixtures) {
-        return;
-      }
+    if (!userInput || this.props.excludeFixtures === false) {
+      this.props.fixtures.forEach(suggest => {
+        if (fixturesSearched >= maxFixtures) {
+          return;
+        }
 
-      if (!skipSuggest(suggest) && suggest.label.match(regex)) {
-        fixturesSearched++;
+        if (!skipSuggest(suggest) && suggest.label.match(regex)) {
+          fixturesSearched++;
 
-        suggest.placeId = suggest.label;
-        suggest.isFixture = true;
-        suggest.matchedSubstrings = {
-          offset: suggest.label.indexOf(userInput),
-          length: userInput.length
-        };
-        suggests.push(suggest);
-      }
-    });
+          suggest.placeId = suggest.label;
+          suggest.isFixture = true;
+          suggest.matchedSubstrings = {
+            offset: suggest.label.indexOf(userInput),
+            length: userInput.length
+          };
+          suggests.push(suggest);
+        }
+      });
+    }
 
     suggestsGoogle.forEach(suggest => {
       if (!skipSuggest(suggest)) {
