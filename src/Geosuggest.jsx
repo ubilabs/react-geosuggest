@@ -13,7 +13,7 @@ import SuggestList from './suggest-list';
 
 // Escapes special characters in user input for regex
 function escapeRegExp(str) {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+  return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 }
 
 /**
