@@ -37,6 +37,8 @@
     "copyfiles": "^1.2.0",
     "eslint": "4.14.0",
     "eslint-plugin-react": "^3.16.1",
+    "prettier": "1.9.2",
+    "eslint-plugin-prettier": "^2.4.0",
     "gh-pages": "^0.9.0",
     "jsdom": "^8.1.0",
     "light-server": "^1.0.3",
