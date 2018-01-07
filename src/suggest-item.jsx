@@ -14,9 +14,11 @@ export default class SuggestItem extends React.Component {
    * @return {JSX} Bolder text
    */
   makeBold(element, key) {
-    return <b className='geosuggest__item__matched-text' key={key}>
-      {element}
-    </b>;
+    return (
+      <b className="geosuggest__item__matched-text" key={key}>
+        {element}
+      </b>
+    );
   }
 
   /**
@@ -33,8 +35,7 @@ export default class SuggestItem extends React.Component {
     const start = suggest.matchedSubstrings.offset,
       length = suggest.matchedSubstrings.length,
       end = start + length,
-      boldPart = this.makeBold(suggest.label.substring(start, end),
-        suggest.label);
+      boldPart = this.makeBold(suggest.label.substring(start, end), suggest.label);
 
     let pre = '',
       post = '';
@@ -46,7 +47,13 @@ export default class SuggestItem extends React.Component {
       post = suggest.label.slice(end);
     }
 
-    return <span>{pre}{boldPart}{post}</span>;
+    return (
+      <span>
+        {pre}
+        {boldPart}
+        {post}
+      </span>
+    );
   }
 
   /**
@@ -67,12 +74,12 @@ export default class SuggestItem extends React.Component {
     const el = this.ref,
       parent = el.parentElement,
       overTop = el.offsetTop - parent.offsetTop < parent.scrollTop,
-      overBottom = el.offsetTop - parent.offsetTop + el.clientHeight >
-        parent.scrollTop + parent.clientHeight;
+      overBottom =
+        el.offsetTop - parent.offsetTop + el.clientHeight > parent.scrollTop + parent.clientHeight;
 
     if (overTop || overBottom) {
-      parent.scrollTop = el.offsetTop - parent.offsetTop -
-        parent.clientHeight / 2 + el.clientHeight / 2;
+      parent.scrollTop =
+        el.offsetTop - parent.offsetTop - parent.clientHeight / 2 + el.clientHeight / 2;
     }
   }
 
@@ -90,14 +97,15 @@ export default class SuggestItem extends React.Component {
    * @return {Function} The React element to render
    */
   render() {
-    const {suggest} = this.props,
+    const { suggest } = this.props,
       classes = classnames(
         'geosuggest__item',
         this.props.className,
         this.props.suggestItemClassName,
-        {'geosuggest__item--active': this.props.isActive},
-        {[this.props.activeClassname]: this.props.activeClassname ?
-          this.props.isActive : null}
+        { 'geosuggest__item--active': this.props.isActive },
+        {
+          [this.props.activeClassname]: this.props.activeClassname ? this.props.isActive : null
+        }
       );
     let content = suggest.label;
 
@@ -107,14 +115,18 @@ export default class SuggestItem extends React.Component {
       content = this.formatMatchedText(this.props.userInput, suggest);
     }
 
-    return <li className={classes}
-      ref={li => this.ref = li}
-      style={this.props.style}
-      onMouseDown={this.props.onMouseDown}
-      onMouseOut={this.props.onMouseOut}
-      onClick={this.onClick}>
-      {content}
-    </li>;
+    return (
+      <li
+        className={classes}
+        ref={li => (this.ref = li)}
+        style={this.props.style}
+        onMouseDown={this.props.onMouseDown}
+        onMouseOut={this.props.onMouseOut}
+        onClick={this.onClick}
+      >
+        {content}
+      </li>
+    );
   }
 }
 
