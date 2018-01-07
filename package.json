@@ -53,6 +53,7 @@
   "scripts": {
     "prepublish": "npm run build:module",
     "lint": "eslint ./src/*.jsx ./src/*.js ./example/src ./test/*.jsx ./test/*.js ./test/fixtures",
+    "lint-fix": "eslint --fix ./src/*.jsx ./src/*.js ./example/src ./test/*.jsx ./test/*.js ./test/fixtures",
     "pretest": "npm run lint",
     "test": "nyc --include 'src/*' -e .jsx -s npm run unit-test && npm run report",
     "start": "npm run server",
