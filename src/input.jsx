@@ -143,7 +143,7 @@ Input.defaultProps = {
   ignoreTab: false,
   onKeyDown: () => {},
   onKeyPress: () => {},
-  autoComplete: 'off'
+  autoComplete: 'nope'
 };
 
 export default Input;
