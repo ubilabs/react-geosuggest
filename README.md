@@ -291,7 +291,7 @@ Additional `className` to add when a suggestion item is active.
 
 #### autoComplete
 Type: `String`,
-Default: `off`
+Default: `nope`
 
 Autocomplete input attribute.
 
