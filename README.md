@@ -245,7 +245,7 @@ Used to generate a custom label for a suggest. Only parameter is a suggest (goog
 Type: `Function`
 Default: `null`
 
-Used to customize the inner html of SuggestItem and allows for controlling what properties of the suggest object you want to render. Also a convenient way to add additional styling to different rendered elements within SuggestItem.
+Used to customize the inner html of SuggestItem and allows for controlling what properties of the suggest object you want to render. Also a convenient way to add additional styling to different rendered elements within SuggestItem. The function is passed both the suggestion and the user input.
 
 #### skipSuggest
 Type: `Function`
