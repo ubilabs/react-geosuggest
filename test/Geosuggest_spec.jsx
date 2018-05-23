@@ -361,6 +361,21 @@ describe('Component: Geosuggest', () => {
     });
   });
 
+  describe('with enter ignored', () => {
+    beforeEach(() => render({ignoreEnter: true}));
+    
+      it('should not call onSuggestSelect on enter', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'Tab',
+        keyCode: 13,
+        which: 13
+      });
+      expect(onSuggestSelect.calledOnce).to.be.false; // eslint-disable-line no-unused-expressions, max-len
+    });
+  });
+
   describe('with fixtures', () => {
     const fixtures = [
       {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
