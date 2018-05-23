@@ -74,7 +74,7 @@ class Input extends React.Component {
         }
         break;
       case 13: // ENTER
-        if (this.props.doNotSubmitOnEnter) {
+        if (this.props.submitOnEnter) {
           event.preventDefault();
         }
 
