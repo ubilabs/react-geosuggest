@@ -363,8 +363,8 @@ describe('Component: Geosuggest', () => {
 
   describe('with enter ignored', () => {
     beforeEach(() => render({ignoreEnter: true}));
-    
-      it('should not call onSuggestSelect on enter', () => {
+
+    it('should not call onSuggestSelect on enter', () => {
       const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(component, 'geosuggest__input'); // eslint-disable-line max-len
       geoSuggestInput.value = 'New';
       TestUtils.Simulate.keyDown(geoSuggestInput, {
