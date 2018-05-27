@@ -8,14 +8,12 @@ describe('The module build', function() {
     this.timeout(60000); // eslint-disable-line no-invalid-this
 
     const rootDir = path.resolve(__dirname, '..');
-    childProcess
-      .exec('npm run build:module', {cwd: rootDir})
-      .on('exit', function(exitCode) {
-        expect(exitCode).to.equal(0);
+    childProcess.exec('npm run build:module', { cwd: rootDir }).on('exit', function(exitCode) {
+      expect(exitCode).to.equal(0);
 
-        const ctor = require(path.resolve(rootDir, localPackage.main));
-        expect(ctor.default).to.be.a('function');
-        done();
-      });
+      const ctor = require(path.resolve(rootDir, localPackage.main));
+      expect(ctor.default).to.be.a('function');
+      done();
+    });
   });
 });

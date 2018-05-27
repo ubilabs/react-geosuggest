@@ -36,6 +36,8 @@ Our communications here on GitHub follow certain guidelines. Please observe the 
 
    - run `npm run lint` to check code style
 
+   - run `npm run lint-fix` to format the code and fix most of the linting errors. Run this before making a commit.
+
 - CSS
 
     - CSS code follows [BEM](http://getbem.com/naming/) style

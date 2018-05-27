@@ -53,7 +53,8 @@ class Input extends React.Component {
    * When a key gets pressed in the input
    * @param  {Event} event The keydown event
    */
-  onInputKeyDown = event => { // eslint-disable-line complexity
+  onInputKeyDown = event => {
+    // eslint-disable-line complexity
     // Call props.onKeyDown if defined
     // Gives the developer a little bit more control if needed
     if (this.props.onKeyDown) {
@@ -114,22 +115,23 @@ class Input extends React.Component {
    */
   render() {
     const attributes = filterInputAttributes(this.props),
-      classes = classnames(
-        'geosuggest__input',
-        this.props.className
-      );
+      classes = classnames('geosuggest__input', this.props.className);
 
-    return <input className={classes}
-      ref={i => this.input = i}
-      type='text'
-      {...attributes}
-      value={this.props.value}
-      style={this.props.style}
-      onKeyDown={this.onInputKeyDown}
-      onChange={this.onChange}
-      onKeyPress={this.onKeyPress}
-      onFocus={this.onFocus}
-      onBlur={this.onBlur} />;
+    return (
+      <input
+        className={classes}
+        ref={i => (this.input = i)}
+        type="text"
+        {...attributes}
+        value={this.props.value}
+        style={this.props.style}
+        onKeyDown={this.onInputKeyDown}
+        onChange={this.onChange}
+        onKeyPress={this.onKeyPress}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+      />
+    );
   }
 }
 

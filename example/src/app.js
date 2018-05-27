@@ -50,9 +50,9 @@ class App extends React.Component {
    */
   render() {
     var fixtures = [
-      {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
-      {label: 'Rio', location: {lat: -22.066452, lng: -42.9232368}},
-      {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
+      { label: 'New York', location: { lat: 40.7033127, lng: -73.979681 } },
+      { label: 'Rio', location: { lat: -22.066452, lng: -42.9232368 } },
+      { label: 'Tokyo', location: { lat: 35.673343, lng: 139.710388 } }
     ];
 
     return ( // eslint-disable-line
@@ -65,7 +65,8 @@ class App extends React.Component {
           onSuggestSelect={this.onSuggestSelect}
           onSuggestNoResults={this.onSuggestNoResults}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
-          radius="20" />
+          radius="20"
+        />
       </div>
     );
   }

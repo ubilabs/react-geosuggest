@@ -3,8 +3,8 @@ import predictions from './fixtures/predictions';
 export default function googleStub() {
   const predictionStub = (options, callback) => {
       const suggestsGoogle = predictions().filter(prediction =>
-        prediction.terms.find(term => term.value.startsWith(options.input)
-      ));
+        prediction.terms.find(term => term.value.startsWith(options.input))
+      );
 
       callback(suggestsGoogle.length > 0 ? suggestsGoogle : null);
     },
@@ -14,14 +14,19 @@ export default function googleStub() {
         return;
       }
 
-      callback([{
-        geometry: {
-          location: {
-            lat: () => 0,
-            lng: () => 0
+      callback(
+        [
+          {
+            geometry: {
+              location: {
+                lat: () => 0,
+                lng: () => 0
+              }
+            }
           }
-        }
-      }], 'OK');
+        ],
+        'OK'
+      );
     },
     google = {
       maps: {
@@ -39,7 +44,7 @@ export default function googleStub() {
           };
         },
         GeocoderStatus: {
-          'OK': 'OK'
+          OK: 'OK'
         }
       }
     };
