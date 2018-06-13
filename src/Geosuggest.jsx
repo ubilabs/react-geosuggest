@@ -194,10 +194,8 @@ class Geosuggest extends React.Component {
       }
     });
 
-    if (this.props.country) {
-      options.componentRestrictions = {
-        country: this.props.country
-      };
+    if (this.props.componentRestrictions) {
+      options.componentRestrictions = this.props.componentRestrictions;
     }
 
     this.setState({isLoading: true}, () => {
@@ -386,8 +384,7 @@ class Geosuggest extends React.Component {
         address: suggest.label,
         location: this.props.location,
         bounds: this.props.bounds,
-        componentRestrictions: this.props.country ?
-        {country: this.props.country} : null
+        componentRestrictions: this.props.componentRestrictions || null
       };
     }
     this.geocoder.geocode(
