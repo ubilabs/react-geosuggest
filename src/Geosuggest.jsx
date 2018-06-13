@@ -200,6 +200,10 @@ class Geosuggest extends React.Component {
       };
     }
 
+    if (this.props.componentRestrictions) {
+      options.componentRestrictions = this.props.componentRestrictions;
+    }
+
     this.setState({isLoading: true}, () => {
       this.autocompleteService.getPlacePredictions(
         options,

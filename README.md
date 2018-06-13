@@ -122,6 +122,12 @@ Default: `null`
 
 Restricts predictions to the specified country (ISO 3166-1 Alpha-2 country code, case insensitive). E.g., us, br, au. You can provide a single one, or an array of up to 5 country code strings.
 
+#### componentRestrictions
+Type: `JSON`
+Default: `null`
+
+Restricts predictions to specified component restrictions. E.g. `{country: 'UK', postcode: 'W1F 0DA'}`. Consult the google docs for [up to date component restrictions](https://developers.google.com/maps/documentation/javascript/examples/geocoding-component-restriction)
+
 #### types
 Type: `Array`
 Default: `null`
