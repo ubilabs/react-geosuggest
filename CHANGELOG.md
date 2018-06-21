@@ -1,3 +1,17 @@
+## 2.8.0 (2018-06-21)
+
+
+#### Bug Fixes
+
+* **autoComplete prop default value:** Change default value from off (which Chrome and other modern browsers ignore) to ([462bd357](https://github.com/ubilabs/react-geosuggest/commit/462bd357599828a6b7041ca6efb9e68f251d3a3c))
+
+
+#### Features
+
+* **ignoreEnter:** add new prop to disable enter key.. Rename current internal varaible named "igno ([225eede4](https://github.com/ubilabs/react-geosuggest/commit/225eede4abab4226e6685c2c7aa7ba2de052e71b), closes [#345](https://github.com/ubilabs/react-geosuggest/issues/345))
+* Passes userInput to the renderSuggest function ([f1eb98f](https://github.com/ubilabs/react-geosuggest/pull/381/commits/f1eb98ffaafacf512af010fff70661091b169273))
+
+
 ## 2.7.0 (2017-12-11)
 
 
