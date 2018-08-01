@@ -1,7 +1,15 @@
+.github
+.nyc_output
+coverage
 example
 src
+test
 .editorconfig
+.eslintrc
 .gitignore
 .travis.yml
+.prettierrc.yml
+.prettierignore
 bower.json
+CONTRIBUTING.md
 CONVENTIONS.md

@@ -36,10 +36,22 @@ class Geosuggest extends React.Component {
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onAfterInputChange = this.onAfterInputChange.bind(this);
+    this.onInputFocus = this.onInputFocus.bind(this);
+    this.onInputBlur = this.onInputBlur.bind(this);
+    this.onNext = this.onNext.bind(this);
+    this.onPrev = this.onPrev.bind(this);
+    this.onSelect = this.onSelect.bind(this);
+    this.onSuggestMouseDown = this.onSuggestMouseDown.bind(this);
+    this.onSuggestMouseOut = this.onSuggestMouseOut.bind(this);
+    this.onSuggestNoResults = this.onSuggestNoResults.bind(this);
+    this.hideSuggests = this.hideSuggests.bind(this);
+    this.selectSuggest = this.selectSuggest.bind(this);
 
     if (props.queryDelay) {
-      this.onAfterInputChange =
-        debounce(this.onAfterInputChange, props.queryDelay);
+      this.onAfterInputChange = debounce(
+        this.onAfterInputChange,
+        props.queryDelay
+      );
     }
   }
 
@@ -63,7 +75,8 @@ class Geosuggest extends React.Component {
       return;
     }
 
-    var googleMaps = this.props.googleMaps ||
+    var googleMaps =
+      this.props.googleMaps ||
       (window.google && // eslint-disable-line no-extra-parens
         window.google.maps) ||
       this.googleMaps;
@@ -71,8 +84,10 @@ class Geosuggest extends React.Component {
     /* istanbul ignore next */
     if (!googleMaps) {
       if (console) {
-        console.error(// eslint-disable-line no-console
-          'Google map api was not found in the page.');
+        console.error(
+          // eslint-disable-line no-console
+          'Google map api was not found in the page.'
+        );
       }
       return;
     }
@@ -93,51 +108,61 @@ class Geosuggest extends React.Component {
    * When the input changed
    * @param {String} userInput The input value of the user
    */
-  onInputChange = userInput => {
+  onInputChange(userInput) {
     if (!userInput) {
       this.props.onSuggestSelect();
     }
     this.setState({userInput}, this.onAfterInputChange);
-  };
+  }
 
   /**
    * On After the input got changed
    */
-  onAfterInputChange = () => {
+  onAfterInputChange() {
     this.showSuggests();
     this.props.onChange(this.state.userInput);
-  };
+  }
 
   /**
    * When the input gets focused
    */
-  onInputFocus = () => {
+  onInputFocus() {
     this.props.onFocus();
     this.showSuggests();
-  };
+  }
 
   /**
    * When the input gets blurred
    */
-  onInputBlur = () => {
+  onInputBlur() {
     if (!this.state.ignoreBlur) {
       this.hideSuggests();
     }
-  };
+  }
 
-  onNext = () => this.activateSuggest('next');
+  onNext() {
+    this.activateSuggest('next');
+  }
 
-  onPrev = () => this.activateSuggest('prev');
+  onPrev() {
+    this.activateSuggest('prev');
+  }
 
-  onSelect = () => this.selectSuggest(this.state.activeSuggest);
+  onSelect() {
+    this.selectSuggest(this.state.activeSuggest);
+  }
 
-  onSuggestMouseDown = () => this.setState({ignoreBlur: true});
+  onSuggestMouseDown() {
+    this.setState({ignoreBlur: true});
+  }
 
-  onSuggestMouseOut = () => this.setState({ignoreBlur: false});
+  onSuggestMouseOut() {
+    this.setState({ignoreBlur: false});
+  }
 
-  onSuggestNoResults = () => {
+  onSuggestNoResults() {
     this.props.onSuggestNoResults(this.state.userInput);
-  };
+  }
 
   /**
    * Focus the input
@@ -201,20 +226,20 @@ class Geosuggest extends React.Component {
     }
 
     this.setState({isLoading: true}, () => {
-      this.autocompleteService.getPlacePredictions(
-        options,
-        suggestsGoogle => {
-          this.setState({isLoading: false});
-          this.updateSuggests(suggestsGoogle || [], // can be null
-            () => {
-              if (this.props.autoActivateFirstSuggest &&
-                !this.state.activeSuggest
-              ) {
-                this.activateSuggest('next');
-              }
-            });
-        }
-      );
+      this.autocompleteService.getPlacePredictions(options, suggestsGoogle => {
+        this.setState({isLoading: false});
+        this.updateSuggests(
+          suggestsGoogle || [], // can be null
+          () => {
+            if (
+              this.props.autoActivateFirstSuggest &&
+              !this.state.activeSuggest
+            ) {
+              this.activateSuggest('next');
+            }
+          }
+        );
+      });
     });
   }
 
@@ -277,9 +302,10 @@ class Geosuggest extends React.Component {
     let activeSuggest = this.state.activeSuggest;
 
     if (activeSuggest) {
-      const newSuggest = suggests.filter(listedSuggest =>
-        activeSuggest.placeId === listedSuggest.placeId &&
-        activeSuggest.isFixture === listedSuggest.isFixture
+      const newSuggest = suggests.filter(
+        listedSuggest =>
+          activeSuggest.placeId === listedSuggest.placeId &&
+          activeSuggest.isFixture === listedSuggest.isFixture
       )[0];
 
       activeSuggest = newSuggest || null;
@@ -299,7 +325,7 @@ class Geosuggest extends React.Component {
   /**
    * Hide the suggestions
    */
-  hideSuggests = () => {
+  hideSuggests() {
     this.props.onBlur(this.state.userInput);
     this.timer = setTimeout(() => {
       this.setState({
@@ -307,13 +333,14 @@ class Geosuggest extends React.Component {
         activeSuggest: null
       });
     }, 100);
-  };
+  }
 
   /**
    * Activate a new suggest
    * @param {String} direction The direction in which to activate new suggest
    */
-  activateSuggest(direction) { // eslint-disable-line complexity
+  activateSuggest(direction) {
+    // eslint-disable-line complexity
     if (this.state.isSuggestsHidden) {
       this.showSuggests();
       return;
@@ -348,7 +375,7 @@ class Geosuggest extends React.Component {
    * When an item got selected
    * @param {GeosuggestItem} suggest The selected suggest item
    */
-  selectSuggest = suggest => {
+  selectSuggest(suggest) {
     if (!suggest) {
       suggest = {
         label: this.state.userInput
@@ -357,9 +384,8 @@ class Geosuggest extends React.Component {
 
     this.setState({
       isSuggestsHidden: true,
-      userInput: typeof suggest.label !== 'object' ?
-        suggest.label :
-        suggest.description
+      userInput:
+        typeof suggest.label !== 'object' ? suggest.label : suggest.description
     });
 
     if (suggest.location) {
@@ -369,7 +395,7 @@ class Geosuggest extends React.Component {
     }
 
     this.geocodeSuggest(suggest);
-  };
+  }
 
   /**
    * Geocode a suggest
@@ -386,26 +412,24 @@ class Geosuggest extends React.Component {
         address: suggest.label,
         location: this.props.location,
         bounds: this.props.bounds,
-        componentRestrictions: this.props.country ?
-        {country: this.props.country} : null
+        componentRestrictions: this.props.country
+          ? {country: this.props.country}
+          : null
       };
     }
-    this.geocoder.geocode(
-      options,
-      (results, status) => {
-        if (status === this.googleMaps.GeocoderStatus.OK) {
-          var gmaps = results[0],
-            location = gmaps.geometry.location;
+    this.geocoder.geocode(options, (results, status) => {
+      if (status === this.googleMaps.GeocoderStatus.OK) {
+        var gmaps = results[0],
+          location = gmaps.geometry.location;
 
-          suggest.gmaps = gmaps;
-          suggest.location = {
-            lat: location.lat(),
-            lng: location.lng()
-          };
-        }
-        this.props.onSuggestSelect(suggest);
+        suggest.gmaps = gmaps;
+        suggest.location = {
+          lat: location.lat(),
+          lng: location.lng()
+        };
       }
-    );
+      this.props.onSuggestSelect(suggest);
+    });
   }
 
   /**
@@ -414,58 +438,66 @@ class Geosuggest extends React.Component {
    */
   render() {
     const attributes = filterInputAttributes(this.props),
-      classes = classnames(
-        'geosuggest',
-        this.props.className,
-        {'geosuggest--loading': this.state.isLoading}
-      ),
+      classes = classnames('geosuggest', this.props.className, {
+        'geosuggest--loading': this.state.isLoading
+      }),
       shouldRenderLabel = this.props.label && attributes.id,
-      input = <Input className={this.props.inputClassName}
-        ref={i => this.input = i}
-        value={this.state.userInput}
-        doNotSubmitOnEnter={!this.state.isSuggestsHidden}
-        ignoreTab={this.props.ignoreTab}
-        ignoreEnter={this.props.ignoreEnter}
-        style={this.props.style.input}
-        onChange={this.onInputChange}
-        onFocus={this.onInputFocus}
-        onBlur={this.onInputBlur}
-        onKeyDown={this.props.onKeyDown}
-        onKeyPress={this.props.onKeyPress}
-        onNext={this.onNext}
-        onPrev={this.onPrev}
-        onSelect={this.onSelect}
-        onEscape={this.hideSuggests} {...attributes} />,
-      suggestionsList = <SuggestList isHidden={this.state.isSuggestsHidden}
-        style={this.props.style.suggests}
-        suggestItemStyle={this.props.style.suggestItem}
-        userInput={this.state.userInput}
-        isHighlightMatch={this.props.highlightMatch}
-        suggestsClassName={this.props.suggestsClassName}
-        suggestItemClassName={this.props.suggestItemClassName}
-        suggests={this.state.suggests}
-        hiddenClassName={this.props.suggestsHiddenClassName}
-        suggestItemActiveClassName={this.props.suggestItemActiveClassName}
-        activeSuggest={this.state.activeSuggest}
-        onSuggestNoResults={this.onSuggestNoResults}
-        onSuggestMouseDown={this.onSuggestMouseDown}
-        onSuggestMouseOut={this.onSuggestMouseOut}
-        onSuggestSelect={this.selectSuggest}
-        renderSuggestItem={this.props.renderSuggestItem}
-        minLength={this.props.minLength}/>;
+      input = (
+        <Input
+          className={this.props.inputClassName}
+          ref={i => (this.input = i)}
+          value={this.state.userInput}
+          doNotSubmitOnEnter={!this.state.isSuggestsHidden}
+          ignoreTab={this.props.ignoreTab}
+          ignoreEnter={this.props.ignoreEnter}
+          style={this.props.style.input}
+          onChange={this.onInputChange}
+          onFocus={this.onInputFocus}
+          onBlur={this.onInputBlur}
+          onKeyDown={this.props.onKeyDown}
+          onKeyPress={this.props.onKeyPress}
+          onNext={this.onNext}
+          onPrev={this.onPrev}
+          onSelect={this.onSelect}
+          onEscape={this.hideSuggests}
+          {...attributes}
+        />
+      ),
+      suggestionsList = (
+        <SuggestList
+          isHidden={this.state.isSuggestsHidden}
+          style={this.props.style.suggests}
+          suggestItemStyle={this.props.style.suggestItem}
+          userInput={this.state.userInput}
+          isHighlightMatch={this.props.highlightMatch}
+          suggestsClassName={this.props.suggestsClassName}
+          suggestItemClassName={this.props.suggestItemClassName}
+          suggests={this.state.suggests}
+          hiddenClassName={this.props.suggestsHiddenClassName}
+          suggestItemActiveClassName={this.props.suggestItemActiveClassName}
+          activeSuggest={this.state.activeSuggest}
+          onSuggestNoResults={this.onSuggestNoResults}
+          onSuggestMouseDown={this.onSuggestMouseDown}
+          onSuggestMouseOut={this.onSuggestMouseOut}
+          onSuggestSelect={this.selectSuggest}
+          renderSuggestItem={this.props.renderSuggestItem}
+          minLength={this.props.minLength}
+        />
+      );
 
-    return <div className={classes}>
-      <div className="geosuggest__input-wrapper">
-        {shouldRenderLabel &&
-          <label className="geosuggest__label"
-            htmlFor={attributes.id}>{this.props.label}</label>
-        }
-        {input}
+    return (
+      <div className={classes}>
+        <div className="geosuggest__input-wrapper">
+          {shouldRenderLabel && (
+            <label className="geosuggest__label" htmlFor={attributes.id}>
+              {this.props.label}
+            </label>
+          )}
+          {input}
+        </div>
+        <div className="geosuggest__suggests-wrapper">{suggestionsList}</div>
       </div>
-      <div className="geosuggest__suggests-wrapper">
-        {suggestionsList}
-      </div>
-    </div>;
+    );
   }
 }
 

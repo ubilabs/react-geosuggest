@@ -16,15 +16,9 @@ export default {
   suggestItemClassName: PropTypes.string,
   suggestItemActiveClassName: PropTypes.string,
   location: PropTypes.object,
-  radius: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]),
+  radius: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   bounds: PropTypes.object,
-  country: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array
-  ]),
+  country: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   types: PropTypes.array,
   queryDelay: PropTypes.number,
   googleMaps: PropTypes.object,

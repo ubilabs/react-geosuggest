@@ -1,9 +1,10 @@
 const jsdom = require('jsdom'),
-  doc = jsdom.jsdom('<!doctype html><html><body></body></html>'),
-  win = doc.defaultView;
+  dom = new jsdom.JSDOM('<!doctype html><html><body></body></html>', {
+    url: 'https://example.org/'
+  });
 
-global.document = doc;
-global.window = win;
+global.window = dom.window;
+global.document = dom.window.document;
 
 Object.keys(window).forEach(key => {
   if (!(key in global)) {
