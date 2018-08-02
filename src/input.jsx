@@ -11,6 +11,17 @@ import filterInputAttributes from './filter-input-attributes';
  */
 class Input extends React.Component {
   /**
+   * The constructor. Sets the initial state.
+   * @param  {Object} props The properties object.
+   */
+  constructor(props) {
+    super(props);
+
+    this.onChange = this.onChange.bind(this);
+    this.onInputKeyDown = this.onInputKeyDown.bind(this);
+  }
+
+  /**
    * Whether or not the component should update
    * @param {Object} nextProps The new properties
    * @param {Object} nextState The new state
@@ -23,37 +34,16 @@ class Input extends React.Component {
   /**
    * When the input got changed
    */
-  onChange = () => {
+  onChange() {
     this.props.onChange(this.input.value);
-  };
-
-  /**
-   * When the input got focused
-   */
-  onFocus = () => {
-    this.props.onFocus();
-  };
-
-  /**
-   * When the input loses focus
-   */
-  onBlur = () => {
-    this.props.onBlur();
-  };
-
-  /**
-   * When a key gets pressed in the input
-   * @param  {Event} event The keypress event
-   */
-  onKeyPress = event => {
-    this.props.onKeyPress(event);
-  };
+  }
 
   /**
    * When a key gets pressed in the input
    * @param  {Event} event The keydown event
    */
-  onInputKeyDown = event => { // eslint-disable-line complexity
+  onInputKeyDown(event) {
+    // eslint-disable-line complexity
     // Call props.onKeyDown if defined
     // Gives the developer a little bit more control if needed
     if (this.props.onKeyDown) {
@@ -94,7 +84,7 @@ class Input extends React.Component {
       default:
         break;
     }
-  };
+  }
 
   /**
    * Focus the input
@@ -116,22 +106,23 @@ class Input extends React.Component {
    */
   render() {
     const attributes = filterInputAttributes(this.props),
-      classes = classnames(
-        'geosuggest__input',
-        this.props.className
-      );
+      classes = classnames('geosuggest__input', this.props.className);
 
-    return <input className={classes}
-      ref={i => this.input = i}
-      type='text'
-      {...attributes}
-      value={this.props.value}
-      style={this.props.style}
-      onKeyDown={this.onInputKeyDown}
-      onChange={this.onChange}
-      onKeyPress={this.onKeyPress}
-      onFocus={this.onFocus}
-      onBlur={this.onBlur} />;
+    return (
+      <input
+        className={classes}
+        ref={i => (this.input = i)}
+        type="text"
+        {...attributes}
+        value={this.props.value}
+        style={this.props.style}
+        onKeyDown={this.onInputKeyDown}
+        onChange={this.onChange}
+        onKeyPress={this.props.onKeyPress}
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
+      />
+    );
   }
 }
 

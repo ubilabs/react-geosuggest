@@ -30,9 +30,9 @@ export default {
   renderSuggestItem: null,
   autoActivateFirstSuggest: false,
   style: {
-    'input': {},
-    'suggests': {},
-    'suggestItem': {}
+    input: {},
+    suggests: {},
+    suggestItem: {}
   },
   ignoreTab: false,
   ignoreEnter: false,

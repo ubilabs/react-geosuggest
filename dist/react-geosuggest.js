@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Geosuggest = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Geosuggest = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /*!
   Copyright (c) 2017 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -670,6 +670,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -1636,84 +1640,6 @@ var Geosuggest = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Geosuggest.__proto__ || Object.getPrototypeOf(Geosuggest)).call(this, props));
 
-    _this.onInputChange = function (userInput) {
-      if (!userInput) {
-        _this.props.onSuggestSelect();
-      }
-      _this.setState({ userInput: userInput }, _this.onAfterInputChange);
-    };
-
-    _this.onAfterInputChange = function () {
-      _this.showSuggests();
-      _this.props.onChange(_this.state.userInput);
-    };
-
-    _this.onInputFocus = function () {
-      _this.props.onFocus();
-      _this.showSuggests();
-    };
-
-    _this.onInputBlur = function () {
-      if (!_this.state.ignoreBlur) {
-        _this.hideSuggests();
-      }
-    };
-
-    _this.onNext = function () {
-      return _this.activateSuggest('next');
-    };
-
-    _this.onPrev = function () {
-      return _this.activateSuggest('prev');
-    };
-
-    _this.onSelect = function () {
-      return _this.selectSuggest(_this.state.activeSuggest);
-    };
-
-    _this.onSuggestMouseDown = function () {
-      return _this.setState({ ignoreBlur: true });
-    };
-
-    _this.onSuggestMouseOut = function () {
-      return _this.setState({ ignoreBlur: false });
-    };
-
-    _this.onSuggestNoResults = function () {
-      _this.props.onSuggestNoResults(_this.state.userInput);
-    };
-
-    _this.hideSuggests = function () {
-      _this.props.onBlur(_this.state.userInput);
-      _this.timer = setTimeout(function () {
-        _this.setState({
-          isSuggestsHidden: true,
-          activeSuggest: null
-        });
-      }, 100);
-    };
-
-    _this.selectSuggest = function (suggest) {
-      if (!suggest) {
-        suggest = {
-          label: _this.state.userInput
-        };
-      }
-
-      _this.setState({
-        isSuggestsHidden: true,
-        userInput: _typeof(suggest.label) !== 'object' ? suggest.label : suggest.description
-      });
-
-      if (suggest.location) {
-        _this.setState({ ignoreBlur: false });
-        _this.props.onSuggestSelect(suggest);
-        return;
-      }
-
-      _this.geocodeSuggest(suggest);
-    };
-
     _this.state = {
       isSuggestsHidden: true,
       isLoading: false,
@@ -1724,6 +1650,16 @@ var Geosuggest = function (_React$Component) {
 
     _this.onInputChange = _this.onInputChange.bind(_this);
     _this.onAfterInputChange = _this.onAfterInputChange.bind(_this);
+    _this.onInputFocus = _this.onInputFocus.bind(_this);
+    _this.onInputBlur = _this.onInputBlur.bind(_this);
+    _this.onNext = _this.onNext.bind(_this);
+    _this.onPrev = _this.onPrev.bind(_this);
+    _this.onSelect = _this.onSelect.bind(_this);
+    _this.onSuggestMouseDown = _this.onSuggestMouseDown.bind(_this);
+    _this.onSuggestMouseOut = _this.onSuggestMouseOut.bind(_this);
+    _this.onSuggestNoResults = _this.onSuggestNoResults.bind(_this);
+    _this.hideSuggests = _this.hideSuggests.bind(_this);
+    _this.selectSuggest = _this.selectSuggest.bind(_this);
 
     if (props.queryDelay) {
       _this.onAfterInputChange = (0, _lodash2.default)(_this.onAfterInputChange, props.queryDelay);
@@ -1764,7 +1700,8 @@ var Geosuggest = function (_React$Component) {
       /* istanbul ignore next */
       if (!googleMaps) {
         if (console) {
-          console.error( // eslint-disable-line no-console
+          console.error(
+          // eslint-disable-line no-console
           'Google map api was not found in the page.');
         }
         return;
@@ -1790,28 +1727,85 @@ var Geosuggest = function (_React$Component) {
      * @param {String} userInput The input value of the user
      */
 
+  }, {
+    key: 'onInputChange',
+    value: function onInputChange(userInput) {
+      if (!userInput) {
+        this.props.onSuggestSelect();
+      }
+      this.setState({ userInput: userInput }, this.onAfterInputChange);
+    }
 
     /**
      * On After the input got changed
      */
 
+  }, {
+    key: 'onAfterInputChange',
+    value: function onAfterInputChange() {
+      this.showSuggests();
+      this.props.onChange(this.state.userInput);
+    }
 
     /**
      * When the input gets focused
      */
 
+  }, {
+    key: 'onInputFocus',
+    value: function onInputFocus() {
+      this.props.onFocus();
+      this.showSuggests();
+    }
 
     /**
      * When the input gets blurred
      */
 
   }, {
-    key: 'focus',
-
+    key: 'onInputBlur',
+    value: function onInputBlur() {
+      if (!this.state.ignoreBlur) {
+        this.hideSuggests();
+      }
+    }
+  }, {
+    key: 'onNext',
+    value: function onNext() {
+      this.activateSuggest('next');
+    }
+  }, {
+    key: 'onPrev',
+    value: function onPrev() {
+      this.activateSuggest('prev');
+    }
+  }, {
+    key: 'onSelect',
+    value: function onSelect() {
+      this.selectSuggest(this.state.activeSuggest);
+    }
+  }, {
+    key: 'onSuggestMouseDown',
+    value: function onSuggestMouseDown() {
+      this.setState({ ignoreBlur: true });
+    }
+  }, {
+    key: 'onSuggestMouseOut',
+    value: function onSuggestMouseOut() {
+      this.setState({ ignoreBlur: false });
+    }
+  }, {
+    key: 'onSuggestNoResults',
+    value: function onSuggestNoResults() {
+      this.props.onSuggestNoResults(this.state.userInput);
+    }
 
     /**
      * Focus the input
      */
+
+  }, {
+    key: 'focus',
     value: function focus() {
       this.input.focus();
     }
@@ -1995,13 +1989,26 @@ var Geosuggest = function (_React$Component) {
      */
 
   }, {
-    key: 'activateSuggest',
+    key: 'hideSuggests',
+    value: function hideSuggests() {
+      var _this4 = this;
 
+      this.props.onBlur(this.state.userInput);
+      this.timer = setTimeout(function () {
+        _this4.setState({
+          isSuggestsHidden: true,
+          activeSuggest: null
+        });
+      }, 100);
+    }
 
     /**
      * Activate a new suggest
      * @param {String} direction The direction in which to activate new suggest
      */
+
+  }, {
+    key: 'activateSuggest',
     value: function activateSuggest(direction) {
       // eslint-disable-line complexity
       if (this.state.isSuggestsHidden) {
@@ -2040,15 +2047,37 @@ var Geosuggest = function (_React$Component) {
      */
 
   }, {
-    key: 'geocodeSuggest',
+    key: 'selectSuggest',
+    value: function selectSuggest(suggest) {
+      if (!suggest) {
+        suggest = {
+          label: this.state.userInput
+        };
+      }
 
+      this.setState({
+        isSuggestsHidden: true,
+        userInput: _typeof(suggest.label) !== 'object' ? suggest.label : suggest.description
+      });
+
+      if (suggest.location) {
+        this.setState({ ignoreBlur: false });
+        this.props.onSuggestSelect(suggest);
+        return;
+      }
+
+      this.geocodeSuggest(suggest);
+    }
 
     /**
      * Geocode a suggest
      * @param  {Object} suggest The suggest
      */
+
+  }, {
+    key: 'geocodeSuggest',
     value: function geocodeSuggest(suggest) {
-      var _this4 = this;
+      var _this5 = this;
 
       var options = null;
       if (suggest.placeId && !suggest.isFixture) {
@@ -2064,7 +2093,7 @@ var Geosuggest = function (_React$Component) {
         };
       }
       this.geocoder.geocode(options, function (results, status) {
-        if (status === _this4.googleMaps.GeocoderStatus.OK) {
+        if (status === _this5.googleMaps.GeocoderStatus.OK) {
           var gmaps = results[0],
               location = gmaps.geometry.location;
 
@@ -2074,7 +2103,7 @@ var Geosuggest = function (_React$Component) {
             lng: location.lng()
           };
         }
-        _this4.props.onSuggestSelect(suggest);
+        _this5.props.onSuggestSelect(suggest);
       });
     }
 
@@ -2086,14 +2115,17 @@ var Geosuggest = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       var attributes = (0, _filterInputAttributes2.default)(this.props),
-          classes = (0, _classnames2.default)('geosuggest', this.props.className, { 'geosuggest--loading': this.state.isLoading }),
+          classes = (0, _classnames2.default)('geosuggest', this.props.className, {
+        'geosuggest--loading': this.state.isLoading
+      }),
           shouldRenderLabel = this.props.label && attributes.id,
-          input = _react2.default.createElement(_input2.default, _extends({ className: this.props.inputClassName,
+          input = _react2.default.createElement(_input2.default, _extends({
+        className: this.props.inputClassName,
         ref: function ref(i) {
-          return _this5.input = i;
+          return _this6.input = i;
         },
         value: this.state.userInput,
         doNotSubmitOnEnter: !this.state.isSuggestsHidden,
@@ -2108,8 +2140,10 @@ var Geosuggest = function (_React$Component) {
         onNext: this.onNext,
         onPrev: this.onPrev,
         onSelect: this.onSelect,
-        onEscape: this.hideSuggests }, attributes)),
-          suggestionsList = _react2.default.createElement(_suggestList2.default, { isHidden: this.state.isSuggestsHidden,
+        onEscape: this.hideSuggests
+      }, attributes)),
+          suggestionsList = _react2.default.createElement(_suggestList2.default, {
+        isHidden: this.state.isSuggestsHidden,
         style: this.props.style.suggests,
         suggestItemStyle: this.props.style.suggestItem,
         userInput: this.state.userInput,
@@ -2125,7 +2159,8 @@ var Geosuggest = function (_React$Component) {
         onSuggestMouseOut: this.onSuggestMouseOut,
         onSuggestSelect: this.selectSuggest,
         renderSuggestItem: this.props.renderSuggestItem,
-        minLength: this.props.minLength });
+        minLength: this.props.minLength
+      });
 
       return _react2.default.createElement(
         'div',
@@ -2135,8 +2170,7 @@ var Geosuggest = function (_React$Component) {
           { className: 'geosuggest__input-wrapper' },
           shouldRenderLabel && _react2.default.createElement(
             'label',
-            { className: 'geosuggest__label',
-              htmlFor: attributes.id },
+            { className: 'geosuggest__label', htmlFor: attributes.id },
             this.props.label
           ),
           input
@@ -2209,9 +2243,9 @@ exports.default = {
   renderSuggestItem: null,
   autoActivateFirstSuggest: false,
   style: {
-    'input': {},
-    'suggests': {},
-    'suggestItem': {}
+    input: {},
+    suggests: {},
+    suggestItem: {}
   },
   ignoreTab: false,
   ignoreEnter: false,
@@ -2292,84 +2326,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Input = function (_React$Component) {
   _inherits(Input, _React$Component);
 
-  function Input() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
+  /**
+   * The constructor. Sets the initial state.
+   * @param  {Object} props The properties object.
+   */
+  function Input(props) {
     _classCallCheck(this, Input);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Input.__proto__ || Object.getPrototypeOf(Input)).call.apply(_ref, [this].concat(args))), _this), _this.onChange = function () {
-      _this.props.onChange(_this.input.value);
-    }, _this.onFocus = function () {
-      _this.props.onFocus();
-    }, _this.onBlur = function () {
-      _this.props.onBlur();
-    }, _this.onKeyPress = function (event) {
-      _this.props.onKeyPress(event);
-    }, _this.onInputKeyDown = function (event) {
-      // eslint-disable-line complexity
-      // Call props.onKeyDown if defined
-      // Gives the developer a little bit more control if needed
-      if (_this.props.onKeyDown) {
-        _this.props.onKeyDown(event);
-      }
-
-      switch (event.which) {
-        case 40:
-          // DOWN
-          if (!event.shiftKey) {
-            event.preventDefault();
-            _this.props.onNext();
-          }
-          break;
-        case 38:
-          // UP
-          if (!event.shiftKey) {
-            event.preventDefault();
-            _this.props.onPrev();
-          }
-          break;
-        case 13:
-          // ENTER
-          if (_this.props.doNotSubmitOnEnter) {
-            event.preventDefault();
-          }
-
-          if (!_this.props.ignoreEnter) {
-            _this.props.onSelect();
-          }
-          break;
-        case 9:
-          // TAB
-          if (!_this.props.ignoreTab) {
-            _this.props.onSelect();
-          }
-          break;
-        case 27:
-          // ESC
-          _this.props.onEscape();
-          break;
-        /* istanbul ignore next */
-        default:
-          break;
-      }
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    _this.onChange = _this.onChange.bind(_this);
+    _this.onInputKeyDown = _this.onInputKeyDown.bind(_this);
+    return _this;
   }
+
+  /**
+   * Whether or not the component should update
+   * @param {Object} nextProps The new properties
+   * @param {Object} nextState The new state
+   * @return {Boolean} Update or not?
+   */
+
 
   _createClass(Input, [{
     key: 'shouldComponentUpdate',
-
-    /**
-     * Whether or not the component should update
-     * @param {Object} nextProps The new properties
-     * @param {Object} nextState The new state
-     * @return {Boolean} Update or not?
-     */
     value: function shouldComponentUpdate(nextProps, nextState) {
       return (0, _reactAddonsShallowCompare2.default)(this, nextProps, nextState);
     }
@@ -2378,22 +2358,11 @@ var Input = function (_React$Component) {
      * When the input got changed
      */
 
-
-    /**
-     * When the input got focused
-     */
-
-
-    /**
-     * When the input loses focus
-     */
-
-
-    /**
-     * When a key gets pressed in the input
-     * @param  {Event} event The keypress event
-     */
-
+  }, {
+    key: 'onChange',
+    value: function onChange() {
+      this.props.onChange(this.input.value);
+    }
 
     /**
      * When a key gets pressed in the input
@@ -2401,12 +2370,62 @@ var Input = function (_React$Component) {
      */
 
   }, {
-    key: 'focus',
+    key: 'onInputKeyDown',
+    value: function onInputKeyDown(event) {
+      // eslint-disable-line complexity
+      // Call props.onKeyDown if defined
+      // Gives the developer a little bit more control if needed
+      if (this.props.onKeyDown) {
+        this.props.onKeyDown(event);
+      }
 
+      switch (event.which) {
+        case 40:
+          // DOWN
+          if (!event.shiftKey) {
+            event.preventDefault();
+            this.props.onNext();
+          }
+          break;
+        case 38:
+          // UP
+          if (!event.shiftKey) {
+            event.preventDefault();
+            this.props.onPrev();
+          }
+          break;
+        case 13:
+          // ENTER
+          if (this.props.doNotSubmitOnEnter) {
+            event.preventDefault();
+          }
+
+          if (!this.props.ignoreEnter) {
+            this.props.onSelect();
+          }
+          break;
+        case 9:
+          // TAB
+          if (!this.props.ignoreTab) {
+            this.props.onSelect();
+          }
+          break;
+        case 27:
+          // ESC
+          this.props.onEscape();
+          break;
+        /* istanbul ignore next */
+        default:
+          break;
+      }
+    }
 
     /**
      * Focus the input
      */
+
+  }, {
+    key: 'focus',
     value: function focus() {
       this.input.focus();
     }
@@ -2434,7 +2453,8 @@ var Input = function (_React$Component) {
       var attributes = (0, _filterInputAttributes2.default)(this.props),
           classes = (0, _classnames2.default)('geosuggest__input', this.props.className);
 
-      return _react2.default.createElement('input', _extends({ className: classes,
+      return _react2.default.createElement('input', _extends({
+        className: classes,
         ref: function ref(i) {
           return _this2.input = i;
         },
@@ -2444,9 +2464,10 @@ var Input = function (_React$Component) {
         style: this.props.style,
         onKeyDown: this.onInputKeyDown,
         onChange: this.onChange,
-        onKeyPress: this.onKeyPress,
-        onFocus: this.onFocus,
-        onBlur: this.onBlur }));
+        onKeyPress: this.props.onKeyPress,
+        onFocus: this.props.onFocus,
+        onBlur: this.props.onBlur
+      }));
     }
   }]);
 
@@ -2563,32 +2584,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var SuggestItem = function (_React$Component) {
   _inherits(SuggestItem, _React$Component);
 
-  function SuggestItem() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
+  /**
+   * The constructor. Sets the initial state.
+   * @param  {Object} props The properties object.
+   */
+  function SuggestItem(props) {
     _classCallCheck(this, SuggestItem);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    var _this = _possibleConstructorReturn(this, (SuggestItem.__proto__ || Object.getPrototypeOf(SuggestItem)).call(this, props));
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SuggestItem.__proto__ || Object.getPrototypeOf(SuggestItem)).call.apply(_ref, [this].concat(args))), _this), _this.onClick = function (event) {
-      event.preventDefault();
-      _this.props.onSelect(_this.props.suggest);
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    _this.onClick = _this.onClick.bind(_this);
+    return _this;
   }
+
+  /**
+   * Makes a text bold
+   * @param {String} element The element to wrap
+   * @param {String} key The key to set on the element
+   * @return {JSX} Bolder text
+   */
+
 
   _createClass(SuggestItem, [{
     key: 'makeBold',
-
-    /**
-     * Makes a text bold
-     * @param {String} element The element to wrap
-     * @param {String} key The key to set on the element
-     * @return {JSX} Bolder text
-     */
     value: function makeBold(element, key) {
       return _react2.default.createElement(
         'b',
@@ -2672,13 +2690,19 @@ var SuggestItem = function (_React$Component) {
      */
 
   }, {
-    key: 'render',
-
+    key: 'onClick',
+    value: function onClick(event) {
+      event.preventDefault();
+      this.props.onSelect(this.props.suggest);
+    }
 
     /**
      * Render the view
      * @return {Function} The React element to render
      */
+
+  }, {
+    key: 'render',
     value: function render() {
       var _this2 = this;
 
@@ -2695,7 +2719,8 @@ var SuggestItem = function (_React$Component) {
 
       return _react2.default.createElement(
         'li',
-        { className: classes,
+        {
+          className: classes,
           ref: function ref(li) {
             return _this2.ref = li;
           },
@@ -2832,7 +2857,8 @@ var SuggestList = function (_React$Component) {
           var isActive = _this2.props.activeSuggest && suggest.placeId === _this2.props.activeSuggest.placeId,
               key = suggest.key || suggest.placeId;
 
-          return _react2.default.createElement(_suggestItem2.default, { key: key,
+          return _react2.default.createElement(_suggestItem2.default, {
+            key: key,
             className: suggest.className,
             userInput: _this2.props.userInput,
             isHighlightMatch: _this2.props.isHighlightMatch,
@@ -2844,7 +2870,8 @@ var SuggestList = function (_React$Component) {
             onMouseDown: _this2.props.onSuggestMouseDown,
             onMouseOut: _this2.props.onSuggestMouseOut,
             onSelect: _this2.props.onSuggestSelect,
-            renderSuggestItem: _this2.props.renderSuggestItem });
+            renderSuggestItem: _this2.props.renderSuggestItem
+          });
         })
       );
     }

@@ -55,7 +55,7 @@ class App extends React.Component {
       {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
     ];
 
-    return ( // eslint-disable-line
+    return (
       <div>
         <Geosuggest
           fixtures={fixtures}
@@ -65,7 +65,8 @@ class App extends React.Component {
           onSuggestSelect={this.onSuggestSelect}
           onSuggestNoResults={this.onSuggestNoResults}
           location={new google.maps.LatLng(53.558572, 9.9278215)}
-          radius="20" />
+          radius="20"
+        />
       </div>
     );
   }
