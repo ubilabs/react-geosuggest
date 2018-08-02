@@ -56,7 +56,6 @@ class App extends React.Component {
     ];
 
     return (
-      // eslint-disable-line
       <div>
         <Geosuggest
           fixtures={fixtures}
