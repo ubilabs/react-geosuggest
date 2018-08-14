@@ -2,3 +2,6 @@ package.json
 coverage
 dist
 module
+rollup.browser.config.js
+rollup.example.config.js
+rollup.module.config.js

@@ -1,7 +1,7 @@
 /**
  * Attributes allowed on input elements
  */
-const allowedAttributes = [
+const allowedAttributes: string[] = [
   'autoCapitalize',
   'autoComplete',
   'autoCorrect',
@@ -68,13 +68,13 @@ const allowedAttributes = [
   'aria-required'
 ];
 
+interface IProps { [key: string]: any; };
+
 /**
  * Filter the properties for only allowed input properties
- * @param  {Object} props The properties to filter
- * @return {Object} The filtered, allowed properties
  */
-export default function(props) {
-  const attributes = {};
+export default function(props: IProps): { [key: string]: any; } {
+  const attributes: { [key: string]: any; } = {};
 
   allowedAttributes.forEach(allowedAttribute => {
     if (props[allowedAttribute]) {

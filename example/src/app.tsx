@@ -1,4 +1,5 @@
 /* global google */
+/* tslint:disable:no-console */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -8,48 +9,44 @@ class App extends React.Component {
   /**
    * When the input receives focus
    */
-  onFocus() {
-    console.log('onFocus'); // eslint-disable-line
+  onFocus(): void {
+    console.log('onFocus');
   }
 
   /**
    * When the input loses focus
-   * @param {String} value The user input
    */
-  onBlur(value) {
-    console.log('onBlur', value); // eslint-disable-line
+  onBlur(value?: string): void {
+    console.log('onBlur', value);
   }
 
   /**
    * When the input got changed
-   * @param {String} value The new value
    */
-  onChange(value) {
-    console.log('input changes to :' + value); // eslint-disable-line
+  onChange(value: string) {
+    console.log('input changes to :' + value);
   }
 
   /**
    * When a suggest got selected
-   * @param  {Object} suggest The suggest
    */
-  onSuggestSelect(suggest) {
-    console.log(suggest); // eslint-disable-line
+  onSuggestSelect(suggest: any) {
+    console.log(suggest);
   }
 
   /**
    * When there are no suggest results
-   * @param {String} userInput The user input
    */
-  onSuggestNoResults(userInput) {
-    console.log('onSuggestNoResults for :' + userInput); // eslint-disable-line
+  onSuggestNoResults(userInput: string) {
+    console.log('onSuggestNoResults for :' + userInput);
   }
 
   /**
    * Render the example app
    * @return {Function} React render function
    */
-  render() {
-    var fixtures = [
+  render(): JSX.Element {
+    const fixtures = [
       {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
       {label: 'Rio', location: {lat: -22.066452, lng: -42.9232368}},
       {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
@@ -72,4 +69,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app')); // eslint-disable-line
+ReactDOM.render(<App />, document.getElementById('app'));
