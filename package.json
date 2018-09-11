@@ -3,6 +3,7 @@
   "version": "2.3.6",
   "description": "A React autosuggest for the Google Maps Places API.",
   "main": "module/Geosuggest.js",
+  "files": ["/module"],
   "author": "Robert Katzki <katzki@ubilabs.net>",
   "homepage": "https://github.com/ubilabs/react-geosuggest",
   "license": "MIT",
