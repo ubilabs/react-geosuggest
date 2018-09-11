@@ -1,5 +1,5 @@
 {
-  "name": "react-geosuggest",
+  "name": "@icg360/react-geosuggest",
   "version": "2.3.6",
   "description": "A React autosuggest for the Google Maps Places API.",
   "main": "module/Geosuggest.js",
@@ -86,5 +86,8 @@
     "google",
     "autosuggest",
     "places"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://icg360.jfrog.io/icg360/api/npm/npm-local/"
+  }
 }
