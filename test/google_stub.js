@@ -36,6 +36,11 @@ export default function googleStub() {
             return {
               getPlacePredictions: predictionStub
             };
+          },
+          AutocompleteSessionToken() {
+            return {
+              token: 'token'
+            };
           }
         },
         Geocoder() {

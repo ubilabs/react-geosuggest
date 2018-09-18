@@ -94,6 +94,7 @@ class Geosuggest extends React.Component {
     this.googleMaps = googleMaps;
 
     this.autocompleteService = new googleMaps.places.AutocompleteService();
+    this.sessionToken = new google.maps.places.AutocompleteSessionToken();
     this.geocoder = new googleMaps.Geocoder();
   }
 
@@ -204,7 +205,8 @@ class Geosuggest extends React.Component {
     }
 
     const options = {
-        input: this.state.userInput
+        input: this.state.userInput,
+        sessionToken: this.sessionToken
       },
       inputLength = this.state.userInput.length,
       isShorterThanMinLength = inputLength < this.props.minLength;
