@@ -8,23 +8,21 @@ export default function googleStub() {
 
       callback(suggestsGoogle.length > 0 ? suggestsGoogle : null);
     },
-    geocodeStub = (query, callback) => {
+    placesStub = (query, callback) => {
       if (query.address === '' || query.placeId === '') {
         callback([], 'ZERO_RESULTS');
         return;
       }
 
       callback(
-        [
-          {
-            geometry: {
-              location: {
-                lat: () => 0,
-                lng: () => 0
-              }
+        {
+          geometry: {
+            location: {
+              lat: () => 0,
+              lng: () => 0
             }
           }
-        ],
+        },
         'OK'
       );
     },
@@ -41,15 +39,15 @@ export default function googleStub() {
             return {
               token: 'token'
             };
+          },
+          PlacesService() {
+            return {
+              getDetails: placesStub
+            };
+          },
+          PlacesServiceStatus: {
+            OK: 'OK'
           }
-        },
-        Geocoder() {
-          return {
-            geocode: geocodeStub
-          };
-        },
-        GeocoderStatus: {
-          OK: 'OK'
         }
       }
     };

@@ -94,8 +94,10 @@ class Geosuggest extends React.Component {
     this.googleMaps = googleMaps;
 
     this.autocompleteService = new googleMaps.places.AutocompleteService();
+    this.placesService = new google.maps.places.PlacesService(
+      document.createElement('div')
+    );
     this.sessionToken = new google.maps.places.AutocompleteSessionToken();
-    this.geocoder = new googleMaps.Geocoder();
   }
 
   /**
@@ -407,7 +409,8 @@ class Geosuggest extends React.Component {
     let options = null;
     if (suggest.placeId && !suggest.isFixture) {
       options = {
-        placeId: suggest.placeId
+        placeId: suggest.placeId,
+        sessionToken: this.sessionToken
       };
     } else {
       options = {
@@ -419,9 +422,9 @@ class Geosuggest extends React.Component {
           : null
       };
     }
-    this.geocoder.geocode(options, (results, status) => {
-      if (status === this.googleMaps.GeocoderStatus.OK) {
-        var gmaps = results[0],
+    this.placesService.getDetails(options, (results, status) => {
+      if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
+        var gmaps = results,
           location = gmaps.geometry.location;
 
         suggest.gmaps = gmaps;
@@ -430,6 +433,7 @@ class Geosuggest extends React.Component {
           lng: location.lng()
         };
       }
+      this.sessionToken = new google.maps.places.AutocompleteSessionToken();
       this.props.onSuggestSelect(suggest);
     });
   }
