@@ -32,7 +32,7 @@ Our communications here on GitHub follow certain guidelines. Please observe the 
 
 - JavaScript
 
-   - [ESLint](http://eslint.org/) configuration files are provided
+   - [TSLint](https://palantir.github.io/tslint/) configuration files are provided
 
    - run `npm run lint` to check code style
 

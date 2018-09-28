@@ -1,20 +1,60 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
-import shallowCompare from 'react-addons-shallow-compare';
+import * as React from 'react';
 import classnames from 'classnames';
 
 import filterInputAttributes from './filter-input-attributes';
 
+interface IProps {
+  readonly value: string;
+  readonly className?: string;
+  readonly doNotSubmitOnEnter?: boolean;
+  readonly ignoreEnter?: boolean;
+  readonly ignoreTab?: boolean;
+  readonly style?: any;
+  readonly autoComplete?: string;
+  readonly onChange: (value: string) => void;
+  readonly onSelect: () => void;
+  readonly onKeyDown?: (event: React.KeyboardEvent) => void;
+  readonly onKeyPress?: (event: React.KeyboardEvent) => void;
+  readonly onNext: () => void;
+  readonly onPrev: () => void;
+  readonly onEscape: () => void;
+  readonly onFocus: () => void;
+  readonly onBlur: () => void;
+}
+
 /**
  * The input field
- * @param {Object} props The component's props
- * @return {JSX} The icon component.
  */
-class Input extends React.Component {
+export default class extends React.PureComponent<IProps, {}> {
+  /* tslint:disable:no-empty */
   /**
-   * The constructor. Sets the initial state.
-   * @param  {Object} props The properties object.
+   * Default values for the properties
    */
-  constructor(props) {
+  static defaultProps: IProps = {
+    autoComplete: 'nope',
+    className: '',
+    onBlur: () => {},
+    onChange: () => {},
+    onEscape: () => {},
+    onFocus: () => {},
+    onKeyDown: () => {},
+    onKeyPress: () => {},
+    onNext: () => {},
+    onPrev: () => {},
+    onSelect: () => {},
+    value: ''
+  };
+  /* tslint:enable:no-empty */
+
+  /**
+   * The reference to the input element
+   */
+  input: HTMLInputElement | null = null;
+
+  /**
+   * The constructor.
+   */
+  constructor(props: IProps) {
     super(props);
 
     this.onChange = this.onChange.bind(this);
@@ -22,28 +62,18 @@ class Input extends React.Component {
   }
 
   /**
-   * Whether or not the component should update
-   * @param {Object} nextProps The new properties
-   * @param {Object} nextState The new state
-   * @return {Boolean} Update or not?
-   */
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
-
-  /**
    * When the input got changed
    */
   onChange() {
-    this.props.onChange(this.input.value);
+    if (this.input) {
+      this.props.onChange(this.input.value);
+    }
   }
 
   /**
    * When a key gets pressed in the input
-   * @param  {Event} event The keydown event
    */
-  onInputKeyDown(event) {
-    // eslint-disable-line complexity
+  onInputKeyDown(event: React.KeyboardEvent) {
     // Call props.onKeyDown if defined
     // Gives the developer a little bit more control if needed
     if (this.props.onKeyDown) {
@@ -90,23 +120,26 @@ class Input extends React.Component {
    * Focus the input
    */
   focus() {
-    this.input.focus();
+    if (this.input) {
+      this.input.focus();
+    }
   }
 
   /**
    * Blur the input
    */
   blur() {
-    this.input.blur();
+    if (this.input) {
+      this.input.blur();
+    }
   }
 
   /**
    * Render the view
-   * @return {Function} The React element to render
    */
-  render() {
-    const attributes = filterInputAttributes(this.props),
-      classes = classnames('geosuggest__input', this.props.className);
+  render(): JSX.Element {
+    const attributes = filterInputAttributes(this.props);
+    const classes = classnames('geosuggest__input', this.props.className);
 
     return (
       <input
@@ -125,18 +158,3 @@ class Input extends React.Component {
     );
   }
 }
-
-/**
- * Default values for the properties
- * @type {Object}
- */
-Input.defaultProps = {
-  className: '',
-  value: '',
-  ignoreTab: false,
-  onKeyDown: () => {},
-  onKeyPress: () => {},
-  autoComplete: 'nope'
-};
-
-export default Input;
