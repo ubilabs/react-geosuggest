@@ -5,11 +5,14 @@ example
 src
 test
 .editorconfig
-.eslintrc
+tslint.json
 .gitignore
 .travis.yml
 .prettierrc.yml
 .prettierignore
+rollup.browser.config.js
+rollup.example.config.js
+rollup.module.config.js
 bower.json
 CONTRIBUTING.md
 CONVENTIONS.md
