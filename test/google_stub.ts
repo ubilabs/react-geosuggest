@@ -36,6 +36,27 @@ export default function googleStub() {
       'OK'
     );
   };
+  const placesStub = (
+    query: google.maps.places.PlaceDetailsRequest,
+    callback: (results: any, status: string) => void
+  ) => {
+    if (query.placeId === '') {
+      callback({}, 'ZERO_RESULTS');
+      return;
+    }
+
+    callback(
+      {
+        geometry: {
+          location: {
+            lat: () => 0,
+            lng: () => 0
+          }
+        }
+      } as any,
+      'OK'
+    );
+  };
   const google = {
     maps: {
       Geocoder() {
@@ -52,6 +73,19 @@ export default function googleStub() {
           return {
             getPlacePredictions: predictionStub
           };
+        },
+        AutocompleteSessionToken() {
+          return {
+            token: 'token'
+          };
+        },
+        PlacesService() {
+          return {
+            getDetails: placesStub
+          };
+        },
+        PlacesServiceStatus: {
+          OK: 'OK'
         }
       }
     }

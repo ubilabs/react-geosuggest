@@ -47,6 +47,16 @@ export default class extends React.Component<IProps, IState> {
   autocompleteService: google.maps.places.AutocompleteService | null = null;
 
   /**
+   * The places service to get place details
+   */
+  placesService: google.maps.places.PlacesService | null = null;
+
+  /**
+   * The sessionToken service to use session based monetization
+   */
+  sessionToken: google.maps.places.AutocompleteSessionToken | undefined = undefined;
+
+  /**
    * The geocoder to get geocoded results
    */
   geocoder: google.maps.Geocoder | null = null;
@@ -135,6 +145,10 @@ export default class extends React.Component<IProps, IState> {
     this.googleMaps = googleMaps;
 
     this.autocompleteService = new googleMaps.places.AutocompleteService();
+    this.placesService = new googleMaps.places.PlacesService(
+      document.createElement('div')
+    );
+    this.sessionToken = new googleMaps.places.AutocompleteSessionToken();
     this.geocoder = new googleMaps.Geocoder();
   }
 
@@ -257,7 +271,8 @@ export default class extends React.Component<IProps, IState> {
     }
 
     const options: google.maps.places.AutocompletionRequest = {
-      input: this.state.userInput
+      input: this.state.userInput,
+      sessionToken: this.sessionToken
     };
     const inputLength = this.state.userInput.length;
     const isShorterThanMinLength = this.props.minLength && inputLength < this.props.minLength;
@@ -471,12 +486,29 @@ export default class extends React.Component<IProps, IState> {
       return;
     }
 
-    let options: google.maps.GeocoderRequest = {};
+    if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
+      const options = {
+        placeId: suggestToGeocode.placeId,
+        sessionToken: this.sessionToken
+      };
 
-    if (suggestToGeocode.placeId && !suggestToGeocode.isFixture) {
-      options.placeId = suggestToGeocode.placeId;
+      this.placesService.getDetails(options, (results, status) => {
+        if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
+          const gmaps = results;
+          const location = gmaps.geometry.location;
+          const suggest = {...suggestToGeocode, gmaps, location: {
+            lat: location.lat(),
+            lng: location.lng()
+          }};
+
+          this.sessionToken = new google.maps.places.AutocompleteSessionToken();
+          if (this.props.onSuggestSelect) {
+            this.props.onSuggestSelect(suggest);
+          }
+        }
+      });
     } else {
-      options = {
+      const options: google.maps.GeocoderRequest = {
         address: suggestToGeocode.label,
         bounds: this.props.bounds,
         componentRestrictions: this.props.country
@@ -484,22 +516,22 @@ export default class extends React.Component<IProps, IState> {
           : undefined,
         location: this.props.location
       };
-    }
 
-    this.geocoder.geocode(options, (results, status) => {
-      if (status === this.googleMaps.GeocoderStatus.OK) {
-        const gmaps = results[0];
-        const location = gmaps.geometry.location;
-        const suggest = {...suggestToGeocode, gmaps, location: {
-          lat: location.lat(),
-          lng: location.lng()
-        }};
+      this.geocoder.geocode(options, (results, status) => {
+        if (status === this.googleMaps.GeocoderStatus.OK) {
+          const gmaps = results[0];
+          const location = gmaps.geometry.location;
+          const suggest = {...suggestToGeocode, gmaps, location: {
+            lat: location.lat(),
+            lng: location.lng()
+          }};
 
-        if (this.props.onSuggestSelect) {
-          this.props.onSuggestSelect(suggest);
+          if (this.props.onSuggestSelect) {
+            this.props.onSuggestSelect(suggest);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   /**

@@ -8,6 +8,6 @@ type ILocation = ISuggest & {
     lat: number;
     lng: number;
   };
-  readonly gmaps?: google.maps.GeocoderResult;
+  readonly gmaps?: google.maps.GeocoderResult | google.maps.places.PlaceResult;
 }
 export default ILocation;
