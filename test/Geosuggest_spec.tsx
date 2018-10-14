@@ -347,16 +347,16 @@ describe('Component: Geosuggest', () => {
 
     it('should have the focus after calling `focus`', () => {
       component.focus();
-      expect(document.activeElement.classList.contains('geosuggest__input')).to
+      expect(document.activeElement!.classList.contains('geosuggest__input')).to
         .be.true;
     });
 
     it('should not have the focus after calling `blur`', () => {
       component.focus();
-      expect(document.activeElement.classList.contains('geosuggest__input')).to
+      expect(document.activeElement!.classList.contains('geosuggest__input')).to
         .be.true;
       component.blur();
-      expect(document.activeElement.classList.contains('geosuggest__input')).to
+      expect(document.activeElement!.classList.contains('geosuggest__input')).to
         .be.false;
     });
 
