@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import filterInputAttributes from './filter-input-attributes';
 
-interface IProps {
+interface Props {
   readonly value: string;
   readonly className?: string;
   readonly doNotSubmitOnEnter?: boolean;
@@ -13,8 +13,8 @@ interface IProps {
   readonly autoComplete?: string;
   readonly onChange: (value: string) => void;
   readonly onSelect: () => void;
-  readonly onKeyDown?: (event: React.KeyboardEvent) => void;
-  readonly onKeyPress?: (event: React.KeyboardEvent) => void;
+  readonly onKeyDown?: (event: React.KeyboardEvent<Element>) => void;
+  readonly onKeyPress?: (event: React.KeyboardEvent<Element>) => void;
   readonly onNext: () => void;
   readonly onPrev: () => void;
   readonly onEscape: () => void;
@@ -25,12 +25,12 @@ interface IProps {
 /**
  * The input field
  */
-export default class extends React.PureComponent<IProps, {}> {
+export default class extends React.PureComponent<Props, {}> {
   /* tslint:disable:no-empty */
   /**
    * Default values for the properties
    */
-  static defaultProps: IProps = {
+  static defaultProps: Props = {
     autoComplete: 'nope',
     className: '',
     onBlur: () => {},
@@ -54,7 +54,7 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * The constructor.
    */
-  constructor(props: IProps) {
+  constructor(props: Props) {
     super(props);
 
     this.onChange = this.onChange.bind(this);
@@ -73,7 +73,7 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * When a key gets pressed in the input
    */
-  onInputKeyDown(event: React.KeyboardEvent) {
+  onInputKeyDown(event: React.KeyboardEvent<Element>) {
     // Call props.onKeyDown if defined
     // Gives the developer a little bit more control if needed
     if (this.props.onKeyDown) {

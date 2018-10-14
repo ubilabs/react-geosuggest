@@ -4,6 +4,7 @@
   "description": "A React autosuggest for the Google Maps Places API.",
   "main": "module/Geosuggest.umd.js",
   "module": "module/Geosuggest.esm.js",
+  "types": "module/types/Geosuggest.d.ts",
   "author": "Robert Katzki <katzki@ubilabs.net>",
   "homepage": "https://github.com/ubilabs/react-geosuggest",
   "license": "MIT",

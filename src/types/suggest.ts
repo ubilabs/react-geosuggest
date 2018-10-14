@@ -1,17 +1,15 @@
-import IFixture from "./fixture";
+import Location from './location';
 
 /**
  * The suggest interface
  */
-export default interface ISuggest {
+export default interface Suggest {
   readonly description?: string;
+  readonly gmaps?: google.maps.GeocoderResult;
   readonly label: string;
   readonly placeId: string;
   readonly isFixture: boolean;
-  readonly location?: {
-    lat: number;
-    lng: number;
-  };
+  readonly location?: Location;
   readonly matchedSubstrings?: {
     offset: number;
     length: number;

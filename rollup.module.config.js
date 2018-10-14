@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV;
 export default {
   input: 'src/Geosuggest.tsx',
   plugins: [
-    typescript(),
+    typescript({useTsconfigDeclarationDir: true}),
     resolve({jsnext: true, main: true, browser: true}),
     commonjs({
       namedExports: {

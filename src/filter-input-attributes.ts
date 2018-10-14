@@ -68,12 +68,12 @@ const allowedAttributes: string[] = [
   'aria-required'
 ];
 
-interface IProps { [key: string]: any; };
+interface Props { [key: string]: any; };
 
 /**
  * Filter the properties for only allowed input properties
  */
-export default function(props: IProps): { [key: string]: any; } {
+export default function(props: Props): { [key: string]: any; } {
   const attributes: { [key: string]: any; } = {};
 
   allowedAttributes.forEach(allowedAttribute => {

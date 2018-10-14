@@ -9,32 +9,34 @@ import filterInputAttributes from './filter-input-attributes';
 
 import Input from './input';
 import SuggestList from './suggest-list';
-import ISuggest from './types/suggest';
-import IProps from './types/props';
-import ILocation from './types/location';
+import Suggest from './types/suggest';
+import GeosuggestProps from './types/props';
+import Location from './types/location';
 
 // Escapes special characters in user input for regex
 function escapeRegExp(str: string) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
-interface IState {
+interface GeosuggestState {
   readonly isSuggestsHidden: boolean;
   readonly isLoading: boolean;
   readonly ignoreBlur: boolean;
   readonly userInput: string;
-  readonly activeSuggest: null | ISuggest;
-  readonly suggests: ISuggest[];
+  readonly activeSuggest: null | Suggest;
+  readonly suggests: Suggest[];
 }
+
+export {GeosuggestProps, Input, SuggestList, Suggest, Location};
 
 /**
  * Entry point for the Geosuggest component
  */
-export default class extends React.Component<IProps, IState> {
+export default class extends React.Component<GeosuggestProps, GeosuggestState> {
   /**
    * Default values for the properties
    */
-  static defaultProps: IProps = defaults;
+  static defaultProps: GeosuggestProps = defaults;
 
   /**
    * The Google Map instance
@@ -64,7 +66,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * The constructor. Sets the initial state.
    */
-  constructor(props: IProps) {
+  constructor(props: GeosuggestProps) {
     super(props);
 
     this.state = {
@@ -100,7 +102,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Change inputValue if prop changes
    */
-  componentWillReceiveProps(props: IProps) {
+  componentWillReceiveProps(props: GeosuggestProps) {
     if (this.props.initialValue !== props.initialValue) {
       this.setState({userInput: props.initialValue || ''});
     }
@@ -307,7 +309,7 @@ export default class extends React.Component<IProps, IState> {
     // tslint:disable-next-line:no-empty
     callback: () => void = () => {}
   ) {
-    const suggests: ISuggest[] = [];
+    const suggests: Suggest[] = [];
     const {userInput} = this.state;
     const {skipSuggest, maxFixtures, fixtures} = this.props;
     const regex = new RegExp(escapeRegExp(userInput), 'gim');
@@ -361,7 +363,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Return the new activeSuggest object after suggests have been updated
    */
-  updateActiveSuggest(suggests: ISuggest[] = []): ISuggest | null {
+  updateActiveSuggest(suggests: Suggest[] = []): Suggest | null {
     let activeSuggest = this.state.activeSuggest;
 
     if (activeSuggest) {
@@ -439,8 +441,8 @@ export default class extends React.Component<IProps, IState> {
   /**
    * When an item got selected
    */
-  selectSuggest(suggestToSelect: ISuggest | null) {
-    const suggest: ISuggest = suggestToSelect || {
+  selectSuggest(suggestToSelect: Suggest | null) {
+    const suggest: Suggest = suggestToSelect || {
       isFixture: false,
       label: this.state.userInput,
       placeId: this.state.userInput
@@ -455,7 +457,7 @@ export default class extends React.Component<IProps, IState> {
     if (suggest.location) {
       this.setState({ignoreBlur: false});
       if (this.props.onSuggestSelect) {
-        this.props.onSuggestSelect(suggest as ILocation);
+        this.props.onSuggestSelect(suggest);
       }
       return;
     }
@@ -466,7 +468,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Geocode a suggest
    */
-  geocodeSuggest(suggestToGeocode: ISuggest): void {
+  geocodeSuggest(suggestToGeocode: Suggest): void {
     if (!this.geocoder) {
       return;
     }
@@ -490,7 +492,7 @@ export default class extends React.Component<IProps, IState> {
       if (status === this.googleMaps.GeocoderStatus.OK) {
         const gmaps = results[0];
         const location = gmaps.geometry.location;
-        const suggest = {...suggestToGeocode, gmaps, location: {
+        const suggest: Suggest = {...suggestToGeocode, gmaps, location: {
           lat: location.lat(),
           lng: location.lng()
         }};

@@ -1,18 +1,18 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import ISuggest from './types/suggest';
+import Suggest from './types/suggest';
 
-interface IProps {
+interface Props {
   readonly userInput: string;
   readonly isActive: boolean;
   readonly className: string;
   readonly suggestItemClassName?: string;
   readonly activeClassName?: string;
-  readonly suggest: ISuggest;
+  readonly suggest: Suggest;
   readonly isHighlightMatch: boolean;
   readonly style: any;
-  readonly onSelect: (suggest: ISuggest) => void;
-  readonly renderSuggestItem?: (suggest: ISuggest, userInput: string) => JSX.Element | string;
+  readonly onSelect: (suggest: Suggest) => void;
+  readonly renderSuggestItem?: (suggest: Suggest, userInput: string) => JSX.Element | string;
   readonly onMouseDown: (event: React.MouseEvent) => void;
   readonly onMouseOut: (event: React.MouseEvent) => void;
 }
@@ -20,7 +20,7 @@ interface IProps {
 /**
  * A single Geosuggest item in the list
  */
-export default class extends React.PureComponent<IProps, {}> {
+export default class extends React.PureComponent<Props, {}> {
   /**
    * The reference to the suggest element
    */
@@ -29,7 +29,7 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * The constructor.
    */
-  constructor(props: IProps) {
+  constructor(props: Props) {
     super(props);
 
     this.onClick = this.onClick.bind(this);
@@ -49,7 +49,7 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * Replace matched text with the same in bold
    */
-  formatMatchedText(userInput: string, suggest: ISuggest): JSX.Element | string {
+  formatMatchedText(userInput: string, suggest: Suggest): JSX.Element | string {
     if (!userInput || !suggest.matchedSubstrings) {
       return suggest.label;
     }
@@ -84,7 +84,7 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * Checking if item just became active and scrolling if needed.
    */
-  componentWillReceiveProps(nextProps: IProps): void {
+  componentWillReceiveProps(nextProps: Props): void {
     if (nextProps.isActive && !this.props.isActive) {
       this.scrollIfNeeded();
     }

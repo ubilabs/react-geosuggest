@@ -2,13 +2,12 @@
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "module/types",
     "jsx": "react",
-    "outDir": ".tmp",
+    "outDir": "module",
     "strict": true,
     "lib": ["dom", "es5", "es2015", "es2016", "scripthost"]
   },
-  "include": [
-    "example/src/**/*",
-    "src/**/*"
-  ]
+  "include": ["src"]
 }
