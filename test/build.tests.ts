@@ -15,7 +15,7 @@ describe('The module build', () => {
         expect(exitCode).to.equal(0);
 
         const ctor = require(path.resolve(rootDir, 'module', 'Geosuggest.umd.js'));
-        expect(ctor).to.be.a('function');
+        expect(ctor.default).to.be.a('function');
         done();
       });
   });
