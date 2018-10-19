@@ -1,12 +1,9 @@
 ## 2.9.0 (2018-10-19)
 
 
-#### Bug Fixes
+#### Features
 
 * **geosuggest:**
-  * adapt solution to typescript ([68c8817a](https://github.com/ubilabs/react-geosuggest/commit/68c8817ad64524fcde73d8f64e52ee8e9d566f21))
-  * merge new changes to the repo ([86067701](https://github.com/ubilabs/react-geosuggest/commit/8606770163f14048881049edcd78404ca0e06d47))
-  * changed Geocoder to PlacesService ([36668554](https://github.com/ubilabs/react-geosuggest/commit/3666855443d5c92628993630cb678e343ae002c5))
   * add Places API sessionToken support (issue #394) ([3738916e](https://github.com/ubilabs/react-geosuggest/commit/3738916e71eb2379c06cc50db49801d6a30f9b6f))
 
 
