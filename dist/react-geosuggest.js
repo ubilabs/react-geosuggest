@@ -1857,6 +1857,11 @@ var Geosuggest = (function () {
     }
     });
 
+    var React = /*#__PURE__*/Object.freeze({
+        default: react,
+        __moduleExports: react
+    });
+
     var classnames = createCommonjsModule(function (module) {
     /*!
       Copyright (c) 2017 Jed Watson.
@@ -2285,26 +2290,27 @@ var Geosuggest = (function () {
     var lodash_debounce = debounce;
 
     /* istanbul ignore next */
+    /* tslint:disable:no-empty */
     /**
      * Default values
      */
     var defaults = {
-        fixtures: [],
-        maxFixtures: 10,
-        initialValue: '',
-        placeholder: 'Search places',
+        autoActivateFirstSuggest: false,
         disabled: false,
-        queryDelay: 250,
-        highlightMatch: true,
+        fixtures: [],
         getSuggestLabel: function (suggest) { return suggest.description; },
-        skipSuggest: function () { return false; },
+        highlightMatch: true,
+        ignoreEnter: false,
+        ignoreTab: false,
+        initialValue: '',
+        maxFixtures: 10,
+        minLength: 1,
         onKeyDown: function () { },
         onKeyPress: function () { },
-        style: {},
-        autoActivateFirstSuggest: false,
-        ignoreTab: false,
-        ignoreEnter: false,
-        minLength: 1
+        placeholder: 'Search places',
+        queryDelay: 250,
+        skipSuggest: function () { return false; },
+        style: {}
     };
 
     /**
@@ -2399,6 +2405,7 @@ var Geosuggest = (function () {
          */
         function default_1(props) {
             var _this = _super.call(this, props) || this;
+            /* tslint:enable:no-empty */
             /**
              * The reference to the input element
              */
@@ -2479,28 +2486,30 @@ var Geosuggest = (function () {
          */
         default_1.prototype.render = function () {
             var _this = this;
-            var attributes = filterInputAttributes(this.props), classes = classnames('geosuggest__input', this.props.className);
-            return (react.createElement("input", __assign({ className: classes, ref: function (i) { return (_this.input = i); }, type: "text" }, attributes, { value: this.props.value, style: this.props.style, onKeyDown: this.onInputKeyDown, onChange: this.onChange, onKeyPress: this.props.onKeyPress, onFocus: this.props.onFocus, onBlur: this.props.onBlur })));
+            var attributes = filterInputAttributes(this.props);
+            var classes = classnames('geosuggest__input', this.props.className);
+            return (undefined("input", __assign({ className: classes, ref: function (i) { return (_this.input = i); }, type: "text" }, attributes, { value: this.props.value, style: this.props.style, onKeyDown: this.onInputKeyDown, onChange: this.onChange, onKeyPress: this.props.onKeyPress, onFocus: this.props.onFocus, onBlur: this.props.onBlur })));
         };
+        /* tslint:disable:no-empty */
         /**
          * Default values for the properties
          */
         default_1.defaultProps = {
-            value: '',
-            className: '',
             autoComplete: 'nope',
+            className: '',
+            onBlur: function () { },
             onChange: function () { },
-            onSelect: function () { },
+            onEscape: function () { },
+            onFocus: function () { },
             onKeyDown: function () { },
             onKeyPress: function () { },
             onNext: function () { },
             onPrev: function () { },
-            onEscape: function () { },
-            onFocus: function () { },
-            onBlur: function () { }
+            onSelect: function () { },
+            value: ''
         };
         return default_1;
-    }(react.PureComponent));
+    }(undefined));
 
     /**
      * A single Geosuggest item in the list
@@ -2523,7 +2532,7 @@ var Geosuggest = (function () {
          * Makes a text bold
          */
         default_1.prototype.makeBold = function (element, key) {
-            return (react.createElement("b", { className: "geosuggest__item__matched-text", key: key }, element));
+            return (undefined("b", { className: "geosuggest__item__matched-text", key: key }, element));
         };
         /**
          * Replace matched text with the same in bold
@@ -2544,7 +2553,7 @@ var Geosuggest = (function () {
             if (end < suggest.label.length) {
                 post = suggest.label.slice(end);
             }
-            return (react.createElement("span", null,
+            return (undefined("span", null,
                 pre,
                 boldPart,
                 post));
@@ -2591,7 +2600,8 @@ var Geosuggest = (function () {
         default_1.prototype.render = function () {
             var _this = this;
             var _a;
-            var suggest = this.props.suggest, classes = classnames('geosuggest__item', this.props.className, this.props.suggestItemClassName, { 'geosuggest__item--active': this.props.isActive }, (_a = {},
+            var suggest = this.props.suggest;
+            var classes = classnames('geosuggest__item', this.props.className, this.props.suggestItemClassName, { 'geosuggest__item--active': this.props.isActive }, (_a = {},
                 _a[this.props.activeClassName || ''] = this.props.activeClassName
                     ? this.props.isActive
                     : null,
@@ -2603,10 +2613,10 @@ var Geosuggest = (function () {
             else if (this.props.isHighlightMatch) {
                 content = this.formatMatchedText(this.props.userInput, suggest);
             }
-            return (react.createElement("li", { className: classes, ref: function (li) { return (_this.ref = li); }, style: this.props.style, onMouseDown: this.props.onMouseDown, onMouseOut: this.props.onMouseOut, onClick: this.onClick }, content));
+            return (undefined("li", { className: classes, ref: function (li) { return (_this.ref = li); }, style: this.props.style, onMouseDown: this.props.onMouseDown, onMouseOut: this.props.onMouseOut, onClick: this.onClick }, content));
         };
         return default_1;
-    }(react.PureComponent));
+    }(undefined));
 
     /**
      * The list with suggestions.
@@ -2644,14 +2654,14 @@ var Geosuggest = (function () {
                     ? this.isHidden()
                     : null,
                 _a));
-            return (react.createElement("ul", { className: classes, style: this.props.style }, this.props.suggests.map(function (suggest) {
+            return (undefined("ul", { className: classes, style: this.props.style }, this.props.suggests.map(function (suggest) {
                 var isActive = _this.props.activeSuggest &&
                     suggest.placeId === _this.props.activeSuggest.placeId || false;
-                return (react.createElement(default_1$1, { key: suggest.placeId, className: suggest.className || '', userInput: _this.props.userInput, isHighlightMatch: _this.props.isHighlightMatch, suggest: suggest, style: _this.props.suggestItemStyle, suggestItemClassName: _this.props.suggestItemClassName, isActive: isActive, activeClassName: _this.props.suggestItemActiveClassName, onMouseDown: _this.props.onSuggestMouseDown, onMouseOut: _this.props.onSuggestMouseOut, onSelect: _this.props.onSuggestSelect, renderSuggestItem: _this.props.renderSuggestItem }));
+                return (undefined(default_1$1, { key: suggest.placeId, className: suggest.className || '', userInput: _this.props.userInput, isHighlightMatch: _this.props.isHighlightMatch, suggest: suggest, style: _this.props.suggestItemStyle, suggestItemClassName: _this.props.suggestItemClassName, isActive: isActive, activeClassName: _this.props.suggestItemActiveClassName, onMouseDown: _this.props.onSuggestMouseDown, onMouseOut: _this.props.onSuggestMouseOut, onSelect: _this.props.onSuggestSelect, renderSuggestItem: _this.props.renderSuggestItem }));
             })));
         };
         return default_1;
-    }(react.PureComponent));
+    }(undefined));
 
     /* global window */
     // Escapes special characters in user input for regex
@@ -2677,6 +2687,14 @@ var Geosuggest = (function () {
              */
             _this.autocompleteService = null;
             /**
+             * The places service to get place details
+             */
+            _this.placesService = null;
+            /**
+             * The sessionToken service to use session based monetization
+             */
+            _this.sessionToken = undefined;
+            /**
              * The geocoder to get geocoded results
              */
             _this.geocoder = null;
@@ -2685,12 +2703,12 @@ var Geosuggest = (function () {
              */
             _this.input = null;
             _this.state = {
-                isSuggestsHidden: true,
-                isLoading: false,
-                ignoreBlur: false,
-                userInput: props.initialValue || '',
                 activeSuggest: null,
-                suggests: []
+                ignoreBlur: false,
+                isLoading: false,
+                isSuggestsHidden: true,
+                suggests: [],
+                userInput: props.initialValue || ''
             };
             _this.onInputChange = _this.onInputChange.bind(_this);
             _this.onAfterInputChange = _this.onAfterInputChange.bind(_this);
@@ -2733,14 +2751,15 @@ var Geosuggest = (function () {
             /* istanbul ignore next */
             if (!googleMaps) {
                 if (console) {
-                    console.error(
-                    // eslint-disable-line no-console
-                    'Google map api was not found in the page.');
+                    // tslint:disable-next-line:no-console
+                    console.error('Google maps API was not found in the page.');
                 }
                 return;
             }
             this.googleMaps = googleMaps;
             this.autocompleteService = new googleMaps.places.AutocompleteService();
+            this.placesService = new googleMaps.places.PlacesService(document.createElement('div'));
+            this.sessionToken = new googleMaps.places.AutocompleteSessionToken();
             this.geocoder = new googleMaps.Geocoder();
         };
         /**
@@ -2847,7 +2866,8 @@ var Geosuggest = (function () {
                 return;
             }
             var options = {
-                input: this.state.userInput
+                input: this.state.userInput,
+                sessionToken: this.sessionToken
             };
             var inputLength = this.state.userInput.length;
             var isShorterThanMinLength = this.props.minLength && inputLength < this.props.minLength;
@@ -2855,6 +2875,7 @@ var Geosuggest = (function () {
                 return;
             }
             var _a = this.props, location = _a.location, radius = _a.radius, bounds = _a.bounds, types = _a.types, country = _a.country;
+            /* tslint:disable:curly */
             if (location)
                 options.location = location;
             if (radius)
@@ -2865,6 +2886,7 @@ var Geosuggest = (function () {
                 options.types = types;
             if (country)
                 options.componentRestrictions = { country: country };
+            /* tslint:enable:curly */
             this.setState({ isLoading: true }, function () {
                 if (!_this.autocompleteService) {
                     _this.setState({ isLoading: false });
@@ -2885,10 +2907,14 @@ var Geosuggest = (function () {
         /**
          * Update the suggests
          */
-        default_1$$1.prototype.updateSuggests = function (suggestsGoogle, callback) {
+        default_1$$1.prototype.updateSuggests = function (suggestsGoogle, 
+        // tslint:disable-next-line:no-empty
+        callback) {
             var _this = this;
             if (suggestsGoogle === void 0) { suggestsGoogle = []; }
-            if (callback === void 0) { callback = function () { }; }
+            if (callback === void 0) { 
+            // tslint:disable-next-line:no-empty
+            callback = function () { }; }
             var suggests = [];
             var userInput = this.state.userInput;
             var _a = this.props, skipSuggest = _a.skipSuggest, maxFixtures = _a.maxFixtures, fixtures = _a.fixtures;
@@ -2903,15 +2929,15 @@ var Geosuggest = (function () {
                     if ((skipSuggest && !skipSuggest(fixture)) && fixture.label.match(regex)) {
                         fixturesSearched++;
                         suggests.push({
+                            className: fixture.className,
+                            isFixture: true,
                             label: fixture.label,
                             location: fixture.location,
-                            placeId: fixture.label,
-                            isFixture: true,
                             matchedSubstrings: {
-                                offset: fixture.label.indexOf(userInput),
-                                length: userInput.length
+                                length: userInput.length,
+                                offset: fixture.label.indexOf(userInput)
                             },
-                            className: fixture.className
+                            placeId: fixture.label
                         });
                     }
                 });
@@ -2920,10 +2946,10 @@ var Geosuggest = (function () {
                 if (skipSuggest && !skipSuggest(suggest)) {
                     suggests.push({
                         description: suggest.description,
-                        label: _this.props.getSuggestLabel ? _this.props.getSuggestLabel(suggest) : '',
-                        placeId: suggest.place_id,
                         isFixture: false,
-                        matchedSubstrings: suggest.matched_substrings[0]
+                        label: _this.props.getSuggestLabel ? _this.props.getSuggestLabel(suggest) : '',
+                        matchedSubstrings: suggest.matched_substrings[0],
+                        placeId: suggest.place_id
                     });
                 }
             });
@@ -2935,7 +2961,7 @@ var Geosuggest = (function () {
         };
         /**
          * Return the new activeSuggest object after suggests have been updated
-         **/
+         */
         default_1$$1.prototype.updateActiveSuggest = function (suggests) {
             if (suggests === void 0) { suggests = []; }
             var activeSuggest = this.state.activeSuggest;
@@ -2964,8 +2990,8 @@ var Geosuggest = (function () {
             }
             this.timer = window.setTimeout(function () {
                 _this.setState({
-                    isSuggestsHidden: true,
-                    activeSuggest: null
+                    activeSuggest: null,
+                    isSuggestsHidden: true
                 });
             }, 100);
         };
@@ -3003,9 +3029,9 @@ var Geosuggest = (function () {
          */
         default_1$$1.prototype.selectSuggest = function (suggestToSelect) {
             var suggest = suggestToSelect || {
+                isFixture: false,
                 label: this.state.userInput,
-                placeId: this.state.userInput,
-                isFixture: false
+                placeId: this.state.userInput
             };
             this.setState({
                 isSuggestsHidden: true,
@@ -3028,54 +3054,74 @@ var Geosuggest = (function () {
             if (!this.geocoder) {
                 return;
             }
-            var options = {};
-            if (suggestToGeocode.placeId && !suggestToGeocode.isFixture) {
-                options.placeId = suggestToGeocode.placeId;
+            if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
+                var options = {
+                    placeId: suggestToGeocode.placeId,
+                    sessionToken: this.sessionToken
+                };
+                this.placesService.getDetails(options, function (results, status) {
+                    if (status === _this.googleMaps.places.PlacesServiceStatus.OK) {
+                        var gmaps = results;
+                        var location_1 = gmaps.geometry.location;
+                        var suggest = __assign({}, suggestToGeocode, { gmaps: gmaps, location: {
+                                lat: location_1.lat(),
+                                lng: location_1.lng()
+                            } });
+                        _this.sessionToken = new google.maps.places.AutocompleteSessionToken();
+                        if (_this.props.onSuggestSelect) {
+                            _this.props.onSuggestSelect(suggest);
+                        }
+                    }
+                });
             }
             else {
-                options = {
+                var options = {
                     address: suggestToGeocode.label,
-                    location: this.props.location,
                     bounds: this.props.bounds,
                     componentRestrictions: this.props.country
                         ? { country: this.props.country }
-                        : undefined
+                        : undefined,
+                    location: this.props.location
                 };
-            }
-            this.geocoder.geocode(options, function (results, status) {
-                if (status === _this.googleMaps.GeocoderStatus.OK) {
-                    var gmaps = results[0];
-                    var location_1 = gmaps.geometry.location;
-                    var suggest = __assign({}, suggestToGeocode, { gmaps: gmaps, location: {
-                            lat: location_1.lat(),
-                            lng: location_1.lng()
-                        } });
-                    if (_this.props.onSuggestSelect) {
-                        _this.props.onSuggestSelect(suggest);
+                this.geocoder.geocode(options, function (results, status) {
+                    if (status === _this.googleMaps.GeocoderStatus.OK) {
+                        var gmaps = results[0];
+                        var location_2 = gmaps.geometry.location;
+                        var suggest = __assign({}, suggestToGeocode, { gmaps: gmaps, location: {
+                                lat: location_2.lat(),
+                                lng: location_2.lng()
+                            } });
+                        if (_this.props.onSuggestSelect) {
+                            _this.props.onSuggestSelect(suggest);
+                        }
                     }
-                }
-            });
+                });
+            }
         };
         /**
          * Render the view
          */
         default_1$$1.prototype.render = function () {
             var _this = this;
-            var attributes = filterInputAttributes(this.props), classes = classnames('geosuggest', this.props.className, {
+            var attributes = filterInputAttributes(this.props);
+            var classes = classnames('geosuggest', this.props.className, {
                 'geosuggest--loading': this.state.isLoading
-            }), shouldRenderLabel = this.props.label && attributes.id, input = (react.createElement(default_1, __assign({ className: this.props.inputClassName, ref: function (i) { return (_this.input = i); }, value: this.state.userInput, doNotSubmitOnEnter: !this.state.isSuggestsHidden, ignoreTab: this.props.ignoreTab, ignoreEnter: this.props.ignoreEnter, style: this.props.style && this.props.style.input, onChange: this.onInputChange, onFocus: this.onInputFocus, onBlur: this.onInputBlur, onKeyDown: this.props.onKeyDown, onKeyPress: this.props.onKeyPress, onNext: this.onNext, onPrev: this.onPrev, onSelect: this.onSelect, onEscape: this.hideSuggests }, attributes))), suggestionsList = (react.createElement(default_1$2, { isHidden: this.state.isSuggestsHidden, style: this.props.style && this.props.style.suggests, suggestItemStyle: this.props.style && this.props.style.suggestItem, userInput: this.state.userInput, isHighlightMatch: Boolean(this.props.highlightMatch), suggestsClassName: this.props.suggestsClassName, suggestItemClassName: this.props.suggestItemClassName, suggests: this.state.suggests, hiddenClassName: this.props.suggestsHiddenClassName, suggestItemActiveClassName: this.props.suggestItemActiveClassName, activeSuggest: this.state.activeSuggest, onSuggestNoResults: this.onSuggestNoResults, onSuggestMouseDown: this.onSuggestMouseDown, onSuggestMouseOut: this.onSuggestMouseOut, onSuggestSelect: this.selectSuggest, renderSuggestItem: this.props.renderSuggestItem }));
-            return (react.createElement("div", { className: classes },
-                react.createElement("div", { className: "geosuggest__input-wrapper" },
-                    shouldRenderLabel && (react.createElement("label", { className: "geosuggest__label", htmlFor: attributes.id }, this.props.label)),
+            });
+            var shouldRenderLabel = this.props.label && attributes.id;
+            var input = (undefined(default_1, __assign({ className: this.props.inputClassName, ref: function (i) { return (_this.input = i); }, value: this.state.userInput, doNotSubmitOnEnter: !this.state.isSuggestsHidden, ignoreTab: this.props.ignoreTab, ignoreEnter: this.props.ignoreEnter, style: this.props.style && this.props.style.input, onChange: this.onInputChange, onFocus: this.onInputFocus, onBlur: this.onInputBlur, onKeyDown: this.props.onKeyDown, onKeyPress: this.props.onKeyPress, onNext: this.onNext, onPrev: this.onPrev, onSelect: this.onSelect, onEscape: this.hideSuggests }, attributes)));
+            var suggestionsList = (undefined(default_1$2, { isHidden: this.state.isSuggestsHidden, style: this.props.style && this.props.style.suggests, suggestItemStyle: this.props.style && this.props.style.suggestItem, userInput: this.state.userInput, isHighlightMatch: Boolean(this.props.highlightMatch), suggestsClassName: this.props.suggestsClassName, suggestItemClassName: this.props.suggestItemClassName, suggests: this.state.suggests, hiddenClassName: this.props.suggestsHiddenClassName, suggestItemActiveClassName: this.props.suggestItemActiveClassName, activeSuggest: this.state.activeSuggest, onSuggestNoResults: this.onSuggestNoResults, onSuggestMouseDown: this.onSuggestMouseDown, onSuggestMouseOut: this.onSuggestMouseOut, onSuggestSelect: this.selectSuggest, renderSuggestItem: this.props.renderSuggestItem }));
+            return (undefined("div", { className: classes },
+                undefined("div", { className: "geosuggest__input-wrapper" },
+                    shouldRenderLabel && (undefined("label", { className: "geosuggest__label", htmlFor: attributes.id }, this.props.label)),
                     input),
-                react.createElement("div", { className: "geosuggest__suggests-wrapper" }, suggestionsList)));
+                undefined("div", { className: "geosuggest__suggests-wrapper" }, suggestionsList)));
         };
         /**
          * Default values for the properties
          */
         default_1$$1.defaultProps = defaults;
         return default_1$$1;
-    }(react.Component));
+    }(undefined));
 
     return default_1$3;
 
