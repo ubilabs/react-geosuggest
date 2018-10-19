@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/classnames": "^2.2.6",
-    "@types/googlemaps": "^3.30.11",
+    "@types/googlemaps": "3.30.13",
     "@types/jsdom": "^11.0.6",
     "@types/lodash.debounce": "^4.0.4",
     "@types/mocha": "^5.2.5",

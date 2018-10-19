@@ -8,13 +8,7 @@ const env = process.env.NODE_ENV;
 
 export default {
   input: 'example/src/app.tsx',
-  plugins: [
-    typescript(),
-    resolve({jsnext: true, main: true, browser: true}),
-    commonjs(),
-    replace({'process.env.NODE_ENV': JSON.stringify(env)}),
-    env === 'production' && uglify()
-  ],
+ 
   output: {
     name: 'Geosuggest',
     sourcemap: env === 'production' ? false : 'inline',
@@ -22,5 +16,29 @@ export default {
     globals: ['google'],
     format: 'iife',
     file: 'example/dist/app.js'
-  }
+  },
+  plugins: [
+    typescript(),
+    resolve({jsnext: true, main: true, browser: true}),
+    commonjs({
+      include: 'node_modules/**',
+      namedExports: {
+        'react': [ 'Children',
+        'Component',
+        'PureComponent',
+        'PropTypes',
+        'createElement',
+        'Fragment',
+        'cloneElement',
+        'StrictMode',
+        'createFactory',
+        'createRef',
+        'createContext',
+        'isValidElement',
+        'isValidElementType',]
+      }
+    }),
+    replace({'process.env.NODE_ENV': JSON.stringify(env)}),
+    env === 'production' && uglify()
+  ],
 };
