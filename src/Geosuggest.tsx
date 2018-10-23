@@ -488,6 +488,7 @@ export default class extends React.Component<IProps, IState> {
 
     if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
       const options = {
+        fields: ['geometry'],
         placeId: suggestToGeocode.placeId,
         sessionToken: this.sessionToken
       };

@@ -3056,6 +3056,7 @@ var Geosuggest = (function () {
             }
             if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
                 var options = {
+                    fields: ['geometry'],
                     placeId: suggestToGeocode.placeId,
                     sessionToken: this.sessionToken
                 };
