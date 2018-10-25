@@ -3,6 +3,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import replace from 'rollup-plugin-replace';
 import {uglify} from 'rollup-plugin-uglify';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 const env = process.env.NODE_ENV;
 
@@ -13,30 +14,20 @@ export default {
     name: 'Geosuggest',
     sourcemap: env === 'production' ? false : 'inline',
     exports: 'none',
-    globals: ['google'],
+    globals: {
+	  'google': 'google',
+      'react': 'React',
+	  'react-dom': 'ReactDOM',
+	},
     format: 'iife',
     file: 'example/dist/app.js'
   },
   plugins: [
+    peerDepsExternal(),
     typescript(),
     resolve({jsnext: true, main: true, browser: true}),
     commonjs({
       include: 'node_modules/**',
-      namedExports: {
-        'react': [ 'Children',
-        'Component',
-        'PureComponent',
-        'PropTypes',
-        'createElement',
-        'Fragment',
-        'cloneElement',
-        'StrictMode',
-        'createFactory',
-        'createRef',
-        'createContext',
-        'isValidElement',
-        'isValidElementType',]
-      }
     }),
     replace({'process.env.NODE_ENV': JSON.stringify(env)}),
     env === 'production' && uglify()
