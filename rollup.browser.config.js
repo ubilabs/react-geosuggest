@@ -21,9 +21,9 @@ export default {
     name: 'Geosuggest',
     sourcemap: false,
     globals: {
-	  'google': 'google',
+      'google': 'google',
       'react': 'React',
-	  'react-dom': 'ReactDOM',
+      'react-dom': 'ReactDOM',
     },
     format: 'iife',
     file:

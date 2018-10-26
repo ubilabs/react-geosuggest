@@ -15,10 +15,10 @@ export default {
     sourcemap: env === 'production' ? false : 'inline',
     exports: 'none',
     globals: {
-	  'google': 'google',
+      'google': 'google',
       'react': 'React',
-	  'react-dom': 'ReactDOM',
-	},
+      'react-dom': 'ReactDOM',
+    },
     format: 'iife',
     file: 'example/dist/app.js'
   },
