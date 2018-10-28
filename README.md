@@ -142,6 +142,12 @@ Default: `10`
 
 Maximum number of fixtures to render.
 
+#### fields
+Type: `Array`
+Default: `['geometry']`
+
+Fields to retrieve from Google Places API and include in the `gmaps` response object. Please note that the fields selection impacts pricing. Consult the Google Docs for [up to date pricing guidelines](https://developers.google.com/places/web-service/usage-and-billing).   
+
 #### googleMaps
 Type: `Object`
 Default: `google.maps`

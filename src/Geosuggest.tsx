@@ -70,7 +70,7 @@ export default class extends React.Component<IProps, IState> {
    * The input component
    */
   input: Input | null = null;
-
+  
   /**
    * The constructor. Sets the initial state.
    */
@@ -488,7 +488,7 @@ export default class extends React.Component<IProps, IState> {
 
     if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
       const options = {
-        fields: ['geometry'],
+        fields: this.props.fields,
         placeId: suggestToGeocode.placeId,
         sessionToken: this.sessionToken
       };

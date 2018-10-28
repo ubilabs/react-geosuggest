@@ -2310,7 +2310,8 @@ var Geosuggest = (function () {
         placeholder: 'Search places',
         queryDelay: 250,
         skipSuggest: function () { return false; },
-        style: {}
+        style: {},
+        fields: ['geometry']
     };
 
     /**
@@ -3056,7 +3057,7 @@ var Geosuggest = (function () {
             }
             if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
                 var options = {
-                    fields: ['geometry'],
+                    fields: this.props.fields,
                     placeId: suggestToGeocode.placeId,
                     sessionToken: this.sessionToken
                 };

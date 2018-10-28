@@ -6,6 +6,7 @@
 export default {
   autoActivateFirstSuggest: false,
   disabled: false,
+  fields: ['geometry'],
   fixtures: [],
   getSuggestLabel: (suggest: any) => suggest.description,
   highlightMatch: true,
