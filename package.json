@@ -42,7 +42,7 @@
     "prettier": "^1.14.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.7.0",
     "rimraf": "^2.6.2",
     "rollup": "^0.63.5",
     "rollup-plugin-commonjs": "^9.1.5",
