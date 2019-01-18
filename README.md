@@ -142,6 +142,12 @@ Default: `10`
 
 Maximum number of fixtures to render.
 
+#### placeDetailFields
+Type: `Array`
+Default: `null`
+
+By default Google returns all fields when getting place details which can [impact billing](https://developers.google.com/maps/billing/understanding-cost-of-use#data-skus). You can optionally pass an [array of fields to include in place results](https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceDetailsRequest.fields) to limit what is returned and potentially reduce billing impact.
+
 #### googleMaps
 Type: `Object`
 Default: `google.maps`
@@ -303,7 +309,7 @@ Autocomplete input attribute.
 
 #### Others
 
-All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.js#L4)
+All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.ts#L4)
 All [DOM clipboard events](https://facebook.github.io/react/docs/events.html#clipboard-events).  
 All [DOM mouse events](https://facebook.github.io/react/docs/events.html#mouse-events) except for drag & drop.
 

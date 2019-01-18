@@ -487,10 +487,14 @@ export default class extends React.Component<IProps, IState> {
     }
 
     if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
-      const options = {
+      const options: any = {
         placeId: suggestToGeocode.placeId,
         sessionToken: this.sessionToken
       };
+
+      if (this.props.placeDetailFields) {
+        options.fields = this.props.placeDetailFields;
+      }
 
       this.placesService.getDetails(options, (results, status) => {
         if (status === this.googleMaps.places.PlacesServiceStatus.OK) {

@@ -20,7 +20,7 @@ Our communications here on GitHub follow certain guidelines. Please observe the 
 
 ## Pull Requests / Merge Requests
 
-- **IMPORTANT**: by submitting a patch, you agree to allow the project owners to license your work under this [LICENSE](LICENSE)
+- **IMPORTANT**: by submitting a patch, you agree to allow the project owners to license your work under this [LICENSE.md](LICENSE.md)
 
 - please provide test cases for all features and bug fixes
 

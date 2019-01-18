@@ -1,3 +1,17 @@
+## 2.10.0 (2019-01-18)
+
+
+#### Bug Fixes
+
+* **build:** fix build on windows (#409) ([15ff2569](https://github.com/ubilabs/react-geosuggest/commit/15ff25696f84a65cb37866e206bac2508be6a5f2))
+* **compatibility:** change react and reactdom to peer dependencies (#410) ([b4a8b40e](https://github.com/ubilabs/react-geosuggest/commit/b4a8b40eda5ee119acc85d6bb8c660098e4dbc9c), closes [#405](https://github.com/ubilabs/react-geosuggest/issues/405))
+
+
+#### Features
+
+* **geosuggest:** add optional `placeDetailsField` prop to limit place details fields (#414) ([ea820c4c](https://github.com/ubilabs/react-geosuggest/commit/ea820c4cccc630c0a3ce21de3dc2940ab94aa1b8))
+
+
 ## 2.9.0 (2018-10-19)
 
 

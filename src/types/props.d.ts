@@ -48,4 +48,5 @@ export default interface IProps {
   readonly label?: string;
   readonly autoComplete?: string;
   readonly minLength?: number;
+  readonly placeDetailFields?: string[] | null;
 }
