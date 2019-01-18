@@ -309,7 +309,7 @@ Autocomplete input attribute.
 
 #### Others
 
-All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.js#L4)
+All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.ts#L4)
 All [DOM clipboard events](https://facebook.github.io/react/docs/events.html#clipboard-events).  
 All [DOM mouse events](https://facebook.github.io/react/docs/events.html#mouse-events) except for drag & drop.
 
