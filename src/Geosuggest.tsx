@@ -347,7 +347,7 @@ export default class extends React.Component<IProps, IState> {
               length: userInput.length,
               offset: fixture.label.indexOf(userInput)
             },
-            placeId: fixture.label
+            placeId: fixture.placeId
           });
         }
       });
