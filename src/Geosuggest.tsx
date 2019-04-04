@@ -340,10 +340,7 @@ export default class extends React.Component<IProps, IState> {
 
           suggests.push({
             ...fixture,
-            className: fixture.className,
             isFixture: true,
-            label: fixture.label,
-            location: fixture.location,
             matchedSubstrings: {
               length: userInput.length,
               offset: fixture.label.indexOf(userInput)
