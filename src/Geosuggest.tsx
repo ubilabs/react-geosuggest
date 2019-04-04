@@ -339,6 +339,7 @@ export default class extends React.Component<IProps, IState> {
           fixturesSearched++;
 
           suggests.push({
+            ...fixture,
             className: fixture.className,
             isFixture: true,
             label: fixture.label,
@@ -347,7 +348,7 @@ export default class extends React.Component<IProps, IState> {
               length: userInput.length,
               offset: fixture.label.indexOf(userInput)
             },
-            placeId: fixture.placeId
+            placeId: fixture.placeId || fixture.label
           });
         }
       });
