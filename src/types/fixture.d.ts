@@ -3,6 +3,7 @@
  */
 export default interface IFixture {
   readonly label: string;
+  readonly placeId?: string;
   readonly location?: {
     lat: number;
     lng: number;

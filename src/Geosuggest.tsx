@@ -339,15 +339,13 @@ export default class extends React.Component<IProps, IState> {
           fixturesSearched++;
 
           suggests.push({
-            className: fixture.className,
+            ...fixture,
             isFixture: true,
-            label: fixture.label,
-            location: fixture.location,
             matchedSubstrings: {
               length: userInput.length,
               offset: fixture.label.indexOf(userInput)
             },
-            placeId: fixture.label
+            placeId: fixture.placeId || fixture.label
           });
         }
       });
