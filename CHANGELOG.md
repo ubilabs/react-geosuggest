@@ -1,3 +1,11 @@
+## 2.11.0 (2019-04-05)
+
+
+#### Features
+
+* allow custom props for fixtures ([82735c11](https://github.com/ubilabs/react-geosuggest/commit/82735c11644ee99fa31e5885828dd2f49f39bcd1))
+
+
 ## 2.10.0 (2019-01-18)
 
 

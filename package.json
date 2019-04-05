@@ -1,6 +1,6 @@
 {
   "name": "react-geosuggest",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "description": "A React autosuggest for the Google Maps Places API.",
   "main": "module/Geosuggest.umd.js",
   "module": "module/Geosuggest.esm.js",

@@ -1113,17 +1113,10 @@ var Geosuggest = (function (React) {
                     }
                     if ((skipSuggest && !skipSuggest(fixture)) && fixture.label.match(regex)) {
                         fixturesSearched++;
-                        suggests.push({
-                            className: fixture.className,
-                            isFixture: true,
-                            label: fixture.label,
-                            location: fixture.location,
-                            matchedSubstrings: {
+                        suggests.push(__assign({}, fixture, { isFixture: true, matchedSubstrings: {
                                 length: userInput.length,
                                 offset: fixture.label.indexOf(userInput)
-                            },
-                            placeId: fixture.label
-                        });
+                            }, placeId: fixture.placeId || fixture.label }));
                     }
                 });
             }
