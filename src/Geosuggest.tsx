@@ -499,7 +499,12 @@ export default class extends React.Component<IProps, IState> {
       this.placesService.getDetails(options, (results, status) => {
         if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
           const gmaps = results;
-          const location = gmaps.geometry.location;
+          const location = gmaps.geometry && gmaps.geometry.location;
+
+          if (!location) {
+            return;
+          }
+
           const suggest = {...suggestToGeocode, gmaps, location: {
             lat: location.lat(),
             lng: location.lng()
@@ -524,7 +529,12 @@ export default class extends React.Component<IProps, IState> {
       this.geocoder.geocode(options, (results, status) => {
         if (status === this.googleMaps.GeocoderStatus.OK) {
           const gmaps = results[0];
-          const location = gmaps.geometry.location;
+          const location = gmaps.geometry && gmaps.geometry.location;
+
+          if (!location) {
+            return;
+          }
+
           const suggest = {...suggestToGeocode, gmaps, location: {
             lat: location.lat(),
             lng: location.lng()
