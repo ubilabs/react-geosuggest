@@ -3,7 +3,9 @@ import predictions from './fixtures/predictions';
 export default function googleStub() {
   const predictionStub = (
     options: google.maps.places.AutocompletionRequest,
-    callback: (predicctions: google.maps.places.AutocompletePrediction[] | null) => void
+    callback: (
+      predicctions: google.maps.places.AutocompletePrediction[] | null
+    ) => void
   ) => {
     const suggestsGoogle = predictions().filter(prediction =>
       prediction.terms.find(term => term.value.startsWith(options.input))

@@ -1,4 +1,4 @@
-import IFixture from "./fixture";
+import IFixture from './fixture';
 
 /**
  * The suggest interface

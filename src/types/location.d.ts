@@ -1,4 +1,4 @@
-import ISuggest from "./suggest";
+import ISuggest from './suggest';
 
 /**
  * The suggest interface
@@ -9,5 +9,5 @@ type ILocation = ISuggest & {
     lng: number;
   };
   readonly gmaps?: google.maps.GeocoderResult | google.maps.places.PlaceResult;
-}
+};
 export default ILocation;

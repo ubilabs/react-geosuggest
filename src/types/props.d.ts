@@ -31,17 +31,24 @@ export default interface IProps {
   readonly onChange?: (value: string) => void;
   readonly onKeyDown?: (event: React.KeyboardEvent) => void;
   readonly onKeyPress?: (event: React.KeyboardEvent) => void;
-  readonly onUpdateSuggests?: (suggests: ISuggest[], activeSuggest: ISuggest | null) => void;
+  readonly onUpdateSuggests?: (
+    suggests: ISuggest[],
+    activeSuggest: ISuggest | null
+  ) => void;
   readonly onActivateSuggest?: (suggest: ISuggest | null) => void;
   readonly onSuggestNoResults?: (userInput: string) => void;
-  readonly skipSuggest?: (suggest: IFixture | google.maps.places.AutocompletePrediction) => boolean;
-  readonly getSuggestLabel?: (suggest: google.maps.places.AutocompletePrediction) => string;
+  readonly skipSuggest?: (
+    suggest: IFixture | google.maps.places.AutocompletePrediction
+  ) => boolean;
+  readonly getSuggestLabel?: (
+    suggest: google.maps.places.AutocompletePrediction
+  ) => string;
   readonly renderSuggestItem?: (suggest: ISuggest) => string | JSX.Element;
   readonly autoActivateFirstSuggest?: boolean;
   readonly style?: {
     input?: any;
     suggests?: any;
-    suggestItem?: any
+    suggestItem?: any;
   };
   readonly ignoreTab?: boolean;
   readonly ignoreEnter?: boolean;

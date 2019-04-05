@@ -39,7 +39,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * The Google Map instance
    */
-  googleMaps: any | null = null;
+  googleMaps: any | null = null;
 
   /**
    * The autocomple service to get suggests
@@ -54,7 +54,9 @@ export default class extends React.Component<IProps, IState> {
   /**
    * The sessionToken service to use session based monetization
    */
-  sessionToken: google.maps.places.AutocompleteSessionToken | undefined = undefined;
+  sessionToken:
+    | google.maps.places.AutocompleteSessionToken
+    | undefined = undefined;
 
   /**
    * The geocoder to get geocoded results
@@ -128,17 +130,14 @@ export default class extends React.Component<IProps, IState> {
 
     const googleMaps =
       this.props.googleMaps ||
-      ((window as any).google &&
-        (window as any).google.maps) ||
+      ((window as any).google && (window as any).google.maps) ||
       this.googleMaps;
 
     /* istanbul ignore next */
     if (!googleMaps) {
       if (console) {
         // tslint:disable-next-line:no-console
-        console.error(
-          'Google maps API was not found in the page.'
-        );
+        console.error('Google maps API was not found in the page.');
       }
       return;
     }
@@ -275,7 +274,8 @@ export default class extends React.Component<IProps, IState> {
       sessionToken: this.sessionToken
     };
     const inputLength = this.state.userInput.length;
-    const isShorterThanMinLength = this.props.minLength && inputLength < this.props.minLength;
+    const isShorterThanMinLength =
+      this.props.minLength && inputLength < this.props.minLength;
 
     if (isShorterThanMinLength) {
       return;
@@ -335,7 +335,11 @@ export default class extends React.Component<IProps, IState> {
           return;
         }
 
-        if ((skipSuggest && !skipSuggest(fixture)) && fixture.label.match(regex)) {
+        if (
+          skipSuggest &&
+          !skipSuggest(fixture) &&
+          fixture.label.match(regex)
+        ) {
           fixturesSearched++;
 
           suggests.push({
@@ -356,7 +360,9 @@ export default class extends React.Component<IProps, IState> {
         suggests.push({
           description: suggest.description,
           isFixture: false,
-          label: this.props.getSuggestLabel ? this.props.getSuggestLabel(suggest) : '',
+          label: this.props.getSuggestLabel
+            ? this.props.getSuggestLabel(suggest)
+            : '',
           matchedSubstrings: suggest.matched_substrings[0],
           placeId: suggest.place_id
         });
@@ -379,7 +385,8 @@ export default class extends React.Component<IProps, IState> {
 
     if (activeSuggest) {
       const newSuggest = suggests.filter(
-        listedSuggest => activeSuggest &&
+        listedSuggest =>
+          activeSuggest &&
           activeSuggest.placeId === listedSuggest.placeId &&
           activeSuggest.isFixture === listedSuggest.isFixture
       )[0];
@@ -462,7 +469,9 @@ export default class extends React.Component<IProps, IState> {
     this.setState({
       isSuggestsHidden: true,
       userInput:
-        typeof suggest.label !== 'object' ? suggest.label : (suggest.description || '')
+        typeof suggest.label !== 'object'
+          ? suggest.label
+          : suggest.description || ''
     });
 
     if (suggest.location) {
@@ -484,7 +493,11 @@ export default class extends React.Component<IProps, IState> {
       return;
     }
 
-    if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
+    if (
+      suggestToGeocode.placeId &&
+      !suggestToGeocode.isFixture &&
+      this.placesService
+    ) {
       const options: any = {
         placeId: suggestToGeocode.placeId,
         sessionToken: this.sessionToken
@@ -498,10 +511,14 @@ export default class extends React.Component<IProps, IState> {
         if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
           const gmaps = results;
           const location = gmaps.geometry.location;
-          const suggest = {...suggestToGeocode, gmaps, location: {
-            lat: location.lat(),
-            lng: location.lng()
-          }};
+          const suggest = {
+            ...suggestToGeocode,
+            gmaps,
+            location: {
+              lat: location.lat(),
+              lng: location.lng()
+            }
+          };
 
           this.sessionToken = new google.maps.places.AutocompleteSessionToken();
           if (this.props.onSuggestSelect) {
@@ -523,10 +540,14 @@ export default class extends React.Component<IProps, IState> {
         if (status === this.googleMaps.GeocoderStatus.OK) {
           const gmaps = results[0];
           const location = gmaps.geometry.location;
-          const suggest = {...suggestToGeocode, gmaps, location: {
-            lat: location.lat(),
-            lng: location.lng()
-          }};
+          const suggest = {
+            ...suggestToGeocode,
+            gmaps,
+            location: {
+              lat: location.lat(),
+              lng: location.lng()
+            }
+          };
 
           if (this.props.onSuggestSelect) {
             this.props.onSuggestSelect(suggest);

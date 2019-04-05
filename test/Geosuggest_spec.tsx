@@ -400,7 +400,7 @@ describe('Component: Geosuggest', () => {
       const geoSuggestList = TestUtils.findRenderedDOMComponentWithClass(
         component,
         'geosuggest__suggests'
-      )as HTMLUListElement;
+      ) as HTMLUListElement;
 
       geoSuggestInput.value = 'There is no result for this. Really.';
       TestUtils.Simulate.change(geoSuggestInput);
@@ -801,38 +801,44 @@ describe('Component: Geosuggest', () => {
     const props = {
       fixtures: [
         {
-          'placeId': '123456789',
-          'label': 'Location1',
-          'isFixture':true,
-          'location': {'lat':46,'lng':-71},
-          'locationId': 123456789,
-          'className': 'fixture'
+          placeId: '123456789',
+          label: 'Location1',
+          isFixture: true,
+          location: {lat: 46, lng: -71},
+          locationId: 123456789,
+          className: 'fixture'
         },
         {
-          'label': 'Location2',
-          'isFixture':true,
-          'location': {'lat':46,'lng':-71},
-          'locationId': 123456789,
-          'className': 'fixture'
+          label: 'Location2',
+          isFixture: true,
+          location: {lat: 46, lng: -71},
+          locationId: 123456789,
+          className: 'fixture'
         }
       ]
     };
 
-    beforeEach(() => { 
+    beforeEach(() => {
       render(props);
       component.updateSuggests();
     });
 
     it('should set suggest.placeId to fixture.placeId if fixture.placeId is defined', () => {
-      expect(component.state.suggests[0].placeId).to.equal(props.fixtures[0].placeId);
+      expect(component.state.suggests[0].placeId).to.equal(
+        props.fixtures[0].placeId
+      );
     });
 
     it('should set suggest.placeId to fixture.label if fixture.placeId is not defined', () => {
-      expect(component.state.suggests[1].placeId).to.equal(props.fixtures[1].label);
+      expect(component.state.suggests[1].placeId).to.equal(
+        props.fixtures[1].label
+      );
     });
 
     it('should set suggest.locationId to fixture.locationId if fixture.locationId is defined', () => {
-      expect(component.state.suggests[0].locationId).to.equal(props.fixtures[0].locationId);
+      expect(component.state.suggests[0].locationId).to.equal(
+        props.fixtures[0].locationId
+      );
     });
   });
 
