@@ -455,11 +455,19 @@ export default class extends React.Component<IProps, IState> {
    * When an item got selected
    */
   selectSuggest(suggestToSelect: ISuggest | null) {
-    const suggest: ISuggest = suggestToSelect || {
+    let suggest: ISuggest = suggestToSelect || {
       isFixture: false,
       label: this.state.userInput,
       placeId: this.state.userInput
     };
+
+    if (
+      !suggestToSelect &&
+      this.props.autoActivateFirstSuggest &&
+      this.state.suggests.length > 0
+    ) {
+      suggest = this.state.suggests[0];
+    }
 
     this.setState({
       isSuggestsHidden: true,
