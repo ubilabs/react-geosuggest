@@ -656,9 +656,7 @@ describe('Component: Geosuggest', () => {
   describe('with autoActivateFirstSuggest and fixtures enabled', () => {
     const props = {
       autoActivateFirstSuggest: true,
-      fixtures: [
-        {label: 'New Yorrrrk'}
-      ]
+      fixtures: [{label: 'New Yorrrrk'}]
     };
 
     beforeEach(() => render(props));
@@ -673,9 +671,11 @@ describe('Component: Geosuggest', () => {
 
       component.selectSuggest();
 
-      expect(onSuggestSelect.calledWithMatch((value: any) => {
-        return value.label === props.fixtures[0].label;
-      })).to.be.true;
+      expect(
+        onSuggestSelect.calledWithMatch((value: any) => {
+          return value.label === props.fixtures[0].label;
+        })
+      ).to.be.true;
     });
   });
 
