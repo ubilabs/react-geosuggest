@@ -41,7 +41,7 @@ var Geosuggest = (function (React) {
         return __assign.apply(this, arguments);
     };
 
-    var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+    var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
     function createCommonjsModule(fn, module) {
     	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -840,8 +840,9 @@ var Geosuggest = (function (React) {
                     : null,
                 _a));
             return (React.createElement("ul", { className: classes, style: this.props.style }, this.props.suggests.map(function (suggest) {
-                var isActive = _this.props.activeSuggest &&
-                    suggest.placeId === _this.props.activeSuggest.placeId || false;
+                var isActive = (_this.props.activeSuggest &&
+                    suggest.placeId === _this.props.activeSuggest.placeId) ||
+                    false;
                 return (React.createElement(default_1$1, { key: suggest.placeId, className: suggest.className || '', userInput: _this.props.userInput, isHighlightMatch: _this.props.isHighlightMatch, suggest: suggest, style: _this.props.suggestItemStyle, suggestItemClassName: _this.props.suggestItemClassName, isActive: isActive, activeClassName: _this.props.suggestItemActiveClassName, onMouseDown: _this.props.onSuggestMouseDown, onMouseOut: _this.props.onSuggestMouseOut, onSelect: _this.props.onSuggestSelect, renderSuggestItem: _this.props.renderSuggestItem }));
             })));
         };
@@ -857,11 +858,11 @@ var Geosuggest = (function (React) {
      * Entry point for the Geosuggest component
      */
     var default_1$3 = /** @class */ (function (_super) {
-        __extends(default_1$$1, _super);
+        __extends(default_1$1, _super);
         /**
          * The constructor. Sets the initial state.
          */
-        function default_1$$1(props) {
+        function default_1$1(props) {
             var _this = _super.call(this, props) || this;
             /**
              * The Google Map instance
@@ -915,7 +916,7 @@ var Geosuggest = (function (React) {
         /**
          * Change inputValue if prop changes
          */
-        default_1$$1.prototype.componentWillReceiveProps = function (props) {
+        default_1$1.prototype.componentWillReceiveProps = function (props) {
             if (this.props.initialValue !== props.initialValue) {
                 this.setState({ userInput: props.initialValue || '' });
             }
@@ -925,13 +926,12 @@ var Geosuggest = (function (React) {
          * Google api sdk object will be obtained and cached as a instance property.
          * Necessary objects of google api will also be determined and saved.
          */
-        default_1$$1.prototype.componentWillMount = function () {
+        default_1$1.prototype.componentWillMount = function () {
             if (typeof window === 'undefined') {
                 return;
             }
             var googleMaps = this.props.googleMaps ||
-                (window.google &&
-                    window.google.maps) ||
+                (window.google && window.google.maps) ||
                 this.googleMaps;
             /* istanbul ignore next */
             if (!googleMaps) {
@@ -950,13 +950,13 @@ var Geosuggest = (function (React) {
         /**
          * When the component will unmount
          */
-        default_1$$1.prototype.componentWillUnmount = function () {
+        default_1$1.prototype.componentWillUnmount = function () {
             clearTimeout(this.timer);
         };
         /**
          * When the input changed
          */
-        default_1$$1.prototype.onInputChange = function (userInput) {
+        default_1$1.prototype.onInputChange = function (userInput) {
             if (!userInput) {
                 if (this.props.onSuggestSelect) {
                     this.props.onSuggestSelect();
@@ -967,7 +967,7 @@ var Geosuggest = (function (React) {
         /**
          * On After the input got changed
          */
-        default_1$$1.prototype.onAfterInputChange = function () {
+        default_1$1.prototype.onAfterInputChange = function () {
             this.showSuggests();
             if (this.props.onChange) {
                 this.props.onChange(this.state.userInput);
@@ -976,7 +976,7 @@ var Geosuggest = (function (React) {
         /**
          * When the input gets focused
          */
-        default_1$$1.prototype.onInputFocus = function () {
+        default_1$1.prototype.onInputFocus = function () {
             if (this.props.onFocus) {
                 this.props.onFocus();
             }
@@ -985,27 +985,27 @@ var Geosuggest = (function (React) {
         /**
          * When the input gets blurred
          */
-        default_1$$1.prototype.onInputBlur = function () {
+        default_1$1.prototype.onInputBlur = function () {
             if (!this.state.ignoreBlur) {
                 this.hideSuggests();
             }
         };
-        default_1$$1.prototype.onNext = function () {
+        default_1$1.prototype.onNext = function () {
             this.activateSuggest('next');
         };
-        default_1$$1.prototype.onPrev = function () {
+        default_1$1.prototype.onPrev = function () {
             this.activateSuggest('prev');
         };
-        default_1$$1.prototype.onSelect = function () {
+        default_1$1.prototype.onSelect = function () {
             this.selectSuggest(this.state.activeSuggest);
         };
-        default_1$$1.prototype.onSuggestMouseDown = function () {
+        default_1$1.prototype.onSuggestMouseDown = function () {
             this.setState({ ignoreBlur: true });
         };
-        default_1$$1.prototype.onSuggestMouseOut = function () {
+        default_1$1.prototype.onSuggestMouseOut = function () {
             this.setState({ ignoreBlur: false });
         };
-        default_1$$1.prototype.onSuggestNoResults = function () {
+        default_1$1.prototype.onSuggestNoResults = function () {
             if (this.props.onSuggestNoResults) {
                 this.props.onSuggestNoResults(this.state.userInput);
             }
@@ -1013,7 +1013,7 @@ var Geosuggest = (function (React) {
         /**
          * Focus the input
          */
-        default_1$$1.prototype.focus = function () {
+        default_1$1.prototype.focus = function () {
             if (this.input) {
                 this.input.focus();
             }
@@ -1021,7 +1021,7 @@ var Geosuggest = (function (React) {
         /**
          * Blur the input
          */
-        default_1$$1.prototype.blur = function () {
+        default_1$1.prototype.blur = function () {
             if (this.input) {
                 this.input.blur();
             }
@@ -1029,7 +1029,7 @@ var Geosuggest = (function (React) {
         /**
          * Update the value of the user input
          */
-        default_1$$1.prototype.update = function (userInput) {
+        default_1$1.prototype.update = function (userInput) {
             this.setState({ userInput: userInput });
             if (this.props.onChange) {
                 this.props.onChange(userInput);
@@ -1038,13 +1038,13 @@ var Geosuggest = (function (React) {
         /*
          * Clear the input and close the suggestion pane
          */
-        default_1$$1.prototype.clear = function () {
+        default_1$1.prototype.clear = function () {
             this.setState({ userInput: '' }, this.hideSuggests);
         };
         /**
          * Search for new suggests
          */
-        default_1$$1.prototype.searchSuggests = function () {
+        default_1$1.prototype.searchSuggests = function () {
             var _this = this;
             if (!this.state.userInput) {
                 this.updateSuggests();
@@ -1092,14 +1092,12 @@ var Geosuggest = (function (React) {
         /**
          * Update the suggests
          */
-        default_1$$1.prototype.updateSuggests = function (suggestsGoogle, 
+        default_1$1.prototype.updateSuggests = function (suggestsGoogle, 
         // tslint:disable-next-line:no-empty
         callback) {
             var _this = this;
             if (suggestsGoogle === void 0) { suggestsGoogle = []; }
-            if (callback === void 0) { 
-            // tslint:disable-next-line:no-empty
-            callback = function () { }; }
+            if (callback === void 0) { callback = function () { }; }
             var suggests = [];
             var userInput = this.state.userInput;
             var _a = this.props, skipSuggest = _a.skipSuggest, maxFixtures = _a.maxFixtures, fixtures = _a.fixtures;
@@ -1111,7 +1109,9 @@ var Geosuggest = (function (React) {
                     if (maxFixtures && fixturesSearched >= maxFixtures) {
                         return;
                     }
-                    if ((skipSuggest && !skipSuggest(fixture)) && fixture.label.match(regex)) {
+                    if (skipSuggest &&
+                        !skipSuggest(fixture) &&
+                        fixture.label.match(regex)) {
                         fixturesSearched++;
                         suggests.push(__assign({}, fixture, { isFixture: true, matchedSubstrings: {
                                 length: userInput.length,
@@ -1125,7 +1125,9 @@ var Geosuggest = (function (React) {
                     suggests.push({
                         description: suggest.description,
                         isFixture: false,
-                        label: _this.props.getSuggestLabel ? _this.props.getSuggestLabel(suggest) : '',
+                        label: _this.props.getSuggestLabel
+                            ? _this.props.getSuggestLabel(suggest)
+                            : '',
                         matchedSubstrings: suggest.matched_substrings[0],
                         placeId: suggest.place_id
                     });
@@ -1140,13 +1142,15 @@ var Geosuggest = (function (React) {
         /**
          * Return the new activeSuggest object after suggests have been updated
          */
-        default_1$$1.prototype.updateActiveSuggest = function (suggests) {
+        default_1$1.prototype.updateActiveSuggest = function (suggests) {
             if (suggests === void 0) { suggests = []; }
             var activeSuggest = this.state.activeSuggest;
             if (activeSuggest) {
-                var newSuggest = suggests.filter(function (listedSuggest) { return activeSuggest &&
-                    activeSuggest.placeId === listedSuggest.placeId &&
-                    activeSuggest.isFixture === listedSuggest.isFixture; })[0];
+                var newSuggest = suggests.filter(function (listedSuggest) {
+                    return activeSuggest &&
+                        activeSuggest.placeId === listedSuggest.placeId &&
+                        activeSuggest.isFixture === listedSuggest.isFixture;
+                })[0];
                 activeSuggest = newSuggest || null;
             }
             return activeSuggest;
@@ -1154,14 +1158,14 @@ var Geosuggest = (function (React) {
         /**
          * Show the suggestions
          */
-        default_1$$1.prototype.showSuggests = function () {
+        default_1$1.prototype.showSuggests = function () {
             this.searchSuggests();
             this.setState({ isSuggestsHidden: false });
         };
         /**
          * Hide the suggestions
          */
-        default_1$$1.prototype.hideSuggests = function () {
+        default_1$1.prototype.hideSuggests = function () {
             var _this = this;
             if (this.props.onBlur) {
                 this.props.onBlur(this.state.userInput);
@@ -1176,7 +1180,7 @@ var Geosuggest = (function (React) {
         /**
          * Activate a new suggest
          */
-        default_1$$1.prototype.activateSuggest = function (direction) {
+        default_1$1.prototype.activateSuggest = function (direction) {
             if (this.state.isSuggestsHidden) {
                 this.showSuggests();
                 return;
@@ -1205,15 +1209,22 @@ var Geosuggest = (function (React) {
         /**
          * When an item got selected
          */
-        default_1$$1.prototype.selectSuggest = function (suggestToSelect) {
+        default_1$1.prototype.selectSuggest = function (suggestToSelect) {
             var suggest = suggestToSelect || {
                 isFixture: false,
                 label: this.state.userInput,
                 placeId: this.state.userInput
             };
+            if (!suggestToSelect &&
+                this.props.autoActivateFirstSuggest &&
+                this.state.suggests.length > 0) {
+                suggest = this.state.suggests[0];
+            }
             this.setState({
                 isSuggestsHidden: true,
-                userInput: typeof suggest.label !== 'object' ? suggest.label : (suggest.description || '')
+                userInput: typeof suggest.label !== 'object'
+                    ? suggest.label
+                    : suggest.description || ''
             });
             if (suggest.location) {
                 this.setState({ ignoreBlur: false });
@@ -1227,23 +1238,26 @@ var Geosuggest = (function (React) {
         /**
          * Geocode a suggest
          */
-        default_1$$1.prototype.geocodeSuggest = function (suggestToGeocode) {
+        default_1$1.prototype.geocodeSuggest = function (suggestToGeocode) {
             var _this = this;
             if (!this.geocoder) {
                 return;
             }
-            if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
+            if (suggestToGeocode.placeId &&
+                !suggestToGeocode.isFixture &&
+                this.placesService) {
                 var options = {
                     placeId: suggestToGeocode.placeId,
                     sessionToken: this.sessionToken
                 };
                 if (this.props.placeDetailFields) {
-                    options.fields = this.props.placeDetailFields;
+                    options.fields = ['geometry'].concat(this.props.placeDetailFields);
                 }
                 this.placesService.getDetails(options, function (results, status) {
                     if (status === _this.googleMaps.places.PlacesServiceStatus.OK) {
                         var gmaps = results;
-                        var location_1 = gmaps.geometry.location;
+                        var location_1 = (gmaps.geometry &&
+                            gmaps.geometry.location);
                         var suggest = __assign({}, suggestToGeocode, { gmaps: gmaps, location: {
                                 lat: location_1.lat(),
                                 lng: location_1.lng()
@@ -1267,7 +1281,8 @@ var Geosuggest = (function (React) {
                 this.geocoder.geocode(options, function (results, status) {
                     if (status === _this.googleMaps.GeocoderStatus.OK) {
                         var gmaps = results[0];
-                        var location_2 = gmaps.geometry.location;
+                        var location_2 = (gmaps.geometry &&
+                            gmaps.geometry.location);
                         var suggest = __assign({}, suggestToGeocode, { gmaps: gmaps, location: {
                                 lat: location_2.lat(),
                                 lng: location_2.lng()
@@ -1282,7 +1297,7 @@ var Geosuggest = (function (React) {
         /**
          * Render the view
          */
-        default_1$$1.prototype.render = function () {
+        default_1$1.prototype.render = function () {
             var _this = this;
             var attributes = filterInputAttributes(this.props);
             var classes = classnames('geosuggest', this.props.className, {
@@ -1300,8 +1315,8 @@ var Geosuggest = (function (React) {
         /**
          * Default values for the properties
          */
-        default_1$$1.defaultProps = defaults;
-        return default_1$$1;
+        default_1$1.defaultProps = defaults;
+        return default_1$1;
     }(React.Component));
 
     return default_1$3;

@@ -1,3 +1,11 @@
+## 2.12.0 (2019-04-08)
+
+
+#### Features
+
+* use first suggest on selectSuggest when autoActivateFirstSuggest  (#431) ([6bc9850a](https://github.com/ubilabs/react-geosuggest/commit/6bc9850a070a9379ab05064cb03635dfd324466a), closes [#423](https://github.com/ubilabs/react-geosuggest/issues/423))
+
+
 ## 2.11.0 (2019-04-05)
 
 
