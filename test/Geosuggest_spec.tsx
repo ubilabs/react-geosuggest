@@ -653,6 +653,32 @@ describe('Component: Geosuggest', () => {
     });
   });
 
+  describe('with autoActivateFirstSuggest and fixtures enabled', () => {
+    const props = {
+      autoActivateFirstSuggest: true,
+      fixtures: [
+        {label: 'New Yorrrrk'}
+      ]
+    };
+
+    beforeEach(() => render(props));
+
+    it('should select the first suggest on `selectSuggest`', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
+        component,
+        'geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+
+      component.selectSuggest();
+
+      expect(onSuggestSelect.calledWithMatch((value: any) => {
+        return value.label === props.fixtures[0].label;
+      })).to.be.true;
+    });
+  });
+
   describe('with label and id props', () => {
     const props = {
       id: 'geosuggest-id',

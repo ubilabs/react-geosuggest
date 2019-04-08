@@ -460,11 +460,19 @@ export default class extends React.Component<IProps, IState> {
    * When an item got selected
    */
   selectSuggest(suggestToSelect: ISuggest | null) {
-    const suggest: ISuggest = suggestToSelect || {
+    let suggest: ISuggest = suggestToSelect || {
       isFixture: false,
       label: this.state.userInput,
       placeId: this.state.userInput
     };
+
+    if (
+      !suggestToSelect &&
+      this.props.autoActivateFirstSuggest &&
+      this.state.suggests.length > 0
+    ) {
+      suggest = this.state.suggests[0];
+    }
 
     this.setState({
       isSuggestsHidden: true,
@@ -504,13 +512,14 @@ export default class extends React.Component<IProps, IState> {
       };
 
       if (this.props.placeDetailFields) {
-        options.fields = this.props.placeDetailFields;
+        options.fields = ['geometry', ...this.props.placeDetailFields];
       }
 
       this.placesService.getDetails(options, (results, status) => {
         if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
           const gmaps = results;
-          const location = gmaps.geometry.location;
+          const location = (gmaps.geometry &&
+            gmaps.geometry.location) as google.maps.LatLng;
           const suggest = {
             ...suggestToGeocode,
             gmaps,
@@ -539,7 +548,8 @@ export default class extends React.Component<IProps, IState> {
       this.geocoder.geocode(options, (results, status) => {
         if (status === this.googleMaps.GeocoderStatus.OK) {
           const gmaps = results[0];
-          const location = gmaps.geometry.location;
+          const location = (gmaps.geometry &&
+            gmaps.geometry.location) as google.maps.LatLng;
           const suggest = {
             ...suggestToGeocode,
             gmaps,
