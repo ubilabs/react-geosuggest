@@ -12,7 +12,10 @@ interface IProps {
   readonly isHighlightMatch: boolean;
   readonly style: any;
   readonly onSelect: (suggest: ISuggest) => void;
-  readonly renderSuggestItem?: (suggest: ISuggest, userInput: string) => JSX.Element | string;
+  readonly renderSuggestItem?: (
+    suggest: ISuggest,
+    userInput: string
+  ) => JSX.Element | string;
   readonly onMouseDown: (event: React.MouseEvent) => void;
   readonly onMouseOut: (event: React.MouseEvent) => void;
 }
@@ -49,7 +52,10 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * Replace matched text with the same in bold
    */
-  formatMatchedText(userInput: string, suggest: ISuggest): JSX.Element | string {
+  formatMatchedText(
+    userInput: string,
+    suggest: ISuggest
+  ): JSX.Element | string {
     if (!userInput || !suggest.matchedSubstrings) {
       return suggest.label;
     }
@@ -104,8 +110,8 @@ export default class extends React.PureComponent<IProps, {}> {
 
     const overTop = element.offsetTop - parent.offsetTop < parent.scrollTop;
     const overBottom =
-        element.offsetTop - parent.offsetTop + element.clientHeight >
-        parent.scrollTop + parent.clientHeight;
+      element.offsetTop - parent.offsetTop + element.clientHeight >
+      parent.scrollTop + parent.clientHeight;
 
     if (overTop || overBottom) {
       parent.scrollTop =

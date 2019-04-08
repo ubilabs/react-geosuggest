@@ -16,7 +16,10 @@ interface IProps {
   readonly userInput: string;
   readonly isHighlightMatch: boolean;
   readonly onSuggestNoResults: () => void;
-  readonly renderSuggestItem?: (suggest: ISuggest, userInput: string) => JSX.Element | string;
+  readonly renderSuggestItem?: (
+    suggest: ISuggest,
+    userInput: string
+  ) => JSX.Element | string;
   readonly onSuggestSelect: (suggest: ISuggest) => void;
   readonly onSuggestMouseDown: (event: React.MouseEvent) => void;
   readonly onSuggestMouseOut: (event: React.MouseEvent) => void;
@@ -64,8 +67,9 @@ export default class extends React.PureComponent<IProps, {}> {
       <ul className={classes} style={this.props.style}>
         {this.props.suggests.map(suggest => {
           const isActive =
-            this.props.activeSuggest &&
-            suggest.placeId === this.props.activeSuggest.placeId || false;
+            (this.props.activeSuggest &&
+              suggest.placeId === this.props.activeSuggest.placeId) ||
+            false;
 
           return (
             <SuggestItem
