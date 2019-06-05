@@ -100,6 +100,7 @@ export default class extends React.Component<IProps, IState> {
     this.onSuggestNoResults = this.onSuggestNoResults.bind(this);
     this.hideSuggests = this.hideSuggests.bind(this);
     this.selectSuggest = this.selectSuggest.bind(this);
+    this.transformInput = this.transformInput.bind(this);
 
     if (props.queryDelay) {
       this.onAfterInputChange = debounce(
@@ -225,6 +226,13 @@ export default class extends React.Component<IProps, IState> {
     }
   }
 
+  transformInput(userInput: string): string {
+    if (this.props.transformInput) {
+      return this.props.transformInput(this.state.userInput);
+    }
+    return userInput;
+  }
+
   /**
    * Focus the input
    */
@@ -269,8 +277,10 @@ export default class extends React.Component<IProps, IState> {
       return;
     }
 
+    const transformedInput = this.transformInput(this.state.userInput);
+
     const options: google.maps.places.AutocompletionRequest = {
-      input: this.state.userInput,
+      input: transformedInput,
       sessionToken: this.sessionToken
     };
     const inputLength = this.state.userInput.length;
