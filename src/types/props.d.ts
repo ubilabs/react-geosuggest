@@ -31,6 +31,7 @@ export default interface IProps {
   readonly onChange?: (value: string) => void;
   readonly onKeyDown?: (event: React.KeyboardEvent) => void;
   readonly onKeyPress?: (event: React.KeyboardEvent) => void;
+  readonly transformInput?: (userInput: string) => string;
   readonly onUpdateSuggests?: (
     suggests: ISuggest[],
     activeSuggest: ISuggest | null
