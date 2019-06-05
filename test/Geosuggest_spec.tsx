@@ -1010,4 +1010,46 @@ describe('Component: Geosuggest', () => {
       expect(matchedText).to.have.lengthOf.at.least(1);
     });
   });
+
+  describe('with transformInput', () => {
+    it('should use the actual input value to search for predictions when there is no transformation function is specified', () => {
+      const props = {};
+      render(props);
+
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
+        component,
+        'geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.value = 'Exact Match Without Transformation';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+      const matchedText = TestUtils.scryRenderedDOMComponentsWithClass(
+        component,
+        'geosuggest__item__matched-text'
+      );
+
+      expect(matchedText).to.have.lengthOf.at.least(1);
+    });
+
+    it('should transform our input before to search for predictions when we specify a transformation function', () => {
+      const props = {
+        transformInput: (value: string): string => `Transformed: ${value}`
+      };
+      render(props);
+
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
+        component,
+        'geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.value = 'Exact Match With Transform';
+      TestUtils.Simulate.change(geoSuggestInput);
+      TestUtils.Simulate.focus(geoSuggestInput);
+      const matchedText = TestUtils.scryRenderedDOMComponentsWithClass(
+        component,
+        'geosuggest__item__matched-text'
+      );
+
+      expect(matchedText).to.have.lengthOf.at.least(1);
+    });
+  });
 });

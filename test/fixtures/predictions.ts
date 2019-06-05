@@ -171,6 +171,62 @@ export default function predictions(): google.maps.places.AutocompletePrediction
         }
       ],
       types: ['locality', 'political', 'geocode']
+    },
+    {
+      description: 'Transformed New York, NY, United States',
+      matched_substrings: [
+        {
+          length: 2,
+          offset: 0
+        }
+      ],
+      place_id: 'ChIJHQ6aMnBTwokRc-T-3CrcvOF',
+      reference: '...',
+      structured_formatting: {
+        main_text: 'Transformed: Exact Match With Transform',
+        main_text_matched_substrings: [
+          {
+            length: 2,
+            offset: 0
+          }
+        ],
+        secondary_text: ''
+      },
+      terms: [
+        {
+          offset: 0,
+          value: 'Transformed: Exact Match With Transform'
+        }
+      ],
+      types: ['locality']
+    },
+    {
+      description: 'Exact Match Without Transformation',
+      matched_substrings: [
+        {
+          length: 2,
+          offset: 0
+        }
+      ],
+      place_id: 'ChIJHQ6aMnBTwokRc-T-3CrcvOF',
+      reference: '...',
+      structured_formatting: {
+        main_text: 'Exact Match Without Transformation',
+        main_text_matched_substrings: [
+          {
+            length: 2,
+            offset: 0
+          }
+        ],
+        secondary_text: ''
+      },
+      terms: [
+        {
+          offset: 0,
+          value: 'Exact Match Without Transformation'
+        }
+      ],
+      types: ['locality']
     }
   ];
 }
