@@ -215,6 +215,14 @@ Default: `function(event) {}`
 
 Gets triggered when input field gets key press.
 
+#### transformInput
+Type: `Function`
+Default: `function(userInput: string): string {}`
+
+Gets triggered just before the Google auto-complete gets called. It allows you to modify the search value without updating your input value.
+Example: searching for address with unit number, ie. `123/50 Main Street` would not return anything from Google autocomplete because it might not have this place indexed yet. `transformInput` would allow you to strip the unit number before the search gets triggered.
+
+
 #### onSuggestSelect
 Type: `Function`
 Default: `function(suggest) {}`
