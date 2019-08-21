@@ -1010,4 +1010,57 @@ describe('Component: Geosuggest', () => {
       expect(matchedText).to.have.lengthOf.at.least(1);
     });
   });
+
+  describe('accessibility', () => {
+    let geoSuggestInput: HTMLInputElement;
+    beforeEach(() => {
+      render();
+
+      geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
+        component,
+        'geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.value = 'New';
+      TestUtils.Simulate.change(geoSuggestInput);
+    });
+
+    it('should add aria-selected for the active suggestion', () => {
+      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
+        component,
+        'geosuggest__item'
+      );
+      expect(suggests[0].getAttribute('aria-selected')).to.equal('false');
+
+      TestUtils.Simulate.focus(geoSuggestInput);
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'keyDown',
+        keyCode: 40,
+        which: 40
+      });
+      expect(suggests[0].getAttribute('aria-selected')).to.equal('true');
+    });
+
+    it('should set aria-expanded to false when suggestions are hidden', () => {
+      expect(geoSuggestInput.getAttribute('aria-expanded')).to.equal('true');
+
+      TestUtils.Simulate.keyDown(geoSuggestInput, {
+        key: 'Enter',
+        keyCode: 13,
+        which: 13
+      });
+
+      expect(geoSuggestInput.getAttribute('aria-expanded')).to.equal('false');
+    });
+
+    it('should have aria-owns attribute set to the list id', () => {
+      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
+        component,
+        'geosuggest__suggests'
+      );
+
+      const listId = suggests[0].getAttribute('id');
+
+      expect(geoSuggestInput.getAttribute('aria-owns')).to.equal(listId);
+    });
+  });
 });
