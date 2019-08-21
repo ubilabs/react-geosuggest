@@ -161,7 +161,10 @@ export default class extends React.PureComponent<IProps, {}> {
         style={this.props.style}
         onMouseDown={this.props.onMouseDown}
         onMouseOut={this.props.onMouseOut}
-        onClick={this.onClick}>
+        onClick={this.onClick}
+        role="option"
+        aria-selected={this.props.isActive}
+        id={suggest.placeId}>
         {content}
       </li>
     );
