@@ -39,9 +39,9 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * There are new properties available for the list
    */
-  componentWillReceiveProps(nextProps: IProps) {
-    if (nextProps.suggests !== this.props.suggests) {
-      if (nextProps.suggests.length === 0) {
+  componentDidUpdate(prevProps: IProps) {
+    if (prevProps.suggests !== this.props.suggests) {
+      if (this.props.suggests.length === 0) {
         this.props.onSuggestNoResults();
       }
     }

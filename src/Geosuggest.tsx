@@ -112,9 +112,9 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Change inputValue if prop changes
    */
-  componentWillReceiveProps(props: IProps) {
-    if (this.props.initialValue !== props.initialValue) {
-      this.setState({userInput: props.initialValue || ''});
+  componentDidUpdate(prevProps: IProps): void {
+    if (prevProps.initialValue !== this.props.initialValue) {
+      this.setState({userInput: this.props.initialValue || ''});
     }
   }
 

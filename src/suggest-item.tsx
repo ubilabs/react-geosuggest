@@ -90,8 +90,8 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * Checking if item just became active and scrolling if needed.
    */
-  componentWillReceiveProps(nextProps: IProps): void {
-    if (nextProps.isActive && !this.props.isActive) {
+  componentDidUpdate(prevProps: IProps): void {
+    if (!prevProps.isActive && this.props.isActive) {
       this.scrollIfNeeded();
     }
   }
