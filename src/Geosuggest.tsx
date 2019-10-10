@@ -123,7 +123,7 @@ export default class extends React.Component<IProps, IState> {
    * Google api sdk object will be obtained and cached as a instance property.
    * Necessary objects of google api will also be determined and saved.
    */
-  componentWillMount() {
+  componentDidMount() {
     if (typeof window === 'undefined') {
       return;
     }
