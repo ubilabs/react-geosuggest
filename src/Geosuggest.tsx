@@ -74,6 +74,11 @@ export default class extends React.Component<IProps, IState> {
   input: Input | null = null;
 
   /**
+   * Id for the suggestions list
+   */
+  listId: string;
+
+  /**
    * The constructor. Sets the initial state.
    */
   constructor(props: IProps) {
@@ -100,6 +105,9 @@ export default class extends React.Component<IProps, IState> {
     this.onSuggestNoResults = this.onSuggestNoResults.bind(this);
     this.hideSuggests = this.hideSuggests.bind(this);
     this.selectSuggest = this.selectSuggest.bind(this);
+    this.listId = `geosuggest__list_${Math.random()
+      .toString(16)
+      .slice(2)}`;
 
     if (props.queryDelay) {
       this.onAfterInputChange = debounce(
@@ -594,6 +602,9 @@ export default class extends React.Component<IProps, IState> {
         onPrev={this.onPrev}
         onSelect={this.onSelect}
         onEscape={this.hideSuggests}
+        isSuggestsHidden={this.state.isSuggestsHidden}
+        activeSuggest={this.state.activeSuggest}
+        listId={this.listId}
         {...attributes}
       />
     );
@@ -615,6 +626,7 @@ export default class extends React.Component<IProps, IState> {
         onSuggestMouseOut={this.onSuggestMouseOut}
         onSuggestSelect={this.selectSuggest}
         renderSuggestItem={this.props.renderSuggestItem}
+        listId={this.listId}
       />
     );
 
