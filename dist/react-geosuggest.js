@@ -673,15 +673,20 @@ var Geosuggest = (function (React) {
             var _this = this;
             var attributes = filterInputAttributes(this.props);
             var classes = classnames('geosuggest__input', this.props.className);
-            return (React.createElement("input", __assign({ className: classes, ref: function (i) { return (_this.input = i); }, type: "text" }, attributes, { value: this.props.value, style: this.props.style, onKeyDown: this.onInputKeyDown, onChange: this.onChange, onKeyPress: this.props.onKeyPress, onFocus: this.props.onFocus, onBlur: this.props.onBlur })));
+            return (React.createElement("input", __assign({ className: classes, ref: function (i) { return (_this.input = i); }, type: "text" }, attributes, { value: this.props.value, style: this.props.style, onKeyDown: this.onInputKeyDown, onChange: this.onChange, onKeyPress: this.props.onKeyPress, onFocus: this.props.onFocus, onBlur: this.props.onBlur, role: "combobox", "aria-expanded": !this.props.isSuggestsHidden, "aria-activedescendant": this.props.activeSuggest
+                    ? this.props.activeSuggest.placeId
+                    : undefined, "aria-owns": this.props.listId })));
         };
         /* tslint:disable:no-empty */
         /**
          * Default values for the properties
          */
         default_1.defaultProps = {
+            activeSuggest: null,
             autoComplete: 'nope',
             className: '',
+            isSuggestsHidden: true,
+            listId: '',
             onBlur: function () { },
             onChange: function () { },
             onEscape: function () { },
@@ -746,8 +751,8 @@ var Geosuggest = (function (React) {
         /**
          * Checking if item just became active and scrolling if needed.
          */
-        default_1.prototype.componentWillReceiveProps = function (nextProps) {
-            if (nextProps.isActive && !this.props.isActive) {
+        default_1.prototype.componentDidUpdate = function (prevProps) {
+            if (!prevProps.isActive && this.props.isActive) {
                 this.scrollIfNeeded();
             }
         };
@@ -798,7 +803,7 @@ var Geosuggest = (function (React) {
             else if (this.props.isHighlightMatch) {
                 content = this.formatMatchedText(this.props.userInput, suggest);
             }
-            return (React.createElement("li", { className: classes, ref: function (li) { return (_this.ref = li); }, style: this.props.style, onMouseDown: this.props.onMouseDown, onMouseOut: this.props.onMouseOut, onClick: this.onClick }, content));
+            return (React.createElement("li", { className: classes, ref: function (li) { return (_this.ref = li); }, style: this.props.style, onMouseDown: this.props.onMouseDown, onMouseOut: this.props.onMouseOut, onClick: this.onClick, role: "option", "aria-selected": this.props.isActive, id: suggest.placeId }, content));
         };
         return default_1;
     }(React.PureComponent));
@@ -820,9 +825,9 @@ var Geosuggest = (function (React) {
         /**
          * There are new properties available for the list
          */
-        default_1.prototype.componentWillReceiveProps = function (nextProps) {
-            if (nextProps.suggests !== this.props.suggests) {
-                if (nextProps.suggests.length === 0) {
+        default_1.prototype.componentDidUpdate = function (prevProps) {
+            if (prevProps.suggests !== this.props.suggests) {
+                if (this.props.suggests.length === 0) {
                     this.props.onSuggestNoResults();
                 }
             }
@@ -839,7 +844,7 @@ var Geosuggest = (function (React) {
                     ? this.isHidden()
                     : null,
                 _a));
-            return (React.createElement("ul", { className: classes, style: this.props.style }, this.props.suggests.map(function (suggest) {
+            return (React.createElement("ul", { className: classes, style: this.props.style, role: "listbox", id: this.props.listId }, this.props.suggests.map(function (suggest) {
                 var isActive = (_this.props.activeSuggest &&
                     suggest.placeId === _this.props.activeSuggest.placeId) ||
                     false;
@@ -908,6 +913,9 @@ var Geosuggest = (function (React) {
             _this.onSuggestNoResults = _this.onSuggestNoResults.bind(_this);
             _this.hideSuggests = _this.hideSuggests.bind(_this);
             _this.selectSuggest = _this.selectSuggest.bind(_this);
+            _this.listId = "geosuggest__list_" + Math.random()
+                .toString(16)
+                .slice(2);
             if (props.queryDelay) {
                 _this.onAfterInputChange = lodash_debounce(_this.onAfterInputChange, props.queryDelay);
             }
@@ -916,9 +924,9 @@ var Geosuggest = (function (React) {
         /**
          * Change inputValue if prop changes
          */
-        default_1$1.prototype.componentWillReceiveProps = function (props) {
-            if (this.props.initialValue !== props.initialValue) {
-                this.setState({ userInput: props.initialValue || '' });
+        default_1$1.prototype.componentDidUpdate = function (prevProps) {
+            if (prevProps.initialValue !== this.props.initialValue) {
+                this.setState({ userInput: this.props.initialValue || '' });
             }
         };
         /**
@@ -926,7 +934,7 @@ var Geosuggest = (function (React) {
          * Google api sdk object will be obtained and cached as a instance property.
          * Necessary objects of google api will also be determined and saved.
          */
-        default_1$1.prototype.componentWillMount = function () {
+        default_1$1.prototype.componentDidMount = function () {
             if (typeof window === 'undefined') {
                 return;
             }
@@ -1304,8 +1312,8 @@ var Geosuggest = (function (React) {
                 'geosuggest--loading': this.state.isLoading
             });
             var shouldRenderLabel = this.props.label && attributes.id;
-            var input = (React.createElement(default_1, __assign({ className: this.props.inputClassName, ref: function (i) { return (_this.input = i); }, value: this.state.userInput, doNotSubmitOnEnter: !this.state.isSuggestsHidden, ignoreTab: this.props.ignoreTab, ignoreEnter: this.props.ignoreEnter, style: this.props.style && this.props.style.input, onChange: this.onInputChange, onFocus: this.onInputFocus, onBlur: this.onInputBlur, onKeyDown: this.props.onKeyDown, onKeyPress: this.props.onKeyPress, onNext: this.onNext, onPrev: this.onPrev, onSelect: this.onSelect, onEscape: this.hideSuggests }, attributes)));
-            var suggestionsList = (React.createElement(default_1$2, { isHidden: this.state.isSuggestsHidden, style: this.props.style && this.props.style.suggests, suggestItemStyle: this.props.style && this.props.style.suggestItem, userInput: this.state.userInput, isHighlightMatch: Boolean(this.props.highlightMatch), suggestsClassName: this.props.suggestsClassName, suggestItemClassName: this.props.suggestItemClassName, suggests: this.state.suggests, hiddenClassName: this.props.suggestsHiddenClassName, suggestItemActiveClassName: this.props.suggestItemActiveClassName, activeSuggest: this.state.activeSuggest, onSuggestNoResults: this.onSuggestNoResults, onSuggestMouseDown: this.onSuggestMouseDown, onSuggestMouseOut: this.onSuggestMouseOut, onSuggestSelect: this.selectSuggest, renderSuggestItem: this.props.renderSuggestItem }));
+            var input = (React.createElement(default_1, __assign({ className: this.props.inputClassName, ref: function (i) { return (_this.input = i); }, value: this.state.userInput, doNotSubmitOnEnter: !this.state.isSuggestsHidden, ignoreTab: this.props.ignoreTab, ignoreEnter: this.props.ignoreEnter, style: this.props.style && this.props.style.input, onChange: this.onInputChange, onFocus: this.onInputFocus, onBlur: this.onInputBlur, onKeyDown: this.props.onKeyDown, onKeyPress: this.props.onKeyPress, onNext: this.onNext, onPrev: this.onPrev, onSelect: this.onSelect, onEscape: this.hideSuggests, isSuggestsHidden: this.state.isSuggestsHidden, activeSuggest: this.state.activeSuggest, listId: this.listId }, attributes)));
+            var suggestionsList = (React.createElement(default_1$2, { isHidden: this.state.isSuggestsHidden, style: this.props.style && this.props.style.suggests, suggestItemStyle: this.props.style && this.props.style.suggestItem, userInput: this.state.userInput, isHighlightMatch: Boolean(this.props.highlightMatch), suggestsClassName: this.props.suggestsClassName, suggestItemClassName: this.props.suggestItemClassName, suggests: this.state.suggests, hiddenClassName: this.props.suggestsHiddenClassName, suggestItemActiveClassName: this.props.suggestItemActiveClassName, activeSuggest: this.state.activeSuggest, onSuggestNoResults: this.onSuggestNoResults, onSuggestMouseDown: this.onSuggestMouseDown, onSuggestMouseOut: this.onSuggestMouseOut, onSuggestSelect: this.selectSuggest, renderSuggestItem: this.props.renderSuggestItem, listId: this.listId }));
             return (React.createElement("div", { className: classes },
                 React.createElement("div", { className: "geosuggest__input-wrapper" },
                     shouldRenderLabel && (React.createElement("label", { className: "geosuggest__label", htmlFor: attributes.id }, this.props.label)),

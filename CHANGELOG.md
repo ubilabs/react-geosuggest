@@ -1,3 +1,13 @@
+### 2.12.1 (2019-10-30)
+
+
+#### Bug Fixes
+
+* warning for componentWillMount ([d8a661ec](https://github.com/ubilabs/react-geosuggest/commit/d8a661ec51cc2947c8caeb1e48735a19d538a79f))
+* warnings for componentWillReceiveProps ([b24117a1](https://github.com/ubilabs/react-geosuggest/commit/b24117a1673df9cd15af12b43f1300b010571cbb))
+* **geosuggest:**  add a11y attributes to make suggestions be readable by screenreaders ([b6b7f3dc](https://github.com/ubilabs/react-geosuggest/commit/b6b7f3dce4f78dddec6cd1c0a74f29c43cfcd171))
+
+
 ## 2.12.0 (2019-04-08)
 
 
