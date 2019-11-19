@@ -6,6 +6,7 @@ const allowedAttributes: string[] = [
   'autoComplete',
   'autoCorrect',
   'autoFocus',
+  'data-id',
   'disabled',
   'form',
   'formAction',
