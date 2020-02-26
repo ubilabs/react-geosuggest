@@ -485,53 +485,30 @@ export default class extends React.Component<IProps, IState> {
     if (!this.geocoder) {
       return;
     }
+    
+    const options: google.maps.GeocoderRequest = {
+      address: suggestToGeocode.label,
+      bounds: this.props.bounds,
+      componentRestrictions: this.props.country
+        ? {country: this.props.country}
+        : undefined,
+      location: this.props.location
+    };
 
-    if (suggestToGeocode.placeId && !suggestToGeocode.isFixture && this.placesService) {
-      const options = {
-        placeId: suggestToGeocode.placeId,
-        sessionToken: this.sessionToken
-      };
+    this.geocoder.geocode(options, (results, status) => {
+      if (status === this.googleMaps.GeocoderStatus.OK) {
+        const gmaps = results[0];
+        const location = gmaps.geometry.location;
+        const suggest = {...suggestToGeocode, gmaps, location: {
+          lat: location.lat(),
+          lng: location.lng()
+        }};
 
-      this.placesService.getDetails(options, (results, status) => {
-        if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
-          const gmaps = results;
-          const location = gmaps.geometry.location;
-          const suggest = {...suggestToGeocode, gmaps, location: {
-            lat: location.lat(),
-            lng: location.lng()
-          }};
-
-          this.sessionToken = new google.maps.places.AutocompleteSessionToken();
-          if (this.props.onSuggestSelect) {
-            this.props.onSuggestSelect(suggest);
-          }
+        if (this.props.onSuggestSelect) {
+          this.props.onSuggestSelect(suggest);
         }
-      });
-    } else {
-      const options: google.maps.GeocoderRequest = {
-        address: suggestToGeocode.label,
-        bounds: this.props.bounds,
-        componentRestrictions: this.props.country
-          ? {country: this.props.country}
-          : undefined,
-        location: this.props.location
-      };
-
-      this.geocoder.geocode(options, (results, status) => {
-        if (status === this.googleMaps.GeocoderStatus.OK) {
-          const gmaps = results[0];
-          const location = gmaps.geometry.location;
-          const suggest = {...suggestToGeocode, gmaps, location: {
-            lat: location.lat(),
-            lng: location.lng()
-          }};
-
-          if (this.props.onSuggestSelect) {
-            this.props.onSuggestSelect(suggest);
-          }
-        }
-      });
-    }
+      }
+    });
   }
 
   /**
