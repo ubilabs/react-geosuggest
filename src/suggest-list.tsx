@@ -70,7 +70,7 @@ export default class extends React.PureComponent<IProps, {}> {
         style={this.props.style}
         role="listbox"
         id={this.props.listId}>
-        {this.props.suggests.map(suggest => {
+        {this.props.suggests.map((suggest) => {
           const isActive =
             (this.props.activeSuggest &&
               suggest.placeId === this.props.activeSuggest.placeId) ||
