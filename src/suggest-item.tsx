@@ -157,7 +157,7 @@ export default class extends React.PureComponent<IProps, {}> {
     return (
       <li
         className={classes}
-        ref={li => (this.ref = li)}
+        ref={(li) => (this.ref = li)}
         style={this.props.style}
         onMouseDown={this.props.onMouseDown}
         onMouseOut={this.props.onMouseOut}

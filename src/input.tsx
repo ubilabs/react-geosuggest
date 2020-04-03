@@ -148,10 +148,14 @@ export default class extends React.PureComponent<IProps, {}> {
     const attributes = filterInputAttributes(this.props);
     const classes = classnames('geosuggest__input', this.props.className);
 
+    if (!attributes.tabIndex) {
+      attributes.tabIndex = 0;
+    }
+
     return (
       <input
         className={classes}
-        ref={i => (this.input = i)}
+        ref={(i) => (this.input = i)}
         type="text"
         {...attributes}
         value={this.props.value}

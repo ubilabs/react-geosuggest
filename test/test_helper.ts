@@ -10,7 +10,7 @@ globalAny.document = dom.window.document;
 
 global = globalAny;
 
-Object.keys(window).forEach(key => {
+Object.keys(window).forEach((key) => {
   if (!(key in global)) {
     (global as any)[key] = (window as any)[key];
   }
