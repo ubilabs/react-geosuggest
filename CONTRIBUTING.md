@@ -1,6 +1,6 @@
 # Contribution Guidelines
 
-First off, thanks for contributing to this project :tada: :thumbsup:  
+First off, thanks for contributing to this project :tada: :thumbsup:
 Our communications here on GitHub follow certain guidelines. Please observe the points below.
 
 ## Issue Tracker
@@ -32,7 +32,7 @@ Our communications here on GitHub follow certain guidelines. Please observe the 
 
 - JavaScript
 
-   - [TSLint](https://palantir.github.io/tslint/) configuration files are provided
+   - [ESLint](https://eslint.org/) configuration files are provided
 
    - run `npm run lint` to check code style
 

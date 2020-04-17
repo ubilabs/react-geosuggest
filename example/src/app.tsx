@@ -1,5 +1,5 @@
 /* global google */
-/* tslint:disable:no-console */
+/* eslint-disable no-console */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -23,22 +23,23 @@ class App extends React.Component {
   /**
    * When the input got changed
    */
-  onChange(value: string) {
-    console.log('input changes to :' + value);
+  onChange(value: string): void {
+    console.log(`input changes to : ${value}`);
   }
 
   /**
    * When a suggest got selected
    */
-  onSuggestSelect(suggest: any) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSuggestSelect(suggest: any): void {
     console.log(suggest);
   }
 
   /**
    * When there are no suggest results
    */
-  onSuggestNoResults(userInput: string) {
-    console.log('onSuggestNoResults for :' + userInput);
+  onSuggestNoResults(userInput: string): void {
+    console.log(`onSuggestNoResults for : ${userInput}`);
   }
 
   /**

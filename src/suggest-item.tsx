@@ -10,6 +10,7 @@ interface IProps {
   readonly activeClassName?: string;
   readonly suggest: ISuggest;
   readonly isHighlightMatch: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly style: any;
   readonly onSelect: (suggest: ISuggest) => void;
   readonly renderSuggestItem?: (
@@ -157,7 +158,7 @@ export default class extends React.PureComponent<IProps, {}> {
     return (
       <li
         className={classes}
-        ref={(li) => (this.ref = li)}
+        ref={(li): HTMLLIElement | null => (this.ref = li)}
         style={this.props.style}
         onMouseDown={this.props.onMouseDown}
         onMouseOut={this.props.onMouseOut}

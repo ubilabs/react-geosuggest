@@ -10,6 +10,7 @@ interface IProps {
   readonly doNotSubmitOnEnter?: boolean;
   readonly ignoreEnter?: boolean;
   readonly ignoreTab?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly style?: any;
   readonly autoComplete?: string;
   readonly isSuggestsHidden: boolean;
@@ -29,8 +30,8 @@ interface IProps {
 /**
  * The input field
  */
-export default class extends React.PureComponent<IProps, {}> {
-  /* tslint:disable:no-empty */
+export default class Input extends React.PureComponent<IProps, {}> {
+  /* eslint-disable @typescript-eslint/no-empty-function */
   /**
    * Default values for the properties
    */
@@ -51,7 +52,7 @@ export default class extends React.PureComponent<IProps, {}> {
     onSelect: () => {},
     value: ''
   };
-  /* tslint:enable:no-empty */
+  /* eslint-enable @typescript-eslint/no-empty-function */
 
   /**
    * The reference to the input element
@@ -71,7 +72,7 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * When the input got changed
    */
-  onChange() {
+  onChange(): void {
     if (this.input) {
       this.props.onChange(this.input.value);
     }
@@ -80,7 +81,8 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * When a key gets pressed in the input
    */
-  onInputKeyDown(event: React.KeyboardEvent) {
+  // eslint-disable-next-line complexity
+  onInputKeyDown(event: React.KeyboardEvent): void {
     // Call props.onKeyDown if defined
     // Gives the developer a little bit more control if needed
     if (this.props.onKeyDown) {
@@ -126,7 +128,7 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * Focus the input
    */
-  focus() {
+  focus(): void {
     if (this.input) {
       this.input.focus();
     }
@@ -135,7 +137,7 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * Blur the input
    */
-  blur() {
+  blur(): void {
     if (this.input) {
       this.input.blur();
     }
@@ -155,7 +157,7 @@ export default class extends React.PureComponent<IProps, {}> {
     return (
       <input
         className={classes}
-        ref={(i) => (this.input = i)}
+        ref={(i): HTMLInputElement | null => (this.input = i)}
         type="text"
         {...attributes}
         value={this.props.value}
@@ -170,7 +172,8 @@ export default class extends React.PureComponent<IProps, {}> {
         aria-activedescendant={
           this.props.activeSuggest
             ? this.props.activeSuggest.placeId
-            : undefined
+            : // eslint-disable-next-line no-undefined
+              undefined
         }
         aria-owns={this.props.listId}
       />

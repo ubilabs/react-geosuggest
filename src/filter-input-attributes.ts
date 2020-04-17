@@ -68,6 +68,8 @@ const allowedAttributes: string[] = [
   'aria-required'
 ];
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 interface IProps {
   [key: string]: any;
 }

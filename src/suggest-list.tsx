@@ -11,7 +11,9 @@ interface IProps {
   readonly suggestItemClassName?: string;
   readonly suggestItemActiveClassName?: string;
   readonly activeSuggest: ISuggest | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly style: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly suggestItemStyle: any;
   readonly userInput: string;
   readonly isHighlightMatch: boolean;
@@ -40,7 +42,7 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * There are new properties available for the list
    */
-  componentDidUpdate(prevProps: IProps) {
+  componentDidUpdate(prevProps: IProps): void {
     if (prevProps.suggests !== this.props.suggests) {
       if (this.props.suggests.length === 0) {
         this.props.onSuggestNoResults();

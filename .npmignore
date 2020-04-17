@@ -5,7 +5,7 @@ example
 src
 test
 .editorconfig
-tslint.json
+.eslintrc
 .gitignore
 .travis.yml
 .prettierrc.yml

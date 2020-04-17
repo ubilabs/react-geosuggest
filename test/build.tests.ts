@@ -5,7 +5,9 @@ import path = require('path');
 const {expect} = chai;
 
 describe('The module build', () => {
+  // eslint-disable-next-line prefer-arrow-callback
   it('creates an importable module', function (done) {
+    // eslint-disable-next-line no-invalid-this
     this.timeout(60000);
 
     const rootDir = path.resolve(__dirname, '..');
@@ -14,6 +16,7 @@ describe('The module build', () => {
       .on('exit', (exitCode) => {
         expect(exitCode).to.equal(0);
 
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const ctor = require(path.resolve(
           rootDir,
           'module',
