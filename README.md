@@ -310,8 +310,9 @@ Autocomplete input attribute.
 #### Others
 
 All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.ts#L4)
-All [DOM clipboard events](https://facebook.github.io/react/docs/events.html#clipboard-events).  
+All [DOM clipboard events](https://facebook.github.io/react/docs/events.html#clipboard-events).
 All [DOM mouse events](https://facebook.github.io/react/docs/events.html#mouse-events) except for drag & drop.
+All [data attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*).
 
 
 ### Exposed component functions
@@ -409,7 +410,7 @@ to see what item is selected, f.ex. when using the arrow keys to navigate the su
 
 ## Contributing
 
-Issues and pull requests are welcome!  
+Issues and pull requests are welcome!
 Please read the guidelines in [CONTRIBUTING.md](CONTRIBUTING.md) before starting to work on a PR.
 
 ## License
