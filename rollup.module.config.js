@@ -38,5 +38,9 @@ export default {
       file: 'module/Geosuggest.esm.js',
       format: 'esm'
     }
+  ],
+  external: [
+    'classnames',
+    'lodash.debounce'
   ]
 };
