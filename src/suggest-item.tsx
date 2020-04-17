@@ -90,8 +90,8 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * Checking if item just became active and scrolling if needed.
    */
-  componentWillReceiveProps(nextProps: IProps): void {
-    if (nextProps.isActive && !this.props.isActive) {
+  componentDidUpdate(prevProps: IProps): void {
+    if (!prevProps.isActive && this.props.isActive) {
       this.scrollIfNeeded();
     }
   }
@@ -157,11 +157,14 @@ export default class extends React.PureComponent<IProps, {}> {
     return (
       <li
         className={classes}
-        ref={li => (this.ref = li)}
+        ref={(li) => (this.ref = li)}
         style={this.props.style}
         onMouseDown={this.props.onMouseDown}
         onMouseOut={this.props.onMouseOut}
-        onClick={this.onClick}>
+        onClick={this.onClick}
+        role="option"
+        aria-selected={this.props.isActive}
+        id={suggest.placeId}>
         {content}
       </li>
     );

@@ -2,6 +2,7 @@ export default function predictions(): google.maps.places.AutocompletePrediction
   return [
     {
       description: 'New York, NY, United States',
+      id: '7eae6a016a9c6f58e2044573fb8f14227b6e1f96',
       matched_substrings: [
         {
           length: 2,
@@ -38,6 +39,7 @@ export default function predictions(): google.maps.places.AutocompletePrediction
     },
     {
       description: 'New York, IA, United States',
+      id: '329cb7144660f29514f351db26cef864634f748a',
       matched_substrings: [
         {
           length: 2,
@@ -74,6 +76,7 @@ export default function predictions(): google.maps.places.AutocompletePrediction
     },
     {
       description: 'New York, United States',
+      id: '349c7fc49816ce54bb586cf8fa2cd79b255746b3',
       matched_substrings: [
         {
           length: 2,
@@ -106,6 +109,7 @@ export default function predictions(): google.maps.places.AutocompletePrediction
     },
     {
       description: 'New Jersey, United States',
+      id: '10806aba84cf3520ebd83c6a3f749bad23c4e2e6',
       matched_substrings: [
         {
           length: 2,
@@ -138,6 +142,7 @@ export default function predictions(): google.maps.places.AutocompletePrediction
     },
     {
       description: 'Newark, NJ, United States',
+      id: 'c71040d6268e495203b4ca7ca4299893601f63fc',
       matched_substrings: [
         {
           length: 2,

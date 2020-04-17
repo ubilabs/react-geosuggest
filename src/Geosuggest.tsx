@@ -74,6 +74,11 @@ export default class extends React.Component<IProps, IState> {
   input: Input | null = null;
 
   /**
+   * Id for the suggestions list
+   */
+  listId: string;
+
+  /**
    * The constructor. Sets the initial state.
    */
   constructor(props: IProps) {
@@ -101,6 +106,7 @@ export default class extends React.Component<IProps, IState> {
     this.hideSuggests = this.hideSuggests.bind(this);
     this.selectSuggest = this.selectSuggest.bind(this);
     this.transformInput = this.transformInput.bind(this);
+    this.listId = `geosuggest__list_${Math.random().toString(16).slice(2)}`;
 
     if (props.queryDelay) {
       this.onAfterInputChange = debounce(
@@ -113,9 +119,9 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Change inputValue if prop changes
    */
-  componentWillReceiveProps(props: IProps) {
-    if (this.props.initialValue !== props.initialValue) {
-      this.setState({userInput: props.initialValue || ''});
+  componentDidUpdate(prevProps: IProps): void {
+    if (prevProps.initialValue !== this.props.initialValue) {
+      this.setState({userInput: this.props.initialValue || ''});
     }
   }
 
@@ -124,7 +130,7 @@ export default class extends React.Component<IProps, IState> {
    * Google api sdk object will be obtained and cached as a instance property.
    * Necessary objects of google api will also be determined and saved.
    */
-  componentWillMount() {
+  componentDidMount() {
     if (typeof window === 'undefined') {
       return;
     }
@@ -307,20 +313,23 @@ export default class extends React.Component<IProps, IState> {
         return;
       }
 
-      this.autocompleteService.getPlacePredictions(options, suggestsGoogle => {
-        this.setState({isLoading: false});
-        this.updateSuggests(
-          suggestsGoogle || [], // can be null
-          () => {
-            if (
-              this.props.autoActivateFirstSuggest &&
-              !this.state.activeSuggest
-            ) {
-              this.activateSuggest('next');
+      this.autocompleteService.getPlacePredictions(
+        options,
+        (suggestsGoogle) => {
+          this.setState({isLoading: false});
+          this.updateSuggests(
+            suggestsGoogle || [], // can be null
+            () => {
+              if (
+                this.props.autoActivateFirstSuggest &&
+                !this.state.activeSuggest
+              ) {
+                this.activateSuggest('next');
+              }
             }
-          }
-        );
-      });
+          );
+        }
+      );
     });
   }
 
@@ -340,7 +349,7 @@ export default class extends React.Component<IProps, IState> {
     let activeSuggest = null;
 
     if (fixtures) {
-      fixtures.forEach(fixture => {
+      fixtures.forEach((fixture) => {
         if (maxFixtures && fixturesSearched >= maxFixtures) {
           return;
         }
@@ -365,7 +374,7 @@ export default class extends React.Component<IProps, IState> {
       });
     }
 
-    suggestsGoogle.forEach(suggest => {
+    suggestsGoogle.forEach((suggest) => {
       if (skipSuggest && !skipSuggest(suggest)) {
         suggests.push({
           description: suggest.description,
@@ -395,7 +404,7 @@ export default class extends React.Component<IProps, IState> {
 
     if (activeSuggest) {
       const newSuggest = suggests.filter(
-        listedSuggest =>
+        (listedSuggest) =>
           activeSuggest &&
           activeSuggest.placeId === listedSuggest.placeId &&
           activeSuggest.isFixture === listedSuggest.isFixture
@@ -522,7 +531,8 @@ export default class extends React.Component<IProps, IState> {
       };
 
       if (this.props.placeDetailFields) {
-        options.fields = ['geometry', ...this.props.placeDetailFields];
+        options.fields = this.props.placeDetailFields;
+        options.fields.unshift('geometry');
       }
 
       this.placesService.getDetails(options, (results, status) => {
@@ -589,7 +599,7 @@ export default class extends React.Component<IProps, IState> {
     const input = (
       <Input
         className={this.props.inputClassName}
-        ref={i => (this.input = i)}
+        ref={(i) => (this.input = i)}
         value={this.state.userInput}
         doNotSubmitOnEnter={!this.state.isSuggestsHidden}
         ignoreTab={this.props.ignoreTab}
@@ -604,6 +614,9 @@ export default class extends React.Component<IProps, IState> {
         onPrev={this.onPrev}
         onSelect={this.onSelect}
         onEscape={this.hideSuggests}
+        isSuggestsHidden={this.state.isSuggestsHidden}
+        activeSuggest={this.state.activeSuggest}
+        listId={this.listId}
         {...attributes}
       />
     );
@@ -625,6 +638,7 @@ export default class extends React.Component<IProps, IState> {
         onSuggestMouseOut={this.onSuggestMouseOut}
         onSuggestSelect={this.selectSuggest}
         renderSuggestItem={this.props.renderSuggestItem}
+        listId={this.listId}
       />
     );
 

@@ -2,6 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 import filterInputAttributes from './filter-input-attributes';
+import ISuggest from './types/suggest';
 
 interface IProps {
   readonly value: string;
@@ -11,6 +12,9 @@ interface IProps {
   readonly ignoreTab?: boolean;
   readonly style?: any;
   readonly autoComplete?: string;
+  readonly isSuggestsHidden: boolean;
+  readonly activeSuggest: ISuggest | null;
+  readonly listId: string;
   readonly onChange: (value: string) => void;
   readonly onSelect: () => void;
   readonly onKeyDown?: (event: React.KeyboardEvent) => void;
@@ -31,8 +35,11 @@ export default class extends React.PureComponent<IProps, {}> {
    * Default values for the properties
    */
   static defaultProps: IProps = {
+    activeSuggest: null,
     autoComplete: 'nope',
     className: '',
+    isSuggestsHidden: true,
+    listId: '',
     onBlur: () => {},
     onChange: () => {},
     onEscape: () => {},
@@ -141,10 +148,14 @@ export default class extends React.PureComponent<IProps, {}> {
     const attributes = filterInputAttributes(this.props);
     const classes = classnames('geosuggest__input', this.props.className);
 
+    if (!attributes.tabIndex) {
+      attributes.tabIndex = 0;
+    }
+
     return (
       <input
         className={classes}
-        ref={i => (this.input = i)}
+        ref={(i) => (this.input = i)}
         type="text"
         {...attributes}
         value={this.props.value}
@@ -154,6 +165,14 @@ export default class extends React.PureComponent<IProps, {}> {
         onKeyPress={this.props.onKeyPress}
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
+        role="combobox"
+        aria-expanded={!this.props.isSuggestsHidden}
+        aria-activedescendant={
+          this.props.activeSuggest
+            ? this.props.activeSuggest.placeId
+            : undefined
+        }
+        aria-owns={this.props.listId}
       />
     );
   }

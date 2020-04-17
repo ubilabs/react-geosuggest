@@ -7,8 +7,8 @@ export default function googleStub() {
       predicctions: google.maps.places.AutocompletePrediction[] | null
     ) => void
   ) => {
-    const suggestsGoogle = predictions().filter(prediction =>
-      prediction.terms.find(term => term.value.startsWith(options.input))
+    const suggestsGoogle = predictions().filter((prediction) =>
+      prediction.terms.find((term) => term.value.startsWith(options.input))
     );
 
     const result = suggestsGoogle.length > 0 ? suggestsGoogle : null;

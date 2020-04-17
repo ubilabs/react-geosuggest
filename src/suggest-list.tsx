@@ -15,6 +15,7 @@ interface IProps {
   readonly suggestItemStyle: any;
   readonly userInput: string;
   readonly isHighlightMatch: boolean;
+  readonly listId: string;
   readonly onSuggestNoResults: () => void;
   readonly renderSuggestItem?: (
     suggest: ISuggest,
@@ -39,9 +40,9 @@ export default class extends React.PureComponent<IProps, {}> {
   /**
    * There are new properties available for the list
    */
-  componentWillReceiveProps(nextProps: IProps) {
-    if (nextProps.suggests !== this.props.suggests) {
-      if (nextProps.suggests.length === 0) {
+  componentDidUpdate(prevProps: IProps) {
+    if (prevProps.suggests !== this.props.suggests) {
+      if (this.props.suggests.length === 0) {
         this.props.onSuggestNoResults();
       }
     }
@@ -64,8 +65,12 @@ export default class extends React.PureComponent<IProps, {}> {
     );
 
     return (
-      <ul className={classes} style={this.props.style}>
-        {this.props.suggests.map(suggest => {
+      <ul
+        className={classes}
+        style={this.props.style}
+        role="listbox"
+        id={this.props.listId}>
+        {this.props.suggests.map((suggest) => {
           const isActive =
             (this.props.activeSuggest &&
               suggest.placeId === this.props.activeSuggest.placeId) ||
