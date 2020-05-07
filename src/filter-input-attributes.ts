@@ -80,9 +80,12 @@ interface IProps {
 export default function (props: IProps): {[key: string]: any} {
   const attributes: {[key: string]: any} = {};
 
-  allowedAttributes.forEach((allowedAttribute) => {
-    if (props[allowedAttribute]) {
-      attributes[allowedAttribute] = props[allowedAttribute];
+  Object.keys(props).forEach((attribute) => {
+    const isDataAttribute = attribute.startsWith('data-');
+    const isAllowedAttribute = allowedAttributes.includes(attribute);
+
+    if (isAllowedAttribute || isDataAttribute) {
+      attributes[attribute] = props[attribute];
     }
   });
 

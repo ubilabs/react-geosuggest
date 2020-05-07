@@ -493,6 +493,19 @@ describe('Component: Geosuggest', () => {
     });
   });
 
+  describe('with data attribute', () => {
+    const myId = 'my ID';
+    beforeEach(() => render({'data-id': myId}));
+
+    it('should add any data attribute to the input', () => {
+      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
+        component,
+        'geosuggest__input'
+      ) as HTMLInputElement;
+      expect(geoSuggestInput.dataset.id).to.equal(myId);
+    });
+  });
+
   describe('with fixtures', () => {
     const fixtures = [
       {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
