@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import jsdom = require('jsdom');
 const dom = new jsdom.JSDOM('<!doctype html><html><body></body></html>', {
   url: 'https://example.org/'

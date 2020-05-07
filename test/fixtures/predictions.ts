@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/camelcase */
+
 export default function predictions(): google.maps.places.AutocompletePrediction[] {
   return [
     {

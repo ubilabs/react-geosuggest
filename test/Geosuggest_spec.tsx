@@ -1,3 +1,5 @@
+/* eslint-disable max-statements, no-unused-expressions */
+
 import React = require('react');
 import chai = require('chai');
 import TestUtils = require('react-dom/test-utils');
@@ -6,11 +8,11 @@ import googleStub from './google_stub';
 import Geosuggest from '../src/Geosuggest';
 
 const expect = chai.expect;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (window as any).google = (global as any).google = googleStub();
 
-/* tslint:disable:no-unused-expression */
-
 describe('Component: Geosuggest', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let component: any = null;
   let onSuggestSelect: sinon.SinonSpy = sinon.spy();
   let onActivateSuggest: sinon.SinonSpy = sinon.spy();
@@ -20,7 +22,7 @@ describe('Component: Geosuggest', () => {
   let onKeyPress: sinon.SinonSpy = sinon.spy();
   let onChange: sinon.SinonSpy = sinon.spy();
   let onBlur: sinon.SinonSpy = sinon.spy();
-  const render = (props = {}) => {
+  const render = (props = {}): void => {
     onSuggestSelect = sinon.spy();
     onActivateSuggest = sinon.spy();
     onSuggestNoResults = sinon.spy();
@@ -673,6 +675,7 @@ describe('Component: Geosuggest', () => {
       component.selectSuggest();
 
       expect(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSuggestSelect.calledWithMatch((value: any) => {
           return value.label === props.fixtures[0].label;
         })
@@ -877,7 +880,8 @@ describe('Component: Geosuggest', () => {
         location: {lat: 40.7033127, lng: -73.979681}
       }
     ];
-    const renderSuggestItem = (suggest: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const renderSuggestItem = (suggest: any): JSX.Element => {
       return (
         <span className="my-custom-suggest-item">
           <span className="my-custom-suggest-item__first-name">

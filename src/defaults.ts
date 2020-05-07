@@ -1,5 +1,5 @@
 /* istanbul ignore next */
-/* tslint:disable:no-empty */
+/* eslint-disable @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function */
 /**
  * Default values
  */
@@ -7,6 +7,7 @@ export default {
   autoActivateFirstSuggest: false,
   disabled: false,
   fixtures: [],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getSuggestLabel: (suggest: any) => suggest.description,
   highlightMatch: true,
   ignoreEnter: false,

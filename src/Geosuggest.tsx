@@ -14,7 +14,7 @@ import IProps from './types/props';
 import ILocation from './types/location';
 
 // Escapes special characters in user input for regex
-function escapeRegExp(str: string) {
+function escapeRegExp(str: string): string {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
@@ -39,6 +39,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * The Google Map instance
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   googleMaps: any | null = null;
 
   /**
@@ -56,6 +57,7 @@ export default class extends React.Component<IProps, IState> {
    */
   sessionToken:
     | google.maps.places.AutocompleteSessionToken
+    // eslint-disable-next-line no-undefined
     | undefined = undefined;
 
   /**
@@ -81,6 +83,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * The constructor. Sets the initial state.
    */
+  // eslint-disable-next-line max-statements
   constructor(props: IProps) {
     super(props);
 
@@ -129,20 +132,21 @@ export default class extends React.Component<IProps, IState> {
    * Google api sdk object will be obtained and cached as a instance property.
    * Necessary objects of google api will also be determined and saved.
    */
-  componentDidMount() {
+  componentDidMount(): void {
     if (typeof window === 'undefined') {
       return;
     }
 
     const googleMaps =
       this.props.googleMaps ||
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ((window as any).google && (window as any).google.maps) ||
       this.googleMaps;
 
     /* istanbul ignore next */
     if (!googleMaps) {
       if (console) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.error('Google maps API was not found in the page.');
       }
       return;
@@ -160,14 +164,14 @@ export default class extends React.Component<IProps, IState> {
   /**
    * When the component will unmount
    */
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     clearTimeout(this.timer);
   }
 
   /**
    * When the input changed
    */
-  onInputChange(userInput: string) {
+  onInputChange(userInput: string): void {
     if (!userInput) {
       if (this.props.onSuggestSelect) {
         this.props.onSuggestSelect();
@@ -179,7 +183,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * On After the input got changed
    */
-  onAfterInputChange() {
+  onAfterInputChange(): void {
     this.showSuggests();
     if (this.props.onChange) {
       this.props.onChange(this.state.userInput);
@@ -189,7 +193,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * When the input gets focused
    */
-  onInputFocus() {
+  onInputFocus(): void {
     if (this.props.onFocus) {
       this.props.onFocus();
     }
@@ -199,33 +203,33 @@ export default class extends React.Component<IProps, IState> {
   /**
    * When the input gets blurred
    */
-  onInputBlur() {
+  onInputBlur(): void {
     if (!this.state.ignoreBlur) {
       this.hideSuggests();
     }
   }
 
-  onNext() {
+  onNext(): void {
     this.activateSuggest('next');
   }
 
-  onPrev() {
+  onPrev(): void {
     this.activateSuggest('prev');
   }
 
-  onSelect() {
+  onSelect(): void {
     this.selectSuggest(this.state.activeSuggest);
   }
 
-  onSuggestMouseDown() {
+  onSuggestMouseDown(): void {
     this.setState({ignoreBlur: true});
   }
 
-  onSuggestMouseOut() {
+  onSuggestMouseOut(): void {
     this.setState({ignoreBlur: false});
   }
 
-  onSuggestNoResults() {
+  onSuggestNoResults(): void {
     if (this.props.onSuggestNoResults) {
       this.props.onSuggestNoResults(this.state.userInput);
     }
@@ -234,7 +238,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Focus the input
    */
-  focus() {
+  focus(): void {
     if (this.input) {
       this.input.focus();
     }
@@ -243,7 +247,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Blur the input
    */
-  blur() {
+  blur(): void {
     if (this.input) {
       this.input.blur();
     }
@@ -252,7 +256,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Update the value of the user input
    */
-  update(userInput: string) {
+  update(userInput: string): void {
     this.setState({userInput});
     if (this.props.onChange) {
       this.props.onChange(userInput);
@@ -262,14 +266,15 @@ export default class extends React.Component<IProps, IState> {
   /*
    * Clear the input and close the suggestion pane
    */
-  clear() {
+  clear(): void {
     this.setState({userInput: ''}, this.hideSuggests);
   }
 
   /**
    * Search for new suggests
    */
-  searchSuggests() {
+  // eslint-disable-next-line complexity
+  searchSuggests(): void {
     if (!this.state.userInput) {
       this.updateSuggests();
       return;
@@ -289,13 +294,13 @@ export default class extends React.Component<IProps, IState> {
 
     const {location, radius, bounds, types, country} = this.props;
 
-    /* tslint:disable:curly */
+    /* eslint-disable curly */
     if (location) options.location = location;
     if (radius) options.radius = Number(this.props.radius);
     if (bounds) options.bounds = bounds;
     if (types) options.types = types;
     if (country) options.componentRestrictions = {country};
-    /* tslint:enable:curly */
+    /* eslint-enable curly */
 
     this.setState({isLoading: true}, () => {
       if (!this.autocompleteService) {
@@ -328,9 +333,9 @@ export default class extends React.Component<IProps, IState> {
    */
   updateSuggests(
     suggestsGoogle: google.maps.places.AutocompletePrediction[] = [],
-    // tslint:disable-next-line:no-empty
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function
     callback: () => void = () => {}
-  ) {
+  ): void {
     const suggests: ISuggest[] = [];
     const {userInput} = this.state;
     const {skipSuggest, maxFixtures, fixtures} = this.props;
@@ -432,7 +437,8 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Activate a new suggest
    */
-  activateSuggest(direction: 'next' | 'prev') {
+  // eslint-disable-next-line complexity, max-statements
+  activateSuggest(direction: 'next' | 'prev'): void {
     if (this.state.isSuggestsHidden) {
       this.showSuggests();
       return;
@@ -468,7 +474,8 @@ export default class extends React.Component<IProps, IState> {
   /**
    * When an item got selected
    */
-  selectSuggest(suggestToSelect: ISuggest | null) {
+  // eslint-disable-next-line complexity
+  selectSuggest(suggestToSelect: ISuggest | null): void {
     let suggest: ISuggest = suggestToSelect || {
       isFixture: false,
       label: this.state.userInput,
@@ -515,6 +522,7 @@ export default class extends React.Component<IProps, IState> {
       !suggestToGeocode.isFixture &&
       this.placesService
     ) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const options: any = {
         placeId: suggestToGeocode.placeId,
         sessionToken: this.sessionToken
@@ -551,7 +559,8 @@ export default class extends React.Component<IProps, IState> {
         bounds: this.props.bounds,
         componentRestrictions: this.props.country
           ? {country: this.props.country}
-          : undefined,
+          : // eslint-disable-next-line no-undefined
+            undefined,
         location: this.props.location
       };
 
@@ -589,7 +598,7 @@ export default class extends React.Component<IProps, IState> {
     const input = (
       <Input
         className={this.props.inputClassName}
-        ref={(i) => (this.input = i)}
+        ref={(i): Input | null => (this.input = i)}
         value={this.state.userInput}
         doNotSubmitOnEnter={!this.state.isSuggestsHidden}
         ignoreTab={this.props.ignoreTab}
