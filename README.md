@@ -336,49 +336,43 @@ Same effect as hitting `enter` (will geocode the text inside of the input).
 ### Example
 
 ```jsx
-import React from 'react';
+import React, {useRef} from 'react';
 import ReactDOM from 'react-dom';
 import Geosuggest from 'react-geosuggest';
 
-class App extends React.Component {
-  /**
-   * Render the example app
-   */
-  render() {
-    var fixtures = [
-      {label: 'Old Elbe Tunnel, Hamburg', location: {lat: 53.5459, lng: 9.966576}},
-      {label: 'Reeperbahn, Hamburg', location: {lat: 53.5495629, lng: 9.9625838}},
-      {label: 'Alster, Hamburg', location: {lat: 53.5610398, lng: 10.0259135}}
-    ];
+const App = () => {
+  const geosuggestEl = useRef(null);
 
-    return (
-      <div>
-        <Geosuggest
-          ref={el=>this._geoSuggest=el}
-          placeholder="Start typing!"
-          initialValue="Hamburg"
-          fixtures={fixtures}
-          onSuggestSelect={this.onSuggestSelect}
-          location={new google.maps.LatLng(53.558572, 9.9278215)}
-          radius="20" />
-
-        {* Buttons to trigger exposed component functions *}
-        <button onClick={()=>this._geoSuggest.focus()}>Focus</button>
-        <button onClick={()=>this._geoSuggest.update('New Zealand')}>Update</button>
-        <button onClick={()=>this._geoSuggest.clear()}>Clear</button>
-        <button onClick={()=>this._geoSuggest.selectSuggest()}>Search</button>
-      </div>
-    )
-  }
+  const fixtures = [
+    {label: 'New York', location: {lat: 40.7033127, lng: -73.979681}},
+    {label: 'Rio', location: {lat: -22.066452, lng: -42.9232368}},
+    {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
+  ];
 
   /**
    * When a suggest got selected
-   * @param  {Object} suggest The suggest
    */
-  onSuggestSelect(suggest) {
-    console.log(suggest);
-  }
-});
+  const onSuggestSelect = (suggest) => console.log(suggest);
+
+  return (
+    <div>
+      <Geosuggest
+        ref={geosuggestEl}
+        placeholder="Start typing!"
+        initialValue="Hamburg"
+        fixtures={fixtures}
+        onSuggestSelect={onSuggestSelect}
+        location={new google.maps.LatLng(53.558572, 9.9278215)}
+        radius="20" />
+
+      {* Buttons to trigger exposed component functions *}
+      <button onClick={()=>geosuggestEl.current.focus()}>Focus</button>
+      <button onClick={()=>geosuggestEl.current.update('New Zealand')}>Update</button>
+      <button onClick={()=>geosuggestEl.current.clear()}>Clear</button>
+      <button onClick={()=>geosuggestEl.current.selectSuggest()}>Search</button>
+    </div>
+  );
+};
 
 ReactDOM.render(<App />, document.getElementById('app'));
 ```
