@@ -1,3 +1,17 @@
+## 2.13.0 (2020-05-08)
+
+
+#### Bug Fixes
+
+* catch changing fixtures (#462) ([3df1f8ee](https://github.com/ubilabs/react-geosuggest/commit/3df1f8ee3fea1a0f1a9e1bbbca0277ac833b0ad7), closes [#457](https://github.com/ubilabs/react-geosuggest/issues/457))
+* stop bundling classnames and lodash.debounce (#458) ([6ffbb4be](https://github.com/ubilabs/react-geosuggest/commit/6ffbb4be9732b4ba7ba69b7beb495659fc6fc737))
+
+
+#### Features
+
+* allow any data attributes (#460) ([2d11ab9b](https://github.com/ubilabs/react-geosuggest/commit/2d11ab9be31679556220b2a20516690673340d9f))
+
+
 ### 2.12.1 (2019-10-30)
 
 
