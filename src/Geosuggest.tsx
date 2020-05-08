@@ -125,6 +125,11 @@ export default class extends React.Component<IProps, IState> {
     if (prevProps.initialValue !== this.props.initialValue) {
       this.setState({userInput: this.props.initialValue || ''});
     }
+    if (
+      JSON.stringify(prevProps.fixtures) !== JSON.stringify(this.props.fixtures)
+    ) {
+      this.searchSuggests();
+    }
   }
 
   /**
@@ -273,7 +278,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Search for new suggests
    */
-  // eslint-disable-next-line complexity
+  // eslint-disable-next-line complexity, max-statements
   searchSuggests(): void {
     if (!this.state.userInput) {
       this.updateSuggests();
@@ -289,6 +294,7 @@ export default class extends React.Component<IProps, IState> {
       this.props.minLength && inputLength < this.props.minLength;
 
     if (isShorterThanMinLength) {
+      this.updateSuggests();
       return;
     }
 
