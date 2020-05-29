@@ -1,11 +1,11 @@
 # React Geosuggest [![Build Status](https://travis-ci.org/ubilabs/react-geosuggest.svg?branch=master)](https://travis-ci.org/ubilabs/react-geosuggest)
 
-A [React](http://facebook.github.io/react/) autosuggest for the Google Maps Places API. You can also define your own suggests as defaults. Works with [Preact](https://github.com/developit/preact), too.
+A [React](https://reactjs.org/) autosuggest for the Google Maps Places API. You can also define your own suggests as defaults. Works with [Preact](https://github.com/developit/preact), too.
 
 
 ## Demo
 
-Live demo: [ubilabs.github.io/react-geosuggest](http://ubilabs.github.io/react-geosuggest/)
+Live demo: [ubilabs.github.io/react-geosuggest](https://ubilabs.github.io/react-geosuggest/)
 
 
 ## Installation
@@ -27,7 +27,7 @@ As this component uses the Google Maps Places API to get suggests, you must incl
 
 Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key. The API's that you have to enable in your Google API Manager Dashboard are [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/start), [Google Places API Web Service](https://developers.google.com/places/web-service/) and [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/).
 
-The easiest way to use geosuggest is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
+The easiest way to use geosuggest is to install it from NPM and include it in your own React build process (using [Webpack](https://webpack.github.io/), [Parcel](https://parceljs.org/), etc).
 
 You can also use the standalone build by including `dist/react-geosuggest.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
 
@@ -385,7 +385,7 @@ ReactDOM.render(<App />, document.getElementById('app'));
 
 ## Styling
 
-This component uses [BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/) for namespacing the CSS classes. So styling should be easy and without conflicts. See the [geosuggest.css](https://github.com/ubilabs/react-geosuggest/blob/master/src/geosuggest.css) for an example styling.
+This component uses [BEM](https://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/) for namespacing the CSS classes. So styling should be easy and without conflicts. See the [geosuggest.css](https://github.com/ubilabs/react-geosuggest/blob/master/src/geosuggest.css) for an example styling.
 
 ### Note:
 
