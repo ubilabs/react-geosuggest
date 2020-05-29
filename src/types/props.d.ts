@@ -11,6 +11,7 @@ export default interface IProps {
   readonly initialValue?: string;
   readonly placeholder?: string;
   readonly disabled?: boolean;
+  readonly id?: string;
   readonly className?: string;
   readonly inputClassName?: string;
   readonly suggestsClassName?: string;

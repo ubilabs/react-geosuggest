@@ -14,7 +14,6 @@ const allowedAttributes: string[] = [
   'formNoValidate',
   'formTarget',
   'height',
-  'id',
   'inputMode',
   'maxLength',
   'name',

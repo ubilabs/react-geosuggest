@@ -69,6 +69,12 @@ Default: `''`
 
 An initial value for the input, when you want to prefill the suggest.
 
+#### id
+Type: `String`
+Default: `''`
+
+Define an ID for the geosuggest. Needed when there are multiple instances on a page.
+
 #### className
 Type: `String`
 Default: `''`

@@ -7,6 +7,7 @@ import ISuggest from './types/suggest';
 interface IProps {
   readonly value: string;
   readonly className?: string;
+  readonly id?: string;
   readonly doNotSubmitOnEnter?: boolean;
   readonly ignoreEnter?: boolean;
   readonly ignoreTab?: boolean;
@@ -16,6 +17,7 @@ interface IProps {
   readonly isSuggestsHidden: boolean;
   readonly activeSuggest: ISuggest | null;
   readonly listId: string;
+  readonly label?: string;
   readonly onChange: (value: string) => void;
   readonly onSelect: () => void;
   readonly onKeyDown?: (event: React.KeyboardEvent) => void;
@@ -149,34 +151,43 @@ export default class Input extends React.PureComponent<IProps, {}> {
   render(): JSX.Element {
     const attributes = filterInputAttributes(this.props);
     const classes = classnames('geosuggest__input', this.props.className);
+    const shouldRenderLabel = this.props.label && this.props.id;
 
     if (!attributes.tabIndex) {
       attributes.tabIndex = 0;
     }
 
     return (
-      <input
-        className={classes}
-        ref={(i): HTMLInputElement | null => (this.input = i)}
-        type="text"
-        {...attributes}
-        value={this.props.value}
-        style={this.props.style}
-        onKeyDown={this.onInputKeyDown}
-        onChange={this.onChange}
-        onKeyPress={this.props.onKeyPress}
-        onFocus={this.props.onFocus}
-        onBlur={this.props.onBlur}
-        role="combobox"
-        aria-expanded={!this.props.isSuggestsHidden}
-        aria-activedescendant={
-          this.props.activeSuggest
-            ? this.props.activeSuggest.placeId
-            : // eslint-disable-next-line no-undefined
-              undefined
-        }
-        aria-owns={this.props.listId}
-      />
+      <>
+        {shouldRenderLabel && (
+          <label className="geosuggest__label" htmlFor={this.props.id}>
+            {this.props.label}
+          </label>
+        )}
+        <input
+          className={classes}
+          id={`geosuggest__input${this.props.id ? `--${this.props.id}` : ''}`}
+          ref={(i): HTMLInputElement | null => (this.input = i)}
+          type="text"
+          {...attributes}
+          value={this.props.value}
+          style={this.props.style}
+          onKeyDown={this.onInputKeyDown}
+          onChange={this.onChange}
+          onKeyPress={this.props.onKeyPress}
+          onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
+          role="combobox"
+          aria-expanded={!this.props.isSuggestsHidden}
+          aria-activedescendant={
+            this.props.activeSuggest
+              ? this.props.activeSuggest.placeId
+              : // eslint-disable-next-line no-undefined
+                undefined
+          }
+          aria-owns={this.props.listId}
+        />
+      </>
     );
   }
 }
