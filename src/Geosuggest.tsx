@@ -600,7 +600,6 @@ export default class extends React.Component<IProps, IState> {
     const classes = classnames('geosuggest', this.props.className, {
       'geosuggest--loading': this.state.isLoading
     });
-    const shouldRenderLabel = this.props.label && attributes.id;
     const input = (
       <Input
         className={this.props.inputClassName}
@@ -621,6 +620,8 @@ export default class extends React.Component<IProps, IState> {
         onEscape={this.hideSuggests}
         isSuggestsHidden={this.state.isSuggestsHidden}
         activeSuggest={this.state.activeSuggest}
+        label={this.props.label}
+        id={this.props.id}
         listId={this.listId}
         {...attributes}
       />
@@ -649,14 +650,7 @@ export default class extends React.Component<IProps, IState> {
 
     return (
       <div className={classes} id={this.props.id}>
-        <div className="geosuggest__input-wrapper">
-          {shouldRenderLabel && (
-            <label className="geosuggest__label" htmlFor={attributes.id}>
-              {this.props.label}
-            </label>
-          )}
-          {input}
-        </div>
+        <div className="geosuggest__input-wrapper">{input}</div>
         <div className="geosuggest__suggests-wrapper">{suggestionsList}</div>
       </div>
     );

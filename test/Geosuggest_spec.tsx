@@ -697,19 +697,20 @@ describe('Component: Geosuggest', () => {
   });
 
   describe('with label and id props', () => {
-    const props = {
-      id: 'geosuggest-id',
-      label: 'some label'
-    };
-
-    beforeEach(() => render(props));
-
     it('should render a <label> if the `label` and `id` props were supplied', () => {
+      const props = {
+        id: 'geosuggest-id',
+        label: 'some label'
+      };
+
+      render(props);
+
       const label = TestUtils.findRenderedDOMComponentWithTag(
         component,
         'label'
       );
-      expect(label).to.not.equal(null);
+
+      expect(label).to.not.be.null;
     });
   });
 
@@ -1100,6 +1101,22 @@ describe('Component: Geosuggest', () => {
 
       expect(input.getAttribute('aria-owns')).to.equal(listId);
       expect(listId?.endsWith(props.id)).to.be.true;
+    });
+
+    it('should have id set to the input according to the passed in ID', () => {
+      const props = {
+        id: 'test-id'
+      };
+      render(props);
+
+      const input = TestUtils.findRenderedDOMComponentWithClass(
+        component,
+        'geosuggest__input'
+      );
+
+      expect(input.getAttribute('id')).to.equal(
+        `geosuggest__input--${props.id}`
+      );
     });
   });
 });
