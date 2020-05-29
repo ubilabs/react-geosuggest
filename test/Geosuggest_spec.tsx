@@ -1080,5 +1080,26 @@ describe('Component: Geosuggest', () => {
 
       expect(geoSuggestInput.getAttribute('aria-owns')).to.equal(listId);
     });
+
+    it('should have aria-owns attribute set to the list id with the passed in ID', () => {
+      const props = {
+        id: 'test-id'
+      };
+      render(props);
+
+      const input = TestUtils.findRenderedDOMComponentWithClass(
+        component,
+        'geosuggest__input'
+      );
+      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
+        component,
+        'geosuggest__suggests'
+      );
+
+      const listId = suggests[0].getAttribute('id');
+
+      expect(input.getAttribute('aria-owns')).to.equal(listId);
+      expect(listId?.endsWith(props.id)).to.be.true;
+    });
   });
 });

@@ -108,7 +108,7 @@ export default class extends React.Component<IProps, IState> {
     this.onSuggestNoResults = this.onSuggestNoResults.bind(this);
     this.hideSuggests = this.hideSuggests.bind(this);
     this.selectSuggest = this.selectSuggest.bind(this);
-    this.listId = `geosuggest__list_${Math.random().toString(16).slice(2)}`;
+    this.listId = `geosuggest__list${props.id ? `--${props.id}` : ''}`;
 
     if (props.queryDelay) {
       this.onAfterInputChange = debounce(
@@ -648,7 +648,7 @@ export default class extends React.Component<IProps, IState> {
     );
 
     return (
-      <div className={classes}>
+      <div className={classes} id={this.props.id}>
         <div className="geosuggest__input-wrapper">
           {shouldRenderLabel && (
             <label className="geosuggest__label" htmlFor={attributes.id}>
