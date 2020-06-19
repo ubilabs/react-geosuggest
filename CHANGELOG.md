@@ -1,3 +1,12 @@
+### 2.13.1 (2020-06-19)
+
+
+#### Bug Fixes
+
+* use secure URLs (#465) ([86ec9227](https://github.com/ubilabs/react-geosuggest/commit/86ec922751c841293540e5396ce6f201b6149112))
+* use a not random id for the list (#464) ([68da464e](https://github.com/ubilabs/react-geosuggest/commit/68da464e26db7af24a742973df523b4909a1ef10))
+
+
 ## 2.13.0 (2020-05-08)
 
 
