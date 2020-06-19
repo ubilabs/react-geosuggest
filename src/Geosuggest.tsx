@@ -483,6 +483,7 @@ export default class extends React.Component<IProps, IState> {
   // eslint-disable-next-line complexity
   selectSuggest(suggestToSelect: ISuggest | null): void {
     let suggest: ISuggest = suggestToSelect || {
+      // isFixture: true,
       isFixture: false,
       label: this.state.userInput,
       placeId: this.state.userInput
