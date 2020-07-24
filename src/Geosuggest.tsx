@@ -614,6 +614,7 @@ export default class extends React.Component<IProps, IState> {
         onBlur={this.onInputBlur}
         onKeyDown={this.props.onKeyDown}
         onKeyPress={this.props.onKeyPress}
+        inputType={this.props.inputType}
         onNext={this.onNext}
         onPrev={this.onPrev}
         onSelect={this.onSelect}
