@@ -1,3 +1,16 @@
+## 2.14.0 (2020-07-27)
+
+
+#### Bug Fixes
+
+* geocode in selectSuggest when nothing selected (#470) ([ada1de9f](https://github.com/ubilabs/react-geosuggest/commit/ada1de9fb6c3549639149cc6c627cfdaac1ebe4f))
+
+
+#### Features
+
+* add option for search input type (#471) ([58264de2](https://github.com/ubilabs/react-geosuggest/commit/58264de27f11316c0abc7aa927bb3f9be709ea89), closes [#441](https://github.com/ubilabs/react-geosuggest/issues/441))
+
+
 ### 2.13.1 (2020-06-19)
 
 
