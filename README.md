@@ -313,6 +313,12 @@ Default: `nope`
 
 Autocomplete input attribute.
 
+#### inputType
+Type: `String`,
+Default: `text`
+
+The value for the `type` attribute on the html input element. Can be either `text` or `search`.
+
 #### Others
 
 All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.ts#L4)

@@ -18,6 +18,7 @@ interface IProps {
   readonly activeSuggest: ISuggest | null;
   readonly listId: string;
   readonly label?: string;
+  readonly inputType: string;
   readonly onChange: (value: string) => void;
   readonly onSelect: () => void;
   readonly onKeyDown?: (event: React.KeyboardEvent) => void;
@@ -43,6 +44,7 @@ export default class Input extends React.PureComponent<IProps, {}> {
     className: '',
     isSuggestsHidden: true,
     listId: '',
+    inputType: 'text',
     onBlur: () => {},
     onChange: () => {},
     onEscape: () => {},
@@ -168,7 +170,7 @@ export default class Input extends React.PureComponent<IProps, {}> {
           className={classes}
           id={`geosuggest__input${this.props.id ? `--${this.props.id}` : ''}`}
           ref={(i): HTMLInputElement | null => (this.input = i)}
-          type="text"
+          type={this.props.inputType}
           {...attributes}
           value={this.props.value}
           style={this.props.style}
