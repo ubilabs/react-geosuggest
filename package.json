@@ -97,6 +97,7 @@
     "react-component",
     "google",
     "autosuggest",
+    "autocomplete",
     "places"
   ]
 }
