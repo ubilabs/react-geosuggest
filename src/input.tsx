@@ -33,7 +33,7 @@ interface IProps {
 /**
  * The input field
  */
-export default class Input extends React.PureComponent<IProps, {}> {
+export default class Input extends React.PureComponent<IProps, unknown> {
   /* eslint-disable @typescript-eslint/no-empty-function */
   /**
    * Default values for the properties

@@ -22,7 +22,7 @@ export default {
       globals: {
         'google': 'google',
         'react': 'React',
-        'react-dom': 'ReactDOM',
+        'react-dom': 'ReactDOM'
       },
       file: 'module/Geosuggest.umd.js',
       format: 'umd'
@@ -33,7 +33,7 @@ export default {
       globals: {
         'google': 'google',
         'react': 'React',
-        'react-dom': 'ReactDOM',
+        'react-dom': 'ReactDOM'
       },
       file: 'module/Geosuggest.esm.js',
       format: 'esm'
