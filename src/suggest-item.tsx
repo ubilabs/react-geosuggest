@@ -24,7 +24,7 @@ interface IProps {
 /**
  * A single Geosuggest item in the list
  */
-export default class extends React.PureComponent<IProps, {}> {
+export default class extends React.PureComponent<IProps, unknown> {
   /**
    * The reference to the suggest element
    */
