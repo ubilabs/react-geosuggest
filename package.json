@@ -71,7 +71,7 @@
     "test": "nyc --include 'src/*' -e .tsx -s npm run unit-test",
     "posttest": "nyc report --reporter=text --reporter=lcov --reporter=html",
     "start": "npm run server",
-    "unit-test": "mocha --test --require ts-node/register --require ./test/test_helper.ts \"test/**/*@(.ts|.tsx)\"",
+    "unit-test": "mocha --exit --require ts-node/register --require ./test/test_helper.ts \"test/**/*@(.ts|.tsx)\"",
     "server": "npm run prepare:example && light-server -s example/dist -p 8000 -w 'src/*.tsx,src/*.ts,example/src/*.tsx,example/src/*.ts # npm run js:example' -w 'src/*.css,example/src/*.css # npm run css # reloadcss' -w 'example/src/*.html # npm run copy:assets # reload'",
     "prepare:example": "rimraf example/dist && mkdirp example/dist && npm run copy:assets && npm run js:example && npm run css",
     "copy:assets": "copyfiles -f example/src/*.html example/dist && copyfiles -f example/src/*.svg example/dist",
