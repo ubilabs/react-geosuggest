@@ -58,4 +58,5 @@ export default interface IProps {
   readonly minLength?: number;
   readonly placeDetailFields?: string[] | null;
   readonly inputType?: string;
+  readonly handleGeocodingError?: (error: Error) => void;
 }
