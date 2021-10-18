@@ -114,7 +114,7 @@ export default class extends React.Component<IProps, IState> {
     this.hideSuggests = this.hideSuggests.bind(this);
     this.selectSuggest = this.selectSuggest.bind(this);
     this.listId = `geosuggest__list${props.id ? `--${props.id}` : ''}`;
-    this.listLabel = `${props.label} options`;
+    this.listLabel = props.label ? `${props.label} options` : 'options';
 
     if (props.queryDelay) {
       this.onAfterInputChange = debounce(
