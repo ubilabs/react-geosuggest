@@ -40,7 +40,7 @@ export default class Input extends React.PureComponent<IProps, unknown> {
    */
   static defaultProps: IProps = {
     activeSuggest: null,
-    autoComplete: 'off',
+    autoComplete: 'nope',
     className: '',
     isSuggestsHidden: true,
     listId: '',
