@@ -42,6 +42,8 @@ const App = (): JSX.Element => {
 
   return (
     <Geosuggest
+      label="Geoautocomplete"
+      id="geosuggest"
       fixtures={fixtures}
       onFocus={onFocus}
       onBlur={onBlur}

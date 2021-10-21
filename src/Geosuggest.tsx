@@ -650,7 +650,7 @@ export default class extends React.Component<IProps, IState> {
     );
 
     return (
-      <div className={classes} id={this.props.id}>
+      <div className={classes} id={`${this.props.id}--geosuggest`}>
         <div className="geosuggest__input-wrapper">{input}</div>
         <div className="geosuggest__suggests-wrapper">{suggestionsList}</div>
       </div>

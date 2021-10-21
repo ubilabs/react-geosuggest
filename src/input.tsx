@@ -168,7 +168,7 @@ export default class Input extends React.PureComponent<IProps, unknown> {
         )}
         <input
           className={classes}
-          id={`geosuggest__input${this.props.id ? `--${this.props.id}` : ''}`}
+          id={this.props.id ? this.props.id : 'geosuggest__input'}
           ref={(i): HTMLInputElement | null => (this.input = i)}
           type={this.props.inputType}
           {...attributes}
