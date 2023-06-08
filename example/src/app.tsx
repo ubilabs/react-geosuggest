@@ -48,8 +48,12 @@ const App = (): JSX.Element => {
       onChange={onChange}
       onSuggestSelect={onSuggestSelect}
       onSuggestNoResults={onSuggestNoResults}
-      location={new google.maps.LatLng(53.558572, 9.9278215)}
-      radius="20"
+      locationBias={
+        new google.maps.Circle({
+          center: new google.maps.LatLng(53.558572, 9.9278215),
+          radius: 20
+        })
+      }
     />
   );
 };
