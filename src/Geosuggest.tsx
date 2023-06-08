@@ -298,14 +298,34 @@ export default class extends React.Component<IProps, IState> {
       return;
     }
 
-    const {location, radius, bounds, types, country} = this.props;
+    const {
+      location,
+      radius,
+      bounds,
+      types,
+      country,
+      locationBias,
+      locationRestriction
+    } = this.props;
 
     /* eslint-disable curly */
-    if (location) options.location = location;
-    if (radius) options.radius = Number(this.props.radius);
-    if (bounds) options.bounds = bounds;
+    /**
+     * Location, radius and bounds can be removed on the next major release for potential breaking changes
+     */
+    if (location) {
+      const parsedRadius = Number(radius);
+      options.locationBias = new google.maps.Circle({
+        center: location,
+        radius: !Number.isNaN(parsedRadius) ? parsedRadius : null
+      });
+    }
+    if (bounds) {
+      options.locationBias = bounds;
+    }
     if (types) options.types = types;
     if (country) options.componentRestrictions = {country};
+    if (locationBias) options.locationBias = locationBias;
+    if (locationRestriction) options.locationRestriction = locationRestriction;
     /* eslint-enable curly */
 
     this.setState({isLoading: true}, () => {
@@ -540,7 +560,10 @@ export default class extends React.Component<IProps, IState> {
       }
 
       this.placesService.getDetails(options, (results, status) => {
-        if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
+        if (
+          status === this.googleMaps.places.PlacesServiceStatus.OK &&
+          results
+        ) {
           const gmaps = results;
           const location = (gmaps.geometry &&
             gmaps.geometry.location) as google.maps.LatLng;
@@ -563,15 +586,16 @@ export default class extends React.Component<IProps, IState> {
       const options: google.maps.GeocoderRequest = {
         address: suggestToGeocode.label,
         bounds: this.props.bounds,
-        componentRestrictions: this.props.country
-          ? {country: this.props.country}
-          : // eslint-disable-next-line no-undefined
-            undefined,
+        componentRestrictions:
+          typeof this.props.country === 'string'
+            ? {country: this.props.country}
+            : // eslint-disable-next-line no-undefined
+              undefined,
         location: this.props.location
       };
 
       this.geocoder.geocode(options, (results, status) => {
-        if (status === this.googleMaps.GeocoderStatus.OK) {
+        if (status === this.googleMaps.GeocoderStatus.OK && results) {
           const gmaps = results[0];
           const location = (gmaps.geometry &&
             gmaps.geometry.location) as google.maps.LatLng;
