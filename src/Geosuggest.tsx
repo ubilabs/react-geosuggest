@@ -586,10 +586,11 @@ export default class extends React.Component<IProps, IState> {
       const options: google.maps.GeocoderRequest = {
         address: suggestToGeocode.label,
         bounds: this.props.bounds,
-        componentRestrictions: this.props.country
-          ? {country: this.props.country}
-          : // eslint-disable-next-line no-undefined
-            undefined,
+        componentRestrictions:
+          typeof this.props.country === 'string'
+            ? {country: this.props.country}
+            : // eslint-disable-next-line no-undefined
+              undefined,
         location: this.props.location
       };
 
