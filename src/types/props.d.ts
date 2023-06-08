@@ -21,6 +21,19 @@ export default interface IProps {
   readonly location?: google.maps.LatLng;
   readonly radius?: string | number;
   readonly bounds?: google.maps.LatLngBounds | google.maps.LatLngBoundsLiteral;
+
+  readonly locationBias?:
+    | google.maps.LatLng
+    | google.maps.LatLngBounds
+    | google.maps.LatLngLiteral
+    | google.maps.LatLngBoundsLiteral
+    | google.maps.Circle
+    | google.maps.CircleLiteral
+    | string;
+  readonly locationRestriction?:
+    | google.maps.LatLngBounds
+    | google.maps.LatLngBoundsLiteral;
+
   readonly country?: string | string[];
   readonly types?: string[] | null;
   readonly queryDelay?: number;
