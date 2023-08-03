@@ -701,7 +701,7 @@ var Geosuggest = (function (React) {
          */
         Input.defaultProps = {
             activeSuggest: null,
-            autoComplete: 'nope',
+            autoComplete: 'off',
             className: '',
             isSuggestsHidden: true,
             listId: '',

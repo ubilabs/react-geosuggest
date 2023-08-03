@@ -1118,5 +1118,14 @@ describe('Component: Geosuggest', () => {
         `geosuggest__input--${props.id}`
       );
     });
+
+    it('should have autoComplete attribute set to "off" by default to input', () => {
+      const input = TestUtils.findRenderedDOMComponentWithClass(
+        component,
+        'geosuggest__input'
+      );
+
+      expect(input.getAttribute('autoComplete')).to.equal('off');
+    });
   });
 });
