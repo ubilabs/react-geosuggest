@@ -967,7 +967,7 @@ describe('Component: Geosuggest', () => {
       );
       expect(geoSuggestItems).to.have.lengthOf(1);
       expect(geoSuggestItems[0].childNodes).to.have.lengthOf(1);
-      expect(geoSuggestItems[0].childNodes[0].childNodes).to.have.lengthOf(3);
+      expect(geoSuggestItems[0].childNodes[0].childNodes).to.have.lengthOf(2);
     });
   });
 

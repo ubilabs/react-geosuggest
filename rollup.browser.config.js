@@ -23,7 +23,8 @@ export default {
     globals: {
       'google': 'google',
       'react': 'React',
-      'react-dom': 'ReactDOM'
+      'react-dom': 'ReactDOM',
+      'react-dom/client': 'ReactDOM'
     },
     format: 'iife',
     file:
