@@ -81,6 +81,11 @@ export default class extends React.Component<IProps, IState> {
   listId: string;
 
   /**
+   * Label for the suggestions list
+   */
+  listLabel: string;
+
+  /**
    * The constructor. Sets the initial state.
    */
   // eslint-disable-next-line max-statements
@@ -109,6 +114,7 @@ export default class extends React.Component<IProps, IState> {
     this.hideSuggests = this.hideSuggests.bind(this);
     this.selectSuggest = this.selectSuggest.bind(this);
     this.listId = `geosuggest__list${props.id ? `--${props.id}` : ''}`;
+    this.listLabel = props.label ? `${props.label} options` : 'options';
 
     if (props.queryDelay) {
       this.onAfterInputChange = debounce(
@@ -646,6 +652,7 @@ export default class extends React.Component<IProps, IState> {
         onSuggestSelect={this.selectSuggest}
         renderSuggestItem={this.props.renderSuggestItem}
         listId={this.listId}
+        listLabel={this.listLabel}
       />
     );
 

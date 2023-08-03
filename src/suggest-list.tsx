@@ -18,6 +18,7 @@ interface IProps {
   readonly userInput: string;
   readonly isHighlightMatch: boolean;
   readonly listId: string;
+  readonly listLabel: string;
   readonly onSuggestNoResults: () => void;
   readonly renderSuggestItem?: (
     suggest: ISuggest,
@@ -71,6 +72,7 @@ export default class extends React.PureComponent<IProps, unknown> {
         className={classes}
         style={this.props.style}
         role="listbox"
+        aria-label={this.props.listLabel}
         id={this.props.listId}>
         {this.props.suggests.map((suggest) => {
           const isActive =

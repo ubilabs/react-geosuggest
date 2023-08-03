@@ -1082,6 +1082,14 @@ describe('Component: Geosuggest', () => {
       expect(geoSuggestInput.getAttribute('aria-owns')).to.equal(listId);
     });
 
+    it('should have aria-label attribute set', () => {
+      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
+        component,
+        'geosuggest__suggests'
+      );
+      expect(suggests[0].getAttribute('aria-label')).to.exist;
+    });
+
     it('should have aria-owns attribute set to the list id with the passed in ID', () => {
       const props = {
         id: 'test-id'
