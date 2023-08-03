@@ -319,6 +319,12 @@ Default: `text`
 
 The value for the `type` attribute on the html input element. Can be either `text` or `search`.
 
+### handleGeocodingError
+Type: `Function`
+Default `undefined`
+
+An optional error handler that can process the error returned by the [`Geocoder.geocode`](https://developers.google.com/maps/documentation/javascript/reference/geocoder#Geocoder-Methods) API.
+
 #### Others
 
 All [allowed attributes for `input[type="text"]`](https://github.com/ubilabs/react-geosuggest/blob/master/src/filter-input-attributes.ts#L4)

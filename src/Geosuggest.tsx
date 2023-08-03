@@ -548,7 +548,7 @@ export default class extends React.Component<IProps, IState> {
       this.placesService.getDetails(options, (results, status) => {
         if (status === this.googleMaps.places.PlacesServiceStatus.OK) {
           const gmaps = results;
-          const location = (gmaps.geometry &&
+          const location = (gmaps?.geometry &&
             gmaps.geometry.location) as google.maps.LatLng;
           const suggest = {
             ...suggestToGeocode,
@@ -566,35 +566,41 @@ export default class extends React.Component<IProps, IState> {
         }
       });
     } else {
+      const country = Array.isArray(this.props.country)
+        ? this.props.country[0]
+        : this.props.country;
       const options: google.maps.GeocoderRequest = {
         address: suggestToGeocode.label,
         bounds: this.props.bounds,
-        componentRestrictions: this.props.country
-          ? {country: this.props.country}
-          : // eslint-disable-next-line no-undefined
-            undefined,
+        componentRestrictions: {country},
         location: this.props.location
       };
 
-      this.geocoder.geocode(options, (results, status) => {
-        if (status === this.googleMaps.GeocoderStatus.OK) {
-          const gmaps = results[0];
-          const location = (gmaps.geometry &&
-            gmaps.geometry.location) as google.maps.LatLng;
-          const suggest = {
-            ...suggestToGeocode,
-            gmaps,
-            location: {
-              lat: location.lat(),
-              lng: location.lng()
-            }
-          };
+      this.geocoder
+        .geocode(options, (results, status) => {
+          if (status === this.googleMaps.GeocoderStatus.OK) {
+            const gmaps = results?.[0];
+            const location = (gmaps?.geometry &&
+              gmaps.geometry.location) as google.maps.LatLng;
+            const suggest = {
+              ...suggestToGeocode,
+              gmaps,
+              location: {
+                lat: location.lat(),
+                lng: location.lng()
+              }
+            };
 
-          if (this.props.onSuggestSelect) {
-            this.props.onSuggestSelect(suggest);
+            if (this.props.onSuggestSelect) {
+              this.props.onSuggestSelect(suggest);
+            }
           }
-        }
-      });
+        })
+        ?.catch((error) => {
+          if (this.props.handleGeocodingError) {
+            this.props.handleGeocodingError(error);
+          }
+        });
     }
   }
 
