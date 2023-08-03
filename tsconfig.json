@@ -7,8 +7,5 @@
     "strict": true,
     "lib": ["dom", "es5", "es2015", "es2016", "scripthost"]
   },
-  "include": [
-    "example/src/**/*",
-    "src/**/*"
-  ]
+  "include": ["example/src/**/*", "src/**/*"]
 }

@@ -13,17 +13,22 @@ export default {
     typescript(),
     resolve({jsnext: true, main: true, browser: true}),
     commonjs(),
-    replace({'process.env.NODE_ENV': JSON.stringify(env)})
+    replace({
+      preventAssignment: true,
+      values: {'process.env.NODE_ENV': JSON.stringify(env)}
+    })
   ],
   output: [
     {
       name: 'Geosuggest',
       sourcemap: false,
       globals: {
-        'google': 'google',
-        'react': 'React',
+        google: 'google',
+        react: 'React',
         'react-dom': 'ReactDOM',
-        'react-dom/client': 'ReactDOM'
+        'react-dom/client': 'ReactDOM',
+        classnames: 'classnames',
+        'lodash.debounce': 'debounce'
       },
       file: 'module/Geosuggest.umd.js',
       format: 'umd'
@@ -32,16 +37,13 @@ export default {
       name: 'Geosuggest',
       sourcemap: false,
       globals: {
-        'google': 'google',
-        'react': 'React',
+        google: 'google',
+        react: 'React',
         'react-dom': 'ReactDOM'
       },
       file: 'module/Geosuggest.esm.js',
       format: 'esm'
     }
   ],
-  external: [
-    'classnames',
-    'lodash.debounce'
-  ]
+  external: ['classnames', 'lodash.debounce']
 };

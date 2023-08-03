@@ -30,7 +30,7 @@ interface IState {
 /**
  * Entry point for the Geosuggest component
  */
-export default class extends React.Component<IProps, IState> {
+export default class GeoSuggest extends React.Component<IProps, IState> {
   /**
    * Default values for the properties
    */
