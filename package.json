@@ -88,7 +88,7 @@
     "preversion": "npm test",
     "version": "npm run build:browser && npm run changelog && git add .",
     "postversion": "git push && git push --tags && npm run publish:example",
-    "publish:example": "npm run build:example && gh-pages -d example/dist"
+    "publish:example": "gh-pages -d example/dist"
   },
   "readmeFilename": "README.md",
   "keywords": [
