@@ -2,7 +2,7 @@
 
 import React = require('react');
 import chai = require('chai');
-import TestUtils = require('react-dom/test-utils');
+import {fireEvent, render, RenderResult, waitFor} from '@testing-library/react';
 import * as sinon from 'sinon';
 import googleStub from './google_stub';
 import Geosuggest from '../src/Geosuggest';
@@ -12,8 +12,9 @@ const expect = chai.expect;
 (window as any).google = (global as any).google = googleStub();
 
 describe('Component: Geosuggest', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let component: any = null;
+  // eslint-disable-next-line init-declarations
+  let component: RenderResult;
+  let geosuggestRef = React.createRef<Geosuggest>();
   let onSuggestSelect: sinon.SinonSpy = sinon.spy();
   let onActivateSuggest: sinon.SinonSpy = sinon.spy();
   let onSuggestNoResults: sinon.SinonSpy = sinon.spy();
@@ -22,7 +23,9 @@ describe('Component: Geosuggest', () => {
   let onKeyPress: sinon.SinonSpy = sinon.spy();
   let onChange: sinon.SinonSpy = sinon.spy();
   let onBlur: sinon.SinonSpy = sinon.spy();
-  const render = (props = {}): void => {
+
+  const renderGeosuggest = (props = {}): void => {
+    geosuggestRef = React.createRef<Geosuggest>();
     onSuggestSelect = sinon.spy();
     onActivateSuggest = sinon.spy();
     onSuggestNoResults = sinon.spy();
@@ -32,8 +35,9 @@ describe('Component: Geosuggest', () => {
     onKeyPress = sinon.spy();
     onBlur = sinon.spy();
 
-    component = TestUtils.renderIntoDocument(
+    component = render(
       <Geosuggest
+        ref={geosuggestRef}
         radius="20"
         queryDelay={0}
         onSuggestSelect={onSuggestSelect}
@@ -62,29 +66,23 @@ describe('Component: Geosuggest', () => {
   };
 
   describe('default', () => {
-    beforeEach(() => render());
+    beforeEach(() => renderGeosuggest());
 
     it('should have an input field', () => {
-      const input = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__input'
-      );
-      expect(input).to.have.lengthOf(1);
+      const inputs =
+        component.container.getElementsByClassName('geosuggest__input');
+      expect(inputs).to.have.lengthOf(1);
     });
 
     it('should not show any suggestions when the input is empty', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      TestUtils.Simulate.focus(geoSuggestInput);
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.focus();
 
-      const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__item'
-      );
-      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      const suggestItems =
+        component.container.getElementsByClassName('geosuggest__item');
+      const suggests = component.container.getElementsByClassName(
         'geosuggest__suggests'
       );
 
@@ -94,28 +92,28 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should call `onSuggestSelect` when we type a city name and choose some of the suggestions', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
+
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
         which: 40
       });
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
         which: 40
       });
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyUp',
         keyCode: 38,
         which: 38
       });
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Enter',
         keyCode: 13,
         which: 13
@@ -124,54 +122,46 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should call `onSuggestSelect` when we type a city name and click on one of the suggestions', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
 
-      const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__item'
-      );
-      TestUtils.Simulate.click(suggestItems[0]);
+      const suggestItems =
+        component.container.getElementsByClassName('geosuggest__item');
+      fireEvent.click(suggestItems[0]);
       expect(onSuggestSelect.calledOnce).to.be.true;
     });
 
     it('should call `onSuggestSelect` when we clear out the selected city', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
         which: 40
       });
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Enter',
         keyCode: 13,
         which: 13
       });
       expect(onSuggestSelect.calledOnce).to.be.true;
-      geoSuggestInput.value = '';
-      TestUtils.Simulate.change(geoSuggestInput);
+
+      fireEvent.change(geoSuggestInput, {target: {value: ''}});
       expect(onSuggestSelect.calledWithExactly()).to.be.true;
     });
 
     it('should call `onActivateSuggest` when we key down to a suggestion', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
         which: 40
@@ -180,86 +170,75 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should call `onFocus` when we focus the input', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      TestUtils.Simulate.focus(geoSuggestInput);
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.focus();
       expect(onFocus.calledOnce).to.be.true;
     });
 
     it('should call `onBlur` when we remove the focus from the input', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      TestUtils.Simulate.focus(geoSuggestInput);
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.blur(geoSuggestInput);
+      geoSuggestInput.focus();
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.blur();
       expect(onBlur.withArgs('New').calledOnce).to.be.true;
     });
 
     it('should call `onChange` when we change the input value', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
       expect(onChange.withArgs('New').calledOnce).to.be.true;
     });
 
     it('should call `onChange` when the update method is called', () => {
-      component.update('New');
+      geosuggestRef.current?.update('New');
       expect(onChange.withArgs('New').calledOnce).to.be.true;
     });
 
     it('should call `onKeyDown` when we key press in the input', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      TestUtils.Simulate.keyDown(geoSuggestInput);
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      fireEvent.keyDown(geoSuggestInput);
       expect(onKeyDown.calledOnce).to.be.true;
     });
 
     it('should call `onKeyPress` when we key press in the input', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      TestUtils.Simulate.keyPress(geoSuggestInput);
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      fireEvent.keyPress(geoSuggestInput, {charCode: 40});
       expect(onKeyPress.calledOnce).to.be.true;
     });
 
-    it('should clear the input text when calling `clear`', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+    it('should clear the input text when calling `clear`', async () => {
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      component.clear();
-      expect(geoSuggestInput.value).to.equal('');
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geosuggestRef.current?.clear();
+
+      await waitFor(() => expect(geoSuggestInput.value).to.equal(''));
     });
 
     it('should not change the active suggest while it remains in the list', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'Ne';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'Ne'}});
+      geoSuggestInput.focus();
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
         which: 40
       });
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Enter',
         keyCode: 13,
         which: 13
@@ -270,20 +249,17 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should reset the active suggest when it disappears from the list', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New York';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New York'}});
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
         which: 40
       });
-      geoSuggestInput.value = 'London';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'London'}});
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Enter',
         keyCode: 13,
         which: 13
@@ -294,146 +270,127 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should deactivate the active suggest when pressing arrow down on the last suggest', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'Ne';
-      TestUtils.Simulate.change(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'Ne'}});
 
-      const geoSuggestItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__item'
-      );
+      const geoSuggestItems =
+        component.container.getElementsByClassName('geosuggest__item');
       for (let i = 0; i < geoSuggestItems.length + 1; i++) {
-        TestUtils.Simulate.keyDown(geoSuggestInput, {
+        fireEvent.keyDown(geoSuggestInput, {
           key: 'keyDown',
           keyCode: 40,
           which: 40
         });
       }
 
-      const activeItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      const activeItems = component.container.getElementsByClassName(
         'geosuggest__item--active'
       );
       expect(activeItems.length).to.be.equal(0);
     });
 
     it('should activate the last suggest in the list when pressing arrow up', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
 
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyUp',
         keyCode: 38,
         which: 38
       });
 
-      const allItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__item'
-      );
-      const activeItem = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__item--active'
+      const allItems =
+        component.container.getElementsByClassName('geosuggest__item');
+      const activeItem = component.container.querySelector(
+        '.geosuggest__item--active'
       );
 
       expect(activeItem).to.be.equal(allItems[allItems.length - 1]);
     });
 
     // @TODO activeElement is somehow not set in new jsdom, even when setting a tabIndex.
-    // it('should have the focus after calling `focus`', () => {
-    //   component.focus();
-    //   expect(document.activeElement!.classList.contains('geosuggest__input')).to
-    //     .be.true;
-    // });
+    it('should have the focus after calling `focus`', () => {
+      geosuggestRef.current?.focus();
+      expect(document.activeElement!.classList.contains('geosuggest__input')).to
+        .be.true;
+    });
 
-    // it('should not have the focus after calling `blur`', () => {
-    //   component.focus();
-    //   expect(document.activeElement!.classList.contains('geosuggest__input')).to
-    //     .be.true;
-    //   component.blur();
-    //   expect(document.activeElement!.classList.contains('geosuggest__input')).to
-    //     .be.false;
-    // });
+    it('should not have the focus after calling `blur`', () => {
+      geosuggestRef.current?.focus();
+      expect(document.activeElement!.classList.contains('geosuggest__input')).to
+        .be.true;
+      geosuggestRef.current?.blur();
+      expect(document.activeElement!.classList.contains('geosuggest__input')).to
+        .be.false;
+    });
 
     it('should add external inline `style` to input component', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
       expect(geoSuggestInput.style.borderColor).to.be.equal('#000');
     });
 
     it('should add external inline `style` to suggestList component', () => {
-      const geoSuggestList = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__suggests'
-      ) as HTMLInputElement;
+      const geoSuggestList = component.container.querySelector(
+        '.geosuggest__suggests'
+      ) as HTMLUListElement;
       expect(geoSuggestList.style.borderColor).to.be.equal('#000');
     });
 
     it('should add external inline `style` to suggestItem component', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
 
-      const geoSuggestItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      const geoSuggestItems = component.container.getElementsByClassName(
         'geosuggest__item'
-      ) as HTMLLIElement[];
+      ) as HTMLCollectionOf<HTMLLIElement>;
       expect(geoSuggestItems[0].style.borderColor).to.be.equal('#000');
     });
 
     it('should hide the suggestion box when there are no suggestions', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      const geoSuggestList = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__suggests'
+      const geoSuggestList = component.container.querySelector(
+        '.geosuggest__suggests'
       ) as HTMLUListElement;
 
-      geoSuggestInput.value = 'There is no result for this. Really.';
-      TestUtils.Simulate.change(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {
+        target: {value: 'There is no result for this. Really.'}
+      });
 
       expect(geoSuggestList.classList.contains('geosuggest__suggests--hidden'))
         .to.be.true;
     });
 
     it('should call `onSuggestNoResults` when there are no suggestions', () => {
-      const input = component.input;
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
 
-      input.value = 'There is no result for this. Really.';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {
+        target: {value: 'There is no result for this. Really.'}
+      });
+      geoSuggestInput.focus();
 
       expect(onSuggestNoResults.called).to.be.true;
     });
 
     it('should call onSuggestSelect on enter', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Enter',
         keyCode: 13,
         which: 13
@@ -442,13 +399,11 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should call onSuggestSelect on tab', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Tab',
         keyCode: 9,
         which: 9
@@ -458,15 +413,14 @@ describe('Component: Geosuggest', () => {
   });
 
   describe('with tab ignored', () => {
-    beforeEach(() => render({ignoreTab: true}));
+    beforeEach(() => renderGeosuggest({ignoreTab: true}));
 
     it('should not call onSuggestSelect on tab', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Tab',
         keyCode: 9,
         which: 9
@@ -476,15 +430,14 @@ describe('Component: Geosuggest', () => {
   });
 
   describe('with enter ignored', () => {
-    beforeEach(() => render({ignoreEnter: true}));
+    beforeEach(() => renderGeosuggest({ignoreEnter: true}));
 
     it('should not call onSuggestSelect on enter', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Tab',
         keyCode: 13,
         which: 13
@@ -495,12 +448,11 @@ describe('Component: Geosuggest', () => {
 
   describe('with data attribute', () => {
     const myId = 'my ID';
-    beforeEach(() => render({'data-id': myId}));
+    beforeEach(() => renderGeosuggest({'data-id': myId}));
 
     it('should add any data attribute to the input', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
       expect(geoSuggestInput.dataset.id).to.equal(myId);
     });
@@ -513,53 +465,47 @@ describe('Component: Geosuggest', () => {
       {label: 'Tokyo', location: {lat: 35.673343, lng: 139.710388}}
     ];
 
-    beforeEach(() => render({fixtures}));
+    beforeEach(() => renderGeosuggest({fixtures}));
 
-    it('should show the fixtures on focus when the input is empty', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      TestUtils.Simulate.focus(geoSuggestInput);
+    it('should show the fixtures on focus when the input is empty', async () => {
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
 
-      const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__item'
-      );
-      expect(suggestItems.length).to.equal(fixtures.length);
+      geoSuggestInput.focus();
+
+      await waitFor(() => {
+        const suggestItems =
+          component.container.getElementsByClassName('geosuggest__item');
+        expect(suggestItems.length).to.equal(fixtures.length);
+      });
     });
 
     it('should filter the fixtures depending on the user input', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
 
-      geoSuggestInput.value = 'Rio';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'Rio'}});
+      geoSuggestInput.focus();
 
-      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__item'
-      );
+      const suggests =
+        component.container.getElementsByClassName('geosuggest__item');
       expect(suggests.length).to.be.equal(1);
     });
 
     it('should fire `onSuggestSelect` when selecting a fixture', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
 
-      geoSuggestInput.value = 'Rio';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.change(geoSuggestInput, {target: {value: 'Rio'}});
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
         which: 40
       });
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Enter',
         keyCode: 13,
         which: 13
@@ -569,19 +515,17 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should show the fixtures when pressing arrow up', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      const suggest = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__suggests'
-      );
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      const suggest = component.container.querySelector(
+        '.geosuggest__suggests'
+      ) as HTMLUListElement;
 
       expect(suggest.classList.contains('geosuggest__suggests--hidden')).to.be
         .true;
 
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyUp',
         keyCode: 38,
         which: 38
@@ -591,19 +535,19 @@ describe('Component: Geosuggest', () => {
         .false;
     });
 
-    it('should show a maximum of `maxFixtures` fixtures', () => {
-      render({maxFixtures: 2, fixtures});
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      TestUtils.Simulate.focus(geoSuggestInput);
+    it('should show a maximum of `maxFixtures` fixtures', async () => {
+      renderGeosuggest({maxFixtures: 2, fixtures});
 
-      const suggestItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__item'
-      );
-      expect(suggestItems.length).to.equal(2);
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.focus();
+
+      await waitFor(() => {
+        const suggestItems =
+          component.container.getElementsByClassName('geosuggest__item');
+        expect(suggestItems.length).to.equal(2);
+      });
     });
   });
 
@@ -612,11 +556,10 @@ describe('Component: Geosuggest', () => {
       autoActivateFirstSuggest: true
     };
 
-    beforeEach(() => render(props));
+    beforeEach(() => renderGeosuggest(props));
 
     it('should not activate a suggest before focus', () => {
-      const activeItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      const activeItems = component.container.getElementsByClassName(
         'geosuggest__item--active'
       );
       expect(activeItems.length).to.be.equal(0);
@@ -624,43 +567,35 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should call `onActivateSuggest` when auto-activating the first suggest', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
 
       expect(onActivateSuggest.calledOnce).to.be.true;
     });
 
     it('should not change the active suggest when it is set already', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      geoSuggestInput.value = 'New York';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      fireEvent.change(geoSuggestInput, {target: {value: 'New York'}});
+      geoSuggestInput.focus();
 
       expect(onActivateSuggest.calledOnce).to.be.true;
     });
 
     it('should activate a suggest once there is some input', (done) => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
 
       setImmediate(() => {
-        const activeItems = TestUtils.scryRenderedDOMComponentsWithClass(
-          component,
+        const activeItems = component.container.getElementsByClassName(
           'geosuggest__item--active'
         );
         expect(activeItems.length).to.be.equal(1);
@@ -675,17 +610,15 @@ describe('Component: Geosuggest', () => {
       fixtures: [{label: 'New Yorrrrk'}]
     };
 
-    beforeEach(() => render(props));
+    beforeEach(() => renderGeosuggest(props));
 
     it('should select the first suggest on `selectSuggest`', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
 
-      component.selectSuggest();
+      geosuggestRef.current?.selectSuggest(null);
 
       expect(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -703,24 +636,20 @@ describe('Component: Geosuggest', () => {
         label: 'some label'
       };
 
-      render(props);
+      renderGeosuggest(props);
 
-      const label = TestUtils.findRenderedDOMComponentWithTag(
-        component,
-        'label'
-      );
+      const label = component.container.querySelector('label');
 
       expect(label).to.not.be.null;
     });
   });
 
   describe('without label and id props', () => {
-    beforeEach(() => render());
+    beforeEach(() => renderGeosuggest());
 
     it('should not render a <label> if no `label` and `id` props were supplied', () => {
-      expect(() =>
-        TestUtils.findRenderedDOMComponentWithTag(component, 'label')
-      ).to.throw(Error);
+      const label = component.container.querySelector('label');
+      expect(label).to.be.null;
     });
   });
 
@@ -731,17 +660,15 @@ describe('Component: Geosuggest', () => {
       suggestsHiddenClassName: 'suggests-hidden-class'
     };
 
-    beforeEach(() => render(props));
+    beforeEach(() => renderGeosuggest(props));
 
     it('should apply suggestsHiddenClassName when the list is hidden', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      TestUtils.Simulate.focus(geoSuggestInput);
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.focus();
 
-      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      const suggests = component.container.getElementsByClassName(
         'geosuggest__suggests'
       );
       expect(suggests[0].classList.contains('suggests-hidden-class')).to.be
@@ -751,17 +678,14 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should apply suggestItemActiveClassName when a list item is active', (done) => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
 
       setImmediate(() => {
-        const activeItems = TestUtils.scryRenderedDOMComponentsWithClass(
-          component,
+        const activeItems = component.container.getElementsByClassName(
           'suggest-item-active'
         );
         expect(activeItems.length).to.be.equal(1);
@@ -778,40 +702,32 @@ describe('Component: Geosuggest', () => {
       suggestsClassName: 'suggests-class'
     };
 
-    beforeEach(() => render(props));
+    beforeEach(() => renderGeosuggest(props));
 
     it('should apply suggestsClassName to the list', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      TestUtils.Simulate.focus(geoSuggestInput);
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.focus();
 
-      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      const suggests = component.container.getElementsByClassName(
         'geosuggest__suggests'
       );
       expect(suggests[0].classList.contains('suggests-class')).to.be.true;
     });
 
     it('should apply suggestItemClassName to each list item', (done) => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
 
       setImmediate(() => {
-        const totalItems = TestUtils.scryRenderedDOMComponentsWithClass(
-          component,
-          'suggest-item'
-        );
-        const itemsWithItemClass = TestUtils.scryRenderedDOMComponentsWithClass(
-          component,
-          'geosuggest__item'
-        );
+        const totalItems =
+          component.container.getElementsByClassName('suggest-item');
+        const itemsWithItemClass =
+          component.container.getElementsByClassName('geosuggest__item');
 
         expect(totalItems.length).to.be.equal(itemsWithItemClass.length);
         done();
@@ -824,15 +740,13 @@ describe('Component: Geosuggest', () => {
       onUpdateSuggests: sinon.spy()
     };
 
-    beforeEach(() => render(props));
+    beforeEach(() => renderGeosuggest(props));
 
     it('should call onUpdateSuggests when input onChange is triggered', (done) => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New York City';
-      TestUtils.Simulate.change(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New York City'}});
 
       setImmediate(() => {
         expect(props.onUpdateSuggests.calledOnce).to.be.true;
@@ -849,39 +763,47 @@ describe('Component: Geosuggest', () => {
           isFixture: true,
           label: 'Location1',
           location: {lat: 46, lng: -71},
-          locationId: 123456789,
           placeId: '123456789'
         },
         {
           className: 'fixture',
           isFixture: true,
           label: 'Location2',
-          location: {lat: 46, lng: -71},
-          locationId: 123456789
+          location: {lat: 46, lng: -71}
         }
       ]
     };
-
     beforeEach(() => {
-      render(props);
-      component.updateSuggests();
+      renderGeosuggest(props);
     });
 
-    it('should set suggest.placeId to fixture.placeId if fixture.placeId is defined', () => {
-      expect(component.state.suggests[0].placeId).to.equal(
-        props.fixtures[0].placeId
+    it('should set suggest.placeId to fixture.placeId if fixture.placeId is defined', async () => {
+      geosuggestRef.current?.updateSuggests();
+
+      await waitFor(() =>
+        expect(geosuggestRef.current?.state.suggests[0].placeId).to.equal(
+          props.fixtures[0].placeId
+        )
       );
     });
 
-    it('should set suggest.placeId to fixture.label if fixture.placeId is not defined', () => {
-      expect(component.state.suggests[1].placeId).to.equal(
-        props.fixtures[1].label
+    it('should set suggest.placeId to fixture.label if fixture.placeId is not defined', async () => {
+      geosuggestRef.current?.updateSuggests();
+
+      await waitFor(() =>
+        expect(geosuggestRef.current?.state.suggests[1].placeId).to.equal(
+          props.fixtures[1].label
+        )
       );
     });
 
-    it('should set suggest.locationId to fixture.locationId if fixture.locationId is defined', () => {
-      expect(component.state.suggests[0].locationId).to.equal(
-        props.fixtures[0].locationId
+    it('should set suggest.locationId to fixture.locationId if fixture.locationId is defined', async () => {
+      geosuggestRef.current?.updateSuggests();
+
+      await waitFor(() =>
+        expect(geosuggestRef.current?.state.suggests[0].location).to.equal(
+          props.fixtures[0].location
+        )
       );
     });
   });
@@ -906,27 +828,25 @@ describe('Component: Geosuggest', () => {
       );
     };
 
-    beforeEach(() => render({fixtures, renderSuggestItem}));
+    beforeEach(() => renderGeosuggest({fixtures, renderSuggestItem}));
 
-    it('should render result of renderSuggestItem into the SuggestItem', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
+    it('should render result of renderSuggestItem into the SuggestItem', async () => {
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      geoSuggestInput.focus();
 
-      TestUtils.Simulate.focus(geoSuggestInput);
+      await waitFor(() => {
+        const wrapper = component.container.querySelector(
+          '.my-custom-suggest-item'
+        );
+        const innerContent = component.container.querySelector(
+          '.my-custom-suggest-item__first-name'
+        );
 
-      const wrapper = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'my-custom-suggest-item'
-      );
-      const innerContent = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'my-custom-suggest-item__first-name'
-      );
-
-      expect(wrapper).to.exist;
-      expect(innerContent).to.exist;
+        expect(wrapper).to.exist;
+        expect(innerContent).to.exist;
+      });
     });
   });
 
@@ -935,36 +855,30 @@ describe('Component: Geosuggest', () => {
       suggestsClassName: 'suggests-class'
     };
 
-    beforeEach(() => render(props));
+    beforeEach(() => renderGeosuggest(props));
 
     it('should highlight matched text', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
-      const matchedText = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
+
+      const matchedText = component.container.getElementsByClassName(
         'geosuggest__item__matched-text'
       );
       expect(matchedText).to.have.lengthOf.at.least(1);
     });
 
     it('should render a match with minial nodes', () => {
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'Newa';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'Newa'}});
+      geoSuggestInput.focus();
 
-      const geoSuggestItems = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__item'
-      );
+      const geoSuggestItems =
+        component.container.getElementsByClassName('geosuggest__item');
       expect(geoSuggestItems).to.have.lengthOf(1);
       expect(geoSuggestItems[0].childNodes).to.have.lengthOf(1);
       expect(geoSuggestItems[0].childNodes[0].childNodes).to.have.lengthOf(2);
@@ -976,34 +890,30 @@ describe('Component: Geosuggest', () => {
       const props = {
         minLength: 5
       };
-      render(props);
+      renderGeosuggest(props);
 
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
-      const matchedText = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
+
+      const matchedText = component.container.getElementsByClassName(
         'geosuggest__item__matched-text'
       );
       expect(matchedText).to.have.lengthOf(0);
     });
 
     it('should search for predictions when the input value is one character and minLength prop was not specified', () => {
-      render();
+      renderGeosuggest();
 
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
-      const matchedText = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
+      geoSuggestInput.focus();
+
+      const matchedText = component.container.getElementsByClassName(
         'geosuggest__item__matched-text'
       );
       expect(matchedText).to.have.lengthOf.at.least(1);
@@ -1013,17 +923,15 @@ describe('Component: Geosuggest', () => {
       const props = {
         minLength: 3
       };
-      render(props);
+      renderGeosuggest(props);
 
-      const geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New York';
-      TestUtils.Simulate.change(geoSuggestInput);
-      TestUtils.Simulate.focus(geoSuggestInput);
-      const matchedText = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      fireEvent.change(geoSuggestInput, {target: {value: 'New York'}});
+      geoSuggestInput.focus();
+
+      const matchedText = component.container.getElementsByClassName(
         'geosuggest__item__matched-text'
       );
       expect(matchedText).to.have.lengthOf.at.least(1);
@@ -1031,27 +939,25 @@ describe('Component: Geosuggest', () => {
   });
 
   describe('accessibility', () => {
+    // eslint-disable-next-line init-declarations
     let geoSuggestInput: HTMLInputElement;
-    beforeEach(() => {
-      render();
 
-      geoSuggestInput = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
+    beforeEach(() => {
+      renderGeosuggest();
+
+      geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
       ) as HTMLInputElement;
-      geoSuggestInput.value = 'New';
-      TestUtils.Simulate.change(geoSuggestInput);
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
     });
 
     it('should add aria-selected for the active suggestion', () => {
-      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
-        'geosuggest__item'
-      );
+      const suggests =
+        component.container.getElementsByClassName('geosuggest__item');
       expect(suggests[0].getAttribute('aria-selected')).to.equal('false');
 
-      TestUtils.Simulate.focus(geoSuggestInput);
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      geoSuggestInput.focus();
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'keyDown',
         keyCode: 40,
         which: 40
@@ -1062,7 +968,7 @@ describe('Component: Geosuggest', () => {
     it('should set aria-expanded to false when suggestions are hidden', () => {
       expect(geoSuggestInput.getAttribute('aria-expanded')).to.equal('true');
 
-      TestUtils.Simulate.keyDown(geoSuggestInput, {
+      fireEvent.keyDown(geoSuggestInput, {
         key: 'Enter',
         keyCode: 13,
         which: 13
@@ -1072,8 +978,7 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should have aria-owns attribute set to the list id', () => {
-      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      const suggests = component.container.getElementsByClassName(
         'geosuggest__suggests'
       );
 
@@ -1083,8 +988,7 @@ describe('Component: Geosuggest', () => {
     });
 
     it('should have aria-label attribute set', () => {
-      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      const suggests = component.container.getElementsByClassName(
         'geosuggest__suggests'
       );
       expect(suggests[0].getAttribute('aria-label')).to.exist;
@@ -1094,20 +998,18 @@ describe('Component: Geosuggest', () => {
       const props = {
         id: 'test-id'
       };
-      render(props);
+      renderGeosuggest(props);
+      geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
 
-      const input = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-      const suggests = TestUtils.scryRenderedDOMComponentsWithClass(
-        component,
+      const suggests = component.container.getElementsByClassName(
         'geosuggest__suggests'
       );
-
       const listId = suggests[0].getAttribute('id');
 
-      expect(input.getAttribute('aria-owns')).to.equal(listId);
+      expect(geoSuggestInput.getAttribute('aria-owns')).to.equal(listId);
       expect(listId?.endsWith(props.id)).to.be.true;
     });
 
@@ -1115,25 +1017,19 @@ describe('Component: Geosuggest', () => {
       const props = {
         id: 'test-id'
       };
-      render(props);
+      renderGeosuggest(props);
+      geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
 
-      const input = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-
-      expect(input.getAttribute('id')).to.equal(
+      expect(geoSuggestInput.getAttribute('id')).to.equal(
         `geosuggest__input--${props.id}`
       );
     });
 
     it('should have autoComplete attribute set to "off" by default to input', () => {
-      const input = TestUtils.findRenderedDOMComponentWithClass(
-        component,
-        'geosuggest__input'
-      );
-
-      expect(input.getAttribute('autoComplete')).to.equal('off');
+      expect(geoSuggestInput.getAttribute('autoComplete')).to.equal('off');
     });
   });
 });
