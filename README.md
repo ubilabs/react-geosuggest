@@ -349,7 +349,7 @@ Same effect as hitting `enter` (will geocode the text inside of the input).
 
 ```jsx
 import React, {useRef} from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import Geosuggest from 'react-geosuggest';
 
 const App = () => {
@@ -386,7 +386,9 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const container = document.getElementById('app');
+const root = ReactDOM.createRoot(container!);
+root.render(<App />);
 ```
 
 ## Styling
