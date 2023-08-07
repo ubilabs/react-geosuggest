@@ -1,30 +1,7 @@
 /**
- * Resets
- */
-*, :before, :after {
-  margin: 0;
-  padding: 0;
-  position: relative;
-  box-sizing: border-box;
-}
-
-input, select, button, textarea {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -moz-appearance: none;
-  font: inherit;
-  color: inherit;
-}
-
-/**
  * Base
  */
 html {
-  font: 112.5%/1.2 "Roboto", Arial, sans-serif;
-  color: #3d464d;
-  background-color: #fff;
-  font-weight: 300;
-  -webkit-font-smoothing: antialiased;
   width: 100%;
   height: 100%;
   overflow: hidden-x;
@@ -38,12 +15,12 @@ body {
   display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
 }
@@ -51,37 +28,56 @@ body {
 .container {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 auto;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
-  max-width: 612px;
-  max-width: 34rem;
-}
-
-a {
-  color: #3d464d;
-  -webkit-transition: color 0.2s;
-          transition: color 0.2s;
-}
-
-a:hover, a:focus {
-  color: #267dc0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  max-width: 576px;
+  max-width: 36rem;
 }
 
 h1 {
-  font-size: 72px;
+  font-size: 64px;
   font-size: 4rem;
-  font-weight: 100;
-  margin-bottom: .5em;
-  color: #267dc0;
+  margin-bottom: 0.5em;
+  color: var(--ubilabs-green);
 }
 
 .subheader {
-  font-weight: 300;
   margin-bottom: 1.5em;
+  font-weight: 400;
+}
+
+input[type='text'] {
+  /** Reset Ubilabs input styles */
+  background-color: initial;
+  border-radius: initial;
+  color: initial;
+  font-family: initial;
+  font-size: initial;
+  height: initial;
+  line-height: initial;
+  max-width: initial;
+  outline: initial;
+  font: inherit;
+  /** Set Geosuggest styles */
+  width: 100%;
+  border: 2px solid transparent;
+  box-shadow: 0 0 1px #3d464d;
+  padding: 0.5em 1em;
+  -webkit-transition:
+    border 0.2s,
+    box-shadow 0.2s;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
+}
+input[type='text']:focus-visible {
+  /** Set Geosuggest styles */
+  border-color: #267dc0;
+  box-shadow: 0 0 0 transparent;
 }
 
 .hint {
-  color: #ccc;
+  color: var(--ubilabs-gray-dark-1);
   margin: 2em 0;
 }
 
@@ -89,11 +85,13 @@ h1 {
   font-weight: 300;
   padding-top: 2em;
   margin-top: 2em;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--ubilabs-gray);
 }
 
 .ubilabs {
-  vertical-align: middle;
+  height: 1em;
+  margin: 0.05em 0.25em;
+  vertical-align: text-top;
 }
 /**
  * The geosuggest module
