@@ -32,7 +32,7 @@ interface IProps {
 /**
  * The list with suggestions.
  */
-export default class extends React.PureComponent<IProps, unknown> {
+export default class SuggestList extends React.PureComponent<IProps, unknown> {
   /**
    * Whether or not it is hidden
    */

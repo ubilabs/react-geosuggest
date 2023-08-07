@@ -1,5 +1,3 @@
-import IFixture from './fixture';
-
 /**
  * The suggest interface
  */

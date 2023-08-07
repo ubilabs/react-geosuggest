@@ -9,7 +9,6 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "prettier/@typescript-eslint",
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
@@ -155,14 +154,7 @@
     "no-undef": 0,
     "no-undef-init": 2,
     "no-undefined": 2,
-    "no-unused-vars": [
-      2,
-      {
-        "vars": "all",
-        "args": "after-used",
-        "varsIgnorePattern": "^I"
-      }
-    ],
+    "no-unused-vars": [0],
     "no-use-before-define": [0],
     "@typescript-eslint/no-use-before-define": [2],
     "callback-return": 2,
