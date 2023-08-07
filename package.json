@@ -86,8 +86,8 @@
     "release:major": "npm version major -m \"chore(release): version %s\"",
     "changelog": "conventional-changelog-generator",
     "preversion": "npm test",
-    "version": "npm run build:browser && npm run changelog && git add .",
-    "postversion": "git push && git push --tags && npm run publish:example",
+    "version": "npm run build:browser && npm run changelog && git checkout -b chore/release-${npm_package_version} && git add .",
+    "postversion": "git push -u origin chore/release-${npm_package_version} && git push --tags --no-verify",
     "publish:example": "gh-pages -d example/dist"
   },
   "readmeFilename": "README.md",
