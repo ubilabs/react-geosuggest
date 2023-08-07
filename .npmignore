@@ -7,7 +7,6 @@ test
 .editorconfig
 .eslintrc
 .gitignore
-.travis.yml
 .prettierrc.yml
 .prettierignore
 rollup.browser.config.js

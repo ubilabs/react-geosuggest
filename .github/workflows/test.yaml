@@ -1,0 +1,23 @@
+name: Run Tests
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout repository from GitHub
+        uses: actions/checkout@v3
+      - name: Setup npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm run test
