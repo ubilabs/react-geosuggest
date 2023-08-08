@@ -1,7 +1,7 @@
 /**
  * The fixture interface
  */
-export default interface IFixture {
+export default interface Fixture {
   readonly label: string;
   readonly placeId?: string;
   readonly location?: {

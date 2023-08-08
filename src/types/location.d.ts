@@ -1,13 +1,12 @@
-import ISuggest from './suggest';
+import Suggest from './suggest';
 
 /**
  * The suggest interface
  */
-type ILocation = ISuggest & {
+export default interface Location extends Suggest {
   readonly location: {
     lat: number;
     lng: number;
   };
   readonly gmaps?: google.maps.GeocoderResult | google.maps.places.PlaceResult;
-};
-export default ILocation;
+}

@@ -1,12 +1,12 @@
-import IFixture from './fixture';
-import ISuggest from './suggest';
-import ILocation from './location';
+import Fixture from './fixture';
+import Suggest from './suggest';
+import Location from './location';
 
 /**
  * Prop Types
  */
-export default interface IProps {
-  readonly fixtures?: IFixture[];
+export default interface Props {
+  readonly fixtures?: Fixture[];
   readonly maxFixtures?: number;
   readonly initialValue?: string;
   readonly placeholder?: string;
@@ -26,25 +26,25 @@ export default interface IProps {
   readonly queryDelay?: number;
   readonly googleMaps?: any;
   readonly highlightMatch?: boolean;
-  readonly onSuggestSelect?: (suggest?: ILocation) => void;
+  readonly onSuggestSelect?: (suggest?: Location) => void;
   readonly onFocus?: () => void;
   readonly onBlur?: (userInput?: string) => void;
   readonly onChange?: (value: string) => void;
   readonly onKeyDown?: (event: React.KeyboardEvent) => void;
   readonly onKeyPress?: (event: React.KeyboardEvent) => void;
   readonly onUpdateSuggests?: (
-    suggests: ISuggest[],
-    activeSuggest: ISuggest | null
+    suggests: Suggest[],
+    activeSuggest: Suggest | null
   ) => void;
-  readonly onActivateSuggest?: (suggest: ISuggest | null) => void;
+  readonly onActivateSuggest?: (suggest: Suggest | null) => void;
   readonly onSuggestNoResults?: (userInput: string) => void;
   readonly skipSuggest?: (
-    suggest: IFixture | google.maps.places.AutocompletePrediction
+    suggest: Fixture | google.maps.places.AutocompletePrediction
   ) => boolean;
   readonly getSuggestLabel?: (
     suggest: google.maps.places.AutocompletePrediction
   ) => string;
-  readonly renderSuggestItem?: (suggest: ISuggest) => string | JSX.Element;
+  readonly renderSuggestItem?: (suggest: Suggest) => string | JSX.Element;
   readonly autoActivateFirstSuggest?: boolean;
   readonly style?: {
     input?: any;

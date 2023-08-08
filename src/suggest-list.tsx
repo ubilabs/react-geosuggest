@@ -1,16 +1,16 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import SuggestItem from './suggest-item';
-import ISuggest from './types/suggest';
+import Suggest from './types/suggest';
 
-interface IProps {
+interface Props {
   readonly isHidden: boolean;
-  readonly suggests: ISuggest[];
+  readonly suggests: Suggest[];
   readonly suggestsClassName?: string;
   readonly hiddenClassName?: string;
   readonly suggestItemClassName?: string;
   readonly suggestItemActiveClassName?: string;
-  readonly activeSuggest: ISuggest | null;
+  readonly activeSuggest: Suggest | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly style: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,10 +21,10 @@ interface IProps {
   readonly listLabel: string;
   readonly onSuggestNoResults: () => void;
   readonly renderSuggestItem?: (
-    suggest: ISuggest,
+    suggest: Suggest,
     userInput: string
   ) => JSX.Element | string;
-  readonly onSuggestSelect: (suggest: ISuggest) => void;
+  readonly onSuggestSelect: (suggest: Suggest) => void;
   readonly onSuggestMouseDown: (event: React.MouseEvent) => void;
   readonly onSuggestMouseOut: (event: React.MouseEvent) => void;
 }
@@ -32,7 +32,7 @@ interface IProps {
 /**
  * The list with suggestions.
  */
-export default class SuggestList extends React.PureComponent<IProps, unknown> {
+export default class SuggestList extends React.PureComponent<Props, unknown> {
   /**
    * Whether or not it is hidden
    */
@@ -43,7 +43,7 @@ export default class SuggestList extends React.PureComponent<IProps, unknown> {
   /**
    * There are new properties available for the list
    */
-  componentDidUpdate(prevProps: IProps): void {
+  componentDidUpdate(prevProps: Props): void {
     if (prevProps.suggests !== this.props.suggests) {
       if (this.props.suggests.length === 0) {
         this.props.onSuggestNoResults();
