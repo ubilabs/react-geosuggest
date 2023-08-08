@@ -2,9 +2,10 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 import filterInputAttributes from './filter-input-attributes';
-import ISuggest from './types/suggest';
 
-interface IProps {
+import {Suggest} from './types/suggest';
+
+interface Props {
   readonly value: string;
   readonly className?: string;
   readonly id?: string;
@@ -15,7 +16,7 @@ interface IProps {
   readonly style?: any;
   readonly autoComplete?: string;
   readonly isSuggestsHidden: boolean;
-  readonly activeSuggest: ISuggest | null;
+  readonly activeSuggest: Suggest | null;
   readonly listId: string;
   readonly label?: string;
   readonly inputType: string;
@@ -33,12 +34,12 @@ interface IProps {
 /**
  * The input field
  */
-export default class Input extends React.PureComponent<IProps, unknown> {
+export default class Input extends React.PureComponent<Props, unknown> {
   /* eslint-disable @typescript-eslint/no-empty-function */
   /**
    * Default values for the properties
    */
-  static defaultProps: IProps = {
+  static defaultProps: Props = {
     activeSuggest: null,
     autoComplete: 'off',
     className: '',
@@ -66,7 +67,7 @@ export default class Input extends React.PureComponent<IProps, unknown> {
   /**
    * The constructor.
    */
-  constructor(props: IProps) {
+  constructor(props: Props) {
     super(props);
 
     this.onChange = this.onChange.bind(this);

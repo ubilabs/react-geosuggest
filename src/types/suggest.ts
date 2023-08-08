@@ -1,7 +1,7 @@
 /**
  * The suggest interface
  */
-export default interface ISuggest {
+export interface Suggest {
   readonly description?: string;
   readonly label: string;
   readonly placeId: string;

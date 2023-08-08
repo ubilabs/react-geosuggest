@@ -69,14 +69,14 @@ const allowedAttributes: string[] = [
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-interface IProps {
+interface Props {
   [key: string]: any;
 }
 
 /**
  * Filter the properties for only allowed input properties
  */
-export default function (props: IProps): {[key: string]: any} {
+export default function (props: Props): {[key: string]: any} {
   const attributes: {[key: string]: any} = {};
 
   Object.keys(props).forEach((attribute) => {
