@@ -1,7 +1,8 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import SuggestItem from './suggest-item';
-import Suggest from './types/suggest';
+
+import {Suggest} from './types/suggest';
 
 interface Props {
   readonly isHidden: boolean;

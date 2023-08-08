@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import Suggest from './types/suggest';
+
+import {Suggest} from './types/suggest';
 
 interface Props {
   readonly userInput: string;

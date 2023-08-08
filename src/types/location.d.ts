@@ -1,9 +1,9 @@
-import Suggest from './suggest';
+import {Suggest} from './suggest';
 
 /**
  * The suggest interface
  */
-export default interface Location extends Suggest {
+export interface Location extends Suggest {
   readonly location: {
     lat: number;
     lng: number;

@@ -2,7 +2,8 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 import filterInputAttributes from './filter-input-attributes';
-import Suggest from './types/suggest';
+
+import {Suggest} from './types/suggest';
 
 interface Props {
   readonly value: string;

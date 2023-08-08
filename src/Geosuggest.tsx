@@ -9,9 +9,10 @@ import filterInputAttributes from './filter-input-attributes';
 
 import Input from './input';
 import SuggestList from './suggest-list';
-import Suggest from './types/suggest';
-import Props from './types/props';
-import Location from './types/location';
+
+import {Suggest} from './types/suggest';
+import {Props} from './types/props';
+import {Location} from './types/location';
 
 // Escapes special characters in user input for regex
 function escapeRegExp(str: string): string {

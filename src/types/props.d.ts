@@ -1,11 +1,11 @@
-import Fixture from './fixture';
-import Suggest from './suggest';
-import Location from './location';
+import {Fixture} from './fixture';
+import {Suggest} from './suggest';
+import {Location} from './location';
 
 /**
  * Prop Types
  */
-export default interface Props {
+export interface Props {
   readonly fixtures?: Fixture[];
   readonly maxFixtures?: number;
   readonly initialValue?: string;
