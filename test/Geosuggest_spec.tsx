@@ -870,11 +870,26 @@ describe('Component: Geosuggest', () => {
       expect(matchedText).to.have.lengthOf.at.least(1);
     });
 
-    it('should render a match with minial nodes', () => {
+    it('should highlight multiple matched substrings', () => {
       const geoSuggestInput = component.container.querySelector(
         '.geosuggest__input'
       ) as HTMLInputElement;
       fireEvent.change(geoSuggestInput, {target: {value: 'Newa'}});
+      geoSuggestInput.focus();
+
+      const geoSuggestItems =
+        component.container.getElementsByClassName('geosuggest__item');
+      const matchedText = geoSuggestItems[0].getElementsByClassName(
+        'geosuggest__item__matched-text'
+      );
+      expect(matchedText).to.have.lengthOf(2);
+    });
+
+    it('should render a match with minimal nodes', () => {
+      const geoSuggestInput = component.container.querySelector(
+        '.geosuggest__input'
+      ) as HTMLInputElement;
+      fireEvent.change(geoSuggestInput, {target: {value: 'New Jersey'}});
       geoSuggestInput.focus();
 
       const geoSuggestItems =
