@@ -43,12 +43,8 @@ export default class SuggestItem extends React.PureComponent<Props, unknown> {
   /**
    * Makes a text bold
    */
-  makeBold(element: string, key: string): JSX.Element {
-    return (
-      <b className="geosuggest__item__matched-text" key={key}>
-        {element}
-      </b>
-    );
+  makeBold(element: string) {
+    return <b className="geosuggest__item__matched-text">{element}</b>;
   }
 
   /**
@@ -59,31 +55,30 @@ export default class SuggestItem extends React.PureComponent<Props, unknown> {
       return suggest.label;
     }
 
-    const start: number = suggest.matchedSubstrings.offset;
-    const length: number = suggest.matchedSubstrings.length;
-    const end: number = start + length;
-    const boldPart = this.makeBold(
-      suggest.label.substring(start, end),
-      suggest.label
-    );
+    const parts = [];
 
-    let pre = '';
-    let post = '';
+    let previousEnd = 0;
 
-    if (start > 0) {
-      pre = suggest.label.slice(0, start);
+    for (const {offset: start, length} of suggest.matchedSubstrings) {
+      // Add non-matching substring before and between matches
+      if (start > previousEnd) {
+        parts.push(suggest.label.substring(previousEnd, start));
+      }
+
+      // Add matching substring as bold text
+      const end = start + length;
+      const match = this.makeBold(suggest.label.substring(start, end));
+      parts.push(match);
+
+      previousEnd = end;
     }
-    if (end < suggest.label.length) {
-      post = suggest.label.slice(end);
+
+    // Add non-matching substring after matches
+    if (previousEnd < suggest.label.length) {
+      parts.push(suggest.label.substring(previousEnd));
     }
 
-    return (
-      <span>
-        {pre}
-        {boldPart}
-        {post}
-      </span>
-    );
+    return <span>{parts}</span>;
   }
 
   /**

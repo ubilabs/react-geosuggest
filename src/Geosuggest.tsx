@@ -372,10 +372,12 @@ export default class GeoSuggest extends React.Component<Props, State> {
           suggests.push({
             ...fixture,
             isFixture: true,
-            matchedSubstrings: {
-              length: userInput.length,
-              offset: fixture.label.indexOf(userInput)
-            },
+            matchedSubstrings: [
+              {
+                length: userInput.length,
+                offset: fixture.label.indexOf(userInput)
+              }
+            ],
             placeId: fixture.placeId || fixture.label
           });
         }
@@ -390,7 +392,7 @@ export default class GeoSuggest extends React.Component<Props, State> {
           label: this.props.getSuggestLabel
             ? this.props.getSuggestLabel(suggest)
             : '',
-          matchedSubstrings: suggest.matched_substrings[0],
+          matchedSubstrings: suggest.matched_substrings,
           placeId: suggest.place_id
         });
       }
