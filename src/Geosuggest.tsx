@@ -375,7 +375,7 @@ export default class GeoSuggest extends React.Component<Props, State> {
             matchedSubstrings: [
               {
                 length: userInput.length,
-                offset: fixture.label.indexOf(userInput)
+                offset: fixture.label.search(regex)
               }
             ],
             placeId: fixture.placeId || fixture.label
