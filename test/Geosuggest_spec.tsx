@@ -649,17 +649,15 @@ describe('Component: Geosuggest', () => {
         label: 'some label'
       };
 
-      render(props);
+      renderGeosuggest(props);
 
-      const label = TestUtils.findRenderedDOMComponentWithTag(
-        component,
+      const label = component.container.querySelector(
         'label'
-      ).attributes.getNamedItem('for')?.value;
+      ) as HTMLLabelElement;
 
-      const input = TestUtils.findRenderedDOMComponentWithTag(
-        component,
+      const input = component.container.querySelector(
         'input'
-      ).id;
+      ) as HTMLInputElement;
 
       expect(label).to.be.equal(input);
     });
