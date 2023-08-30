@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import Geosuggest from '../../src/Geosuggest';
 
 const App = (): JSX.Element => {
@@ -54,4 +54,6 @@ const App = (): JSX.Element => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const container = document.getElementById('app');
+const root = ReactDOM.createRoot(container!);
+root.render(<App />);

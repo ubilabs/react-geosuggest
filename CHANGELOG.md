@@ -1,3 +1,18 @@
+## 2.16.0 (2023-08-08)
+
+
+### 2.15.1 (2023-08-07)
+
+
+## 2.15.0 (2023-08-07)
+
+
+#### Bug Fixes
+
+* **Geosuggest:** fix accessibility (#489) ([b5a32e72](https://github.com/ubilabs/react-geosuggest/commit/b5a32e727e34aca926cee5f5fafa5f8c24c9dd82))
+* **input:** fix autoComplete attribute default to off (#488) ([24ead929](https://github.com/ubilabs/react-geosuggest/commit/24ead929100f6be05e0a4828975932b19b97fbf9))
+
+
 ### 2.14.1 (2021-01-28)
 
 

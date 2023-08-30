@@ -9,32 +9,33 @@ import filterInputAttributes from './filter-input-attributes';
 
 import Input from './input';
 import SuggestList from './suggest-list';
-import ISuggest from './types/suggest';
-import IProps from './types/props';
-import ILocation from './types/location';
+
+import {Suggest} from './types/suggest';
+import {Props} from './types/props';
+import {Location} from './types/location';
 
 // Escapes special characters in user input for regex
 function escapeRegExp(str: string): string {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
-interface IState {
+interface State {
   readonly isSuggestsHidden: boolean;
   readonly isLoading: boolean;
   readonly ignoreBlur: boolean;
   readonly userInput: string;
-  readonly activeSuggest: null | ISuggest;
-  readonly suggests: ISuggest[];
+  readonly activeSuggest: null | Suggest;
+  readonly suggests: Suggest[];
 }
 
 /**
  * Entry point for the Geosuggest component
  */
-export default class extends React.Component<IProps, IState> {
+export default class GeoSuggest extends React.Component<Props, State> {
   /**
    * Default values for the properties
    */
-  static defaultProps: IProps = defaults;
+  static defaultProps: Props = defaults;
 
   /**
    * The Google Map instance
@@ -81,10 +82,15 @@ export default class extends React.Component<IProps, IState> {
   listId: string;
 
   /**
+   * Label for the suggestions list
+   */
+  listLabel: string;
+
+  /**
    * The constructor. Sets the initial state.
    */
   // eslint-disable-next-line max-statements
-  constructor(props: IProps) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -109,6 +115,7 @@ export default class extends React.Component<IProps, IState> {
     this.hideSuggests = this.hideSuggests.bind(this);
     this.selectSuggest = this.selectSuggest.bind(this);
     this.listId = `geosuggest__list${props.id ? `--${props.id}` : ''}`;
+    this.listLabel = props.label ? `${props.label} options` : 'options';
 
     if (props.queryDelay) {
       this.onAfterInputChange = debounce(
@@ -121,7 +128,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Change inputValue if prop changes
    */
-  componentDidUpdate(prevProps: IProps): void {
+  componentDidUpdate(prevProps: Props): void {
     if (prevProps.initialValue !== this.props.initialValue) {
       this.setState({userInput: this.props.initialValue || ''});
     }
@@ -342,7 +349,7 @@ export default class extends React.Component<IProps, IState> {
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function
     callback: () => void = () => {}
   ): void {
-    const suggests: ISuggest[] = [];
+    const suggests: Suggest[] = [];
     const {userInput} = this.state;
     const {skipSuggest, maxFixtures, fixtures} = this.props;
     const regex = new RegExp(escapeRegExp(userInput), 'gim');
@@ -400,7 +407,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Return the new activeSuggest object after suggests have been updated
    */
-  updateActiveSuggest(suggests: ISuggest[] = []): ISuggest | null {
+  updateActiveSuggest(suggests: Suggest[] = []): Suggest | null {
     let activeSuggest = this.state.activeSuggest;
 
     if (activeSuggest) {
@@ -481,8 +488,8 @@ export default class extends React.Component<IProps, IState> {
    * When an item got selected
    */
   // eslint-disable-next-line complexity
-  selectSuggest(suggestToSelect: ISuggest | null): void {
-    let suggest: ISuggest = suggestToSelect || {
+  selectSuggest(suggestToSelect: Suggest | null): void {
+    let suggest: Suggest = suggestToSelect || {
       isFixture: true,
       label: this.state.userInput,
       placeId: this.state.userInput
@@ -507,7 +514,7 @@ export default class extends React.Component<IProps, IState> {
     if (suggest.location) {
       this.setState({ignoreBlur: false});
       if (this.props.onSuggestSelect) {
-        this.props.onSuggestSelect(suggest as ILocation);
+        this.props.onSuggestSelect(suggest as Location);
       }
       return;
     }
@@ -518,7 +525,7 @@ export default class extends React.Component<IProps, IState> {
   /**
    * Geocode a suggest
    */
-  geocodeSuggest(suggestToGeocode: ISuggest): void {
+  geocodeSuggest(suggestToGeocode: Suggest): void {
     if (!this.geocoder) {
       return;
     }
@@ -646,6 +653,7 @@ export default class extends React.Component<IProps, IState> {
         onSuggestSelect={this.selectSuggest}
         renderSuggestItem={this.props.renderSuggestItem}
         listId={this.listId}
+        listLabel={this.listLabel}
       />
     );
 
