@@ -1044,7 +1044,9 @@ describe('Component: Geosuggest', () => {
       ) as HTMLInputElement;
       fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
 
-      expect(input.getAttribute('id')).to.equal(props.id);
+       expect(geoSuggestInput.getAttribute('id')).to.equal(
+        `geosuggest__input--${props.id}`
+      );
     });
 
     it('should have autoComplete attribute set to "off" by default to input', () => {
