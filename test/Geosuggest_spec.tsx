@@ -1042,7 +1042,7 @@ describe('Component: Geosuggest', () => {
       ) as HTMLInputElement;
       fireEvent.change(geoSuggestInput, {target: {value: 'New'}});
 
-       expect(geoSuggestInput.getAttribute('id')).to.equal(
+      expect(geoSuggestInput.getAttribute('id')).to.equal(
         `geosuggest__input--${props.id}`
       );
     });
