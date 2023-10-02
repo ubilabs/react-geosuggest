@@ -149,6 +149,10 @@ export default function predictions(): google.maps.places.AutocompletePrediction
         {
           length: 2,
           offset: 0
+        },
+        {
+          length: 2,
+          offset: 8
         }
       ],
       place_id: 'ChIJHQ6aMnBTwokRc-T-3CrcvOE',

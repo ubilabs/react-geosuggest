@@ -13,6 +13,6 @@ export interface Suggest {
   readonly matchedSubstrings?: {
     offset: number;
     length: number;
-  };
+  }[];
   readonly className?: string;
 }
