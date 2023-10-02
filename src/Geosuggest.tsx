@@ -219,6 +219,9 @@ export default class GeoSuggest extends React.Component<Props, State> {
     if (!this.state.ignoreBlur) {
       this.hideSuggests();
     }
+    if (this.props.onBlur) {
+      this.props.onBlur(this.state.userInput);
+    }
   }
 
   onNext(): void {
@@ -438,9 +441,6 @@ export default class GeoSuggest extends React.Component<Props, State> {
    * Hide the suggestions
    */
   hideSuggests(): void {
-    if (this.props.onBlur) {
-      this.props.onBlur(this.state.userInput);
-    }
     this.timer = window.setTimeout(() => {
       this.setState({
         activeSuggest: null,
