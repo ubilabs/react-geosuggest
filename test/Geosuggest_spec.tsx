@@ -659,7 +659,7 @@ describe('Component: Geosuggest', () => {
         'input'
       ) as HTMLInputElement;
 
-      expect(label).to.be.equal(input);
+      expect(label.getAttribute('for')).to.be.equal(input.getAttribute('id'));
     });
   });
 

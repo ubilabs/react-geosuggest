@@ -165,14 +165,15 @@ export default class Input extends React.PureComponent<Props, unknown> {
         {shouldRenderLabel && (
           <label
             className="geosuggest__label"
-            htmlFor={this.props.id ? this.props.id : 'geosuggest__input'}
-          >
-            {this.props.label}
+            htmlFor={`geosuggest__input${
+              this.props.id ? `--${this.props.id}` : ''
+            }`}>
+            {this.props.label}{' '}
           </label>
         )}
         <input
           className={classes}
-          id={this.props.id ? this.props.id : 'geosuggest__input'}
+          id={`geosuggest__input${this.props.id ? `--${this.props.id}` : ''}`}
           ref={(i): HTMLInputElement | null => (this.input = i)}
           type={this.props.inputType}
           {...attributes}
