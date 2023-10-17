@@ -168,7 +168,7 @@ export default class Input extends React.PureComponent<Props, unknown> {
             htmlFor={`geosuggest__input${
               this.props.id ? `--${this.props.id}` : ''
             }`}>
-            {this.props.label}{' '}
+            {this.props.label}
           </label>
         )}
         <input
