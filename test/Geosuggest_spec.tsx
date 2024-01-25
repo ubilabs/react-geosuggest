@@ -642,6 +642,25 @@ describe('Component: Geosuggest', () => {
 
       expect(label).to.not.be.null;
     });
+
+    it('should render a <label> pointing to the input if `label` and `id` props were supplied', () => {
+      const props = {
+        id: 'geosuggest-id',
+        label: 'some label'
+      };
+
+      renderGeosuggest(props);
+
+      const label = component.container.querySelector(
+        'label'
+      ) as HTMLLabelElement;
+
+      const input = component.container.querySelector(
+        'input'
+      ) as HTMLInputElement;
+
+      expect(label.getAttribute('for')).to.be.equal(input.getAttribute('id'));
+    });
   });
 
   describe('without label and id props', () => {

@@ -660,7 +660,9 @@ export default class GeoSuggest extends React.Component<Props, State> {
     );
 
     return (
-      <div className={classes} id={this.props.id}>
+      <div
+        className={classes}
+        id={`geosuggest__wrapper${this.props.id ? `--${this.props.id}` : ''}`}>
         <div className="geosuggest__input-wrapper">{input}</div>
         <div className="geosuggest__suggests-wrapper">{suggestionsList}</div>
       </div>
