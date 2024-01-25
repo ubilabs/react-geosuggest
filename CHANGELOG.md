@@ -1,3 +1,11 @@
+### 2.16.1 (2023-10-02)
+
+
+#### Bug Fixes
+
+* **blur-callback:** call onBlur only if input loses focus (#510) ([8c804649](https://github.com/ubilabs/react-geosuggest/commit/8c804649727e3555a643e1193b0d1ea63142adf4))
+
+
 ## 2.16.0 (2023-08-08)
 
 

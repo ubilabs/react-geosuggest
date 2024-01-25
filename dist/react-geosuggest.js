@@ -771,8 +771,8 @@ var Geosuggest = (function (React) {
         /**
          * Makes a text bold
          */
-        SuggestItem.prototype.makeBold = function (element, key) {
-            return (React__namespace.createElement("b", { className: "geosuggest__item__matched-text", key: key }, element));
+        SuggestItem.prototype.makeBold = function (element) {
+            return React__namespace.createElement("b", { className: "geosuggest__item__matched-text" }, element);
         };
         /**
          * Replace matched text with the same in bold
@@ -781,22 +781,25 @@ var Geosuggest = (function (React) {
             if (!userInput || !suggest.matchedSubstrings) {
                 return suggest.label;
             }
-            var start = suggest.matchedSubstrings.offset;
-            var length = suggest.matchedSubstrings.length;
-            var end = start + length;
-            var boldPart = this.makeBold(suggest.label.substring(start, end), suggest.label);
-            var pre = '';
-            var post = '';
-            if (start > 0) {
-                pre = suggest.label.slice(0, start);
+            var parts = [];
+            var previousEnd = 0;
+            for (var _i = 0, _a = suggest.matchedSubstrings; _i < _a.length; _i++) {
+                var _b = _a[_i], start = _b.offset, length_1 = _b.length;
+                // Add non-matching substring before and between matches
+                if (start > previousEnd) {
+                    parts.push(suggest.label.substring(previousEnd, start));
+                }
+                // Add matching substring as bold text
+                var end = start + length_1;
+                var match = this.makeBold(suggest.label.substring(start, end));
+                parts.push(match);
+                previousEnd = end;
             }
-            if (end < suggest.label.length) {
-                post = suggest.label.slice(end);
+            // Add non-matching substring after matches
+            if (previousEnd < suggest.label.length) {
+                parts.push(suggest.label.substring(previousEnd));
             }
-            return (React__namespace.createElement("span", null,
-                pre,
-                boldPart,
-                post));
+            return React__namespace.createElement("span", null, parts);
         };
         /**
          * Checking if item just became active and scrolling if needed.
@@ -1052,6 +1055,9 @@ var Geosuggest = (function (React) {
             if (!this.state.ignoreBlur) {
                 this.hideSuggests();
             }
+            if (this.props.onBlur) {
+                this.props.onBlur(this.state.userInput);
+            }
         };
         GeoSuggest.prototype.onNext = function () {
             this.activateSuggest('next');
@@ -1178,10 +1184,12 @@ var Geosuggest = (function (React) {
                         !skipSuggest(fixture) &&
                         fixture.label.match(regex)) {
                         fixturesSearched++;
-                        suggests.push(__assign(__assign({}, fixture), { isFixture: true, matchedSubstrings: {
-                                length: userInput.length,
-                                offset: fixture.label.indexOf(userInput)
-                            }, placeId: fixture.placeId || fixture.label }));
+                        suggests.push(__assign(__assign({}, fixture), { isFixture: true, matchedSubstrings: [
+                                {
+                                    length: userInput.length,
+                                    offset: fixture.label.search(regex)
+                                }
+                            ], placeId: fixture.placeId || fixture.label }));
                     }
                 });
             }
@@ -1193,7 +1201,7 @@ var Geosuggest = (function (React) {
                         label: _this.props.getSuggestLabel
                             ? _this.props.getSuggestLabel(suggest)
                             : '',
-                        matchedSubstrings: suggest.matched_substrings[0],
+                        matchedSubstrings: suggest.matched_substrings,
                         placeId: suggest.place_id
                     });
                 }
@@ -1232,9 +1240,6 @@ var Geosuggest = (function (React) {
          */
         GeoSuggest.prototype.hideSuggests = function () {
             var _this = this;
-            if (this.props.onBlur) {
-                this.props.onBlur(this.state.userInput);
-            }
             this.timer = window.setTimeout(function () {
                 _this.setState({
                     activeSuggest: null,
