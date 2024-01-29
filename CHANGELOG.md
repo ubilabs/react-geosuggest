@@ -1,3 +1,11 @@
+### 2.16.2 (2024-01-25)
+
+
+#### Bug Fixes
+
+* **Geosuggest:** fix input id and label for (#491) ([267b4ac4](https://github.com/ubilabs/react-geosuggest/commit/267b4ac4a200391d7cf295a1a5868d6b58fc9b85))
+
+
 ### 2.16.1 (2023-10-02)
 
 
