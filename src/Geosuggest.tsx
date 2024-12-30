@@ -604,7 +604,7 @@ export default class GeoSuggest extends React.Component<Props, State> {
   /**
    * Render the view
    */
-  render(): JSX.Element {
+  render(): React.JSX.Element {
     const attributes = filterInputAttributes(this.props);
     const classes = classnames('geosuggest', this.props.className, {
       'geosuggest--loading': this.state.isLoading
@@ -612,7 +612,9 @@ export default class GeoSuggest extends React.Component<Props, State> {
     const input = (
       <Input
         className={this.props.inputClassName}
-        ref={(i): Input | null => (this.input = i)}
+        ref={(i: Input | null) => {
+          this.input = i;
+        }}
         value={this.state.userInput}
         doNotSubmitOnEnter={!this.state.isSuggestsHidden}
         ignoreTab={this.props.ignoreTab}

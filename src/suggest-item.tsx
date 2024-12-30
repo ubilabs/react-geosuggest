@@ -17,7 +17,7 @@ interface Props {
   readonly renderSuggestItem?: (
     suggest: Suggest,
     userInput: string
-  ) => JSX.Element | string;
+  ) => React.JSX.Element | string;
   readonly onMouseDown: (event: React.MouseEvent) => void;
   readonly onMouseOut: (event: React.MouseEvent) => void;
 }
@@ -50,7 +50,10 @@ export default class SuggestItem extends React.PureComponent<Props, unknown> {
   /**
    * Replace matched text with the same in bold
    */
-  formatMatchedText(userInput: string, suggest: Suggest): JSX.Element | string {
+  formatMatchedText(
+    userInput: string,
+    suggest: Suggest
+  ): React.JSX.Element | string {
     if (!userInput || !suggest.matchedSubstrings) {
       return suggest.label;
     }
@@ -127,7 +130,7 @@ export default class SuggestItem extends React.PureComponent<Props, unknown> {
   /**
    * Render the view
    */
-  render(): JSX.Element {
+  render(): React.JSX.Element {
     const {suggest} = this.props;
     const classes = classnames(
       'geosuggest__item',
@@ -140,7 +143,7 @@ export default class SuggestItem extends React.PureComponent<Props, unknown> {
           : null
       }
     );
-    let content: JSX.Element | string = suggest.label;
+    let content: React.JSX.Element | string = suggest.label;
 
     if (this.props.renderSuggestItem) {
       content = this.props.renderSuggestItem(suggest, this.props.userInput);
@@ -151,7 +154,9 @@ export default class SuggestItem extends React.PureComponent<Props, unknown> {
     return (
       <li
         className={classes}
-        ref={(li): HTMLLIElement | null => (this.ref = li)}
+        ref={(li: HTMLLIElement | null) => {
+          this.ref = li;
+        }}
         style={this.props.style}
         onMouseDown={this.props.onMouseDown}
         onMouseOut={this.props.onMouseOut}

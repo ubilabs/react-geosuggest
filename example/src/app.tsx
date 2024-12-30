@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Geosuggest from '../../src/Geosuggest';
 
-const App = (): JSX.Element => {
+const App = (): React.JSX.Element => {
   /**
    * When the input receives focus
    */

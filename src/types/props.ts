@@ -44,7 +44,7 @@ export interface Props {
   readonly getSuggestLabel?: (
     suggest: google.maps.places.AutocompletePrediction
   ) => string;
-  readonly renderSuggestItem?: (suggest: Suggest) => string | JSX.Element;
+  readonly renderSuggestItem?: (suggest: Suggest) => string | React.JSX.Element;
   readonly autoActivateFirstSuggest?: boolean;
   readonly style?: {
     input?: any;
