@@ -23,6 +23,8 @@ As this component uses the Google Maps Places API to get suggests, you must incl
 </html>
 ```
 
+You can use [@ubilabs/react-google-maps](https://github.com/visgl/react-google-maps) to initialize the Google Maps API and load the require Google Maps libraries.
+
 Visit the [Google Developer Console](https://console.developers.google.com) to generate your API key. The API's that you have to enable in your Google API Manager Dashboard are [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/start), [Google Places API Web Service](https://developers.google.com/places/web-service/) and [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/).
 
 The easiest way to use geosuggest is to install it from NPM and include it in your own React build process (using [Webpack](https://webpack.github.io/), [Parcel](https://parceljs.org/), etc).
