@@ -151,7 +151,7 @@ export default class Input extends React.PureComponent<Props, unknown> {
   /**
    * Render the view
    */
-  render(): JSX.Element {
+  render(): React.JSX.Element {
     const attributes = filterInputAttributes(this.props);
     const classes = classnames('geosuggest__input', this.props.className);
     const shouldRenderLabel = this.props.label && this.props.id;
@@ -174,7 +174,9 @@ export default class Input extends React.PureComponent<Props, unknown> {
         <input
           className={classes}
           id={`geosuggest__input${this.props.id ? `--${this.props.id}` : ''}`}
-          ref={(i): HTMLInputElement | null => (this.input = i)}
+          ref={(i: HTMLInputElement | null) => {
+            this.input = i;
+          }}
           type={this.props.inputType}
           {...attributes}
           value={this.props.value}

@@ -24,7 +24,7 @@ interface Props {
   readonly renderSuggestItem?: (
     suggest: Suggest,
     userInput: string
-  ) => JSX.Element | string;
+  ) => React.JSX.Element | string;
   readonly onSuggestSelect: (suggest: Suggest) => void;
   readonly onSuggestMouseDown: (event: React.MouseEvent) => void;
   readonly onSuggestMouseOut: (event: React.MouseEvent) => void;
@@ -56,7 +56,7 @@ export default class SuggestList extends React.PureComponent<Props, unknown> {
    * Render the view
    * @return {Function} The React element to render
    */
-  render(): JSX.Element {
+  render(): React.JSX.Element {
     const classes = classnames(
       'geosuggest__suggests',
       this.props.suggestsClassName,
