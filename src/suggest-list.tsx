@@ -42,6 +42,14 @@ export default class SuggestList extends React.PureComponent<Props, unknown> {
   }
 
   /**
+   * Generate a unique key for each suggestion
+   */
+  getSuggestionKey(suggest: Suggest, index: number): string {
+    // Use placeId if available, otherwise fall back to combination of label and index
+    return suggest.placeId || `${suggest.label}_${index}`;
+  }
+
+  /**
    * There are new properties available for the list
    */
   componentDidUpdate(prevProps: Props): void {
@@ -75,7 +83,7 @@ export default class SuggestList extends React.PureComponent<Props, unknown> {
         role="listbox"
         aria-label={this.props.listLabel}
         id={this.props.listId}>
-        {this.props.suggests.map((suggest) => {
+        {this.props.suggests.map((suggest, index) => {
           const isActive =
             (this.props.activeSuggest &&
               suggest.placeId === this.props.activeSuggest.placeId) ||
@@ -83,7 +91,7 @@ export default class SuggestList extends React.PureComponent<Props, unknown> {
 
           return (
             <SuggestItem
-              key={suggest.placeId}
+              key={this.getSuggestionKey(suggest, index)}
               className={suggest.className || ''}
               userInput={this.props.userInput}
               isHighlightMatch={this.props.isHighlightMatch}
