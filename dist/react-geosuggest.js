@@ -721,7 +721,9 @@ var Geosuggest = (function (React) {
             }
             return (React__namespace.createElement(React__namespace.Fragment, null,
                 shouldRenderLabel && (React__namespace.createElement("label", { className: "geosuggest__label", htmlFor: "geosuggest__input".concat(this.props.id ? "--".concat(this.props.id) : '') }, this.props.label)),
-                React__namespace.createElement("input", __assign({ className: classes, id: "geosuggest__input".concat(this.props.id ? "--".concat(this.props.id) : ''), ref: function (i) { return (_this.input = i); }, type: this.props.inputType }, attributes, { value: this.props.value, style: this.props.style, onKeyDown: this.onInputKeyDown, onChange: this.onChange, onKeyPress: this.props.onKeyPress, onFocus: this.props.onFocus, onBlur: this.props.onBlur, role: "combobox", "aria-expanded": !this.props.isSuggestsHidden, "aria-activedescendant": this.props.activeSuggest
+                React__namespace.createElement("input", __assign({ className: classes, id: "geosuggest__input".concat(this.props.id ? "--".concat(this.props.id) : ''), ref: function (i) {
+                        _this.input = i;
+                    }, type: this.props.inputType }, attributes, { value: this.props.value, style: this.props.style, onKeyDown: this.onInputKeyDown, onChange: this.onChange, onKeyPress: this.props.onKeyPress, onFocus: this.props.onFocus, onBlur: this.props.onBlur, role: "combobox", "aria-expanded": !this.props.isSuggestsHidden, "aria-activedescendant": this.props.activeSuggest
                         ? this.props.activeSuggest.placeId
                         : // eslint-disable-next-line no-undefined
                             undefined, "aria-owns": this.props.listId }))));
@@ -856,7 +858,9 @@ var Geosuggest = (function (React) {
             else if (this.props.isHighlightMatch) {
                 content = this.formatMatchedText(this.props.userInput, suggest);
             }
-            return (React__namespace.createElement("li", { className: classes, ref: function (li) { return (_this.ref = li); }, style: this.props.style, onMouseDown: this.props.onMouseDown, onMouseOut: this.props.onMouseOut, onClick: this.onClick, role: "option", "aria-selected": this.props.isActive, id: suggest.placeId }, content));
+            return (React__namespace.createElement("li", { className: classes, ref: function (li) {
+                    _this.ref = li;
+                }, style: this.props.style, onMouseDown: this.props.onMouseDown, onMouseOut: this.props.onMouseOut, onClick: this.onClick, role: "option", "aria-selected": this.props.isActive, id: suggest.placeId }, content));
         };
         return SuggestItem;
     }(React__namespace.PureComponent));
@@ -1378,7 +1382,9 @@ var Geosuggest = (function (React) {
             var classes = classnames('geosuggest', this.props.className, {
                 'geosuggest--loading': this.state.isLoading
             });
-            var input = (React__namespace.createElement(Input, __assign({ className: this.props.inputClassName, ref: function (i) { return (_this.input = i); }, value: this.state.userInput, doNotSubmitOnEnter: !this.state.isSuggestsHidden, ignoreTab: this.props.ignoreTab, ignoreEnter: this.props.ignoreEnter, style: this.props.style && this.props.style.input, onChange: this.onInputChange, onFocus: this.onInputFocus, onBlur: this.onInputBlur, onKeyDown: this.props.onKeyDown, onKeyPress: this.props.onKeyPress, inputType: this.props.inputType, onNext: this.onNext, onPrev: this.onPrev, onSelect: this.onSelect, onEscape: this.hideSuggests, isSuggestsHidden: this.state.isSuggestsHidden, activeSuggest: this.state.activeSuggest, label: this.props.label, id: this.props.id, listId: this.listId }, attributes)));
+            var input = (React__namespace.createElement(Input, __assign({ className: this.props.inputClassName, ref: function (i) {
+                    _this.input = i;
+                }, value: this.state.userInput, doNotSubmitOnEnter: !this.state.isSuggestsHidden, ignoreTab: this.props.ignoreTab, ignoreEnter: this.props.ignoreEnter, style: this.props.style && this.props.style.input, onChange: this.onInputChange, onFocus: this.onInputFocus, onBlur: this.onInputBlur, onKeyDown: this.props.onKeyDown, onKeyPress: this.props.onKeyPress, inputType: this.props.inputType, onNext: this.onNext, onPrev: this.onPrev, onSelect: this.onSelect, onEscape: this.hideSuggests, isSuggestsHidden: this.state.isSuggestsHidden, activeSuggest: this.state.activeSuggest, label: this.props.label, id: this.props.id, listId: this.listId }, attributes)));
             var suggestionsList = (React__namespace.createElement(SuggestList, { isHidden: this.state.isSuggestsHidden, style: this.props.style && this.props.style.suggests, suggestItemStyle: this.props.style && this.props.style.suggestItem, userInput: this.state.userInput, isHighlightMatch: Boolean(this.props.highlightMatch), suggestsClassName: this.props.suggestsClassName, suggestItemClassName: this.props.suggestItemClassName, suggests: this.state.suggests, hiddenClassName: this.props.suggestsHiddenClassName, suggestItemActiveClassName: this.props.suggestItemActiveClassName, activeSuggest: this.state.activeSuggest, onSuggestNoResults: this.onSuggestNoResults, onSuggestMouseDown: this.onSuggestMouseDown, onSuggestMouseOut: this.onSuggestMouseOut, onSuggestSelect: this.selectSuggest, renderSuggestItem: this.props.renderSuggestItem, listId: this.listId, listLabel: this.listLabel }));
             return (React__namespace.createElement("div", { className: classes, id: "geosuggest__wrapper".concat(this.props.id ? "--".concat(this.props.id) : '') },
                 React__namespace.createElement("div", { className: "geosuggest__input-wrapper" }, input),
