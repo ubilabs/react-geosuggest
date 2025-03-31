@@ -153,6 +153,7 @@ export default class SuggestItem extends React.PureComponent<Props, unknown> {
 
     return (
       <li
+        key={`suggest-item-${suggest.placeId}`}
         className={classes}
         ref={(li: HTMLLIElement | null) => {
           this.ref = li;
