@@ -1,3 +1,6 @@
+## 2.17.1 (2025-03-31)
+* fix(geosuggest): Add a key for the returned li in suggest-item by @mikedh in https://github.com/ubilabs/react-geosuggest/pull/522
+
 ## 2.17.0 (2025-01-08)
 
 
